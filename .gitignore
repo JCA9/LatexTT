@@ -1,0 +1,80 @@
+# ===============================
+# LaTeX Project Git Ignore
+# ===============================
+
+# --- Archivos generados por compilación ---
+*.aux
+*.bbl
+*.blg
+*.brf
+*.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.lot
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.toc
+*.fls
+*.fdb_latexmk
+*.xdv
+*.run.xml
+*.bcf
+*.synctex(busy)
+*.pdf
+*.ps
+*.dvi
+
+# --- Archivos de respaldo y temporales ---
+*~
+*.bak
+*.tmp
+*.swp
+*.swo
+*.DS_Store
+Thumbs.db
+
+# --- Carpetas temporales ---
+out/
+build/
+latex.out/
+_cache/
+__pycache__/
+
+# --- Archivos de editor (TeXmaker, VS Code, etc.) ---
+*.synctex.gz(busy)
+*.log
+*.texpadtmp
+*.code-workspace
+.vscode/
+.idea/
+
+# --- Archivos de compilación por herramientas específicas ---
+*.gz
+*.upa
+*.upb
+*.fmt
+*.auxlock
+
+# --- Archivos del sistema ---
+desktop.ini
+ehthumbs.db
+
+# --- Permitir solo los archivos fuente ---
+!.tex
+!.bib
+!.cls
+!.sty
+!.png
+!.jpg
+!.jpeg
+!.svg
+!.pdf_tex
+!.eps
+!.ico
+!.bst
+!.txt
+!.md

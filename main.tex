@@ -1,0 +1,52 @@
+\documentclass[a4paper,12pt]{report}
+
+% ======= PAQUETES =======
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{textcomp}
+
+% ======= FORMATOS =======
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+\geometry{top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
+\setlength{\headheight}{14.5pt}
+
+\pagestyle{fancy}
+\fancyhead[L]{Instituto Politécnico Nacional \,|\, Escuela Superior de Cómputo}
+\fancyhead[R]{TT 2026–A062}
+\fancyfoot[C]{\thepage}
+
+% ======= DOCUMENTO =======
+\begin{document}
+
+\input{portada}
+
+\tableofcontents
+\newpage
+\listoftables
+\newpage
+\listoffigures
+\newpage
+
+\input{Introduccion}
+\input{cap1_planteamiento}
+\input{cap2_marco_teorico}
+\input{cap3_estado_arte}
+\input{cap4_desarrollo}
+\input{cap5_trabajo_futuro}
+\input{conclusiones}
+\input{glosario}
+\input{referencias}
+
+\end{document}
