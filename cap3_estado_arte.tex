@@ -1,0 +1,61 @@
+\chapter{Estado del Arte}
+
+El estado del arte de este proyecto se centra en analizar diversas aplicaciones, artículos y trabajos previos que abordan la gestión de finanzas personales mediante 
+tecnologías digitales, particularmente aquellas que integran reconocimiento óptico de caracteres (OCR), inteligencia artificial (IA) o mecanismos automatizados de control 
+de gastos. El objetivo es identificar las ventajas y limitaciones de las soluciones existentes para fundamentar la propuesta de una aplicación móvil y web que automatice el 
+registro de gastos a través del escaneo de tickets de compra.
+
+\section{Aplicación Expensify}
+Expensify es una de las aplicaciones más consolidadas en el ámbito del control de gastos y reportes financieros. Su principal característica es el uso 
+de \textbf{Reconocimiento Óptico de Caracteres (OCR)} para escanear recibos y extraer información relevante como montos, fechas y categorías. Los usuarios pueden 
+generar reportes automáticos y exportarlos en formatos compatibles con software contable como QuickBooks o Xero.  
+Entre sus ventajas destacan la integración con múltiples plataformas, la generación automática de informes y la posibilidad de sincronizar cuentas corporativas. 
+No obstante, presenta desventajas como la necesidad de validar manualmente las categorías de gasto, errores ocasionales en el reconocimiento del texto y una interfaz más 
+enfocada al entorno empresarial que al usuario común.  
+Tras probar la aplicación, se observa que su interfaz resulta funcional, pero algo recargada, y que el proceso de configuración inicial puede ser lento. Es útil para 
+profesionales o pequeñas empresas, pero excesiva para usuarios individuales que buscan simplicidad.
+
+\section{Aplicación Veryfi}
+Veryfi combina el OCR con \textbf{inteligencia artificial (IA)} para procesar automáticamente recibos y facturas. Su sistema categoriza los gastos y genera estadísticas 
+detalladas en tiempo real, sin intervención manual. Está orientada tanto a usuarios individuales como a pequeñas empresas, destacando por su velocidad y precisión.  
+La aplicación utiliza aprendizaje automático para mejorar continuamente el reconocimiento de texto y la clasificación de transacciones. Sin embargo, su versión gratuita 
+es limitada y el costo de la suscripción puede ser alto para quienes solo buscan funcionalidades básicas.  
+Al probarla, se percibe una gran precisión en el reconocimiento de datos, aunque su diseño está más orientado al entorno empresarial. Es una de las soluciones más avanzadas, 
+pero con una curva de aprendizaje considerable.
+
+\section{Aplicación Mint}
+Mint, desarrollada por Intuit, es una de las aplicaciones de finanzas personales más populares a nivel global. Permite vincular cuentas bancarias, tarjetas y préstamos, 
+ofreciendo una visión general del estado financiero del usuario. Aunque no cuenta con OCR, su sistema de categorización automática identifica patrones de gasto de forma inteligente.  
+Entre sus ventajas se encuentran la integración bancaria, la creación de presupuestos personalizados y las alertas de gastos. No obstante, su desventaja principal es la 
+falta de un módulo de escaneo de tickets y su dependencia de bancos con soporte API.  
+En pruebas, destaca por su diseño intuitivo y reportes detallados, aunque su enfoque está más en la planificación que en el registro automatizado.
+
+\section{Aplicación Shoeboxed}
+Shoeboxed permite escanear recibos mediante OCR y convertirlos en reportes de gastos. Es útil para declaraciones de impuestos y control contable. Su principal ventaja es 
+la digitalización de documentos con valor fiscal, pero la interfaz puede resultar poco amigable y la clasificación de gastos no siempre es precisa.  
+La aplicación requiere tiempo de aprendizaje y ocasionalmente presenta errores de interpretación, especialmente con tickets en español. Pese a ello, ofrece un buen nivel 
+de organización documental y respaldo digital.
+
+\section{Aplicación Fyle}
+Fyle integra OCR e IA para la gestión inteligente de gastos, generando reportes y recomendaciones automáticas. Se orienta principalmente al ámbito corporativo, 
+pero puede adaptarse al uso personal. Ofrece integración con software contable y reportes automatizados.  
+Las ventajas incluyen su precisión y automatización completa, mientras que sus desventajas radican en la necesidad de suscripción y la limitada personalización 
+para usuarios comunes.  
+En la práctica, Fyle logra procesar recibos con alta precisión, pero su modelo de negocio orientado a empresas restringe su adopción masiva.
+
+\section{Artículo: Handwritten Optical Character Recognition (OCR): A Comprehensive Systematic Literature Review}
+El artículo de Memon et al. (2020) realiza una revisión sistemática sobre los sistemas de OCR, destacando sus aplicaciones en sectores como la educación, la administración 
+pública y las finanzas. El estudio evidencia que los modelos híbridos basados en redes neuronales convolucionales (CNN) y LSTM mejoran la precisión del reconocimiento de 
+caracteres, especialmente en contextos multilingües.  
+Entre sus conclusiones, los autores plantean que el OCR moderno, combinado con IA, es capaz de reducir hasta en un 80\% el tiempo de procesamiento de información escrita. 
+En el contexto de las finanzas personales, esta tecnología permite la digitalización automática de tickets, simplificando el seguimiento de gastos.  
+En opinión personal, este artículo respalda teóricamente la viabilidad del uso de OCR en la propuesta, al demostrar su madurez tecnológica y su aplicabilidad a sistemas con 
+grandes volúmenes de texto estructurado.
+
+\section{Trabajo Terminal: Sistema de Control Financiero con Categorización de Gastos}
+Se revisó un trabajo terminal previo titulado \textit{Sistema de Control Financiero con Categorización de Gastos}, desarrollado en la ESCOM-IPN (2023). Este proyecto implementa 
+una aplicación web que permite registrar gastos manualmente y generar reportes gráficos mensuales.  
+Su ventaja principal fue la visualización de datos mediante gráficas dinámicas, pero adolece de automatización: los registros deben ingresarse manualmente. Además, no cuenta 
+con un sistema OCR ni con IA para recomendaciones.  
+En comparación, la propuesta actual amplía el alcance mediante la captura automática de datos con OCR y el análisis inteligente con IA, lo cual representa un salto tecnológico 
+significativo.

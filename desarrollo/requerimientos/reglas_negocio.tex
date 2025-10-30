@@ -1,0 +1,73 @@
+
+\subsection{Reglas de negocio}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{@{} l l X @{}}
+\toprule
+\textbf{Código} & \textbf{Nombre} & \textbf{Descripción} \\
+\midrule
+RN01 & Registro único de usuario &
+Cada usuario debe tener una cuenta única asociada a un correo electrónico válido y no podrá registrar duplicados. \\
+
+RN02 & Validación de credenciales &
+Las credenciales ingresadas deben ser verificadas en la base de datos antes de permitir el acceso al sistema. \\
+
+RN03 & Límite de tamaño de ticket &
+Las imágenes de los tickets no deben superar los 10 MB para evitar saturación del servidor. \\
+
+RN04 & Formato de imagen permitido &
+Solo se aceptan imágenes en formato JPG, PNG o PDF para la carga de tickets. \\
+
+RN05 & Procesamiento OCR controlado &
+Cada ticket se procesa una sola vez para evitar duplicación de datos en la base de datos. \\
+
+RN06 & Categorización automática &
+Los gastos se clasifican automáticamente según palabras clave o coincidencias con categorías predefinidas. \\
+
+RN07 & Corrección manual de datos &
+El usuario podrá editar los datos extraídos, pero los cambios quedarán registrados en la bitácora. \\
+
+RN08 & Generación de reportes &
+El sistema solo generará reportes cuando existan datos válidos en el rango de fechas seleccionado. \\
+
+RN09 & Notificaciones de presupuesto &
+Las alertas se enviarán únicamente cuando el gasto acumulado supere el 80\% del presupuesto configurado. \\
+
+RN10 & Respaldo y seguridad &
+Toda la información importante del usuario debe respaldarse automáticamente cada semana en la nube. \\
+
+RN11 & Eliminación de datos &
+Los usuarios podrán eliminar sus datos personales y gastos registrados, lo cual será irreversible. \\
+
+RN12 & Acceso por roles &
+Solo los usuarios autenticados podrán acceder a sus datos y reportes personales. \\
+
+RN13 & Actualización de precios o montos &
+Los valores de los gastos no podrán modificarse después de generar un reporte cerrado. \\
+
+\bottomrule
+\end{tabularx}
+\caption{Reglas de Negocio (RN01–RN13)}
+\end{table}
+
+\newpage
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{@{} l l X @{}}
+\toprule
+\textbf{Código} & \textbf{Nombre} & \textbf{Descripción} \\
+\midrule
+
+RN14 & Periodos de análisis &
+Los reportes financieros se generan por día, semana, mes o año, según la elección del usuario. \\
+
+RN15 & Tolerancia de OCR &
+Si el reconocimiento de texto tiene menos del 60\% de precisión, se solicitará revisión manual al usuario. \\
+
+\bottomrule
+\end{tabularx}
+\caption{Reglas de Negocio (RN14 - RN01–RN15)}
+\end{table}

@@ -1,0 +1,396 @@
+\section{Análisis de herramientas a utilizar}
+Hemos realizado un análisis de las herramientas que se investigaron para poder dar una solución a la problemática que tenemos, por lo tanto hemos hecho un Análisis de las herramientas mas importartes y sus comparaciones con algunas características que tienen.
+
+\subsection{Análisis de los sistemas Operativos}
+\begin{table}[H]
+\centering
+\small % o usa \footnotesize si sigue grande
+\begin{tabular}{|p{4.2cm}|p{3.5cm}|p{3.5cm}|p{3.5cm}|}
+\hline
+\textbf{Caracteristicas} & \textbf{Windows} & \textbf{macOS} & \textbf{Ubuntu} \\
+\hline
+¿Puedo hacer apps de iPhone? & No & Sí & No \\
+\hline
+¿Puedo hacer apps de Android? & Sí & Sí & Sí \\
+\hline
+¿Tengo “cosas de Linux” para dev? & Sí, con WSL2. & Terminal tipo Unix nativo. & Es Linux, todo nativo. \\
+\hline
+IDE y herramientas populares & VS Code, JetBrains, Android Studio. & Xcode, VS Code, Android Studio. & VS Code, JetBrains, Android Studio. \\
+\hline
+Instalar dependencias & WSL2 o winget. & Homebrew. & apt nativo. \\
+\hline
+Popular entre devs & Muy usado. & Muy usado (clave para iOS). & Muy usado también. \\
+\hline
+Costo del sistema & Licencia de pago. & Requiere Mac. & Gratis (LTS). \\
+\hline
+Equipo que necesito & PC común. & Mac. & Cualquier PC. \\
+\hline
+\end{tabular}
+\caption{Comparativa de sistemas operativos para desarrollo}
+\end{table}
+
+Para el desarrollo del proyecto elegimos Windows como sistema operativo principal, ya que es el que utilizamos en nuestros equipos de trabajo por lo cual ya estamos acostumbrados a este sistema y nos ofrece buena compatibilidad con las herramientas de desarrollo. Además, nos facilita la instalación de Android Studio y las pruebas locales del proyecto sin complicaciones adicionales.
+
+\subsection{Análisis de los Editores/IDEs}
+
+\begin{table}[H]
+\centering
+\small
+\label{tab:ides-desarrollo-simple}
+\begin{tabular}{|p{4.5cm}|p{3.8cm}|p{3.8cm}|p{3.8cm}|}
+\hline
+\textbf{Características} & \textbf{VS Code} & \textbf{Android Studio} & \textbf{JetBrains} \\
+\hline
+Soporte Flutter/Dart & Extensión oficial. & Nativo con plugins. & Plugin disponible. \\
+\hline
+Soporte React/Next.js & Muy bueno. & Limitado. & Completo. \\
+\hline
+Depuración & Node/TS/JS. & Android y emulador. & Avanzada. \\
+\hline
+Git y control de versiones & Integrado. & Integrado. & Muy completo. \\
+\hline
+Inspecciones y refactors & Básico. & Básico. & Muy fuerte. \\
+\hline
+Rendimiento & Ligero. & Pesado. & Medio. \\
+\hline
+Integración móvil & Limitada. & Completa. & Compatible. \\
+\hline
+Integración WSL/Docker & Excelente. & Limitada. & Buena. \\
+\hline
+Personalización & Alta. & Media. & Alta. \\
+\hline
+Curva de aprendizaje & Baja. & Media. & Media–alta. \\
+\hline
+Sistemas operativos & Win/macOS/Linux. & Win/macOS/Linux. & Win/macOS/Linux. \\
+\hline
+Licencia/costo & Gratuito. & Gratuito. & Comercial. \\
+\hline
+\end{tabular}
+\caption{Comparativa de Editores/IDEs para el desarrollo del proyecto (web + móvil)}
+\end{table}
+
+Como entorno de desarrollo se utilizara Visual Studio Code, por ser ligero, rápido y tambien cuenta con una gran cantidad de extensiones que nos facilitaran la programación en los diferentes lenguajes que utilizaremos. También nos permite integrar control de versiones, depuración y el trabajo colaborativo sin necesidad de herramientas adicionales, ya no tenemos que descargar GitHub o algún otro software.
+
+\subsection{Análisis de los Lenguajes de programación}
+
+\begin{table}[H]
+\centering
+\small
+\label{tab:lenguajes-desarrollo}
+\begin{tabular}{|p{4.5cm}|p{3.8cm}|p{3.8cm}|p{3.8cm}|}
+\hline
+\textbf{Características} & \textbf{TypeScript} & \textbf{Dart} & \textbf{Python} \\
+\hline
+React/Next.js & Nativo y maduro & Posible vía web, no común & Posible con frameworks, no usual \\
+\hline
+Flutter & No aplica & Nativo y maduro & Vía FFI o bindings, no común \\
+\hline
+Backend API & Muy usado con Node & Usado con Dart Frog/Shelf & Muy usado con FastAPI/Django \\
+\hline
+Tipado & Fuerte y estático & Fuerte y estático & Dinámico con type hints \\
+\hline
+Rendimiento & Alto en Node/deno & Alto con AOT/JIT & Medio–alto según librerías \\
+\hline
+Ecosistema/paquetes & Muy amplio (npm) & Amplio en Flutter pub & Muy amplio (PyPI) \\
+\hline
+Depuración y tooling & Excelente en VS Code & Excelente en Android Studio & Muy bueno en IDEs \\
+\hline
+Testing & Jest/Vitest/Playwright & Flutter test/integration & pytest/unittest \\
+\hline
+Curva de aprendizaje & Media si vienes de JS & Media & Baja–media \\
+\hline
+Comunidad & Muy grande & Muy grande en Flutter & Muy grande y transversal \\
+\hline
+Dev en contenedores & Muy común & Común & Muy común \\
+\hline
+Sistemas operativos & Win/macOS/Linux & Win/macOS/Linux & Win/macOS/Linux \\
+\hline
+Licencia/impl. & Libre, múltiples runtimes & Libre, SDK oficial & Libre, múltiples runtimes \\
+\hline
+Uso en este proyecto & Web y servicios & App móvil con Flutter & ETL, scripts y utilidades \\
+\hline
+\end{tabular}
+\caption{Comparativa de lenguajes para el desarrollo del proyecto}
+\end{table}
+
+En cuanto a los lenguajes de programación, se trabajara con tres principales:
+
+\textbf TypeScript, para el desarrollo del frontend con Next.js por su compatibilidad con React, su tipado estático y su integración natural con VS Code.
+
+\textbf Dart, para el desarrollo móvil con Flutter, debido a su capacidad de compilar de forma nativa para Android.
+
+\textbf Python, para los procesos de análisis y extracción de datos, ya que cuenta con librerías muy completas para el manejo de archivos, OCR y automatización.
+
+\subsection{Análisis de las Bases de datos}
+
+\begin{table}[H]
+\centering
+\small
+\label{tab:bd-desarrollo-simple}
+\begin{tabular}{|p{4.5cm}|p{3.8cm}|p{3.8cm}|p{3.8cm}|}
+\hline
+\textbf{Características} & \textbf{MySQL} & \textbf{PostgreSQL} & \textbf{MongoDB} \\
+\hline
+Modelo de datos & Relacional & Relacional & No relacional \\
+\hline
+Transacciones ACID & Sí & Sí & Sí \\
+\hline
+Soporte JSON & Bueno & Muy bueno & Nativo \\
+\hline
+Índices & Básicos y rápidos & Avanzados y potentes & Flexibles \\
+\hline
+Consultas avanzadas & SQL estándar & SQL avanzado & Por agregaciones \\
+\hline
+Escalabilidad & Réplicas configurables & Réplicas y particiones & Escalado horizontal \\
+\hline
+Rendimiento general & Alto en lectura y escritura & Estable en grandes volúmenes & Rápido en lectura \\
+\hline
+Copias de seguridad & Fácil con herramientas nativas & Muy confiable & Sencilla con snapshots \\
+\hline
+Compatibilidad con ORM & Alta & Alta & Alta \\
+\hline
+Soporte en la nube & Amplio & Amplio & Amplio \\
+\hline
+Licencia & Libre & Libre & Comercial libre \\
+\hline
+Curva de aprendizaje & Baja & Media & Media \\
+\hline
+Uso en el proyecto & Base principal transaccional & Para análisis y reportes & Para datos flexibles \\
+\hline
+\end{tabular}
+\caption{Comparativa de bases de datos para el desarrollo del proyecto}
+\end{table}
+
+La base de datos seleccionada fue MySQL, porque es fácil de administrar, tiene buen rendimiento para transacciones y es ampliamente soportada por la mayoría de servicios en la nube. Además, nos decidimos por esta ya que es de uso gratuito y contamos con experiencia trabajando en esta base.
+
+\subsection{Análisis de Software para Extracción de Texto}
+
+\begin{table}[H]
+\centering
+\small
+\label{tab:ocr-extraccion}
+\begin{tabular}{|p{4.5cm}|p{3.8cm}|p{3.8cm}|p{3.8cm}|}
+\hline
+\textbf{Características} & \textbf{Tesseract OCR} & \textbf{PaddleOCR} & \textbf{Azure Form Recognizer} \\
+\hline
+Tipo de solución & Código abierto local & Código abierto local & Servicio en la nube \\
+\hline
+Idiomas & Amplios, incluye español & Amplios, incluye español & Amplios, incluye español \\
+\hline
+Entrenamiento propio & Sí con modelos finos & Sí con PP OCR & Sí con modelos personalizados \\
+\hline
+Calidad en imágenes difíciles & Media & Alta & Alta \\
+\hline
+Texto manuscrito & Limitado & Mejor que Tesseract & Bueno en formularios simples \\
+\hline
+Detección de layout & Básica con add ons & Buena con layout integrado & Muy buena y estable \\
+\hline
+Recibos y tickets & Aceptable con reglas & Buena precisión & Muy buena, plantillas listas \\
+\hline
+Salida de datos & Texto sin estructura & Texto y cajas de texto & JSON estructurado por campos \\
+\hline
+Velocidad & Alta en CPU local & Alta en CPU y GPU & Alta en nube \\
+\hline
+Costo & Sin costo de licencia & Sin costo de licencia & Pago por uso \\
+\hline
+Privacidad de datos & Procesa en local & Procesa en local & Procesa en nube \\
+\hline
+Facilidad de integración & Alta con bindings & Alta en Python y otros & Alta con SDKs oficiales \\
+\hline
+Requisitos & Instalar binarios y modelos & Instalar paquetes y modelos & Cuenta de Azure y claves \\
+\hline
+Uso en este proyecto & OCR offline de tickets & Mejor precisión en tickets & Extracción estructurada de campos \\
+\hline
+\end{tabular}
+\caption{Comparativa de software para extracción de texto aplicado a tickets}
+\end{table}
+
+Para la extracción de texto se optó por Tesseract OCR, por ser una herramienta gratuita, de código abierto y con buena precisión en documentos impresos o escaneados. Esto permitió realizar el reconocimiento de texto de los tickets sin depender de servicios externos.
+
+\subsection{Análisis de la Infraestructura en la nube}
+
+\begin{table}[H]
+\centering
+\small
+\label{tab:nube-desarrollo}
+\begin{tabular}{|p{4.5cm}|p{3.8cm}|p{3.8cm}|p{3.8cm}|}
+\hline
+\textbf{Características} & \textbf{AWS} & \textbf{Azure} & \textbf{GCP} \\
+\hline
+Regiones cercanas a México & Virginia y Ohio & Este y Sur de Estados Unidos & Iowa y Carolina del Sur \\
+\hline
+Contenedores & ECS y EKS & AKS y Container Apps & GKE y Cloud Run \\
+\hline
+Serverless & Lambda & Functions & Cloud Functions \\
+\hline
+Bases de datos gestionadas & RDS y DynamoDB & Azure SQL y Cosmos DB & Cloud SQL y Firestore \\
+\hline
+Almacenamiento de archivos & S3 & Blob Storage & Cloud Storage \\
+\hline
+Mensajería y colas & SQS y SNS & Service Bus y Storage Queues & Pub Sub \\
+\hline
+OCR e IDP & Textract & Form Recognizer & Vision AI y Document AI \\
+\hline
+Analítica de datos & Athena y Redshift & Synapse y Fabric & BigQuery \\
+\hline
+Orquestación de datos & Step Functions y MWAA & Data Factory & Cloud Composer \\
+\hline
+CDN & CloudFront & Azure Front Door y CDN & Cloud CDN \\
+\hline
+Autenticación & Cognito & Entra ID & Identity Platform \\
+\hline
+Monitoreo y logs & CloudWatch y X Ray & Monitor y Application Insights & Cloud Logging y Cloud Monitoring \\
+\hline
+Gestión de secretos & Secrets Manager y KMS & Key Vault & Secret Manager y KMS \\
+\hline
+DevOps CI CD & CodePipeline y CodeBuild & DevOps y GitHub Actions & Cloud Build y Deploy \\
+\hline
+Capa gratuita & Amplia & Amplia & Amplia \\
+\hline
+Costos iniciales & Pago por uso & Pago por uso & Pago por uso \\
+\hline
+Integración con ecosistema & Amplia y neutral & Fuerte con Microsoft & Fuerte con Google \\
+\hline
+Adecuación al proyecto & Contenedores y ETL robusto & Integración con herramientas de equipo & Datos y analítica a gran escala \\
+\hline
+\end{tabular}
+\caption{Comparativa de infraestructura en la nube para el desarrollo del proyecto}
+\end{table}
+
+La infraestructura se desplegó en Microsoft Azure, debido a su buena integración con entornos de desarrollo basados en Microsoft, su facilidad para manejar contenedores y servicios serverless, y su compatibilidad con bases de datos y análisis en la nube.
+
+\subsection{Análisis de Frameworks frontend web}
+
+\begin{table}[H]
+\centering
+\small
+\label{tab:frontend-frameworks}
+\begin{tabular}{|p{4.5cm}|p{3.8cm}|p{3.8cm}|p{3.8cm}|}
+\hline
+\textbf{Características} & \textbf{Next.js} & \textbf{Remix} & \textbf{SvelteKit} \\
+\hline
+Renderizado & SSR, SSG, ISR & SSR primero & SSR y SSG \\
+\hline
+Enrutamiento & Por archivos & Por rutas anidadas & Por archivos \\
+\hline
+Carga de datos & Fetch en servidor y cliente & Loaders y actions & Load en servidor y cliente \\
+\hline
+Acciones en servidor & Server Actions & Actions nativas & Actions en endpoints \\
+\hline
+API internas & Rutas API integradas & Enfocado en server adapters & Endpoints integrados \\
+\hline
+Edge y serverless & Soporte amplio & Muy buen soporte & Muy buen soporte \\
+\hline
+Optimización de imágenes & Integrada & Vía adaptadores & Vía plugins \\
+\hline
+Middleware & Integrado & Integrado & Integrado \\
+\hline
+Caché y revalidación & Revalidate y fetch cache & Caché por respuestas & Caché con adapters \\
+\hline
+Streaming & Soporte con React & Soporte nativo & Soporte nativo \\
+\hline
+TypeScript & Soporte completo & Soporte completo & Soporte completo \\
+\hline
+Integración con plataformas & Vercel nativo & Netlify y Fly óptimo & Vercel, Netlify y Cloudflare \\
+\hline
+Rendimiento en producción & Muy alto & Muy alto & Muy alto \\
+\hline
+Curva de aprendizaje & Media & Media & Media \\
+\hline
+Adecuación al proyecto & Web principal del portal & Alternativa con rutas anidadas fuertes & Opcional si buscamos alta reactividad \\
+\hline
+\end{tabular}
+\caption{Comparativa de frameworks frontend web para el desarrollo del proyecto}
+\end{table}
+
+En el frontend se eligió Next.js, por su integración directa con React, su rendimiento en renderizado del lado del servidor y su flexibilidad para generar páginas estáticas o dinámicas.
+
+\subsection{Análisis de Frameworks móviles}
+
+\begin{table}[H]
+\centering
+\small
+\label{tab:mobile-frameworks}
+\begin{tabular}{|p{4.5cm}|p{3.8cm}|p{3.8cm}|p{3.8cm}|}
+\hline
+\textbf{Características} & \textbf{Flutter} & \textbf{React Native} & \textbf{Kotlin Swift nativo} \\
+\hline
+Rendimiento & Alto con motor propio & Alto con puentes nativos & Máximo \\
+\hline
+UI y componentes & Widgets propios & Componentes nativos & UI nativa completa \\
+\hline
+Hot reload & Sí & Sí & Limitado \\
+\hline
+Acceso a APIs del dispositivo & Plugins amplios & Módulos nativos y librerías & Completo \\
+\hline
+Código compartido & Uno para iOS y Android & Uno para iOS y Android & Separado por plataforma \\
+\hline
+Tamaño de app & Medio & Medio & Variable \\
+\hline
+Paquetes y ecosistema & Muy amplio en pub dev & Muy amplio en npm & Muy amplio en SDKs \\
+\hline
+Testing & Unit widget integration & Unit e2e con librerías & Unit UI integration \\
+\hline
+Debug y perfiles & Muy buenos en IDEs & Muy buenos en IDEs & Muy buenos en IDEs \\
+\hline
+Herramientas de build & Gradle Xcode integradas & Gradle Xcode con CLI & Gradle y Xcode nativos \\
+\hline
+Actualizaciones & Ritmo alto y estable & Ritmo alto y estable & Atado a Apple y Google \\
+\hline
+Curva de aprendizaje & Media & Media & Media alta \\
+\hline
+Distribución en stores & Soporte completo & Soporte completo & Soporte completo \\
+\hline
+Sistemas operativos de dev & Win macOS Linux & Win macOS Linux & iOS build requiere macOS \\
+\hline
+Adecuación al proyecto & App móvil principal & Alternativa compatible con web & Casos nativos específicos \\
+\hline
+\end{tabular}
+\caption{Comparativa de frameworks móviles para el desarrollo del proyecto}
+\end{table}
+
+Para la aplicación móvil se utilizó Flutter, ya que permite desarrollar para Android e iOS con una sola base de código y ofrece un rendimiento cercano al nativo.
+
+\subsection{Análisis de Backend}
+
+\begin{table}[H]
+\centering
+\small
+\label{tab:backend-frameworks}
+\begin{tabular}{|p{4.5cm}|p{3.8cm}|p{3.8cm}|p{3.8cm}|}
+\hline
+\textbf{Características} & \textbf{Node.js Express} & \textbf{FastAPI} & \textbf{NestJS} \\
+\hline
+Lenguaje base & JavaScript TypeScript & Python & TypeScript \\
+\hline
+Arquitectura & Minimalista y flexible & Modular y ligera & Estructurada tipo MVC \\
+\hline
+Rendimiento & Alto en peticiones simultáneas & Muy alto en APIs REST & Alto en microservicios \\
+\hline
+Consumo de recursos & Bajo & Bajo & Medio \\
+\hline
+Tipado y validación & Por librerías & Integrado con Pydantic & Integrado por decoradores \\
+\hline
+Soporte asíncrono & Completo & Completo & Completo \\
+\hline
+Generación de documentación & Manual o Swagger externo & Automática con OpenAPI & Automática con Swagger \\
+\hline
+Testing & Jest Mocha Supertest & Pytest integrado & Jest integrado \\
+\hline
+ORMs comunes & Prisma Sequelize & SQLAlchemy Tortoise & Prisma TypeORM Sequelize \\
+\hline
+Autenticación & JWT y middlewares & OAuth JWT integrado & JWT Passport integrado \\
+\hline
+Escalabilidad & Muy alta en microservicios & Alta en APIs separadas & Muy alta modularizada \\
+\hline
+Integración con frontend & Directa con Next.js & API REST rápida & Directa con front en TS \\
+\hline
+Curva de aprendizaje & Baja & Media & Media alta \\
+\hline
+Uso en el proyecto & API base y microservicios & Servicios de análisis en Python & Módulos estructurados opcionales \\
+\hline
+\end{tabular}
+\caption{Comparativa de frameworks backend para el desarrollo del proyecto}
+\end{table}
+
+Finalmente, en el backend se implementó Node.js con Express, por su alta velocidad en el manejo de peticiones concurrentes, su compatibilidad con TypeScript y la facilidad de crear APIs que se integran directamente con el frontend web y móvil.

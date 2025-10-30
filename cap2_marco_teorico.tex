@@ -1,0 +1,281 @@
+\chapter{Marco Teórico}
+
+
+\section{Procesamiento de Documentos Digitales}
+El procesamiento de documentos es un conjunto de procedimientos y tecnologías diseñados para poder transformar y gestionar documentos, contenidos e información 
+tanto de archivos físicos como digitales. Este procesamiento puede abarcar desde la captura y digitalización de documentos y tiene como objetivo optimizar la eficiencia y 
+accesibilidad de la información [A1].
+
+\subsection{Digitalización de documentos}
+Es el proceso de transformar documentos en papel a un formato digital. No es lo mismo el escanear que digitalizar, ya que el escaneo implica obtener una foto del documento 
+y la digitalización lo convierte en algo editable, reconociendo el texto que contiene [A2]. 
+
+\subsection{OCR (Reconocimiento Óptico de Caracteres)}
+El OCR nos permite una digitalización y clasificación simultanea de la documentación e información, confiriendo metadatos a los documentos y permitiendo una búsqueda 
+instantánea de la información deseada posteriormente [A2]. Dicho de otra forma, es el proceso por el cual se convierte una imagen de texto en un formato de texto que pueden 
+leer las maquinas . 
+
+
+\subsubsection{Casos de Uso del OCR}
+
+\textbf{Búsqueda inteligente de archivos de documentos} \\
+El OCR permite la creacion de archivos digitales con capacidad de búsqueda mediante la extracción de texto de documentos PDF y basados en imágenes. 
+Una vez que se reconoce el texto, se puede indexar y utilizar en sistemas de búsqueda basados en IA. Por ejemplo, al buscar un nombre de cliente específico, 
+se devolverían todas las órdenes de pago, las facturas y los formularios que se enviaron originalmente como documentación [A3].
+
+\textbf{Procesamiento de lenguaje natural} \\
+El OCR reconoce y extrae texto por palabra, línea o celda de tabla, lo que ofrece un mayor control sobre cómo se prepara el contenido para las tareas posteriores de 
+procesamiento de lenguaje natural, como la clasificación de documentos, el resumen, el análisis de opiniones, el modelado de temas, el reconocimiento de entidades, etc. [A3].
+
+\textbf{Estandarización de datos} \\
+El OCR ayuda a normalizar datos de documentos no estructurados.
+
+\textbf{Automatización del procesamiento de formularios} \\
+Puede identificar campos y extraer información estructurada de varios tipos de formularios, lo que permite a las empresas integrar estos datos directamente en las 
+bases de datos sin necesidad de ingresarlos manualmente. [A3].
+
+
+
+\subsubsection{Proceso del OCR}
+
+El software OCR emplea un escáner para leer los documentos y así convertirlos en datos binarios. Analiza la imagen escaneada y clasifica las áreas claras como el fondo 
+y las áreas oscuras como el texto. [A7]
+
+\begin{itemize}
+\item \textbf{Procesamiento Previo} \\
+El OCR primero limpia la imagen y elimina errores para prepararla para la lectura. 
+
+\item \textbf{Reconocimiento de Texto} \\
+Los dos tipos principales de algoritmos de OCR o procesos de software que utiliza el software de OCR para el reconocimiento de texto se denominan coincidencia de patrones 
+y extracción de características. 
+
+\item \textbf{Coincidencia de patrones} \\
+La coincidencia de patrones aísla una imagen de carácter, llamada glifo, y la compara con un glifo almacenado de manera similar. El reconocimiento de patrones solo funciona 
+si el glifo almacenado tiene una fuente y una escala similares a las del glifo de entrada. Este método funciona bien con imágenes escaneadas de documentos que se han escrito 
+en una fuente conocida. 
+
+\item \textbf{Extracción de características} \\
+La extracción de características divide o descompone los glifos en características como líneas, circuitos cerrados, dirección de línea e intersecciones de línea. Luego, 
+utiliza estas características para encontrar la mejor coincidencia o el vecino más cercano entre los glifos almacenados.
+
+\item \textbf{Procesamiento Posterior} \\
+Después del análisis, el sistema convierte los datos de texto extraídos en documentos de texto que pueden leer las máquinas [A3].
+\end{itemize}
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=1\linewidth]{ProcessOCR.jpg}
+%     \caption{Proceso general de un programa de OCR}
+%     \label{fig:placeholder}
+% \end{figure}
+
+\subsubsection{Tipos de OCR}
+Actualmente hay 4 tipos de programas de OCR que son cada vez más sofisticados y avanzados.[A7]
+
+\textbf{OCR simple:} Es un análisis de coincidencias de patrones, yendo carácter por carácter, comparando las incidencias entre los caracteres recién escaneados y los 
+glifos almacenados previamente. Esta limitado a la gran cantidad de posibles combinaciones de fuentes, idiomas y caracteres, volviendo complicado el escaneo de algunos 
+tipos de documentos. 
+
+\textbf{Reconocimiento óptico de marcas (OMR):} Este análisis sirve para identificar logotipos, firmas, símbolos, marcas de agua, así como marcas dentro de un documento. 
+Estos pueden identificarse haciendo coincidir imágenes almacenadas, así como en el OCR simple. 
+
+\textbf{Reconocimiento inteligente de caracteres (ICR):} Para este tipo de programas se vuelve indispensable el uso de Machine Learning o aprendizaje profundo, estos 
+programas aprender a leer, así como un humano: mediante practica y entrenamiento continuo. Usa una red neuronal que revisa el texto repetidamente en busca de atributos 
+distintivos: ubicación de curvas, intersecciones, líneas y bucles. 
+
+\textbf{Reconocimiento inteligente de palabras:} Basado en el mismo principio del ICR con la diferencia de que este usa la Inteligencia Artificial entrenada para reconocer 
+las palabras de una imagen, volviéndola más rápida. 
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=1\linewidth]{ExOCR.png}
+%     \caption{Ejemeplo de reconocimiento de OCR}
+%     \label{fig:placeholder}
+% \end{figure}
+
+\subsection{Extracción estructurada de datos (PDF y XML)}
+Para la extracción de datos de un documento PDF se recomienda seguir un flujo que detecte dos casos comunes:  
+
+\begin{enumerate}
+    \item El PDF es nativo con texto seleccionable, entonces el flujo será la extracción de dicho texto manteniendo la estructura con técnicas de extracción de contexto y 
+    segmentación.
+
+    \item El PDF es un conjunto de imágenes o escaneos, aquí el flujo debe ser el aplicar un OCR como lo mencionado anteriormente en la sección 3.1. [A8][A9]
+\end{enumerate}
+Por ejemplo el repositorio SEDAR, Statistics Canada implementó un pipeline que primero identifica las páginas relevantes por densidad de tablas y características de layout, 
+y luego aplica un algoritmo de extracción de tablas (SLICE) para transformar las tablas detectadas en datos tabulares, lo que ilustra la importancia de combinar detección de 
+páginas relevantes, extracción de tablas y modelos de clasificación para obtener datasets de calidad a gran escala.[A10]
+
+Este tipo de flujos nos ayudan a la automatización de diferentes aplicaciones como extraer datos de factura, análisis de texto, exportar datos, convertidores de 
+PDF a texto. [A8][A9]
+
+Si es el caso también se puede hacer una extracción estructurada cuando tenemos comprobantes en formato XML, así como el estándar del SAT, los CFDI. La forma fiable de 
+obtener la información proveniente de estos documentos es parseando el XML. [A11]
+
+Los CFDI mantienen un estándar que permite la extracción exacta de información como fechas, RFC, conceptos, importes e impuestos. 
+
+
+\section{Finanzas Personales y Gestión de Gastos}
+Modelo de sobres de dinero de Dave Ramsey
+\subsection{Conceptos básicos de finanzas personales}
+Las finanzas personales se conforman de ciertas piezas que sabiendo acomodar le permiten al individuo tener una toma de decisiones informadas y construir un futuro 
+financiero solido. Estas piezas son conformadas por los \textbf{ingresos, gastos, ahorros, inversiones y deudas}. Es de gran importancia desarrollar hábitos financieros 
+desde joven, para en un futuro tener buenas bases para enfrentarte a desafíos económicos que puedan surgir.
+
+Dentro de los conceptos que se deben tener claros para la salud financiera tenemos:
+\begin{itemize}
+    \item \textbf{Ingresos (activos/pasivos:} Son todas las formas en las que generas ingresos, ya sea ingresos por nomina, renta de un inmobiliario, las ganancias de alguna 
+    inversión o si usas tu coche como auto de transporte particular.
+    \item \textbf{Ahorro:} Es el dinero destinado para ser almacenado con un propósito especifico. No es dinero que sobro y solo queda guardar, si no que en cuanto se reciba 
+    un ingreso, el ahorro deberá corresponder al 10\% de los ingresos, idealmente.
+    \item \textbf{Deudas:} Incluye tarjetas de créditos, hipoteca, créditos de vivienda o un préstamo familiar. Es importante ordenar tus deudas de la mas pequeña a la mas 
+    grande, hacer un plan de pagos y empezar a liquidar las deudas pequeñas primero.
+    Si no llegaras a tener deudas, pero quisieras tomar un préstamo, deberías revisar tu capacidad de endeudamiento.
+    \item \textbf{Balance:} Es un registro donde debes identificar tus gastos e ingresos, si tus gastos superan tus ingresos, las deudas te consumirán en algún punto por 
+    lo que deberías cambiar de estrategia financiera. Por otra parte si tus gastos igualan tus ingresos, no estas generando ahorros lo que no te permitirá planear un futuro 
+    pleno.
+\end{itemize}
+Hay otros temas relevantes que tocar hablando de conceptos y buenos hábitos, como el no caer en estafas que prometen generar inversiones irreales en tiempos récord, 
+investiga y usa aplicaciones confiables para meter tu dinero. Los consultores también son de tomar en cuenta puesto que analizan tu salud financiera, cuales son tus 
+objetivos y que productos financieros posees. Un consultor traza un plan personalizado según tus posibilidades y necesidades para cumplir los objetivos que te llevaran 
+a lograr tus metas, el consultor también deberá ayudarte a resolver tus dudas y acompañarte año con año para llegar a tus objetivos.[A12][A13]
+
+
+    \subsubsection{Metas financieras}
+    El banco BBVA recomienda establecer metas financieras siguiendo los siguientes consejos: [A12]
+    \begin{itemize}
+        \item Ser especifico: plantear metas y objetivos a lograr, como el conseguir un auto, una casa o viajar.
+        \item Establece plazos: fijar fechas limites de cuando quieres cumplir tus metas.
+        \item Crear un plan: divide tus metas en pequeños objetivos logrables y asigna presupuestos a cada uno.
+    \end{itemize}
+    
+\subsection{Modelos y metodologías de gestión financiera}
+    \subsubsection{Modelo de sobres de Dave Ramsey}
+    Dave Ramsey un escritor y experto en asesoramiento financiero, elaboro un sistema de ahorro basado en la presupuestación de sobres para el control financiero y el ahorro, 
+    basándose en su propia experiencia de quiebra en la juventud. [A14]
+    
+    \textbf{Categorías:} El sistema define categorías según tus gastos mensuales, se recomienda realizar un listado de los gastos personales y a partir de ellos realizar la 
+    categorización. Algunos gastos fijos comunes son el alquiler, el transporte, alimento, el internet y el ocio. La idea de Ramsey para este método no unicamente el ahorra 
+    intensivamente, sino que el que aplique este método goce de un consumo responsable en su ocio, manteniendo un balance entre ingresos y gastos. 
+    
+    \textbf{Presupuesto:} El sistema de Ramsey esta pensado para usarse con efectivo, donde a un sobre le escribes la categoría e introduces el presupuesto en efectivo. El 
+    presupuesto se puede definir analizando facturas y gastos de meses anteriores, calculando un estimado de presupuesto por categoría.
+    La presupuestación ayuda a que se tome consciencia de los gastos mensuales para tener un mejor control financiero. Si por ejemplo vas al supermercado sin tener un 
+    presupuesto definido, es probable que termines gastando mas de lo que realmente era necesario.
+
+    \textbf{Rellenar Sobres:} Ramsey explica que los sobres deben pensarse de manera mensual, por lo que, si tus ingresos son semanales, el sistema debe ajustarse para 
+    cubrir los gastos mensuales. Si los gastos son quincenales, debes introducir a los sobres la mitad correspondiente al presupueste mensual. Con la digitalización hay 
+    gastos domiciliados para los que usar el método de los sobres es muy eficiente.
+
+    \textbf{Disciplina:} Como cualquier método de ahorro requiere de constancia y enfoque, este método permite al que lo use conseguir pequeños logros que motivan a largo 
+    plazo al usuario a lograr una mayor libertad económica.
+    
+\subsubsection{Presupuestación y control de gastos}
+La presupuestación y el control de gastos son un proceso sistemático para planificar, ejecutar y evaluar el uso del dinero. Su finalidad es alinear los recursos con 
+objetivos financieros (ahorro, inversión, reducción de deudas) y corregir desviaciones a tiempo, manteniendo estabilidad y disciplina. [A15]
+
+\textbf{Estructura del método:} 
+Se inicia con el registro histórico de ingresos y gastos, se clasifican por categorías (vivienda, transporte, alimentación, salud, educación, ocio, ahorro, inversión 
+y deudas), y se asignan límites de gasto en función de los ingresos netos y prioridades financieras.
+
+\textbf{Técnicas de presupuestación:} 
+Incluye enfoques como presupuesto incremental (ajustar el del periodo anterior), presupuesto base cero (cada gasto se justifica desde cero), 50/30/20 (necesidades/deseos
+/ahorro-deuda), y presupuestos rodantes (se actualizan mensualmente o trimestralmente). La elección depende de la estabilidad de ingresos y de la complejidad de los gastos.
+
+\textbf{Ciclo de control:} 
+El control se realiza con un ciclo continuo: (1) planificar el presupuesto por categoría; (2) registrar gastos reales; (3) analizar variaciones (\emph{desviación} = gasto
+ real – presupuesto); (4) aplicar medidas correctivas (recortes, reubicaciones, negociación de tarifas); (5) revisar y ajustar metas.
+
+\textbf{Seguimiento práctico:} 
+El registro puede ser manual (hojas de cálculo), con aplicaciones financieras o mediante políticas de sólo efectivo para categorías variables (por ejemplo, alimentación
+/ocio). La trazabilidad mejora usando etiquetas por categoría, fecha y método de pago; se recomienda conciliación semanal y cierre mensual.
+
+\textbf{Indicadores clave (KPIs):} 
+Relación gasto/ingreso, tasa de ahorro, ratio de endeudamiento (cuotas/ingreso), gasto esencial vs. discrecional, cumplimiento por categoría (% dentro del presupuesto), y variación acumulada. Estos indicadores permiten evaluar si el presupuesto es realista y sostenible.
+
+\textbf{Medidas de corrección:} 
+Priorizar gastos esenciales, reducir gastos discrecionales, renegociar servicios (telecomunicaciones, seguros), optimizar compras (listas, ofertas, sustituciones), y 
+reestructurar deudas (pago acelerado de saldos pequeños o de mayor interés, según estrategia).
+
+\textbf{Buenas prácticas:} 
+Definir objetivos claros (fondo de emergencia, inversión, amortización de deuda), automatizar el ahorro al inicio de cada ingreso, establecer límites por categoría 
+con márgenes razonables, revisar mensualmente y ajustar por cambios (inflación, ingresos variables), y mantener evidencia (facturas/recibos) para auditoría personal.
+
+\textbf{Riesgos comunes:} 
+Subestimar gastos variables, no contemplar imprevistos, usar supuestos optimistas, falta de disciplina en el registro, y no actualizar el presupuesto ante cambios. 
+El antídoto es la revisión periódica, el fondo de emergencia y la adaptación flexible.
+
+\textbf{Resultado esperado:} 
+Mejor control del flujo de efectivo, reducción de desviaciones, mayor tasa de ahorro, menor estrés financiero y toma de decisiones informada para metas de corto y 
+largo plazo.
+    
+\subsection{Digitalización financiera y aplicaciones modernas}
+La digitalización en la banca se trata de integrar tecnologías y estrategias para optimizar operaciones practicas y mejorar las experiencias personalizadas digitalmente. 
+La evolución del mercado impulsa a los bancos tradicionales a seguir las tendencias de emplear aplicaciones móviles y sitios web para realizar transacciones. La nueva 
+demanda demanda de Inteligencia Artificial, Internet de las Cosas y el blockchain son razones por las que los bancos implementan estrategias para la transformación digital. [A16]
+En la actualidad, los clientes buscan experiencias personalizadas, transparentes y seguras para realizar la gestión de sus cuentas, todo al alcance de tu mano en tiempo 
+real y con una atención eficiente y rápida.
+Algunos de los factores clave para la transformacional digital son:
+\begin{itemize}
+    \item \textbf{Recorrido del cliente:} tener siempre en cuenta la experiencia del cliente, centrándonos en el uso de datos y nuevas tecnologías para adaptar sus servicios bancarios de forma personalizada.
+    \item \textbf{Infraestructura modernizada:} El uso de nuevas tecnologías como la Inteligencia Artificial o la automatización, sirven para agilizar operaciones internas o impulsar la eficiencia de procesos para ofrecerles a los bancos y servicios financieros una ventaja competitiva.
+    \item \textbf{Análisis de datos:} usando herramientas de análisis de datos avanzados, los bancos pueden tomar decisiones mas informadas y fundamentadas para una mejor gestión de riesgos e innovación.
+    \item \textbf{Medidas de seguridad:} Un punto necesario durante la innovación y la adoptar de la digitalización deben a su vez implementar medidas de ciberseguridad tan robustas como sus procesos para proteger de la mejor manera los datos confidenciales de los clientes, así como detección de fraudes y la garantización del cumplimiento de normativas.
+    \item \textbf{Digitalización:} Esta dentro del sector financiero la necesidad de alinearse junto con otros sectores que adoptan el avance digital, por ello se vuelve crucial la iniciativa de transformación digital así como el asociarse con nuevas compañías de tecnología financiera o infraestructuras bancarias abiertas.
+
+\end{itemize}
+
+Las nuevas aplicaciones bancarias aplican diferentes tecnologías para la digitalización eficiente de sus procesos, tales como: 
+\textbf{Interfaces de programación de aplicaciones (API):} Las APIs permiten que dos o mas aplicaciones integren servicios y transferencia de datos en lugar de hacer desarrollos desde cero, permitiendo crear nuevos productos y servicios para los clientes y mejorar la eficiencia operacional.
+\textbf{Computación en la nube:} El entorno en la nube permite mejores operaciones y una infraestructura flexible, ágil y escalable. Es el acceso bajo demando de los recursos informáticos que se han estandarizado en los últimos tiempos.
+\textbf{IA y Machine Learning (ML):} Se están adoptando estas tecnologías para el análisis de big data, automatización de procesos y la mejora de experiencia del usuario a través de asistentes en linea o chatbots, diseñados para solucionar problemas básicos del cliente. El Machine Learning en la digitalización bancaria nos facilitan el seguimiento de los cambios de comportamiento del usuario y detecta las posibles actividades fraudulentas de manera oportuna. 
+\textbf{Internet de las cosas (IoT):} Esto hace referencias a toda la red de dispositivos electrónicos inteligentes que el usuario utiliza cotidianamente, que permiten a los usuarios realizar pagos instantáneos sin contacto ni interactuar con su banca móvil. Esta tecnología nos aporta una gestión de riesgos y avances en el proceso de autorización muy avanzado.
+
+La digitalización de el sistema bancario conlleva una tarea compleja pero que trae nuevas oportunidades para las compañías de brindar mayos satisfacción al cliente con soluciones eficientes, rápidas e interactivas. Los beneficios de la digitalización nos traen una oportunidad de inversión mas centrada en los clientes, permitiéndoles tener objetivos a corto plazo, todo en una sola plataforma digital.\\
+Cumplir con procesos tediosos se vuelve cosa del pasado con la digitalización puesto que actividades de los empleados se ven remplazadas por automatizaciones eficientes que permiten al empleado utilizar mas de su tiempo en actividades importantes. El uso de sistemas basados en la nube proporciona actualizaciones oportunas y el cumplimiento de la seguridad requerida para los datos.
+
+A pesar del miedo de la administración y protección de datos de los clientes, surgen sofisticados servicios de desarrollo de software disponibles para la protección de la información sensible de los clientes y evitar vulnerabilidades a sus centros de información.
+
+La digitalización nos permite ademas de toda la seguridad y automatización, el poder acceder a nuevos clientes constantemente, en cuestión de clic un nuevo usuario puede registrar sus datos y comenzar su experiencia dentro de las aplicaciones bancarias, que ademas de tener un crecimiento diario, puesto que con la digitalización, las empresas bancarias pueden tener una retroalimentación diaria de sus servicios, pudiendo mejorar e innovar según las necesidades detectadas en el usuario, brindando así, una experiencia única y eficiente a cada persona. [A16]
+
+
+\section{Tecnologías Relacionadas}
+Las tecnologías relacionadas al OCR incluyen diversas técnicas y herramientas que nos pueden ayudar con la precisión y la aplicación de OCR en diferentes contextos. Podemos ocupar IA, Machine Learning o NLP para conseguir extraer los datos mas exactos y poder clasificarlos de mejor manera. Pero el reto se encuentra en como podemos aplicar estas tecnologías para poder obtener mejor la información del documento/foto a digitalizar.
+
+    \subsection{Inteligencia Artificial y Machine Learning}
+La Inteligencia Artificial (IA) y el Machine Learning (ML) son disciplinas fundamentales en el procesamiento de documentos, particularmente en tareas como el reconocimiento óptico de caracteres (OCR) y la extracción de datos. Estas tecnologías permiten mejorar significativamente la precisión y flexibilidad de los sistemas OCR, especialmente en contextos complejos como la lectura de documentos manuscritos, fuentes no estándar o textos con ruido visual.
+
+1. Aplicación de Machine Learning en OCR
+
+El uso de Machine Learning en OCR ha revolucionado la capacidad de los sistemas para reconocer texto de manera precisa. En lugar de depender exclusivamente de plantillas predefinidas (como en los métodos tradicionales de coincidencia de patrones), los modelos basados en ML aprenden a partir de grandes volúmenes de datos. Este enfoque les permite reconocer caracteres y palabras incluso en condiciones no ideales, como imágenes borrosas o distorsionadas.
+
+Redes Neuronales Convolucionales (CNNs): Las CNNs se han utilizado ampliamente en OCR debido a su capacidad para identificar patrones en imágenes. Estas redes, que emulan el proceso de percepción visual en los humanos, se entrenan con grandes cantidades de datos de texto y pueden reconocer con alta precisión caracteres y estructuras complejas de documentos.
+
+
+Redes Neuronales Recurrentes (RNNs): En el caso de documentos más largos o escritura manuscrita, las RNNs y sus variantes, como las LSTM (Long Short-Term Memory), son esenciales para reconocer secuencias de texto que dependen de un contexto anterior, como es el caso de los párrafos o las líneas de texto. Esto hace que el modelo sea más adecuado para aplicaciones como la reconstrucción de documentos o el análisis de formularios con múltiples campos.
+
+
+2. Aprendizaje Automático para la Extracción de Datos
+
+El aprendizaje automático no solo mejora el OCR, sino también el proceso de extracción de datos estructurados. Utilizando algoritmos de clasificación y segmentación, las redes neuronales pueden identificar y extraer información clave de documentos, como fechas, nombres, importes o conceptos. Este tipo de modelos permite que los sistemas interpreten la estructura de un documento y extraigan datos sin necesidad de intervención humana.
+
+Clasificación de Documentos: Los modelos de ML, como las máquinas de soporte vectorial (SVM) o las redes neuronales profundas, son entrenados para clasificar documentos en diferentes categorías (por ejemplo, facturas, contratos, informes), lo que facilita la organización automatizada de los archivos y la posterior búsqueda de información.
+
+
+Segmentación y Extracción de Datos: Los modelos de segmentación semántica pueden ser utilizados para identificar áreas relevantes dentro de los documentos (como tablas, textos o campos específicos) y extraer datos de forma estructurada. Los algoritmos de Deep Learning permiten incluso extraer información de documentos con variaciones en el diseño, como facturas con diferentes estructuras de formato.
+
+3. Ventajas de la IA y ML en el Procesamiento de Documentos
+
+El uso de IA y ML en el procesamiento de documentos ofrece varias ventajas:
+
+Mayor precisión: Los sistemas basados en ML son menos propensos a errores que los métodos tradicionales, especialmente cuando se entrenan con grandes conjuntos de datos. Esto es esencial en contextos como el procesamiento de facturas o la gestión de documentos fiscales, donde la precisión es crítica.
+
+Automatización: La capacidad de automatizar tareas complejas como la extracción de datos, clasificación de documentos y indexación permite reducir la intervención humana y agilizar procesos que antes requerían mucho tiempo.
+
+Adaptabilidad: Los sistemas basados en IA pueden aprender y mejorar con el tiempo a medida que se procesan más documentos, adaptándose a nuevos tipos de formatos y mejorando su rendimiento.
+    
+    \subsection{Procesamiento de lenguaje natural (NLP)}
+El procesamiento de lenguaje natural o PLN es una rama de la Inteligencia Artificial que permite a las computadoras reconocer, comprender y generar texto y voz mediante la combinación de la lingüística computacional, el machine learning y el aprendizaje profundo [A4]. El procesamiento de lenguaje natural es clave para analizar estos datos y obtener información empresarial práctica. Las organizaciones pueden clasificar, ordenar, filtrar y comprender la intención o el sentimiento oculto en los datos lingüísticos. [A5]
+    
+    \subsection{Sistemas de reconocimiento en dispositivos móviles}
+El cambio de las soluciones basadas en computadoras de escritorio a las tecnologías de OCR basadas en dispositivos móviles para el escaneo de documentos marca una evolución significativa en la satisfacción de las necesidades de escaneo. Inicialmente, el reconocimiento óptico de caracteres (OCR) se limitaba en gran medida al entorno de escritorio, pero se ha ampliado al escaneo de documentos y a los escaneos a través de aplicaciones móviles en un dispositivo móvil [A6].
