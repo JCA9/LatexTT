@@ -1,7 +1,7 @@
 \chapter{Planteamiento del problema}
 
 \section{Antecedentes}
-Esta idea surgió a partir de nuestra propia experiencia, ya que, al tener 21 años, nos dimos cuenta de lo fácil que es perder el control sobre los gastos cotidianos. 
+Esta idea surgió a partir de nuestra propia experiencia, ya que, al cumplir los 21 años, nos dimos cuenta de lo fácil que es perder el control sobre los gastos cotidianos. 
 Ambos, al igual que muchos de nuestros amigos y personas cercanas, solíamos ignorar la importancia de llevar un registro detallado de nuestros ingresos y egresos. 
 A medida que nos adentramos en la vida adulta, nos dimos cuenta de que la gestión de los gastos y el ahorro era algo que muchas veces se pasaba por alto, 
 lo que provocaba una falta de conciencia sobre cuánto dinero realmente se estaba gastando. 
@@ -29,18 +29,18 @@ un informe de Statista muestra que un alto porcentaje de personas en diversos pa
 
 A pesar de la disponibilidad de herramientas digitales, el uso de aplicaciones de finanzas personales ha sido limitado. Según un informe de Adjust, aunque las instalaciones 
 de aplicaciones de finanzas aumentaron un 50\% en comparación con 2022, la retención de usuarios sigue siendo un desafío, con una disminución constante en la retención después 
-del día 7 de uso [3].  Esto sugiere que, aunque existe interés inicial, los usuarios enfrentan barreras para mantener el uso continuo de estas herramientas. 
+del día 7 de uso [3].  Esto sugiere que, aunque existe interés inicial, los usuarios enfrentan barreras para mantener el uso continuo de estas herramientas. 
 
 Estos datos evidencian una necesidad urgente de soluciones que fomenten hábitos financieros saludables, mejoren la educación financiera y faciliten el seguimiento de los gastos
 personales. La falta de registros precisos y la escasa utilización de herramientas digitales eficaces contribuyen a una gestión financiera deficiente, afectando la estabilidad 
 económica de los individuos. 
 
 \section{Propuesta de solución}
-Para abordar las problemáticas identificadas en la sección anterior, se propone utilizar un conjunto de tecnologías digitales y algoritmos de análisis de datos que faciliten 
-la gestión financiera personal de manera intuitiva y accesible. Las herramientas seleccionadas se centran en automatizar la captura y categorización de gastos, ofrecer análisis 
+Para abordar las problemáticas identificadas en la sección anterior, proponemos utilizar un conjunto de tecnologías digitales y algoritmos de análisis de datos que faciliten 
+la gestión financiera personal de manera intuitiva y accesible (De las cuales hablaremos en el Capítulo 2, Marco Teórico.). Las herramientas seleccionadas se centran en automatizar la captura y categorización de gastos, ofrecer análisis 
 visuales y generar alertas y recomendaciones basadas en los hábitos del usuario. 
 
-En primer lugar, la digitalización de los tickets de compra mediante Reconocimiento Óptico de Caracteres (OCR, por sus siglas en inglés) permitirá capturar de manera automática 
+En primer lugar, la digitalización de los tickets de compra mediante OCR permitirá capturar de manera automática 
 la información de gastos, evitando la dependencia de registros manuales, los cuales según la ENSAFI 2023 solo realizan el 53.2\% de los mexicanos [1]. Esto contribuiría a que 
 los usuarios tengan un registro más preciso de sus gastos, reduciendo la omisión de información crítica. Por otra parte, el OCR al no ser 100\% efectivo, los usuarios podrán 
 ingresar o corregir los datos del ticket de manera manual si esta falla. 
@@ -56,19 +56,21 @@ automáticos, tanto mensuales como anuales, que consolide la información captur
 gráficos interactivos y análisis comparativos de categorías de gasto, ingresos y ahorro. Además, los reportes pueden ser exportados a formatos comunes como PDF o Excel, 
 facilitando la revisión histórica, el seguimiento de objetivos y la planificación de presupuestos futuros. 
 
-Finalmente, se implementará un sistema de notificaciones y alertas inteligentes que informen al usuario sobre sus límites de gasto o posibles desviaciones de su presupuesto. 
+Finalmente, se implementará un sistema de notificaciones y alertas inteligentes que informen al usuario sobre sus límites de gasto o posibles desviaciones de su presupuesto. 
 
 En conjunto, estas tecnologías permiten atacar todas las problemáticas detectadas: la falta de registro de gastos, la escasa conciencia sobre hábitos financieros, la baja 
 retención en el uso de aplicaciones y la dificultad de análisis financiero. La integración de OCR, visualización interactiva y alertas inteligentes crea un ecosistema digital 
 que facilita el seguimiento y mejora la educación financiera del usuario. 
 
  
+\section{Objetivos}
+Teniendo en cuenta las problemáticas y la propuesta de solución planteadas, definimos los siguientes objetivos para el desarrollo del proyecto:
 
-\section{Objetivo general}
+\subsection{Objetivo general}
 Desarrollar una aplicación y plataforma web interactiva para la gestión de finanzas personales que registre automáticamente los gastos de tickets físicos y digitales, 
 categorizándolos para facilitar el análisis y seguimiento del presupuesto del usuario. 
 
-\section{Objetivos específicos}
+\subsection{Objetivos específicos}
 \begin{itemize}
     \item Desarrollar el módulo de escaneo de tickets físicos mediante la aplicación móvil.
     \item Desarrollar el módulo de escaneo de tickets digitales mediante la plataforma web.
@@ -81,21 +83,25 @@ categorizándolos para facilitar el análisis y seguimiento del presupuesto del 
 \end{itemize}
 
 \section{Justificación}
-La correcta gestión de las finanzas personales es un desafío creciente, especialmente en países como México, donde una gran parte de la población enfrenta dificultades para 
-llevar un control adecuado de sus gastos e ingresos. Según la Encuesta Nacional sobre Salud Financiera (ENSAFI) 2023, solo el 53.2\% de los mexicanos realiza algún tipo de 
-control de sus gastos, lo que refleja una carencia de conciencia sobre la importancia de la planificación financiera. Esta situación se ve reflejada en la incapacidad de muchas 
-personas para ahorrar, pagar deudas o planificar para el futuro, lo que compromete su estabilidad económica.
+La gestión adecuada de las finanzas personales es fundamental para garantizar la estabilidad económica y el bienestar financiero a largo plazo. Sin embargo, como se ha dicho en 
+la sección de planteamiento del problema, una gran parte de la población en México enfrenta dificultades para llevar un control efectivo de sus gastos e ingresos, lo que puede 
+llevar a problemas financieros significativos. [1]
 
-Este proyecto propone una solución digital que combina tecnologías como el Reconocimiento Óptico de Caracteres (OCR), análisis de datos, categorización automática de gastos 
-y visualización interactiva para facilitar la toma de decisiones financieras de los usuarios. Al automatizar el registro de gastos a partir de tickets físicos y digitales, 
-eliminamos parcialmente la barrera del registro manual y promovemos un control preciso y rápido de los gastos. Esto no solo reduce el tiempo de seguimiento de finanzas, sino 
-que también mejora la precisión y la visibilidad de las categorías de gasto, lo cual es crucial para la salud financiera a largo plazo.
+El desarrollo de una aplicación y plataforma web que facilite la gestión de las finanzas personales mediante la automatización del registro y análisis de gastos es una solución 
+innovadora y necesaria. 
+Al utilizar tecnologías como el reconocimiento óptico de caracteres (OCR) para capturar automáticamente los datos de los tickets de compra, se reduce la carga administrativa 
+para el usuario, permitiéndole centrarse en la toma de decisiones financieras informadas. Además, la categorización automática de gastos y la generación de reportes visuales 
+proporcionan una comprensión clara de los hábitos de consumo, lo que es esencial para identificar áreas de mejora y oportunidades de ahorro. Ademas, la implementación de alertas
+y notificaciones inteligentes también contribuye a mantener a los usuarios informados sobre su situación financiera, ayudándoles a evitar gastos excesivos y a adherirse a sus 
+presupuestos. Por lo que esta solución se orienta a usuarios jóvenes y adultos que buscan mejorar su educación financiera y adoptar hábitos de gasto más saludables.
 
-La adopción de tecnologías como el OCR y la clasificación automática de datos no solo mejora la eficiencia, sino que también ofrece a los usuarios una experiencia 
-personalizada, mediante la cual pueden establecer presupuestos, recibir notificaciones de alerta y generar reportes automáticos sobre su comportamiento financiero. La 
-plataforma web, por otro lado, proporciona una visión más detallada de los gastos mensuales, anuales y comparaciones entre categorías, lo que facilita la toma de decisiones 
-informadas.
+La viabilidad del proyecto se sustenta en la disponibilidad de smartphones o una computadora, ya que según la INEGI, el 81.4\% de la población cuenta con acceso a dispositivos móviles y
+el 43.8\% con acceso a computadoras. [I3]
 
-El enfoque técnico del proyecto se justifica por la necesidad de herramientas accesibles, eficientes y fáciles de usar que permitan a los usuarios mejorar sus hábitos 
-financieros sin la necesidad de una formación financiera previa. Esta solución facilitará la educación financiera de los usuarios, proporcionándoles las herramientas necesarias 
-para tener un control más riguroso de su dinero y contribuir a una cultura de finanzas personales saludables.
+El impacto esperado se medirá a través de la precisión de extracción de datos, el tiempo ahorrado frente a la captura manual y la tasa de retención de usuarios.
+Con esto, este sistema busca demostrar que la tecnología puede ser una herramienta poderosa para mejorar la gestión financiera personal.
+
+Este proyecto no solo aborda una necesidad crítica en la gestión financiera personal, sino que también empodera a los usuarios para tomar el control de sus finanzas, 
+promoviendo hábitos financieros saludables y sostenibles a largo plazo. La combinación de tecnologías avanzadas y un enfoque centrado en el usuario hace que esta solución 
+sea relevante y valiosa en el contexto actual, donde la digitalización y la automatización son clave para mejorar la eficiencia y la efectividad en diversas áreas de 
+la vida cotidiana.
