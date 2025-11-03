@@ -6,20 +6,58 @@ por lo que a continuación se presentan los resultados de dichas tecnologías.
 
 \begin{itemize}
     \item Windows
+    
+    Windows es un sistema operativo desarrollado por Microsoft. Es uno de los sistemas operativos más utilizados en el mundo, especialmente en computadoras personales y 
+    de oficina. Ofrece una interfaz gráfica de usuario (GUI) que facilita la interacción con el sistema y una amplia compatibilidad con software y hardware. \cite{WindowsLenovo}
+    La mejor parte de Windows es la amplia gama de opciones de software y hardware disponibles. Puedes elegir entre gama baja, media o alta. No solo eso, también tiene muchas 
+    opciones para dispositivos periféricos. Además, Windows es conocido por su compatibilidad con una amplia variedad de aplicaciones, lo que lo convierte en una opción 
+    popular para usuarios domésticos y profesionales. \cite{WindowsVSMac}
+
     \item Linux
+    
+    Linux es un sistema operativo de código abierto basado en Unix. Es conocido por su estabilidad, seguridad y flexibilidad. Linux es ampliamente utilizado en servidores,
+    supercomputadoras y dispositivos embebidos. Ofrece una amplia variedad de distribuciones (como Ubuntu, Fedora y Debian) que se adaptan a diferentes necesidades y 
+    preferencias de los usuarios. \cite{LinuxUbuntu}
+    Una de las principales ventajas de Linux es su naturaleza de código abierto, lo que permite a los usuarios personalizar y modificar el sistema según sus necesidades. 
+    Además, Linux es conocido por su seguridad robusta y su capacidad para manejar tareas complejas de manera eficiente. \cite{LinuxUbuntu}
+    
+
     \item macOS
+    
+    macOS es el sistema operativo desarrollado por Apple para sus computadoras. Se destaca por su diseño elegante y su enfoque en la experiencia del usuario. \cite{MacOS}
+    Al igual que Windows, macOS ofrece una amplia gama de aplicaciones y es conocido por su estabilidad y seguridad. Sin embargo, su compatibilidad con hardware es 
+    más limitada, ya que está diseñado para funcionar exclusivamente en dispositivos Apple. Una de las desventajas de macOS, ademas de su costo, es que la mayoria de
+    aplicaciones y herramientas de desarrollo son de pago, lo que puede ser una barrera para algunos desarrolladores. \cite{WindowsVSMac}
+
 \end{itemize}
 
 Para el desarrollo del proyecto elegimos Windows como sistema operativo principal, ya que es el que utilizamos en nuestros equipos de trabajo por lo cual ya 
-estamos acostumbrados a este sistema y nos ofrece buena compatibilidad con las herramientas de desarrollo. Además, nos facilita la instalación de Android Studio y 
+estamos acostumbrados a este sistema y nos ofrece buena compatibilidad con las herramientas de desarrollo. Además, nos facilita la instalación de Visual Studio Code y 
 las pruebas locales del proyecto sin complicaciones adicionales.
 
 \subsection{Análisis de los Editores/IDEs}
 
 \begin{itemize}
     \item Visual Studio Code
+    
+    Visual Studio Code (VS Code) es un editor de código fuente desarrollado por Microsoft. Es conocido por su ligereza, velocidad y amplia gama de extensiones que
+    permiten personalizar el entorno de desarrollo según las necesidades del programador. VS Code es compatible con múltiples lenguajes de programación y ofrece 
+    características como resaltado de sintaxis, autocompletado, depuración integrada y control de versiones. \cite{VSCode} La ventaja principal de VS Code es su 
+    flexibilidad y facilidad de uso, lo que lo convierte en una opción popular entre desarrolladores de todos los niveles.
+
     \item Android Studio
+
+    Android Studio es el entorno de desarrollo integrado (IDE) oficial para el desarrollo de aplicaciones Android. Basado en IntelliJ IDEA, ofrece herramientas potentes
+    para la creación, depuración y optimización de aplicaciones Android. \cite{AndroidStudio} Incluye un emulador de dispositivos, 
+    un editor de interfaz gráfica y soporte para el lenguaje Kotlin, entre otras características. Una desventaja de Android Studio es que puede ser pesado y 
+    consumir muchos recursos del sistema, lo que puede afectar el rendimiento en computadoras con hardware limitado.
+
     \item JetBrains
+
+    JetBrains es una empresa conocida por sus herramientas de desarrollo, incluyendo IDEs como IntelliJ IDEA, PyCharm y WebStorm. 
+    Estas herramientas son altamente valoradas por su inteligencia de código, refactorización y soporte para múltiples lenguajes de programación. \cite{JetBrains}
+    Una desventaja de JetBrains es que muchas de sus herramientas son de pago, lo que puede ser una barrera para algunos desarrolladores.
+
 \end{itemize}
 
 Como entorno de desarrollo se utilizara Visual Studio Code, por ser ligero, rápido y tambien cuenta con una gran cantidad de extensiones que nos facilitaran la 
@@ -32,32 +70,83 @@ En cuanto a los lenguajes de programación, se trabajara con tres principales:
 
 \begin{itemize}
     \item TypeScript
-    TypeScript, para el desarrollo del frontend con Next.js por su compatibilidad con React, su tipado estático y su integración natural con VS Code.
+    
+    TypeScript es un superconjunto de JavaScript que añade tipado estático y características avanzadas al lenguaje. El código TypeScript se convierte a JavaScript, que se 
+    ejecuta en cualquier lugar donde se ejecute JavaScript: En un navegador, en Node.js, Deno, Bun y en tus aplicaciones. \cite{TypeScript}
+
+    Este lenguaje se usará para el desarrollo del frontend con Next.js por su compatibilidad con React, su tipado estático y su integración natural con VS Code.
     
     \item Dart
-    Dart, para el desarrollo móvil con Flutter, debido a su capacidad de compilar de forma nativa para Android.
+
+    Dart es un lenguaje optimizado para el cliente para desarrollar aplicaciones rápidas en cualquier plataforma. Su objetivo es ofrecer el lenguaje de programación más 
+    productivo para desarrollo multiplataforma, combinado con un plataforma de tiempo de ejecución flexible para marcos de aplicaciones. \cite{Dart} El lenguaje Dart es 
+    seguro en cuanto a tipos; utiliza verificación de tipos estáticos para garantizarlo el valor de una variable siempre coincide con el tipo estático de la variable.
+
+    Dart, se utilizará para el desarrollo móvil con Flutter, debido a su capacidad de compilar de forma nativa para Android.
     
     \item Python
-    Python, para los procesos de análisis y extracción de datos, ya que cuenta con librerías muy completas para el manejo de archivos, OCR y automatización.
+    
+    Python es un lenguaje de programación ampliamente utilizado en las aplicaciones web, el desarrollo de software, la ciencia de datos y el machine learning (ML). 
+    Los desarrolladores utilizan Python porque es eficiente y fácil de aprender, además de que se puede ejecutar en muchas plataformas diferentes. \cite{Python}
+    Los beneficios de usar Python incluyen su sintaxis clara y concisa, una gran comunidad de soporte y una amplia variedad de bibliotecas y frameworks que facilitan el 
+    desarrollo. \cite{Python}
+
+    Python, se usará para los procesos de análisis y extracción de datos, ya que cuenta con librerías muy completas para el manejo de archivos, OCR y automatización.
 
 \end{itemize}
 
 \subsection{Análisis de las Bases de datos}
 \begin{itemize}
     \item MySQL
+
+    MySQL es un sistema de gestión de bases de datos relacional (RDBMS) de código abierto. Es conocido por su rapidez y fiabilidad, y es una de las bases de datos más 
+    populares del mundo. \cite{MySQL} MySQL es ampliamente utilizado en aplicaciones web y es compatible con una variedad de lenguajes de programación y plataformas.
+    Una desventaja de MySQL es que, aunque es de código abierto, algunas características avanzadas solo están disponibles en la versión comercial. Por otra parte, 
+    su arquitecturapuede no ser tan flexible como la de algunas bases de datos NoSQL para ciertos tipos de aplicaciones.
+    
     \item PostgreSQL
+    
+    PostgreSQL es un sistema de gestión de bases de datos relacional (RDBMS) de código abierto y avanzado. Es conocido por su robustez, escalabilidad y soporte para 
+    características avanzadas como transacciones complejas, procedimientos almacenados y tipos de datos personalizados. \cite{PostgreSQL} PostgreSQL es ampliamente 
+    utilizado en aplicaciones empresariales y es compatible con una variedad de lenguajes de programación y plataformas. Una desventaja de PostgreSQL es que puede ser más 
+    complejo de configurar y administrar en comparación con otras bases de datos, lo que puede requerir un mayor conocimiento técnico por parte del administrador de la 
+    base de datos.
+    
     \item MongoDB
+    MongoDB es una base de datos NoSQL orientada a documentos que almacena datos en formato BSON (una extensión binaria de JSON). 
+    Es conocida por su flexibilidad, escalabilidad y facilidad de uso. \cite{MongoDB} MongoDB es ampliamente utilizado en aplicaciones web y móviles, especialmente 
+    aquellas que requieren un manejo eficiente de grandes volúmenes de datos no estructurados.
+    Una desventaja de MongoDB es que, al ser una base de datos NoSQL, puede no ser la mejor opción para aplicaciones que requieren transacciones complejas o integridad 
+    referencial estricta,
+    ya que carece de algunas de las características tradicionales de las bases de datos relacionales.
 \end{itemize}
 
-La base de datos seleccionada fue MySQL, porque es fácil de administrar, tiene buen rendimiento para transacciones y es ampliamente soportada por la mayoría de 
+La base de datos seleccionada será MySQL, porque es fácil de administrar, tiene buen rendimiento para transacciones y es ampliamente soportada por la mayoría de 
 servicios en la nube. Además, nos decidimos por esta ya que es de uso gratuito y contamos con experiencia trabajando en esta base.
 
 \subsection{Análisis de Software para Extracción de Texto}
 
 \begin{itemize}
     \item Tesseract OCR
+    
+    Tesseract OCR es un motor de reconocimiento óptico de caracteres (OCR) de código abierto desarrollado inicialmente por Hewlett-Packard y ahora mantenido por Google.
+    Es conocido por su alta precisión en el reconocimiento de texto impreso y manuscrito en una variedad de idiomas. \cite{Tesseract} Tesseract es compatible con múltiples 
+    plataformas y se puede integrar fácilmente en aplicaciones mediante su API. Una desventaja de Tesseract es que puede requerir una configuración y entrenamiento 
+    adicionales para optimizar su rendimiento en casos específicos, como documentos con formatos complejos o baja calidad de imagen. \cite{Tesseract}
+
     \item Paddle OCR
+    
+    Paddle OCR es una herramienta de reconocimiento óptico de caracteres (OCR) desarrollada por Baidu. Es parte del ecosistema PaddlePaddle, una plataforma de aprendizaje
+    profundo de código abierto. Paddle OCR es conocido por su alta precisión y velocidad en el reconocimiento de texto en imágenes y documentos. \cite{PaddleOCR}
+    Ofrece soporte para múltiples idiomas y es capaz de manejar una variedad de formatos de texto, incluyendo texto impreso y manuscrito. Una desventaja de Paddle OCR es 
+    que puede requerir una configuración y entrenamiento adicionales para optimizar su rendimiento en casos específicos. \cite{PaddleOCR}
+
     \item Azure Form Recognizer
+    
+    Azure Form Recognizer es un servicio de inteligencia artificial proporcionado por Microsoft Azure que permite extraer información estructurada de documentos y formularios.
+    Utiliza técnicas avanzadas de aprendizaje automático para identificar y extraer texto, tablas y campos clave-valor de una variedad de formatos de documentos. \cite{AzureDocumentI}
+    Una ventaja de Azure Form Recognizer es su capacidad para manejar documentos complejos y variados sin necesidad de un entrenamiento extenso. Sin embargo, una 
+    desventaja es que es un servicio basado en la nube, lo que puede implicar costos adicionales y preocupaciones de privacidad para algunos usuarios. \cite{AzureDocumentI}
 \end{itemize}
 
 Para la extracción de texto se optó por Tesseract OCR, por ser una herramienta gratuita, de código abierto y con buena precisión en documentos impresos o escaneados. 
@@ -66,39 +155,108 @@ Esto permitió realizar el reconocimiento de texto de los tickets sin depender d
 \subsection{Análisis de la Infraestructura en la nube}
 \begin{itemize}
     \item Amazon Web Services (AWS)
+    
+    Azure Web Services (AWS) es una plataforma de servicios en la nube proporcionada por Amazon. Ofrece una amplia gama de servicios, incluyendo computación, almacenamiento,
+    bases de datos, análisis y redes. AWS es conocido por su escalabilidad, flexibilidad y seguridad, y es utilizado por empresas de todos los tamaños en todo el mundo. \cite{AWS} 
+    En comparación con otras plataformas en la nube, AWS puede ser más complejo de configurar y administrar, lo que puede requerir un mayor conocimiento técnico por parte del
+    administrador de la nube.
+
     \item Microsoft Azure
+    
+    Microsoft Azure es una plataforma de servicios en la nube proporcionada por Microsoft. Ofrece una amplia gama de servicios, incluyendo computación, almacenamiento, bases de
+    datos, análisis y redes. Azure es conocido por su integración con productos de Microsoft, su escalabilidad y seguridad, y es utilizado por empresas de todos los tamaños en 
+    todo el mundo. \cite{Azure} Una ventaja de Azure es su integración nativa con herramientas de desarrollo como Visual Studio y servicios empresariales como Office 365 y 
+    Dynamics 365.
+
     \item Google Cloud Platform (GCP)
+    
+    Google Cloud Platform (GCP) es una plataforma de servicios en la nube proporcionada por Google. Ofrece una amplia gama de servicios, incluyendo computación, almacenamiento,
+    bases de datos, análisis y redes. GCP es conocido por su innovación en inteligencia artificial y aprendizaje automático, así como por su infraestructura global. \cite{GCP}
+    Una desventaja de GCP es que puede tener una menor cuota de mercado en comparación con AWS y Azure, lo que puede afectar la disponibilidad de recursos y soporte 
+    en algunas regiones.
 \end{itemize}
-La infraestructura se desplegó en Microsoft Azure, debido a su buena integración con entornos de desarrollo basados en Microsoft, su facilidad para manejar 
+La infraestructura se desplegará en Microsoft Azure, debido a su buena integración con entornos de desarrollo basados en Microsoft, su facilidad para manejar 
 contenedores y servicios serverless, y su compatibilidad con bases de datos y análisis en la nube.
 
 \subsection{Análisis de Frameworks frontend web}
 
 \begin{itemize}
     \item Next.js
+
+    Next.js es un framework de React que permite la renderización del lado del servidor y la generación de sitios estáticos. Es conocido por su rendimiento y facilidad de uso, 
+    lo que lo convierte en una opción popular para aplicaciones web modernas. Next.js ofrece características como enrutamiento automático, soporte para TypeScript y 
+    una optimización de aplicaciones a otro nivel gracias a sus características automáticas integradas. Estas optimizaciones no sólo simplifican el trabajo del desarrollador, 
+    sino que también garantizan que tu aplicación sea rápida, eficiente y lista para la puesta en producción desde el primer momento.\cite{WhyNextJS}
+
     \item Remix
+    
+    Remix es un framework de React que se centra en la experiencia del desarrollador y el rendimiento de la aplicación. Ofrece una arquitectura basada en rutas y
+    proporciona herramientas para manejar datos y estados de manera eficiente. Remix es conocido por su enfoque en la optimización del rendimiento y la facilidad de uso. 
+    Una desventaja de Remix en contra de Next.js es que es un framework más nuevo y puede tener una comunidad y ecosistema de plugins más pequeños. \cite{Remix}
+
     \item SvelteKit
+
+    SvelteKit es un framework para construir aplicaciones web utilizando Svelte. Ofrece una experiencia de desarrollo optimizada y un rendimiento excepcional, 
+    gracias a su enfoque en la compilación en tiempo de construcción. SvelteKit permite la generación de sitios estáticos y la renderización del lado del servidor, 
+    lo que lo convierte en una opción versátil para desarrolladores. \cite{SvelteKit}
+
+
 \end{itemize}
 
 En el frontend se eligió Next.js, por su integración directa con React, su rendimiento en renderizado del lado del servidor y su flexibilidad para generar 
-páginas estáticas o dinámicas.
+páginas estáticas o dinámicas. Además de la experiencia previa que contamos con este framework.
 
 \subsection{Análisis de Frameworks móviles}
 \begin{itemize}
     \item Flutter
+    
+    Flutter es un framework de código abierto desarrollado por Google para construir aplicaciones nativas multiplataforma desde una única base de código. Utiliza el lenguaje
+    de programación Dart y ofrece un rendimiento cercano al nativo, así como una amplia gama de widgets personalizables. Flutter es conocido por su rapidez en el desarrollo y 
+    su capacidad para crear interfaces de usuario atractivas y fluidas. \cite{WhyFlutter}
+
     \item React Native
+
+    React Native es un framework de código abierto desarrollado por Facebook que permite construir aplicaciones móviles utilizando JavaScript y React. Ofrece una experiencia 
+    de desarrollo similar a la de React, lo que facilita la creación de interfaces de usuario nativas. React Native es conocido por su capacidad para compartir código entre 
+    plataformas y su amplia comunidad de desarrolladores. La desventaja de React Native en comparación con Flutter es que puede tener un rendimiento ligeramente inferior en 
+    ciertas situaciones, ya que utiliza un puente para comunicarse con los componentes nativos. \cite{WhyReactNative}
+
     \item Kotlin
+
+    Kotlin es un lenguaje de programación moderno que se ejecuta en la máquina virtual de Java (JVM) y es totalmente interoperable con Java. Es conocido por su concisión, 
+    seguridad y facilidad de uso, lo que lo convierte en una opción popular para el desarrollo de aplicaciones Android. Kotlin también ofrece características avanzadas como 
+    la programación funcional y la extensión de funciones. Kotlin es mucho más difícil de aprender en comparación con otros lenguajes como Dart o React Native, 
+    lo que puede ser un obstáculo para algunos desarrolladores. \cite{WhyFlutter}
+
 \end{itemize}
 
-Para la aplicación móvil se utilizó Flutter, ya que permite desarrollar para Android e iOS con una sola base de código y ofrece un rendimiento cercano al nativo.
+Para la aplicación móvil se utilizará Flutter, ya que permite desarrollar para Android e iOS con una sola base de código y ofrece un rendimiento cercano al nativo.
 
 \subsection{Análisis de Backend}
 
 \begin{itemize}
     \item Node.js con Express
+    
+    Node.js es un entorno de ejecución de JavaScript del lado del servidor que permite construir aplicaciones escalables y de alto rendimiento. Express es un framework
+    minimalista y flexible para Node.js que facilita la creación de aplicaciones web y APIs. Juntos, Node.js y Express ofrecen una solución potente para el desarrollo backend,
+    con una amplia gama de módulos y una gran comunidad de desarrolladores. \cite{NodeExpress}
+
     \item Django
+    
+    Django es un framework web de alto nivel para Python que sigue el patrón de diseño Modelo-Vista-Controlador (MVC). Es conocido por su rapidez en el desarrollo,
+    su seguridad y su enfoque en la reutilización de código. Django ofrece una amplia gama de características integradas, como un sistema de autenticación, un panel de 
+    administración y soporte para bases de datos. \cite{Django} Una desventaja de Django es que puede ser más pesado y complejo en comparación con otros frameworks,
+    lo que puede requerir un mayor conocimiento técnico por parte del desarrollador.
+
     \item Spring Boot
+    
+    Spring Boot es un framework para construir aplicaciones Java basadas en el ecosistema Spring. Ofrece una configuración automática y una amplia gama de herramientas
+    para facilitar el desarrollo de aplicaciones web y microservicios. Spring Boot es conocido por su escalabilidad, seguridad y soporte para una variedad de bases de datos 
+    y servicios. \cite{SpringBoot}. Debido a las tecnologías utilizadas en el frontend y la aplicación móvil, Spring Boot no es tan compatible como las otras opciones 
+    mencionadas.
+    
+
 \end{itemize}
 
-Finalmente, en el backend se implementó Node.js con Express, por su alta velocidad en el manejo de peticiones concurrentes, su compatibilidad con TypeScript y 
+Finalmente, en el backend se implementará en Node.js con Express, por su alta velocidad en el manejo de peticiones concurrentes, su compatibilidad con TypeScript y 
 la facilidad de crear APIs que se integran directamente con el frontend web y móvil.

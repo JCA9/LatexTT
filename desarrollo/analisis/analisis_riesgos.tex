@@ -5,31 +5,33 @@ A continuación, se presenta una tabla con los riesgos identificados, su categor
 \begin{table}[H]
 \centering
 \small
-\label{tab:riesgos}
-\begin{tabular}{|p{1.2cm}|p{4cm}|p{3cm}|p{3cm}|p{4cm}|}
+\renewcommand{\arraystretch}{1.3}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{|c|X|c|c|X|}
 \hline
 \textbf{ID} & \textbf{Riesgo} & \textbf{Categoría} & \textbf{Probabilidad} & \textbf{Gestión del riesgo} \\
 \hline
-R01 & Pérdida del código o archivos del proyecto & Técnico & Alta & Realizar un respaldo completo en GitHub y en la nube cada que se realice un cambio, sea minimo o no. \\
+R01 & Pérdida del código o archivos del proyecto & Técnico & Alta & Realizar respaldos en GitHub y en la nube cada que se realice un cambio, sea mínimo o no. \\
 \hline
 R02 & Un integrante deja el equipo & Personal & Baja & Replantear objetivos y priorizar módulos principales. Postergar funciones secundarias. \\
 \hline
-R03 & Fallas en la base de datos & Técnico & Moderada & Realizar respaldos semanalmente. \\
+R03 & Fallas en la base de datos & Técnico & Moderada & Realizar respaldos semanales y pruebas de recuperación. \\
 \hline
-R04 & Problemas de conexión o caídas en Azure & Externo & Moderada & Tener respaldo local para pruebas. \\
+R04 & Problemas de conexión o caídas en Azure & Externo & Moderada & Mantener respaldo local para pruebas y despliegue alternativo. \\
 \hline
-R05 & Errores en el reconocimiento de texto del OCR & Técnico & Alta & Entrenar modelos como Regex con distintos tipos de tickets y validar resultados manualmente. \\
+R05 & Errores en el reconocimiento de texto del OCR & Técnico & Alta & Validar resultados manualmente y mejorar expresiones regulares según nuevos tipos de tickets. \\
 \hline
-R06 & Cambios de requerimientos del proyecto & Organizacional & Alta & Documentar requerimientos y registrar cambios del proyecto. \\
+R06 & Cambios de requerimientos del proyecto & Organizacional & Alta & Documentar requerimientos y registrar formalmente los cambios del proyecto. \\
 \hline
 R07 & Retrasos por carga académica o personal & Personal & Moderada & Reajustar cronograma y redistribuir tareas según prioridades. \\
 \hline
-R08 & Fallas en la comunicación del equipo & Organizacional & Moderada & Establecer reuniones semanales. \\
+R08 & Fallas en la comunicación del equipo & Organizacional & Moderada & Establecer reuniones semanales y mantener comunicación constante. \\
 \hline
-R09 & Exposición o pérdida de datos de usuarios & Seguridad & Alta & Cifrar datos sensibles como la contraseña. \\
+R09 & Exposición o pérdida de datos de usuarios & Seguridad & Alta & Cifrar datos sensibles como contraseñas y respaldar información sensible. \\
 \hline
-R10 & Falla del equipo o energía eléctrica & Externo & Moderada & Usar laptops con batería, respaldos y almacenamiento en la nube. \\
+R10 & Falla del equipo o energía eléctrica & Externo & Moderada & Utilizar laptops con batería, respaldos en la nube y UPS si es posible. \\
 \hline
-\end{tabular}
-\caption{Matriz riesgos identificados y su gestión}
+\end{tabularx}
+\caption{Matriz de riesgos identificados y su gestión}
+\label{tab:riesgos}
 \end{table}
