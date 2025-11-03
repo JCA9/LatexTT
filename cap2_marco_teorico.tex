@@ -248,30 +248,108 @@ La digitalización nos permite ademas de toda la seguridad y automatización, el
 La solucion que se propuso se fundamenta en una arquitectura cliente - servidor con una separación clara entre la captura y visualizacion (aplicación movil y web),
 la logica de negocio (servidor backend) y la persistencia (base de datos). Este enfoque promueve la modularidad, el despliegue independiente y la escalabilidad
 horizontal cuando los componentes requieren mayor capacidad. \cite{C4Model} \cite{Architectural Styles}
+Haremos la comparación de diferentes tecnologias en el capitulo 3 (Desarrollo)
 
-\subsection{Arquitectura cliente-servidor y modularidad}
+\subsection{Arquitectura cliente-servidor}
+La arquitectura la organizaremos en tres capas principales:
+\begin{itemize}
+    \item \textbf{Cliente (Web y Móvil):} Para la interacción del usuario.
+    \item \textbf{Servidor (Backend):} Aqui se realizara el proceso de lectura de tickets, normalización, categorización, generación de reportes entre otras acciones.
+    \item \textbf{Datos (Base de datos):} La base de datos almacenará de forma segura los datos, permitiendo consultas eficientes y recuperación rápida.
+\end{itemize}
+
+Se selecciono la este tipo de arquitectura ya que uno de los puntos más característicos de la arquitectura Cliente-Servidor es la centralización de los datos, pues el server recibe, 
+procesa y almacena todos los datos provenientes de todos los clientes \cite{ClienteServidor}, por lo tanto, si en nuestro sistema no funciona el servidor, ningún cliente podrá acceder a los datos o 
+servicios que este proporciona. 
+
+Una ventaja importante de esta arquitectura es la centralización, ya que el servidor fungirá como unica fuente de la verdad, lo que impide que los clientes conserven información desactualizada, pero
+por otra parte, una desventaja es que si el servidor falla, todos los clientes se verán afectados, por lo que es crucial implementar mecanismos de respaldo y recuperación para garantizar la disponibilidad continua del sistema.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{./images/EstructuraCliente-Servidor.JPG}
+    \caption{Ejemeplo de la arquitectura Cliente-Servidor}
+\end{figure}
+
+
 \subsection{Tecnologías web y móviles}
-\subsection{Bases de datos y comunicación entre sistemas}
+Para la capa de la presentación web ocuparemos \textbf{Next.js}, nos decidimos por esta tecnología ya que sabemos como funciona React.js y Next.js es un framework basado en React que facilita la creación de aplicaciones web,
+por otra parte una ventaja de este framework recae en su capacidad para manejar grandes volúmenes de tráfico y contenido dinámico lo hace indicado para nuestro proyecto. 
+Ademas, debido a su sistema de renderizado híbrido y optimización automática, Next.js garantiza que tus aplicaciones sean rápidas y eficientes. \cite{WhyNextJS}
 
+Para la aplicacion movil utilizaremos \textbf{Flutter}, al igual que Next.js, escogimos Flutter por la experiencia que tenemos con este framework.
+Flutter se destaca en la creación de interfaces de usuario ricas y personalizables utilizando su propio motor de renderizado. Esto lo hace independiente de la plataforma y muy versátil, lo que permite interfaces de usuario 
+animadas y fluidas tanto en iOS como en Android. se destaca por crear aplicaciones rápidas compiladas de forma nativa en dispositivos móviles, web y de escritorio a partir de una única base de código. Una de sus principales 
+fortalezas es la rápida representación de la interfaz de usuario, lograda mediante el uso de su propio motor para dibujar widgets directamente en la pantalla. Además, Flutter se compila en código de máquina nativo, lo que 
+garantiza que las aplicaciones funcionen de manera excelente y se sientan nativas en cada plataforma. 
+
+
+\subsection{Bases de datos y comunicación entre sistemas}
+La base de datos constituye el núcleo del sistema, ya que en ella se almacena toda la información proveniente del proceso de lectura de tickets, los registros de usuarios, 
+las categorías de gastos y los reportes generados. 
+Para este proyecto se utilizará \textbf{MySQL} como sistema gestor de bases de datos, debido a su estabilidad, su capacidad para almacenar eficientemente grandes volúmenes 
+de datos y su amplia compatibilidad con entornos web \cite{WhyMySQL}. 
+
+Por otro lado, la comunicación entre los distintos componentes del sistema —la aplicación móvil, la aplicación web y el servidor— se implementará bajo el modelo \textbf{REST}. 
+A través de este modelo, los datos se intercambian en formato \textbf{JSON} mediante peticiones \textbf{HTTP} seguras (\textbf{HTTPS}), garantizando la integridad y confidencialidad de la información transmitida \cite{WhyRest}. 
+El servidor expondrá un conjunto de \textit{endpoints} que permitirán realizar operaciones como la carga de tickets, la consulta de gastos y la generación de reportes.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{./images/EstructuraRest.png}
+    \caption{Ejemeplo de la arquitectura REST}
+\end{figure}
 
 \section{Automatización de Procesos y Categorización de Gastos}
-Para tener un buen sistema de gestion de finanzas personales, es necesario implementar técnicas de automatización para poder reducir la intervencion manual, disminuir errores
+Para tener un buen sistema de gestion de finanzas personales, es necesario que implementemos técnicas para poder reducir la intervencion manual, disminuir errores
 y poder optimizar tiempos en el procesamiento de los datos. \cite{ProcessMaker}
 Por otra parte, la categorizacion de gastos es fundamental para que el usuario pueda tener un control detallado de sus finanzas personales, pudiendo identificar patrones de 
 consumo y áreas de mejora en su gestión financiera. \cite{CategorizacionGastos}
 
 \subsection{Reglas y patrones de categorización}
-\subsection{Procesamiento automatizado de transacciones}
+Para el sistema, la categorización de gastos se realizara mediante reglas y patrones definidos manualmente. El enfoque se basa en identificar palabras clave dentro del texto
+extraido del ticket, las cuales se asociarán a categorías predefinidas segun el significado o contexto. Por ejemplo, palabras como “refresco”, “pollo”, “pan” o “sabritas” estarán 
+asociadas a la categoría de alimentos, mientras que términos como “pantalón”, “blusa” o “tenis” se relacionarán con la categoría de ropa.
+Para lograr esto, se implementará un sistema de coincidencias de texto mediante expresiones regulares (regex) que permita detectar la presencia de estas palabras dentro del texto procesado.
+
+Regex funciona buscando patrones dentro de una cadena de texto. El patrón se define utilizando caracteres y símbolos especiales que especifican lo que debe encontrarse en la cadena de texto para que coincida. 
+Un beneficio de usar regex es su capacidad para analizar rápidamente grandes cantidades de datos, buscando coincidencias de manera rápida y precisa, o reemplazando selectivamente partes con otros valores. \cite{WhyRegex}
+
 \subsection{Generación de reportes y visualizaciones automáticas}
+Una vez procesados y categorizados los datos financieros, el sistema procede a la generación automática de reportes y visualizaciones, los cuales representan el resultado
+tangible del análisis. El propósito de esta etapa es convertir los datos en información útil y comprensible, proporcionando al usuario indicadores clave sobre su situación 
+financiera.
+
+La automatización de esta etapa no solo mejora la experiencia del usuario, sino que también asegura la coherencia y puntualidad de los reportes, eliminando la necesidad de 
+cálculos manuales y reduciendo los errores humanos.
+En conjunto, estos mecanismos fortalecen la toma de decisiones financieras al ofrecer información precisa, clara y actualizada sobre el comportamiento económico del usuario.
 
 \section{Metodologías de Desarrollo}
 Las metodologías nos proporcionan un marco estructurado que nos permite organizar el trabajo, poder gestionar los requisitos que quiere el cliente,
 poder reducir los riesgos y nos ayuda a garantizar la calidad del producto final. \cite{Metodologias}
 Para desarrollar una aplicacion de finanzas personales, tenemos que adoptar enfoques adaptativos que nos permitan mantener la flexibilidad ante cambios
-en los requerimientos. \cite{ManifestoAgil}
+en los requerimientos. \cite{ManifestoAgil} Debido a esto, se optó por la metodologia XP basada en Kanban, la cual nos permite iterar rapidamente y adaptarnos a cambios
+en los requisitos de manera continua y efectiva.
 
+\subsection{Metodología Extreme Programming (XP)}
+Nos decidimos por XP ya que es muy eficiente para proyectos con requisitos cambiantes y nos permite entregar software de alta calidad en ciclos cortos.
+Su tasa de error es baja debido a sus prácticas de desarrollo rigurosas, como la programación en pareja y las pruebas unitarias frecuentes. \cite{WhyXP}
+Tambien se puede aplicar a cualquier lenguaje de programación, el cliente tiene el control sobre las prioridades, durante todo el proyecto se pueden realizar
+diversas pruebas y, sobre todo, permite ahorrar mucho tiempo. \cite{WhyXP}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{./images/XPMetod.JPG}
+    \caption{Diagrama de la metodologia XP}
+\end{figure}
 
-\subsection{Metodologías ágiles}
-\subsection{Ciclo de vida del desarrollo del software}
-\subsection{Pruebas y validación del sistema}
+\subsection{Metodología Kanban}
+Combinamos XP con Kanban para gestionar el flujo de trabajo de manera visual y eficiente. Kanban nos permite visualizar las tareas en un tablero, facilitando la 
+identificación de cuellos de botella y optimizando el proceso de desarrollo. Kanban nos ayuda a limitar el trabajo en progreso, lo que mejora la concentración y reduce el 
+tiempo de entrega. \cite{WhyKanban}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{./images/kanban.JPG}
+    \caption{Diagrama de la metodologia Kanban}
+\end{figure}
