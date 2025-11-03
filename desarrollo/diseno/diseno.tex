@@ -1,40 +1,153 @@
 \section{Diseño del Sistema}
 
-\subsection{Arquitectura del Sistema}\
+\subsection{Arquitectura del Sistema}
+Según Tan Dang en Orient Software \cite{Arquitectura}, la arquitectura de un sistema representa el plano o estructura general del mismo, describiendo sus componentes principales, 
+las relaciones que existen entre ellos y la manera en que interactúan para cumplir los objetivos del software.
+Esta arquitectura sirve como guía para el desarrollo, mantenimiento y evolución del sistema, garantizando que todos los módulos funcionen de manera integrada y coherente.
+
 \begin{itemize}
+    \item \textbf{Modelo de arquitectura adoptado}
+    El sistema que proponemos se basa en una arquitectura Cliente–Servidor bajo un modelo en capas, con el objetivo de separar las responsabilidades de cada componente y garantizar 
+    la mantenibilidad, escalabilidad y modularidad del software.
+    En este modelo, los clientes representados por la aplicación móvil y la plataforma web envían peticiones al servidor, el cual procesa la información y responde con los 
+    resultados solicitados.
+    El servidor central gestiona la lógica de negocio, la conexión con la base de datos y los procesos automatizados, como la extracción de texto mediante OCR y la 
+    categorización de gastos.
+
+    \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{./images/EjemploArquitecturaCapas.png}
+    \caption{Ejemplo de arquitectura en capas}
+    \end{figure}
+
     \item \textbf{Arquitectura en capas}
+    Se emplea una arquitectura multicapa (n-tier) que separa responsabilidades en presentación, aplicación/control, lógica de negocio y datos. La separación clara facilita 
+    la mantenibilidad, permite evolucionar capas de forma independiente y reduce el acoplamiento, tal como describen los patrones clásicos de layered architecture y las 
+    guías de arquitectura de Microsoft Azure \cite{ArquitecturaCapas}. Cada capa cumple una función específica dentro del flujo general de procesamiento, 
+    desde la captura de información hasta la generación de reportes.
+
     \item \textbf{Capa de presentación}
+    La capa de presentación (app móvil y web) se encarga de la interacción con el usuario y de enviar/recibir solicitudes al backend mediante HTTP/HTTPS. 
+    En una arquitectura n-tier, esta capa debe permanecer delgada, delegando la lógica de negocio a capas inferiores; es el enfoque recomendado para aplicaciones 
+    empresariales y está alineado con las guías de N-tier de Azure y con la organización en capas para aplicaciones empresariales descrita por Fowler. \cite{ArquitecturaPresenctacion}
+
+    \item \textbf{Capa de aplicación o control}
+    La capa de aplicación expone una API (REST) que coordina flujos entre la interfaz y los módulos de negocio (procesamiento de tickets, categorización, reportes), 
+    maneja sesiones/autenticación y orquesta transacciones. El estilo REST promueve interfaces uniformes, desacoplamiento cliente-servidor y escalabilidad del sistema, 
+    según la tesis de Roy T. Fielding; en seguridad de endpoints y sesiones, se siguen lineamientos de OWASP ASVS. \cite{ArquitecturaAplicacion}
+
     \item \textbf{Capa de lógica de negocio}
+    Aquí residen los casos de uso y las reglas del dominio: validación de datos extraídos del ticket, normalización, categorización basada en reglas (regex/diccionarios) y 
+    generación de reportes. Los patrones de enterprise application recomiendan encapsular la lógica de dominio en esta capa para aislarla de presentación y datos, facilitando 
+    pruebas, evolución y reuso. \cite{ArquitecturaNegocio}
+
     \item \textbf{Capa de datos}
+    La capa de datos se encarga del almacenamiento, recuperación y actualización de la información del sistema.
+    Utiliza una base de datos MySQL, donde se gestionan las tablas de usuarios, tickets, categorías, presupuestos, reportes y notificaciones.
 \end{itemize}
 
+    \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{./images/ArquitecturaCapasFinara.JPG}
+    \caption{Arquitectura en capas del sistema propuesto}
+    \end{figure}
+
 \subsection{Diseño de la Base de Datos}
+La base de datos del sistema la diseñaremos bajo un enfoque relacional, utilizando MySQL como gestor por su estabilidad, escalabilidad y compatibilidad con sistemas cliente-servidor.
+El diseño busca garantizar la integridad, consistencia y disponibilidad de la información financiera procesada por el sistema, permitiendo almacenar de forma 
+estructurada los datos provenientes de la aplicación móvil y la plataforma web.
+
 \begin{itemize}
     \item \textbf{Modelo entidad-relación}
+    
+El modelo entidad-relación constituye la base del diseño lógico de la base de datos, al permitir identificar las entidades del dominio del problema y las relaciones existentes entre ellas.
+De acuerdo con Connolly y Begg \cite{ModeloER}, un modelo E-R “proporciona una representación conceptual de alto nivel que describe los datos de una organización y las asociaciones entre ellos”.
+
+    \begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{./images/Modelo Entidad - Relacion.png}
+    \caption{Modelo entidad-relación del sistema propuesto en módulos}
+    \end{figure}
+
+En la Figura anterior presentamos el modelo entidad-relación del sistema de finanzas personales, diseñado bajo un enfoque relacional utilizando MySQL como gestor de base de datos.
+El modelo se compone de cinco módulos funcionales:
+
+Usuarios y control: define la entidad central Usuarios, responsable de almacenar los datos personales, credenciales y fecha de registro.
+
+Tickets y productos: almacena los comprobantes procesados por el módulo OCR y los artículos asociados a cada ticket.
+
+Finanzas y movimientos: gestiona la información de ingresos y egresos, enlazados a categorías personalizadas por cada usuario.
+
+Deudas y planes financieros: permite registrar compromisos económicos y metas de ahorro.
+
+Alertas y predicciones: almacena notificaciones automáticas y resultados de proyecciones financieras generadas por el sistema.
+
+Este modelo asegura integridad referencial mediante claves primarias (PK) y foráneas (FK), reflejando el flujo lógico del sistema:
+el usuario registra un ticket, el sistema procesa los datos mediante OCR, clasifica la información y la vincula con sus categorías, deudas o alertas correspondientes.
+
     \item \textbf{Tablas y relaciones}
+    
+El modelo físico se implementa mediante un conjunto de tablas interrelacionadas que representan las entidades identificadas en el modelo E-R.
+Cada tabla posee una clave primaria que garantiza la unicidad de los registros y claves foráneas que preservan la coherencia entre los módulos del sistema.
+
+Las relaciones más relevantes son:
+
+Usuarios-Tickets: relación 1:N, donde un usuario puede registrar varios tickets.
+
+Tickets-ProductosTickets: relación 1:N, cada ticket puede contener múltiples productos asociados.
+
+Usuarios-Movimientos: relación 1:N, un usuario genera múltiples registros financieros.
+
+Categorías-Movimientos: relación 1:N, cada movimiento pertenece a una categoría definida por el usuario.
+
+Usuarios-Deudas-Usuarios: relación 1:N, que permite asignar deudas a usuarios específicos.
+
+Movimientos-Predicciones: relación 1:N, cada movimiento puede tener una predicción asociada.
+
+Según Elmasri y Navathe \cite{TablasYRelaciones}, un buen diseño relacional debe “mantener una estructura normalizada, clara y eficiente, minimizando redundancias y asegurando la 
+integridad de los datos”.
+En el presente sistema se implementaron índices en los campos más consultados (id-usuario, id-categoria, fecha-creacion) para optimizar el rendimiento en operaciones de 
+lectura y filtrado, especialmente en la generación de reportes y estadísticas financieras.
+
     \item \textbf{Normalización}
+    
+El diseño de la base de datos se normalizó hasta la Tercera Forma Normal (3FN), garantizando que cada tabla contenga datos atómicos, dependientes únicamente de la clave 
+primaria, y que no existan dependencias transitivas.
+De acuerdo con Silberschatz et al. \cite{Normalización}, la normalización “reduce la redundancia y evita anomalías en las operaciones de inserción, actualización y eliminación de datos”.
+
+En el sistema desarrollado:
+
+Se eliminaron dependencias parciales mediante la creación de tablas intermedias (Deudas-Usuarios y Productos-Tickets).
+
+Cada atributo depende exclusivamente de su clave primaria, cumpliendo con los requisitos de la 3FN.
+
+No existen campos multivaluados ni datos repetidos entre entidades.
+
+Este proceso asegura una estructura coherente, favorece la integridad referencial y mejora la eficiencia en consultas complejas, especialmente en operaciones de categorización y generación de reportes financieros.
 \end{itemize}
 
 \subsection{Modelado UML}
 \begin{itemize}
     \item \textbf{Diagramas de casos de uso}
 
-    Aquí detallaremos los casos de uso identificados en la fase de requerimientos, mostrando las interacciones entre los actores y el sistema.
+    Aquí ilustraremos los casos de uso identificados anteriormente en la fase de requerimientos, mostrando las interacciones entre los actores y el sistema.
 
     \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\linewidth]{./images/CasosUsoApp.JPG}
+    \includegraphics[width=1\linewidth]{./images/CasosUsoApp.JPG}
     \caption{Diagrama UML de Casos de Uso - App Móvil}
     \end{figure}
 
     \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\linewidth]{./images/CasosUsoWeb.JPG}
+    \includegraphics[width=1\linewidth]{./images/CasosUsoWeb.JPG}
     \caption{Diagrama UML de Casos de Uso - Plataforma Web}
     \end{figure}
 
-    \item \textbf{Diagramas de clases}
     \item \textbf{Diagramas de secuencia}
+    
+    Un diagrama de secuencia muestra cómo los objetos interactúan en un escenario particular de un caso de uso,
+    detallando el orden de los mensajes intercambiados entre ellos a lo largo del tiempo. \cite{DIagramaSecuencia}
     
     \begin{figure}[H]
     \centering
@@ -60,7 +173,35 @@
     \caption{Diagrama UML de Secuencia - Generación de Reportes}
     \end{figure}
 
+    \item \textbf{Diagrama de Base de Datos}
+    
+    
+    \begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{./images/E-R BD.png}
+    \caption{Diagrama Entidad-Relación UML del sistema propuesto}
+    \end{figure}
     \item \textbf{Análisis del flujo del Sistema}
+
+    En esta sección, se presenta un análisis detallado del flujo del sistema, identificando los diferentes procesos y cómo interactúan entre sí. 
+    Utilizamos un diagrama para ilustrar estos procesos de manera clara y concisa.
+
+    \begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{./images/Flujo del Sistema.png}
+    \caption{Diagrama del sistema propuesto}
+    \end{figure}
+
+    \item \textbf{Análisis del flujo del OCR}
+    
+    El siguiente diagrama ilustra un prototipo del flujo del proceso de Reconocimiento Óptico de Caracteres (OCR) dentro del sistema.
+    
+    \begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{./images/FlujoOCR.png}
+    \caption{Diagrama del flujo del OCR}
+    \end{figure}
+
 \end{itemize}
 
 \subsection{Diseño de la Interfaz de Usuario}
@@ -72,7 +213,7 @@ Estos wireframes sirven como guía visual para el desarrollo de la interfaz, ase
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\linewidth]{./images/wireframesApp/LogIn.JPG}
+    \includegraphics[width=0.6\linewidth]{./images/wireframesApp/LogIn.JPG}
     \caption{Wireframe de la pantalla de inicio de sesión - App Móvil}
 \end{figure}
 
@@ -84,21 +225,60 @@ Estos wireframes sirven como guía visual para el desarrollo de la interfaz, ase
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\linewidth]{./images/wireframesApp/Principal y Transacciones.JPG}
+    \includegraphics[width=1\linewidth]{./images/wireframesApp/Principal y Transacciones.JPG}
     \caption{Wireframe de la pantalla de principal y transacciones - App Móvil}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\linewidth]{./images/wireframesApp/Presupuestos-Deudas-Notificaciones.JPG}
+    \includegraphics[width=1\linewidth]{./images/wireframesApp/Presupuestos-Deudas-Notificaciones.JPG}
     \caption{Wireframe de la pantalla de presupuestos, deudas y notificaciones - App Móvil}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\linewidth]{./images/wireframesApp/Escaneo-Verificacion-Tickets.JPG}
+    \includegraphics[width=1\linewidth]{./images/wireframesApp/Escaneo-Verificacion-Tickets.JPG}
     \caption{Wireframe de la pantalla de escaneo y verificación de tickets - App Móvil}
 \end{figure}
 
     \item \textbf{Wireframes Panel Web}
+Para el diseño de la interfaz de usuario del panel web, creamos wireframes que representan las diferentes pantallas y funcionalidades de la plataforma web (Dashboard).
+Estos wireframes sirven como guía visual para el desarrollo de la interfaz, asegurando una experiencia de usuario intuitiva y coherente.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{./images/wireframesWeb/Dashboard_web.png}
+    \caption{Wireframe del Dashboard Principal - Panel Web}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{./images/wireframesWeb/Presupuestos_web.png}
+    \caption{Wireframe de la pantalla de Presupuestos - Panel Web}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{./images/wireframesWeb/Analisis_web.png}
+    \caption{Wireframe de la pantalla de Análisis - Panel Web}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{./images/wireframesWeb/Dudas_web.png}
+    \caption{Wireframe de la pantalla de Dudas - Panel Web}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{./images/wireframesWeb/Notificaciones_web.png}
+    \caption{Wireframe de la pantalla de Notificaciones - Panel Web}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{./images/wireframesWeb/Soluciones_web.png}
+    \caption{Wireframe de la pantalla de Soluciones - Panel Web}
+\end{figure}
+
 \end{itemize}
