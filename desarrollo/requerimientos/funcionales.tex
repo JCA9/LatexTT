@@ -1,81 +1,234 @@
 \section{Requerimientos}
+En esta sección detallaremos los requerimientos que debe cumplir el sistema.
 
-\subsection{Requerimientos Funcionales}
+\subsection{Requerimientos Funcionales - Casos de Uso}
+Los requerimientos funcionales describen las funciones específicas que el sistema debe realizar para satisfacer las necesidades del usuario. 
+A continuación, presentamos los principales requerimientos funcionales identificados para nuestro sistema y posteriormente en la sección de diseño
+mostraremos los diagramas UML. \cite{RequisitosFuncionales}
 
-\begin{table}[H]
-\centering
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{@{} l l X @{}}
-\toprule
-\textbf{Código} & \textbf{Nombre} & \textbf{Descripción} \\
-\midrule
-RF01 & Registro de usuario &
-El sistema debe permitir el registro y autenticación de usuarios mediante el correo y la contraseña. \\
+\begin{itemize}
+    \item \textbf{Requerimientos/Casos de Uso Compartidos (App Móvil y Plataforma Web)} 
+        
+    \begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabularx}{\textwidth}{@{} l l X @{}}
+    \toprule
+    \textbf{Código} & \textbf{Nombre} & \textbf{Descripción} \\
+    \midrule
+    RF01 & Registro de usuario &
+    El sistema debe permitir el registro de nuevos usuarios mediante correo electrónico y contraseña, validando los datos ingresados antes de crear la cuenta. \\
 
-RF02 & Captura de tickets &
-La aplicación móvil debe permitir capturar la foto del ticket o subirla desde la galería de fotos. \\
+    RF02 & Inicio de sesión &
+    El sistema debe permitir que los usuarios registrados inicien sesión de forma segura tanto en la aplicación móvil como en la plataforma web. \\
 
-RF03 & Procesamiento OCR &
-El backend debe extraer los datos del ticket mediante \textit{pytesseract} y devolverlos en formato JSON. \\
+    RF03 & Recuperación de contraseña &
+    El sistema debe permitir al usuario recuperar su contraseña mediante un enlace de restablecimiento enviado a su correo electrónico registrado. \\
 
-RF04 & Almacenamiento de datos &
-Los datos extraídos deben almacenarse en la base de datos. \\
+    \bottomrule
+    \end{tabularx}
+    \caption{Requisitos Funcionales Compartidos (RF01–RF03)}
+    \end{table}
 
-RF05 & Clasificación automática &
-El sistema debe intentar categorizar los gastos según palabras clave o patrones detectados. \\
+    \begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabularx}{\textwidth}{@{} l l X @{}}
+    \toprule
+    \textbf{Código} & \textbf{Nombre} & \textbf{Descripción} \\
+    \midrule
+    RF04 & Edición de perfil &
+    El usuario podrá modificar su información personal, como nombre, correo electrónico o fotografía de perfil, desde la aplicación o la web. \\
 
-RF06 & Edición manual &
-El usuario debe poder corregir o completar los datos extraídos manualmente. \\
 
-RF07 & Visualización de gastos &
-La aplicación móvil y la plataforma web deben mostrar los gastos por categorías, fechas y montos totales. \\
+    RF05 & Eliminación de cuenta &
+    El sistema debe permitir al usuario eliminar permanentemente su cuenta y los datos asociados, solicitando confirmación previa antes de proceder. \\
 
-RF08 & Generación de reportes &
-Desde la página web, el usuario podrá generar reportes semanales, mensuales y anuales en formato PDF o Excel. \\
+    RF06 & Registro de ingresos &
+    El usuario podrá registrar manualmente sus ingresos indicando el monto, la fecha y una descripción opcional, tanto desde la aplicación móvil como desde la plataforma web. \\
 
-RF09 & Alertas y notificaciones &
-El sistema debe generar alertas cuando el usuario supere límites de presupuesto o se acerque a deudas. \\
+    RF07 & Registro de egresos &
+    El usuario podrá registrar egresos de forma manual o automática, especificando monto, fecha, categoría y descripción. \\
 
-\bottomrule
-\end{tabularx}
-\caption{Requisitos Funcionales (RF01–RF09)}
-\end{table}
+    RF08 & Registro de egresos manualmente &
+    El sistema permitirá al usuario ingresar egresos de manera manual cuando no disponga de un ticket digital o imagen para procesar automáticamente. \\
 
-\begin{table}[H]
-\centering
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{@{} l l X @{}}
-\toprule
-\textbf{Código} & \textbf{Nombre} & \textbf{Descripción} \\
-\midrule
-RF10 & Presupuesto mensual &
-El usuario podrá establecer un monto de presupuesto mensual y el sistema deberá comparar los gastos contra ese límite. \\
+    RF09 & Registro de ticket manualmente &
+    El usuario podrá registrar un ticket introduciendo manualmente los datos del comprobante, como fecha, monto y establecimiento. \\
 
-RF11 & Panel de resumen &
-El sistema debe mostrar un panel con los totales de ingresos, egresos y balance general del usuario. \\
+    RF10 & Configuración de presupuesto &
+    El sistema debe permitir al usuario definir presupuestos por categoría o periodo, estableciendo límites de gasto que serán monitoreados automáticamente. \\
 
-RF12 & Exportación de datos &
-El usuario podrá exportar la información de sus gastos a un archivo CSV o Excel. \\
+    RF11 & Visualización de historial de gastos &
+    El usuario podrá consultar el historial de gastos registrados en ambos entornos, filtrando por fecha, categoría o tipo de transacción. \\
 
-RF13 & Sincronización en la nube &
-Los datos del usuario deberán sincronizarse automáticamente entre la aplicación móvil y la plataforma web. \\
+    RF12 & Visualización de gráficas o estadísticas &
+    El sistema debe generar gráficas y estadísticas interactivas que representen el comportamiento financiero del usuario de manera clara y comprensible. \\
 
-RF14 & Filtros y búsqueda &
-El sistema debe permitir buscar y filtrar los registros por fecha, categoría, monto o palabra clave. \\
+    \bottomrule
+    \end{tabularx}
+    \caption{Requisitos Funcionales Compartidos (RF04–RF12)}
+    \end{table}
 
-RF15 & Historial de tickets &
-El usuario podrá consultar la lista completa de tickets procesados con fecha y estado del reconocimiento OCR. \\
+    \begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabularx}{\textwidth}{@{} l l X @{}}
+    \toprule
+    \textbf{Código} & \textbf{Nombre} & \textbf{Descripción} \\
+    \midrule
+    RF13 & Generación de reportes en PDF &
+    La plataforma web y la aplicación móvil deberán permitir la generación de reportes financieros en formato PDF, con opción de descarga o visualización en pantalla. \\
 
-RF16 & Administración de categorías &
-El sistema permitirá crear, editar o eliminar categorías personalizadas de gasto o ingreso. \\
+    RF14 & Configuración de metas de ahorro &
+    El usuario podrá establecer metas de ahorro personalizadas, definir plazos y montos objetivo, y consultar su progreso mediante indicadores visuales. \\
+    \bottomrule
+    \end{tabularx}
+    \caption{Requisitos Funcionales Compartidos (RF03–RF14)}
+    \end{table}
 
-RF17 & Bitácora de modificaciones &
-Toda modificación a los registros deberá guardarse con fecha, hora y usuario responsable del cambio. \\
+    \item \textbf{Requerimientos/Casos de Uso Exclusivos de la App Móvil} 
+    
+    \begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabularx}{\textwidth}{@{} l l X @{}}
+    \toprule
+    \textbf{Código} & \textbf{Nombre} & \textbf{Descripción} \\
+    \midrule
+    RF15 & Cambio de tema de la aplicación &
+    El sistema debe permitir al usuario cambiar el tema visual de la aplicación (modo claro u oscuro) para mejorar la experiencia de uso. \\
 
-RF18 & Asistente inteligente de sugerencias &
-El sistema deberá ofrecer sugerencias automáticas basadas en el comportamiento de gasto del usuario. \\
+    RF16 & Captura de foto del ticket &
+    La aplicación móvil debe permitir al usuario tomar una fotografía del ticket de compra utilizando la cámara del dispositivo para su posterior procesamiento. \\
 
-\bottomrule
-\end{tabularx}
-\caption{Requisitos Funcionales (RF10–RF18)}
-\end{table}
+    RF17 & Captura múltiple de tickets &
+    El sistema debe permitir tomar varias fotografías del mismo ticket en caso de que la información no sea visible en una sola imagen. \\
+
+    RF18 & Confirmación de datos escaneados &
+    El sistema debe mostrar los datos extraídos por el OCR para que el usuario los revise y confirme antes de su almacenamiento definitivo. \\
+
+    RF19 & Etiquetado personalizado de tickets &
+    El usuario podrá agregar etiquetas personalizadas a los tickets para clasificar los gastos según sus propios criterios o proyectos personales. \\
+
+    RF20 & Corrección de datos escaneados &
+    El sistema debe permitir al usuario editar manualmente los datos que fueron mal reconocidos durante el proceso de OCR. \\
+
+    \bottomrule
+    \end{tabularx}
+    \caption{Requisitos Funcionales App Móvil (RF15–RF22)}
+    \end{table}
+
+    \begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabularx}{\textwidth}{@{} l l X @{}}
+    \toprule
+    \textbf{Código} & \textbf{Nombre} & \textbf{Descripción} \\
+    \midrule
+    
+    RF21 & Visualización de historial de notificaciones &
+    El usuario podrá consultar un historial de notificaciones dentro de la aplicación móvil, incluyendo alertas de presupuesto, deudas y movimientos recientes. \\
+
+    RF22 & Visualización de estadísticas por categoría &
+    El sistema debe permitir al usuario visualizar las estadísticas de gasto organizadas por categoría y periodo, mostrando porcentajes o montos totales. \\
+
+    RF23 & Modificación de categorías de gasto &
+    El usuario podrá crear, editar o eliminar categorías de gasto personalizadas para una organización más detallada de sus finanzas. \\
+
+    RF24 & Establecimiento de alertas de deudas &
+    El sistema debe permitir configurar alertas automáticas para recordar al usuario fechas de vencimiento o pago de sus deudas registradas. \\
+
+    RF25 & Configuración de deudas &
+    El usuario podrá registrar nuevas deudas, especificando monto, acreedor, fecha de vencimiento y frecuencia de pago. \\
+
+    RF26 & Registro de deudas &
+    El sistema debe almacenar la información de las deudas registradas por el usuario y permitir su actualización o eliminación posterior. \\
+
+    RF27 & Planificación de pago de deudas &
+    El sistema debe generar un plan de pago de deudas que muestre fechas, montos parciales y estado de cada obligación financiera. \\
+
+    RF28 & Planificación de presupuestos personales &
+    El sistema debe permitir al usuario definir presupuestos personalizados por categoría o tipo de gasto para un mejor control financiero. \\
+
+    \bottomrule
+    \end{tabularx}
+    \caption{Requisitos Funcionales App Móvil (RF21–RF28)}
+    \end{table}
+
+    \begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabularx}{\textwidth}{@{} l l X @{}}
+    \toprule
+    \textbf{Código} & \textbf{Nombre} & \textbf{Descripción} \\
+    \midrule
+    RF29 & Consulta de tickets &
+    El usuario podrá consultar los tickets previamente registrados, filtrando por fecha, categoría o monto. \\
+
+    RF30 & Visualización de gastos &
+    El sistema debe mostrar al usuario un resumen de sus gastos organizados por día, semana y mes, junto con las categorías más frecuentes. \\
+
+    RF31 & Eliminación de tickets &
+    El sistema debe permitir al usuario eliminar tickets registrados de forma manual o automática, previa confirmación para evitar pérdidas accidentales de información. \\
+
+    \bottomrule
+    \end{tabularx}
+    \caption{Requisitos Funcionales App Móvil (RF29–RF31)}
+    \end{table}
+
+    \item \textbf{Requerimientos/Casos de Uso Exclusivos de la Plataforma Web} 
+    
+    \begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabularx}{\textwidth}{@{} l l X @{}}
+    \toprule
+    \textbf{Código} & \textbf{Nombre} & \textbf{Descripción} \\
+    \midrule
+RF32 & Consulta de consejos personalizados &
+La plataforma web debe mostrar consejos financieros personalizados basados en los hábitos de consumo del usuario, apoyándose en el análisis de sus gastos registrados. \\
+
+RF33 & Búsqueda y filtrado de tickets &
+El sistema debe permitir al usuario buscar y filtrar tickets según criterios como fecha, categoría, monto o palabras clave dentro de las descripciones. \\
+
+RF34 & Generación de reportes en Excel &
+El sistema debe permitir generar y descargar reportes financieros en formato Excel, con hojas separadas por categorías o periodos. \\
+
+RF35 & Compartir reportes por correo electrónico &
+El usuario podrá compartir los reportes generados directamente por correo electrónico desde la plataforma web, sin necesidad de descargarlos localmente. \\
+
+RF36 & Comparación de gastos entre meses &
+El sistema debe generar comparativas gráficas y tabulares de los gastos registrados en distintos meses, mostrando incrementos o reducciones porcentuales. \\
+
+    \bottomrule
+    \end{tabularx}
+    \caption{Requisitos Funcionales Plataforma Web (RF32–RF36)}
+    \end{table}
+
+        \begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabularx}{\textwidth}{@{} l l X @{}}
+    \toprule
+    \textbf{Código} & \textbf{Nombre} & \textbf{Descripción} \\
+    \midrule
+RF37 & Consulta de balance vs egresos &
+El sistema debe mostrar un balance general que compare los ingresos frente a los egresos, calculando el resultado neto del periodo seleccionado. \\
+
+RF38 & Visualización de estadísticas avanzadas &
+La plataforma debe ofrecer un panel con estadísticas detalladas del comportamiento financiero del usuario, incluyendo tendencias, promedios y porcentajes de gasto por categoría. \\
+
+RF39 & Carga de ticket digital &
+El sistema debe permitir la carga de tickets en formato digital (PDF o imagen) desde el explorador web, procesándolos automáticamente con el módulo OCR. \\
+
+RF40 & Configuración de metas de ahorro desde la web &
+El usuario podrá definir y modificar metas de ahorro directamente desde la plataforma web, sincronizándose con los datos de la aplicación móvil. \\
+    \bottomrule
+    \end{tabularx}
+    \caption{Requisitos Funcionales Plataforma Web (RF37–RF40)}
+    \end{table}
+
+
+\end{itemize}
+
