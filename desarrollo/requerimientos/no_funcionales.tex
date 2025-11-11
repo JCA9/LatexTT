@@ -11,46 +11,23 @@ identificados para nuestro sistema. \cite{RequisitosNoFuncionales}
 \toprule
 \textbf{Código} & \textbf{Nombre} & \textbf{Descripción} \\
 \midrule
-RNF01 & Rendimiento &
-El sistema debe procesar y mostrar los datos de un ticket en menos de 30 segundos después de su captura o carga. \\
 
-RNF02 & Disponibilidad &
-La plataforma web y los servicios en la nube deben estar disponibles al menos el 95\% del tiempo. \\
+RNF01 & Seguridad &
+Las contraseñas y datos personales deben almacenarse cifrados utilizando un algoritmo seguro (bcrypt) y no se guardara texto plano. \\
 
-RNF03 & Escalabilidad &
-La arquitectura del sistema debe permitir agregar nuevos usuarios y módulos sin afectar el rendimiento. \\
+RNF02 & Mantenibilidad &
+El código debe estar modularizado, documentado y versionado con control GitHub para facilitar actualizaciones. Cada modulo podra ser actualizado sin afectar la funcionalidad global. \\
 
-RNF04 & Seguridad &
-Las contraseñas y datos personales deben almacenarse cifrados. \\
+RNF03 & Portabilidad &
+La aplicación móvil debe funcionar correctamente en dispositivos Android 10 o superior, manteniendo su funcionalidad y diseño sin errores en diferentes tipos de pantallas. \\
 
-RNF05 & Mantenibilidad &
-El código debe estar modularizado, documentado y versionado con control GitHub para facilitar actualizaciones. \\
+RNF04 & Compatibilidad &
+La plataforma web debe ser compatible con navegadores modernos como Chrome (v135), Edge (v135) y Firefox (v140). \\
 
-RNF06 & Portabilidad &
-La aplicación móvil debe funcionar correctamente en dispositivos Android 10 o superior. \\
-
-RNF07 & Compatibilidad &
-La plataforma web debe ser compatible con navegadores modernos como Chrome, Edge y Firefox. \\
-
-RNF08 & Usabilidad &
-La interfaz debe ser intuitiva, con botones y menús claros que permitan su uso sin capacitación previa. \\
-
-RNF09 & Respaldo de datos &
-Se deben realizar copias de seguridad automáticas de la base de datos una vez por semana. \\
-
-RNF10 & Recuperación ante fallos &
-En caso de interrupción o pérdida de conexión, el sistema debe permitir reanudar el proceso sin pérdida de datos. \\
-
-RNF11 & Privacidad &
-Los datos del usuario no deben compartirse con terceros sin su consentimiento explícito. \\
-
-RNF12 & Accesibilidad &
-El sistema debe ser accesible para personas con visión limitada mediante fuentes legibles y buen contraste. \\
-
-RNF13 & Monitoreo &
-La infraestructura debe registrar errores y métricas básicas de uso para detectar fallos. \\
+RNF05 & Usabilidad &
+La interfaz de usuario de la aplicación móvil será desarrollada conforme a las Flutter Usability Guidelines y Material Design \cite{flutter2024}, asegurando botones, menús y elementos interactivos claros, consistentes y accesibles. La versión web seguirá las React Accessibility Guidelines \cite{react2024} \cite{infinum2024}, priorizando navegación intuitiva, tiempos de respuesta óptimos. El sistema deberá permitir su uso sin capacitación previa.
 
 \bottomrule
 \end{tabularx}
-\caption{Requisitos No Funcionales (RNF01–RNF13)}
+\caption{Requisitos No Funcionales (RNF01–RNF05)}
 \end{table}
