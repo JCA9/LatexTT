@@ -1,0 +1,100 @@
+% !TeX root = ../analisis-diseno.tex
+
+%=========================================================
+% Caso de uso: Consultar analytics y predicciones
+
+\begin{UseCase}{CU-003}{Consultar analytics y predicciones}{
+	El usuario accede a reportes detallados de sus patrones de gasto, análisis predictivos personalizados, y recomendaciones financieras basadas en su comportamiento histórico y metas establecidas.
+}
+	\UCactor{\cdtActorRef{Usuario Joven}{Persona que desea comprender sus patrones financieros y recibir insights predictivos}}
+	\UCitem[Versión]{1.0}
+	\UCitem[Autor]{Equipo FinanzApp}
+	\UCitem[Fuente]{Análisis de requerimientos de inteligencia financiera}
+	\UCitem[Prioridad]{Media}
+	\UCitem[Estatus]{Activo}
+	\UCitem[Fecha]{Noviembre 2024}
+
+	% Precondiciones
+	\UCpre{
+		\UCli{El usuario debe estar autenticado en la aplicación}
+		\UCli{El usuario debe tener al menos 90 días de historial de transacciones para análisis de tendencias}
+		\UCli{El usuario debe tener al menos 30 días de datos para predicciones básicas}
+		\UCli{El sistema debe haber procesado los datos más recientes del usuario}
+	}
+
+	% Postcondiciones
+	\UCpost{
+		\UCli{Se muestran los analytics actualizados del usuario}
+		\UCli{Se generan predicciones personalizadas basadas en patrones identificados}
+		\UCli{Se registra la consulta para personalización futura de reportes}
+		\UCli{Se actualizan las recomendaciones contextuales del usuario}
+		\UCli{Se programa la próxima actualización de analytics}
+	}
+
+	% Flujo principal
+	\UCstart
+		\UCstep[\UCactor] El usuario accede a la sección ``Analytics'' desde el menú principal
+		\UCstep[\UCsystem] El sistema verifica la disponibilidad de datos suficientes para análisis
+		\UCstep[\UCsystem] El sistema muestra el dashboard de analytics con resumen general
+		\UCstep[\UCsystem] El sistema presenta gráficos de tendencias de gastos por categoría (últimos 3 meses)
+		\UCstep[\UCsystem] El sistema muestra comparativa mensual de gastos vs ingresos
+		\UCstep[\UCactor] El usuario puede seleccionar diferentes períodos de análisis (mes, trimestre, año)
+		\UCstep[\UCsystem] El sistema actualiza las visualizaciones según el período seleccionado
+		\UCstep[\UCsystem] El sistema muestra patrones identificados: días de mayor gasto, categorías dominantes
+		\UCstep[\UCsystem] El sistema presenta análisis predictivo: ``Es probable que gastes \$X en Y categoría esta semana''
+		\UCstep[\UCactor] El usuario puede explorar predicciones específicas tocando en las tarjetas de insights
+		\UCstep[\UCsystem] El sistema muestra detalles de la predicción con nivel de confianza y factores
+		\UCstep[\UCsystem] El sistema presenta recomendaciones personalizadas basadas en los análisis
+		\UCstep[\UCactor] El usuario puede marcar recomendaciones como útiles o descartarlas
+		\UCstep[\UCsystem] El sistema ajusta futuras recomendaciones basado en el feedback del usuario
+		\UCstep[\UCactor] El usuario puede exportar reportes específicos o compartir insights
+		\UCstep[\UCsystem] El sistema genera el reporte solicitado y lo envía al email del usuario
+		\UCstep[\UCsystem] El sistema registra las preferencias de visualización del usuario para futuras consultas
+	\UCend
+
+	% Trayectorias alternativas
+	\UCitem[Trayectorias alternativas]{
+		\UCaltBegin{A}
+			\UCaltitem[Condición]{En el paso 2 no hay suficientes datos para análisis completo}
+			\UCaltitem[\UCsystem] El sistema muestra mensaje informativo sobre la limitación de datos
+			\UCaltitem[\UCsystem] El sistema presenta análisis básicos disponibles con los datos existentes
+			\UCaltitem[\UCsystem] El sistema sugiere: ``Continúa registrando gastos para obtener análisis más precisos''
+			\UCaltitem[\UCsystem] El sistema muestra timeline estimado para análisis completos
+		\UCaltEnd
+
+		\UCaltBegin{B}
+			\UCaltitem[Condición]{En el paso 9 no se pueden generar predicciones confiables}
+			\UCaltitem[\UCsystem] El sistema muestra mensaje: ``Predicciones en desarrollo. Necesitamos más datos de tu comportamiento''
+			\UCaltitem[\UCsystem] El sistema presenta insights básicos disponibles: promedios, totales, comparaciones
+			\UCaltitem[\UCsystem] El sistema muestra consejos generales de educación financiera
+			\UCaltitem[\UCsystem] Continúa con el paso 12 del flujo principal (recomendaciones generales)
+		\UCaltEnd
+
+		\UCaltBegin{C}
+			\UCaltitem[Condición]{El usuario solicita exportar datos pero no hay conexión a internet}
+			\UCaltitem[\UCsystem] El sistema detecta la falta de conectividad
+			\UCaltitem[\UCsystem] El sistema muestra mensaje: \MSGref{MSG-012}{Error de conexión}
+			\UCaltitem[\UCsystem] El sistema ofrece ``Programar envío cuando se reconecte''
+			\UCaltitem[\UCactor] El usuario puede aceptar el programa de envío diferido
+			\UCaltitem[\UCsystem] El sistema agenda el envío y notifica cuando se complete
+		\UCaltEnd
+
+		\UCaltBegin{D}
+			\UCaltitem[Condición]{El sistema detecta patrones de gasto preocupantes}
+			\UCaltitem[\UCsystem] El sistema genera alerta contextual sobre comportamiento financiero riesgoso
+			\UCaltitem[\UCsystem] El sistema presenta recomendaciones específicas para mejorar la situación
+			\UCaltitem[\UCsystem] El sistema ofrece conectar con recursos educationales adicionales
+			\UCaltitem[\UCactor] El usuario puede aceptar recomendaciones o marcarlas como no relevantes
+			\UCaltitem[\UCsystem] Continúa con el flujo principal incorporando las preferencias del usuario
+		\UCaltEnd
+	}
+
+	% Referencias
+	\UCitem[Referencias]{
+		\UCli \BRref{RN-019}{Histórico mínimo}
+		\UCli \BRref{RN-023}{Análisis de tendencias}
+		\UCli \RFref{RF-005}{Análisis predictivo de gastos}
+		\UCli \RFref{RF-006}{Reportes y visualizaciones avanzadas}
+		\UCli \RFref{RF-007}{Recomendaciones financieras personalizadas}
+	}
+\end{UseCase}

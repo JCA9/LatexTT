@@ -1,0 +1,265 @@
+% !TeX root = analisis-diseno.tex
+
+%=========================================================
+\chapter{Modelo de interacción}
+\label{cap:interaccion}
+
+Este capítulo describe las interacciones entre los usuarios y el sistema FinanzApp, así como las interacciones entre los diferentes componentes del sistema. Se detallan los casos de uso principales, las interfaces de interacción y los mensajes intercambiados entre los actores del sistema.
+
+%---------------------------------------------------------
+\section{Casos de uso detallados}
+
+Los casos de uso representan las funcionalidades principales que ofrece FinanzApp a sus usuarios, describiendo las interacciones específicas entre actores y sistema.
+
+\input{cu/cu-registro-gasto-ocr}
+\input{cu/cu-configurar-presupuesto}
+\input{cu/cu-consultar-analytics}
+\input{cu/cu-gestionar-categorias}
+\input{cu/cu-sincronizar-datos}
+
+%---------------------------------------------------------
+\section{Interfaces de usuario}
+
+Las interfaces de usuario definen cómo los usuarios interactúan con las diferentes funcionalidades de FinanzApp a través de las plataformas móvil y web.
+
+% Interfaces de usuario simplificadas
+\section{IU-001 Dashboard Principal}
+\textbf{Propósito:} Pantalla principal que muestra resumen de gastos y acceso rápido a funciones principales.
+
+\textbf{Elementos principales:}
+\begin{itemize}
+    \item Balance actual del mes
+    \item Gráfico de gastos por categoría
+    \item Botón ``Registrar Gasto''
+    \item Últimas transacciones
+    \item Notificaciones de presupuesto
+\end{itemize}
+
+\section{IU-002 Interfaz de Cámara OCR}
+\textbf{Propósito:} Interfaz para capturar tickets mediante la cámara del dispositivo.
+
+\textbf{Elementos principales:}
+\begin{itemize}
+    \item Vista previa de la cámara
+    \item Guías de alineación para el ticket
+    \item Botón de captura
+    \item Flash automático/manual
+    \item Botón de confirmación/rehacer
+\end{itemize}
+
+\section{IU-003 Configuración de Presupuestos}
+\textbf{Propósito:} Permite al usuario establecer y modificar presupuestos por categoría.
+
+\textbf{Elementos principales:}
+\begin{itemize}
+    \item Lista de categorías con presupuestos actuales
+    \item Deslizadores para ajustar montos
+    \item Indicadores de progreso de gasto
+    \item Botones para activar/desactivar alertas
+    \item Histórico de cambios de presupuesto
+\end{itemize}
+
+\section{IU-004 Analytics de Gastos}
+\textbf{Propósito:} Presenta análisis visuales y predicciones sobre los patrones de gasto del usuario.
+
+\textbf{Elementos principales:}
+\begin{itemize}
+    \item Gráficos de tendencias mensuales
+    \item Comparativas por período
+    \item Predicciones de gastos futuros
+    \item Filtros por categoría y fecha
+    \item Exportación de reportes
+\end{itemize}
+
+\section{IU-005 Perfil de Usuario}
+\textbf{Propósito:} Configuración de datos personales y preferencias de la aplicación.
+
+\textbf{Elementos principales:}
+\begin{itemize}
+    \item Información personal del usuario
+    \item Configuración de notificaciones
+    \item Preferencias de moneda y región
+    \item Configuración de seguridad
+    \item Sincronización entre dispositivos
+\end{itemize}
+
+%---------------------------------------------------------
+\section{Mensajes del sistema}
+
+Los mensajes del sistema proporcionan retroalimentación al usuario sobre el estado de las operaciones, errores, confirmaciones y notificaciones importantes.
+
+\input{5-1-Mensajes}
+
+%---------------------------------------------------------
+\section{Flujos de interacción principales}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Flujo de onboarding del usuario}
+
+\begin{figure}[htpb!]
+	\begin{center}
+		% TODO: Agregar imagen correspondiente
+		\caption{Flujo de onboarding del usuario}
+		\label{fig:flujoOnboarding}
+	\end{center}
+\end{figure}
+
+El proceso de onboarding guía al nuevo usuario a través de la configuración inicial de su perfil, establecimiento de categorías de gastos, definición de presupuestos iniciales y comprensión de las funcionalidades principales de la aplicación.
+
+\textbf{Pasos del flujo:}
+\begin{enumerate}
+	\item Registro con email y confirmación
+	\item Configuración de perfil básico (nombre, edad, objetivos financieros)
+	\item Tutorial interactivo de funcionalidades principales
+	\item Primer escaneo de ticket (demo)
+	\item Configuración de presupuesto inicial
+	\item Personalización de categorías
+	\item Configuración de notificaciones
+	\item Acceso al dashboard principal
+\end{enumerate}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Flujo de digitalización completa}
+
+\begin{figure}[htpb!]
+	\begin{center}
+		% TODO: Agregar imagen correspondiente
+		\caption{Flujo de digitalización completa de gasto}
+		\label{fig:flujoDigitalizacion}
+	\end{center}
+\end{figure}
+
+Este flujo muestra la experiencia completa del usuario desde la decisión de registrar un gasto hasta la confirmación de la transacción categorizada y almacenada en su perfil financiero.
+
+\textbf{Pasos del flujo:}
+\begin{enumerate}
+	\item Usuario accede a la función de cámara
+	\item Fotografía el ticket o recibo
+	\item Sistema procesa imagen con OCR
+	\item Extracción de datos (monto, fecha, establecimiento)
+	\item Categorización automática inteligente
+	\item Presentación de resultados al usuario
+	\item Confirmación o corrección por parte del usuario
+	\item Almacenamiento en base de datos
+	\item Actualización de presupuestos y estadísticas
+	\item Notificación de éxito
+\end{enumerate}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Flujo de análisis predictivo}
+
+\begin{figure}[htpb!]
+	\begin{center}
+		% TODO: Agregar imagen correspondiente
+		\caption{Flujo de análisis predictivo y alertas}
+		\label{fig:flujoAnalisisPredictivo}
+	\end{center}
+\end{figure}
+
+Este flujo describe cómo el sistema analiza automáticamente los patrones de gasto del usuario para generar insights, predicciones y alertas proactivas que ayuden en la toma de decisiones financieras.
+
+%---------------------------------------------------------
+\section{Patrones de interacción}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Interacción táctil optimizada}
+
+La aplicación móvil está diseñada para maximizar la usabilidad en dispositivos táctiles:
+
+\begin{itemize}
+	\item \textbf{Gestos principales}: Tap, swipe, pinch-to-zoom, pull-to-refresh
+	\item \textbf{Navegación}: Bottom tab bar para secciones principales
+	\item \textbf{Acciones rápidas}: Float action button para registro de gastos
+	\item \textbf{Feedback háptico}: Confirmaciones y notificaciones importantes
+	\item \textbf{Accesibilidad}: Soporte para TalkBack y tamaños de texto dinámicos
+\end{itemize}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Interacción web responsive}
+
+La plataforma web se adapta a diferentes tamaños de pantalla y métodos de interacción:
+
+\begin{itemize}
+	\item \textbf{Breakpoints}: Mobile (<768px), tablet (768-1024px), desktop (>1024px)
+	\item \textbf{Navegación adaptativa}: Hamburger menu en móvil, sidebar en desktop
+	\item \textbf{Dashboard configurable}: Widgets reorganizables por drag-and-drop
+	\item \textbf{Teclado shortcuts}: Acceso rápido a funciones principales
+	\item \textbf{Tooltips contextuales}: Ayuda integrada sin interrumpir el flujo
+\end{itemize}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Interacción por voz (futura implementación)}
+
+Consideraciones para futuras implementaciones de interacción por voz:
+
+\begin{itemize}
+	\item \textbf{Comandos básicos}: ``Registrar gasto de \$50 en comida''
+	\item \textbf{Consultas}: ``¿Cuánto he gastado esta semana?''
+	\item \textbf{Configuración}: ``Crear presupuesto de \$2000 para entretenimiento''
+	\item \textbf{Privacidad}: Procesamiento local cuando sea posible
+	\item \textbf{Confirmación visual}: Siempre mostrar resultado de comando de voz
+\end{itemize}
+
+%---------------------------------------------------------
+\section{Especificaciones de usabilidad}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Métricas de usabilidad objetivo}
+
+\begin{itemize}
+	\item \textbf{Tiempo de onboarding}: Máximo 3 minutos para configuración inicial
+	\item \textbf{Tiempo de registro de gasto}: Máximo 15 segundos desde cámara hasta confirmación
+	\item \textbf{Tasa de error en OCR}: Máximo 15\% de tickets requieren corrección manual
+	\item \textbf{Satisfacción del usuario}: Score NPS mínimo de 7/10
+	\item \textbf{Retención de usuarios}: 70\% activos después de 30 días
+	\item \textbf{Tiempo de carga}: Máximo 2 segundos para cualquier pantalla
+\end{itemize}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Principios de diseño UX}
+
+\begin{itemize}
+	\item \textbf{Simplicidad}: Interfaces limpias con máximo 3 niveles de navegación
+	\item \textbf{Consistencia}: Patrones de interacción uniformes en toda la aplicación
+	\item \textbf{Retroalimentación}: Respuesta inmediata a todas las acciones del usuario
+	\item \textbf{Tolerancia a errores}: Deshacer acciones críticas, confirmaciones para eliminaciones
+	\item \textbf{Personalización}: Adaptación a preferencias y patrones de uso individual
+	\item \textbf{Gamificación sutil}: Logros y progreso sin interrumpir la funcionalidad principal
+\end{itemize}
+
+%---------------------------------------------------------
+\section{Integración con sistemas externos}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{APIs bancarias}
+
+\begin{figure}[htpb!]
+	\begin{center}
+		% TODO: Agregar imagen correspondiente
+		\caption{Integración con APIs bancarias}
+		\label{fig:integracionBancaria}
+	\end{center}
+\end{figure}
+
+La integración con APIs bancarias permite la importación automática de transacciones y la validación de gastos registrados manualmente.
+
+\textbf{Funcionalidades de integración:}
+\begin{itemize}
+	\item Importación automática de transacciones con tarjeta
+	\item Validación de gastos registrados manualmente
+	\item Detección de transacciones duplicadas
+	\item Reconciliación de saldos
+	\item Notificaciones de discrepancias
+\end{itemize}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Servicios de terceros}
+
+\begin{itemize}
+	\item \textbf{Servicio OCR}: Google Cloud Vision API para procesamiento de imágenes
+	\item \textbf{Notificaciones push}: Firebase Cloud Messaging para notificaciones móviles
+	\item \textbf{Analytics}: Google Analytics para métricas de uso y comportamiento
+	\item \textbf{Crashlytics}: Firebase Crashlytics para monitoreo de errores
+	\item \textbf{Storage}: AWS S3 para almacenamiento de imágenes de tickets
+	\item \textbf{CDN}: CloudFlare para distribución global de contenido estático
+\end{itemize}

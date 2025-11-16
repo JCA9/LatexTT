@@ -1,0 +1,103 @@
+% !TeX root = ../analisis-diseno.tex
+
+%=========================================================
+% Caso de uso: Configurar presupuesto personal
+
+\begin{UseCase}{CU-002}{Configurar presupuesto personal}{
+	El usuario crea un nuevo presupuesto definiendo el monto límite, período de tiempo, categorías incluidas y umbrales de alerta para controlar sus gastos de manera proactiva.
+}
+	\UCactor{\cdtActorRef{Usuario Joven}{Persona que desea establecer límites de gasto para controlar sus finanzas}}
+	\UCitem[Versión]{1.0}
+	\UCitem[Autor]{Equipo FinanzApp}
+	\UCitem[Fuente]{Análisis de requerimientos de control financiero}
+	\UCitem[Prioridad]{Alta}
+	\UCitem[Estatus]{Activo}
+	\UCitem[Fecha]{Noviembre 2024}
+
+	% Precondiciones
+	\UCpre{
+		\UCli{El usuario debe estar autenticado en la aplicación}
+		\UCli{El usuario debe tener al menos 30 días de historial de transacciones para sugerencias}
+		\UCli{El usuario no debe tener más de 10 presupuestos activos simultáneamente}
+		\UCli{Debe existir al menos una categoría de gastos disponible}
+	}
+
+	% Postcondiciones
+	\UCpost{
+		\UCli{El presupuesto queda creado y activo en el sistema}
+		\UCli{Se configuran las alertas automáticas según los umbrales definidos}
+		\UCli{El dashboard se actualiza mostrando el nuevo presupuesto}
+		\UCli{Se inicia el monitoreo automático de gastos contra el presupuesto}
+		\UCli{Se programa el envío de reportes periódicos}
+	}
+
+	% Flujo principal
+	\UCstart
+		\UCstep[\UCactor] El usuario accede a la sección ``Presupuestos'' desde el menú principal
+		\UCstep[\UCsystem] El sistema muestra la lista de presupuestos existentes y botón ``Crear nuevo presupuesto''
+		\UCstep[\UCactor] El usuario selecciona ``Crear nuevo presupuesto''
+		\UCstep[\UCsystem] El sistema muestra el formulario de configuración de presupuesto
+		\UCstep[\UCactor] El usuario ingresa el nombre del presupuesto (ej: ``Entretenimiento Diciembre'')
+		\UCstep[\UCactor] El usuario define el monto total del presupuesto
+		\UCstep[\UCsystem] El sistema sugiere un monto basado en el historial del usuario si está disponible
+		\UCstep[\UCactor] El usuario selecciona el período: semanal, mensual o trimestral
+		\UCstep[\UCactor] El usuario define las fechas de inicio y fin del período
+		\UCstep[\UCsystem] El sistema muestra las categorías disponibles para incluir en el presupuesto
+		\UCstep[\UCactor] El usuario selecciona una o más categorías a incluir (ej: Restaurantes, Entretenimiento)
+		\UCstep[\UCsystem] El sistema muestra el gasto promedio histórico en las categorías seleccionadas
+		\UCstep[\UCactor] El usuario configura los umbrales de alerta (por defecto: 70\% y 90\%)
+		\UCstep[\UCactor] El usuario selecciona los tipos de notificación deseados (push, email, in-app)
+		\UCstep[\UCactor] El usuario revisa el resumen de configuración y confirma la creación
+		\UCstep[\UCsystem] El sistema valida que el presupuesto no exceda límites del sistema
+		\UCstep[\UCsystem] El sistema crea el presupuesto y activa el monitoreo automático
+		\UCstep[\UCsystem] El sistema muestra mensaje de confirmación y retorna a la lista de presupuestos
+		\UCstep[\UCsystem] El sistema actualiza el dashboard con el nuevo presupuesto visible
+	\UCend
+
+	% Trayectorias alternativas
+	\UCitem[Trayectorias alternativas]{
+		\UCaltBegin{A}
+			\UCaltitem[Condición]{En el paso 16 el usuario ya tiene 10 presupuestos activos}
+			\UCaltitem[\UCsystem] El sistema muestra mensaje: ``Límite de presupuestos alcanzado. Desactiva un presupuesto existente para crear uno nuevo''
+			\UCaltitem[\UCsystem] El sistema muestra lista de presupuestos activos con opción de desactivar
+			\UCaltitem[\UCactor] El usuario selecciona un presupuesto para desactivar
+			\UCaltitem[\UCsystem] El sistema desactiva el presupuesto seleccionado
+			\UCaltitem[\UCsystem] Regresa al paso 16 del flujo principal
+		\UCaltEnd
+
+		\UCaltBegin{B}
+			\UCaltitem[Condición]{En el paso 6 el sistema no puede sugerir monto por falta de historial}
+			\UCaltitem[\UCsystem] El sistema muestra mensaje informativo: ``Sin historial suficiente para sugerencias''
+			\UCaltitem[\UCsystem] El sistema proporciona rangos de referencia típicos para la categoría
+			\UCaltitem[\UCactor] El usuario ingresa el monto deseado manualmente
+			\UCaltitem[\UCsystem] Continúa con el paso 8 del flujo principal
+		\UCaltEnd
+
+		\UCaltBegin{C}
+			\UCaltitem[Condición]{En el paso 11 no hay categorías creadas por el usuario}
+			\UCaltitem[\UCsystem] El sistema muestra solo las categorías predefinidas del sistema
+			\UCaltitem[\UCsystem] El sistema ofrece la opción ``Crear nueva categoría personalizada''
+			\UCaltitem[\UCactor] El usuario puede seleccionar categorías existentes o crear nuevas
+			\UCaltitem[\UCsystem] Si se crean nuevas categorías, se procesan antes de continuar
+			\UCaltitem[\UCsystem] Continúa con el paso 12 del flujo principal
+		\UCaltEnd
+
+		\UCaltBegin{D}
+			\UCaltitem[Condición]{En el paso 9 las fechas seleccionadas son inválidas}
+			\UCaltitem[\UCsystem] El sistema valida que la fecha de fin sea posterior a la de inicio
+			\UCaltitem[\UCsystem] El sistema valida que la fecha de inicio no sea en el pasado
+			\UCaltitem[\UCsystem] El sistema muestra mensaje de error y resalta los campos incorrectos
+			\UCaltitem[\UCactor] El usuario corrige las fechas
+			\UCaltitem[\UCsystem] Continúa con el paso 10 del flujo principal
+		\UCaltEnd
+	}
+
+	% Referencias
+	\UCitem[Referencias]{
+		\UCli \BRref{RN-007}{Presupuestos activos}
+		\UCli \BRref{RN-008}{Período de presupuesto}
+		\UCli \BRref{RN-009}{Alertas de presupuesto}
+		\UCli \RFref{RF-003}{Sistema de presupuestos personalizables}
+		\UCli \RFref{RF-004}{Alertas proactivas de gastos}
+	}
+\end{UseCase}

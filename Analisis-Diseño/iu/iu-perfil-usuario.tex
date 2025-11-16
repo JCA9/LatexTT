@@ -1,0 +1,140 @@
+% !TeX root = ../analisis-diseno.tex
+
+%=========================================================
+% Interfaz de usuario: Perfil de usuario
+
+\begin{interfaceUsario}{IU-005}{Perfil de usuario}{
+	Interfaz centralizada para la gestión de información personal, configuración de preferencias, seguridad de la cuenta, y personalización de la experiencia de usuario en FinanzApp.
+}
+	\IUactores{\cdtActorRef{Usuario Joven}{Usuario que desea gestionar su perfil, configuraciones y preferencias personales}}
+	\IUitem[Tipo]{Pantalla de configuración}
+	\IUitem[Plataforma]{Móvil y Web}
+	\IUitem[Prioridad]{Media}
+	\IUitem[Estatus]{Activo}
+	\IUitem[Fecha]{Noviembre 2024}
+
+	% Elementos de la interfaz
+	\IUelem{Header del perfil}{
+		\IUli{Foto de perfil circular con opción de cambio (cámara/galería)}
+		\IUli{Nombre completo del usuario editable}
+		\IUli{Email con indicador de verificación}
+		\IUli{Fecha de registro y estadísticas básicas (días activo, transacciones)}
+	}
+
+	\IUelem{Información personal}{
+		\IUli{Formulario con datos básicos: nombre, apellidos, fecha de nacimiento}
+		\IUli{Información de contacto: teléfono, email secundario}
+		\IUli{Configuración regional: país, zona horaria, idioma}
+		\IUli{Información financiera: ingresos mensuales aproximados (opcional)}
+	}
+
+	\IUelem{Configuración de la cuenta}{
+		\IUli{Cambio de contraseña con validación de fortaleza}
+		\IUli{Configuración de autenticación de dos factores (2FA)}
+		\IUli{Gestión de sesiones activas en diferentes dispositivos}
+		\IUli{Opciones de recuperación de cuenta}
+	}
+
+	\IUelem{Preferencias de la aplicación}{
+		\IUli{Tema de la aplicación: Claro, Oscuro, Automático}
+		\IUli{Configuración de notificaciones por tipo y frecuencia}
+		\IUli{Formato de moneda y números}
+		\IUli{Configuración de categorías por defecto}
+	}
+
+	\IUelem{Privacidad y datos}{
+		\IUli{Configuración de privacidad: datos compartidos, análisis anónimos}
+		\IUli{Gestión de consentimiento para diferentes funcionalidades}
+		\IUli{Opción de exportar todos los datos personales}
+		\IUli{Configuración de retención de datos (imágenes de tickets)}
+	}
+
+	\IUelem{Configuración financiera}{
+		\IUli{Categorías personalizadas: crear, editar, eliminar}
+		\IUli{Configuración de presupuestos por defecto}
+		\IUli{Preferencias de análisis y reportes}
+		\IUli{Configuración de metas financieras predeterminadas}
+	}
+
+	\IUelem{Soporte y ayuda}{
+		\IUli{Centro de ayuda con FAQs y tutoriales}
+		\IUli{Contacto con soporte técnico}
+		\IUli{Reporte de bugs y sugerencias}
+		\IUli{Términos de servicio y política de privacidad}
+	}
+
+	% Interacciones principales
+	\IUinter{
+		\IUli{Tap en foto de perfil: Opciones de cambio (cámara, galería, avatar)}
+		\IUli{Tap en campo editable: Activar modo edición con validación}
+		\IUli{Toggle en configuraciones: Cambio inmediato con confirmación visual}
+		\IUli{Tap en ``Exportar datos'': Confirmación y proceso de generación}
+		\IUli{Tap en dispositivo activo: Opciones para cerrar sesión remota}
+		\IUli{Long press en categoría: Opciones avanzadas de edición}
+	}
+
+	% Estados de la interfaz
+	\IUestados{
+		\IUli{\textbf{Modo visualización}: Información mostrada de forma limpia}
+		\IUli{\textbf{Modo edición}: Campos activos con validación en tiempo real}
+		\IUli{\textbf{Guardando cambios}: Indicador de progreso durante actualización}
+		\IUli{\textbf{Verificando email}: Estado pendiente con opción de reenvío}
+		\IUli{\textbf{Configurando 2FA}: Wizard paso a paso con códigos QR}
+	}
+
+	% Seguridad y validaciones
+	\IUsecurity{
+		\IUli{Validación de email con verificación obligatoria}
+		\IUli{Contraseña con requisitos mínimos: 8 chars, mayús, número, símbolo}
+		\IUli{Confirmación para cambios críticos (email, teléfono, contraseña)}
+		\IUli{Timeout automático en pantallas sensibles}
+		\IUli{Notificación de cambios importantes vía email}
+	}
+
+	% Configuraciones de notificaciones
+	\IUnotifications{
+		\IUli{\textbf{Push notifications}: Presupuestos, metas, insights, recordatorios}
+		\IUli{\textbf{Email}: Resúmenes, alertas críticas, actualizaciones}
+		\IUli{\textbf{In-app}: Tips, consejos, celebraciones de logros}
+		\IUli{\textbf{Frecuencia}: Inmediato, diario, semanal, mensual}
+		\IUli{\textbf{Horario}: Do not disturb configurável}
+	}
+
+	% Personalización avanzada
+	\IUpersonalization{
+		\IUli{Configuración de dashboard: widgets preferidos, orden}
+		\IUli{Shortcuts personalizados para acciones frecuentes}
+		\IUli{Configuración de análisis: métricas favoritas}
+		\IUli{Temas de color personalizados}
+		\IUli{Configuración de gamificación: habilitar/deshabilitar badges}
+	}
+
+	% Gestión de datos
+	\IUdataManagement{
+		\IUli{Resumen de almacenamiento: transacciones, imágenes, reportes}
+		\IUli{Opciones de limpieza: eliminar tickets antiguos, datos cache}
+		\IUli{Configuración de backup automático}
+		\IUli{Sincronización entre dispositivos: configurar, pausar}
+		\IUli{Importación de datos desde otras apps financieras}
+	}
+
+	% Accesibilidad
+	\IUaccessibility{
+		\IUli{Tamaño de texto configurable (pequeño, normal, grande, extra grande)}
+		\IUli{Soporte para lectores de pantalla en toda la interfaz}
+		\IUli{Navegación por teclado para todos los elementos}
+		\IUli{Alto contraste y modo daltónico}
+		\IUli{Reducción de movimiento para usuarios sensibles}
+	}
+
+	% Referencias
+	\IUref{
+		\UCref{CU-004}{Gestionar categorías personalizadas}
+		\BRref{RN-001}{Registro único de usuario}
+		\BRref{RN-013}{Inactividad de cuenta}
+		\BRref{RN-014}{Exportación de datos}
+		\BRref{RN-015}{Eliminación de cuenta}
+		\BRref{RN-021}{Sesión de usuario}
+		\BRref{RN-025}{Recuperación de contraseña}
+	}
+\end{interfaceUsario}

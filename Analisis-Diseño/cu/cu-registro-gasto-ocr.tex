@@ -1,0 +1,102 @@
+% !TeX root = ../analisis-diseno.tex
+
+%=========================================================
+% Caso de uso: Registrar gasto mediante OCR
+
+\begin{UseCase}{CU-001}{Registrar gasto mediante OCR}{
+	El usuario utiliza la cámara de su dispositivo móvil para fotografiar un ticket o recibo, el sistema procesa la imagen mediante OCR, extrae la información relevante y registra automáticamente la transacción con categorización inteligente.
+}
+	\UCactor{\cdtActorRef{Usuario Joven}{Persona que desea registrar un gasto de manera rápida y automática}}
+	\UCitem[Versión]{1.0}
+	\UCitem[Autor]{Equipo FinanzApp}
+	\UCitem[Fuente]{Análisis de requerimientos del usuario}
+	\UCitem[Prioridad]{Alta}
+	\UCitem[Estatus]{Activo}
+	\UCitem[Fecha]{Noviembre 2024}
+
+	% Precondiciones
+	\UCpre{
+		\UCli{El usuario debe estar autenticado en la aplicación}
+		\UCli{El dispositivo debe tener cámara funcional}
+		\UCli{El usuario debe tener conexión a internet activa}
+		\UCli{El usuario no debe haber excedido el límite diario de 50 procesamiento OCR}
+		\UCli{El ticket o recibo debe estar en formato físico legible}
+	}
+
+	% Postcondiciones
+	\UCpost{
+		\UCli{La transacción queda registrada en la base de datos del usuario}
+		\UCli{El gasto se categoriza automáticamente}
+		\UCli{Los presupuestos relevantes se actualizan}
+		\UCli{Se genera una notificación de confirmación}
+		\UCli{La imagen del ticket se almacena temporalmente (90 días)}
+	}
+
+	% Flujo principal
+	\UCstart
+		\UCstep[\UCactor] El usuario accede a la función de registro de gastos desde el dashboard principal
+		\UCstep[\UCactor] El usuario selecciona la opción ``Escanear ticket'' 
+		\UCstep[\UCsystem] El sistema activa la cámara del dispositivo y muestra la interfaz de captura
+		\UCstep[\UCactor] El usuario posiciona el ticket dentro de las guías de alineación
+		\UCstep[\UCactor] El usuario toma la fotografía presionando el botón de captura
+		\UCstep[\UCsystem] El sistema muestra un preview de la imagen capturada
+		\UCstep[\UCactor] El usuario confirma que la imagen es legible o decide tomarla nuevamente
+		\UCstep[\UCsystem] El sistema envía la imagen al servicio OCR para procesamiento
+		\UCstep[\UCsystem] El sistema muestra un indicador de progreso ``Procesando ticket...''
+		\UCstep[\UCsystem] El servicio OCR extrae: monto, fecha, establecimiento, y posibles ítems
+		\UCstep[\UCsystem] El sistema aplica algoritmos de categorización automática
+		\UCstep[\UCsystem] El sistema presenta los datos extraídos al usuario para confirmación
+		\UCstep[\UCactor] El usuario revisa la información y realiza correcciones si es necesario
+		\UCstep[\UCactor] El usuario confirma el registro de la transacción
+		\UCstep[\UCsystem] El sistema guarda la transacción en la base de datos
+		\UCstep[\UCsystem] El sistema actualiza los presupuestos y estadísticas relevantes
+		\UCstep[\UCsystem] El sistema muestra mensaje de confirmación: \MSGref{MSG-003}{OCR exitoso}
+		\UCstep[\UCsystem] El sistema retorna al dashboard con la nueva transacción visible
+	\UCend
+
+	% Trayectorias alternativas
+	\UCitem[Trayectorias alternativas]{
+		\UCaltBegin{A}
+			\UCaltitem[Condición]{En el paso 5 la calidad de la imagen es insuficiente}
+			\UCaltitem[\UCsystem] El sistema detecta automáticamente baja calidad de imagen
+			\UCaltitem[\UCsystem] El sistema muestra sugerencia: ``Imagen poco clara. ¿Deseas tomarla nuevamente?''
+			\UCaltitem[\UCactor] El usuario decide tomar una nueva fotografía
+			\UCaltitem[\UCsystem] Regresa al paso 4 del flujo principal
+		\UCaltEnd
+
+		\UCaltBegin{B}
+			\UCaltitem[Condición]{En el paso 10 el OCR no puede procesar la imagen}
+			\UCaltitem[\UCsystem] El sistema muestra mensaje de error: \MSGref{MSG-004}{Error en OCR}
+			\UCaltitem[\UCsystem] El sistema ofrece opciones: ``Reintentar'' o ``Registro manual''
+			\UCaltitem[\UCactor] El usuario selecciona ``Registro manual''
+			\UCaltitem[\UCsystem] El sistema abre el formulario de registro manual
+			\UCaltitem[\UCactor] El usuario ingresa manualmente: monto, fecha, descripción, categoría
+			\UCaltitem[\UCsystem] Salta al paso 15 del flujo principal
+		\UCaltEnd
+
+		\UCaltBegin{C}
+			\UCaltitem[Condición]{En el paso 13 la categorización automática tiene baja confianza (<60\%)}
+			\UCaltitem[\UCsystem] El sistema marca la transacción como ``Requiere validación''
+			\UCaltitem[\UCsystem] El sistema muestra opciones de categoría sugeridas
+			\UCaltitem[\UCactor] El usuario selecciona la categoría correcta manualmente
+			\UCaltitem[\UCsystem] El sistema aprende de la corrección para futuras categorizaciones
+			\UCaltitem[\UCsystem] Continúa con el paso 15 del flujo principal
+		\UCaltEnd
+
+		\UCaltBegin{D}
+			\UCaltitem[Condición]{El usuario ha alcanzado el límite diario de procesamiento OCR}
+			\UCaltitem[\UCsystem] El sistema muestra mensaje: \MSGref{MSG-017}{Límite OCR diario}
+			\UCaltitem[\UCsystem] El sistema ofrece la opción de registro manual únicamente
+			\UCaltitem[\UCactor] El usuario puede proceder con registro manual o cancelar
+		\UCaltEnd
+	}
+
+	% Referencias
+	\UCitem[Referencias]{
+		\UCli \BRref{RN-003}{Límite de procesamiento OCR}
+		\UCli \BRref{RN-006}{Categorización automática}
+		\UCli \BRref{RN-016}{Validación de tickets}
+		\UCli \RFref{RF-001}{Digitalización automática de tickets}
+		\UCli \RFref{RF-002}{Categorización inteligente de gastos}
+	}
+\end{UseCase}

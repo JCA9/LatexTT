@@ -1,0 +1,81 @@
+% !TeX root = ../analisis-diseno.tex
+
+%=========================================================
+% Caso de uso: Registrar gasto mediante OCR
+
+\section{CU-001 Registrar gasto mediante OCR}
+
+\subsection{Descripción}
+El usuario utiliza la cámara de su dispositivo móvil para fotografiar un ticket o recibo, el sistema procesa la imagen mediante OCR, extrae la información relevante y registra automáticamente la transacción con categorización inteligente.
+
+\subsection{Información del Caso de Uso}
+\begin{itemize}
+    \item \textbf{Actor Principal:} Usuario Joven (Persona de 18-30 años)
+    \item \textbf{Versión:} 1.0
+    \item \textbf{Prioridad:} Alta
+    \item \textbf{Estado:} Activo
+    \item \textbf{Fecha:} Noviembre 2024
+\end{itemize}
+
+\subsection{Precondiciones}
+\begin{itemize}
+    \item El usuario debe estar autenticado en la aplicación
+    \item El dispositivo debe tener cámara funcional
+    \item El usuario debe tener conexión a internet activa
+    \item El ticket o recibo debe estar en formato físico legible
+\end{itemize}
+
+\subsection{Postcondiciones}
+\begin{itemize}
+    \item La transacción queda registrada en la base de datos del usuario
+    \item El gasto se categoriza automáticamente
+    \item Los presupuestos relevantes se actualizan
+    \item Se genera una notificación de confirmación
+\end{itemize}
+
+\subsection{Flujo Principal}
+\begin{enumerate}
+    \item[\UCactor] El usuario accede a la función de registro de gastos desde el dashboard principal
+    \item[\UCactor] El usuario selecciona la opción ``Escanear ticket''
+    \item[\UCsystem] El sistema activa la cámara del dispositivo y muestra la interfaz de captura
+    \item[\UCactor] El usuario posiciona el ticket dentro de las guías de alineación
+    \item[\UCactor] El usuario toma la fotografía presionando el botón de captura
+    \item[\UCsystem] El sistema muestra un preview de la imagen capturada
+    \item[\UCactor] El usuario confirma que la imagen es legible
+    \item[\UCsystem] El sistema envía la imagen al servicio OCR para procesamiento
+    \item[\UCsystem] El sistema extrae: monto, fecha, establecimiento, y posibles ítems
+    \item[\UCsystem] El sistema aplica algoritmos de categorización automática
+    \item[\UCsystem] El sistema presenta los datos extraídos al usuario para confirmación
+    \item[\UCactor] El usuario revisa la información y realiza correcciones si es necesario
+    \item[\UCactor] El usuario confirma el registro de la transacción
+    \item[\UCsystem] El sistema registra el gasto y actualiza los presupuestos correspondientes
+    \item[\UCsystem] El sistema muestra confirmación de registro exitoso
+\end{enumerate}
+
+\subsection{Flujos Alternativos}
+
+\textbf{Flujo A: OCR no puede procesar la imagen correctamente}
+\begin{itemize}
+    \item[Condición:] En el paso 9, el OCR no logra extraer información clara
+    \item[Acción:] El sistema muestra mensaje de error y permite retomar la foto o registrar manualmente
+\end{itemize}
+
+\textbf{Flujo B: Imagen de baja calidad}
+\begin{itemize}
+    \item[Condición:] En el paso 6, la imagen está borrosa o mal enfocada
+    \item[Acción:] El sistema sugiere tomar una nueva fotografía con mejores condiciones de luz
+\end{itemize}
+
+\textbf{Flujo C: Datos extraídos incorrectos}
+\begin{itemize}
+    \item[Condición:] En el paso 12, el usuario detecta errores en la información extraída
+    \item[Acción:] El usuario corrige los campos erróneos antes de confirmar
+\end{itemize}
+
+\subsection{Referencias}
+\begin{itemize}
+    \item RN-001: Autenticación requerida
+    \item RN-005: Validación de montos
+    \item RN-008: Categorización automática
+    \item RF-001: Captura mediante OCR
+\end{itemize}

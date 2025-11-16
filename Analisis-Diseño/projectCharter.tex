@@ -1,0 +1,88 @@
+% !TeX root = analisis-diseno.tex
+
+%=========================================================
+%\chapter{Project Charter}
+
+\newcommand{\ESCOMPchSec}[1]{\rowcolor{colorAgua}\multicolumn{4}{|c|}{\bf #1}\\\hline}
+\newcommand{\ESCOMPchItem}[2]{{\bf {#1}} & \multicolumn{3}{p{.66\textwidth}|}{#2}\\\hline}
+\newcommand{\ESCOMPchSubItem}[3]{{\bf {#1}} & {#2} & \multicolumn{2}{p{.44\textwidth}|}{#3}\\\hline}
+\newcommand{\ESCOMPchSubSubItem}[4]{{\bf {#1}} & {#2} & {#3}& {#4}\\\hline}
+
+\cleardoublepage
+{\centering{\Huge Project Charter}\bigskip\\}
+\begin{table}[hptb!] 
+%\renewcommand\thetable{i}
+\begin{tabular}{|p{.22\textwidth} |p{.22\textwidth} |p{.22\textwidth} |p{.22\textwidth} |}
+	\hline
+	\ESCOMPchItem{Proyecto:}{FA-001, FinanzApp - Aplicación de Finanzas Personales.}
+	\ESCOMPchItem{Responsable:}{ESCOM-IPN, Estudiante desarrollador, Trabajo Terminal.}
+	\ESCOMPchItem{Autoriza:}{ESCOM-IPN, Director de TT, Profesor titular.}
+	\ESCOMPchItem{Background/Contexto:}{Desarrollo de una aplicación móvil y web para jóvenes adultos que les permita gestionar sus finanzas personales mediante OCR y categorización automática de gastos.}
+	\ESCOMPchItem{Beneficios esperados:}{Mejora en la educación financiera de jóvenes, automatización del registro de gastos, análisis predictivo de patrones de consumo.}
+	\ESCOMPchItem{Costo estimado:}{Proyecto académico - Sin costo monetario}
+	\ESCOMPchSubSubItem{Fecha de inicio:}{Agosto 2024}{\bf Fecha de término:}{Junio 2025.}
+	\ESCOMPchItem{Objetivo:}{Desarrollar una aplicación completa de finanzas personales que utilice tecnología OCR para digitalizar recibos y proporcione herramientas de análisis financiero a jóvenes adultos.}
+	\ESCOMPchSec{Entregables Principales}
+	\ESCOMPchSubItem{}{AD-001}{Documento de análisis y diseño del sistema}
+	\ESCOMPchSubItem{}{APP-WEB}{Aplicación web responsive}
+	\ESCOMPchSubItem{}{APP-MOV}{Aplicación móvil nativa}
+	\ESCOMPchSubItem{}{BD-001}{Base de datos diseñada e implementada}
+	\ESCOMPchSubItem{}{API-001}{API REST para comunicación entre componentes}
+	\ESCOMPchSubItem{}{DOC-USR}{Manual de usuario y documentación técnica}
+	\ESCOMPchSec{Alcance del proyecto}
+	\ESCOMPchItem{Incluye:}{
+		\begin{Titemize}
+			\Titem Aplicación web responsive con dashboard financiero
+			\Titem Aplicación móvil con funcionalidad OCR para escaneo de tickets
+			\Titem Sistema de categorización automática de gastos
+			\Titem Módulo de análisis predictivo y reportes
+			\Titem Sistema de notificaciones y alertas
+			\Titem Integración con APIs bancarias básicas
+		\end{Titemize}
+	}
+	\ESCOMPchItem{Excluye:}{
+		\begin{Titemize}
+			\Titem Integración con todas las instituciones bancarias
+			\Titem Funcionalidades de inversión avanzada
+			\Titem Sistema de pagos peer-to-peer
+			\Titem Asesoría financiera personalizada en tiempo real
+		\end{Titemize}
+	}
+	\ESCOMPchItem{Criterio de éxito:}{Aplicación funcional con OCR operativo, categorización automática con 85\% de precisión, y interfaz intuitiva validada por usuarios target.}
+	\ESCOMPchItem{Metodología:}{Desarrollo Ágil (Scrum), UML para modelado, Arquitectura en capas, Prototipado incremental}
+	\ESCOMPchSec{Datos de contacto}
+	\ESCOMPchItem{Desarrollador:}{[Tu nombre], [teléfono], [correo], Estudiante ESCOM}
+	\ESCOMPchItem{Director de TT:}{[Nombre del director], [contacto], Profesor ESCOM}
+	\ESCOMPchItem{Sinodales:}{[Nombres de sinodales], Profesores ESCOM}
+	\ESCOMPchItem{Riesgos y peligros:}{
+		\begin{Titemize}
+			\Titem Precisión insuficiente del OCR en tickets de baja calidad
+			\Titem Cambios en APIs de instituciones bancarias
+			\Titem Complejidad técnica mayor a la estimada
+			\Titem Problemas de privacidad y seguridad de datos financieros
+		\end{Titemize}
+	}
+	\ESCOMPchItem{Supuestos:}{
+		\begin{Titemize}
+			\Titem Disponibilidad de APIs públicas para integración bancaria
+			\Titem Acceso a datasets para entrenar modelos de categorización
+			\Titem Usuarios target dispuestos a participar en pruebas
+			\Titem Infraestructura técnica suficiente para desarrollo
+		\end{Titemize}
+	}
+	\ESCOMPchItem{Restricciones y dependencias:}{
+		\begin{Titemize}
+			\Titem Cumplimiento con regulaciones de protección de datos
+			\Titem Tiempo limitado por ciclo escolar
+			\Titem Recursos limitados de servidor para implementación
+			\Titem Dependencia de librerías de terceros para OCR
+		\end{Titemize}
+	}
+	\ESCOMPchSec{Supervisión}
+	\ESCOMPchSubItem{Reuniones semanales:}{Estudiante desarrollador}{ reporta a Director de TT}
+	\ESCOMPchSubItem{Dudas técnicas:}{Estudiante desarrollador}{ consulta con Director y Sinodales}
+	\ESCOMPchSubItem{Avances mensuales:}{Director de TT}{ reporta a Coordinación de TT}
+\end{tabular}
+	\caption{Resumen del proyecto FinanzApp}
+	\label{tbl:projectCharter}
+\end{table}

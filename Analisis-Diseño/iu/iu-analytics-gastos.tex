@@ -1,0 +1,130 @@
+% !TeX root = ../analisis-diseno.tex
+
+%=========================================================
+% Interfaz de usuario: Analytics de gastos
+
+\begin{interfaceUsario}{IU-004}{Analytics de gastos}{
+	Interfaz rica en visualizaciones que presenta análisis detallados de patrones de gasto, tendencias temporales, predicciones personalizadas y insights accionables para mejorar la salud financiera del usuario.
+}
+	\IUactores{\cdtActorRef{Usuario Joven}{Usuario que desea comprender sus patrones financieros y recibir insights predictivos}}
+	\IUitem[Tipo]{Dashboard analítico}
+	\IUitem[Plataforma]{Móvil y Web}
+	\IUitem[Prioridad]{Media}
+	\IUitem[Estatus]{Activo}
+	\IUitem[Fecha]{Noviembre 2024}
+
+	% Elementos de la interfaz
+	\IUelem{Header de analytics}{
+		\IUli{Selector de período: Mes, Trimestre, Año, Personalizado}
+		\IUli{Toggle entre vista ``Gastos'' e ``Ingresos''}
+		\IUli{Botón de exportar reportes con opciones PDF/Excel}
+		\IUli{Indicador de última actualización de datos}
+	}
+
+	\IUelem{Resumen ejecutivo}{
+		\IUli{Cards con métricas clave: Total gastado, Promedio diario, Cambio vs período anterior}
+		\IUli{Indicadores de tendencia con íconos y colores (↑ rojo, ↓ verde)}
+		\IUli{Gasto más alto del período con detalles}
+		\IUli{Categoría dominante con porcentaje del total}
+	}
+
+	\IUelem{Gráfico principal de tendencias}{
+		\IUli{Line chart de gastos diarios/semanales/mensuales según período}
+		\IUli{Línea de promedio móvil para identificar tendencias}
+		\IUli{Marcadores de eventos especiales (días de pago, gastos grandes)}
+		\IUli{Zoom y pan para exploración detallada}
+	}
+
+	\IUelem{Análisis por categorías}{
+		\IUli{Bar chart horizontal de gastos por categoría}
+		\IUli{Porcentaje del total y comparación con período anterior}
+		\IUli{Drill-down: tap en categoría muestra subcategorías}
+		\IUli{Código de colores consistente con el resto de la app}
+	}
+
+	\IUelem{Heatmap de patrones}{
+		\IUli{Calendar heatmap mostrando intensidad de gastos por día}
+		\IUli{Identificación visual de días de mayor/menor actividad}
+		\IUli{Patrones de días de semana vs fines de semana}
+		\IUli{Correlación con fechas de pago y eventos}
+	}
+
+	\IUelem{Predicciones e insights}{
+		\IUli{Cards de predicciones: ``Gastarás aproximadamente \$X esta semana''}
+		\IUli{Insights automáticos: ``Gastas 30\% más los viernes''}
+		\IUli{Alertas proactivas: ``Podrías exceder tu presupuesto de entretenimiento''}
+		\IUli{Nivel de confianza de cada predicción (Alto/Medio/Bajo)}
+	}
+
+	\IUelem{Comparaciones y benchmarks}{
+		\IUli{Comparación con usuarios similares (anónima, opt-in)}
+		\IUli{Percentil del usuario en diferentes categorías}
+		\IUli{Goals vs reality: progreso hacia metas financieras}
+		\IUli{Eficiencia de presupuestos histórica}
+	}
+
+	% Interacciones principales
+	\IUinter{
+		\IUli{Tap en punto del gráfico: Mostrar transacciones específicas del día}
+		\IUli{Pinch to zoom en gráficos: Exploración detallada de períodos}
+		\IUli{Swipe horizontal: Navegar entre diferentes tipos de análisis}
+		\IUli{Tap en insight card: Expandir explicación detallada}
+		\IUli{Long press en categoría: Opciones de filtrado y configuración}
+		\IUli{Pull to refresh: Recalcular analytics con datos más recientes}
+	}
+
+	% Estados de la interfaz
+	\IUestados{
+		\IUli{\textbf{Cargando analytics}: Skeleton screens para gráficos y métricas}
+		\IUli{\textbf{Datos insuficientes}: Empty state con sugerencias para mejorar análisis}
+		\IUli{\textbf{Calculando predicciones}: Loading state específico para insights de IA}
+		\IUli{\textbf{Error en cálculos}: Fallback con datos básicos disponibles}
+		\IUli{\textbf{Exportando reporte}: Progress indicator para generación de documentos}
+	}
+
+	% Personalización
+	\IUpersonalization{
+		\IUli{Dashboard configurable: usuario puede reordenar widgets}
+		\IUli{Métricas favoritas: pin de KPIs más relevantes para el usuario}
+		\IUli{Alertas personalizadas: umbrales customizables por categoría}
+		\IUli{Frecuencia de insights: diario, semanal, mensual}
+		\IUli{Temas de colores para gráficos: accesibilidad y preferencia}
+	}
+
+	% Insights inteligentes
+	\IUinsights{
+		\IUli{\textbf{Detección de anomalías}: ``Gasto inusual de \$500 en restaurantes''}
+		\IUli{\textbf{Patrones temporales}: ``Gastas 40\% más los primeros 5 días del mes''}
+		\IUli{\textbf{Oportunidades de ahorro}: ``Podrías ahorrar \$200 reduciendo cafeterías''}
+		\IUli{\textbf{Predicciones de riesgo}: ``Alto riesgo de exceder presupuesto mensual''}
+		\IUli{\textbf{Recomendaciones contextuales}: ``Considera transferir \$100 a ahorros''}
+	}
+
+	% Exportación y sharing
+	\IUexport{
+		\IUli{PDF report con gráficos y métricas clave}
+		\IUli{Excel/CSV con datos raw para análisis externo}
+		\IUli{Compartir insights específicos en redes sociales (sin montos)}
+		\IUli{Email automático de resumen semanal/mensual}
+		\IUli{Integración con herramientas de productividad (Google Sheets)}
+	}
+
+	% Accesibilidad en gráficos
+	\IUaccessibility{
+		\IUli{Tabla de datos alternativa para lectores de pantalla}
+		\IUli{Descripciones de audio para tendencias importantes}
+		\IUli{High contrast mode para visualizaciones}
+		\IUli{Texturas y patrones además de colores para diferenciación}
+		\IUli{Navegación por teclado en elementos interactivos}
+	}
+
+	% Referencias
+	\IUref{
+		\UCref{CU-003}{Consultar analytics y predicciones}
+		\BRref{RN-019}{Histórico mínimo}
+		\BRref{RN-023}{Análisis de tendencias}
+		\MSGref{MSG-009}{Gasto atípico detectado}
+		\MSGref{MSG-011}{Consejo de ahorro}
+		\MSGref{MSG-018}{Predicción de gasto}
+	}
+\end{interfaceUsario}

@@ -1,0 +1,110 @@
+% !TeX root = ../analisis-diseno.tex
+
+%=========================================================
+% Caso de uso: Sincronizar datos entre dispositivos
+
+\begin{UseCase}{CU-005}{Sincronizar datos entre dispositivos}{
+	El sistema mantiene automáticamente sincronizados los datos financieros del usuario entre la aplicación móvil y la plataforma web, garantizando consistencia y acceso actualizado desde cualquier dispositivo.
+}
+	\UCactor{\cdtActorRef{Usuario Joven}{Persona que utiliza FinanzApp desde múltiples dispositivos y requiere datos actualizados}}
+	\UCsysactor{\cdtActorRef{Sistema de Sincronización}{Componente automático que gestiona la consistency de datos}}
+	\UCitem[Versión]{1.0}
+	\UCitem[Autor]{Equipo FinanzApp}
+	\UCitem[Fuente]{Análisis de requerimientos multiplataforma}
+	\UCitem[Prioridad]{Alta}
+	\UCitem[Estatus]{Activo}
+	\UCitem[Fecha]{Noviembre 2024}
+
+	% Precondiciones
+	\UCpre{
+		\UCli{El usuario debe estar autenticado en al menos un dispositivo}
+		\UCli{Al menos uno de los dispositivos debe tener conexión a internet activa}
+		\UCli{Los dispositivos deben tener la aplicación actualizada a versión compatible}
+		\UCli{El usuario debe tener una sesión válida no expirada}
+	}
+
+	% Postcondiciones
+	\UCpost{
+		\UCli{Todos los dispositivos activos muestran los mismos datos actualizados}
+		\UCli{Los conflictos de sincronización se resuelven automáticamente}
+		\UCli{Se mantiene un log de sincronización para auditoría}
+		\UCli{Los dispositivos offline almacenan cambios para sincronizar al reconectarse}
+	}
+
+	% Flujo principal
+	\UCstart
+		\UCstep[\UCactor] El usuario realiza una modificación en cualquier dispositivo (ej: registra un gasto en móvil)
+		\UCstep[\UCsystem] El sistema local guarda el cambio con timestamp y marca como ``pendiente de sincronización''
+		\UCstep[\UCsystem] El sistema detecta conexión a internet disponible
+		\UCstep[\UCsystem] El sistema de sincronización inicia el proceso de upload de cambios pendientes
+		\UCstep[\UCsystem] El servidor recibe los cambios y valida la integridad de los datos
+		\UCstep[\UCsystem] El servidor procesa los cambios y actualiza la base de datos central
+		\UCstep[\UCsystem] El servidor genera eventos de notificación para otros dispositivos del usuario
+		\UCstep[\UCsystem] Los dispositivos conectados reciben notificación de cambios disponibles
+		\UCstep[\UCsystem] Cada dispositivo descarga únicamente los cambios incrementales
+		\UCstep[\UCsystem] Los dispositivos actualizan su cache local y interfaz de usuario
+		\UCstep[\UCsystem] El sistema confirma sincronización exitosa a todos los dispositivos
+		\UCstep[\UCactor] El usuario ve los cambios reflejados en todos sus dispositivos activos
+		\UCstep[\UCsystem] El sistema marca la sincronización como completada y actualiza timestamps
+	\UCend
+
+	% Trayectorias alternativas
+	\UCitem[Trayectorias alternativas]{
+		\UCaltBegin{A}
+			\UCaltitem[Condición]{En el paso 3 no hay conexión a internet disponible}
+			\UCaltitem[\UCsystem] El sistema almacena los cambios localmente con flag ``offline''
+			\UCaltitem[\UCsystem] El sistema muestra indicador de ``Trabajando offline'' al usuario
+			\UCaltitem[\UCsystem] El sistema activa listener para detectar reconexión automáticamente
+			\UCaltitem[\UCsystem] Al detectar conectividad, retoma desde el paso 4 del flujo principal
+			\UCaltitem[\UCsystem] El sistema procesa todos los cambios offline acumulados
+		\UCaltEnd
+
+		\UCaltBegin{B}
+			\UCaltitem[Condición]{En el paso 5 se detecta conflicto de datos (edición concurrente)}
+			\UCaltitem[\UCsystem] El sistema identifica el conflicto comparando timestamps y versiones
+			\UCaltitem[\UCsystem] El sistema aplica estrategia ``Last-Write-Wins'' para resolver automáticamente
+			\UCaltitem[\UCsystem] El sistema notifica al usuario sobre la resolución del conflicto
+			\UCaltitem[\UCsystem] El sistema ofrece opción de deshacer la resolución automática si es incorrecta
+			\UCaltitem[\UCactor] El usuario puede aceptar la resolución o realizar corrección manual
+			\UCaltitem[\UCsystem] Continúa con el paso 6 del flujo principal
+		\UCaltEnd
+
+		\UCaltBegin{C}
+			\UCaltitem[Condición]{La sincronización falla por error del servidor}
+			\UCaltitem[\UCsystem] El sistema detecta el error y activa mecanismo de reintentos
+			\UCaltitem[\UCsystem] El sistema espera backoff exponencial (1s, 2s, 4s, 8s) entre reintentos
+			\UCaltitem[\UCsystem] El sistema intenta hasta 3 veces antes de marcar como fallida
+			\UCaltitem[\UCsystem] Si todos los reintentos fallan, muestra mensaje: \MSGref{MSG-012}{Error de conexión}
+			\UCaltitem[\UCsystem] El sistema programa reintento automático en 15 minutos
+			\UCaltitem[\UCactor] El usuario puede forzar reintento manual o continuar trabajando offline
+		\UCaltEnd
+
+		\UCaltBegin{D}
+			\UCaltitem[Condición]{El usuario cambia de dispositivo durante una sincronización}
+			\UCaltitem[\UCsystem] El sistema detecta login desde nuevo dispositivo
+			\UCaltitem[\UCsystem] El sistema prioriza la descarga completa de datos para el nuevo dispositivo
+			\UCaltitem[\UCsystem] El sistema muestra indicador de ``Sincronizando datos...'' durante la descarga inicial
+			\UCaltitem[\UCsystem] Una vez completada la descarga inicial, se integra al flujo normal de sincronización
+			\UCaltitem[\UCsystem] El sistema notifica: \MSGref{MSG-008}{Sincronización completa}
+		\UCaltEnd
+
+		\UCaltBegin{E}
+			\UCaltitem[Condición]{Se detecta actividad sospechosa de sincronización}
+			\UCaltitem[\UCsystem] El sistema detecta patrones anómalos (múltiples dispositivos, ubicaciones extrañas)}
+			\UCaltitem[\UCsystem] El sistema suspende temporalmente la sincronización automática
+			\UCaltitem[\UCsystem] El sistema envía alerta de seguridad al email del usuario
+			\UCaltitem[\UCsystem] El sistema requiere re-autenticación para continuar sincronizando
+			\UCaltitem[\UCactor] El usuario debe confirmar la actividad legítima y re-autenticarse
+			\UCaltitem[\UCsystem] Tras confirmación, se reanuda la sincronización normal
+		\UCaltEnd
+	}
+
+	% Referencias
+	\UCitem[Referencias]{
+		\UCli \BRref{RN-011}{Sincronización de datos}
+		\UCli \BRref{RN-012}{Backup automático}
+		\UCli \RFref{RF-010}{Sincronización en tiempo real}
+		\UCli \RFref{RF-011}{Resolución automática de conflictos}
+		\UCli \RFref{RF-012}{Funcionalidad offline}
+	}
+\end{UseCase}

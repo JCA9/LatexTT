@@ -1,0 +1,203 @@
+% !TeX root = analisis-diseno.tex
+
+%=========================================================
+\chapter{Modelo dinámico}
+\label{cap:dinamico}
+
+Este capítulo presenta el modelo dinámico de FinanzApp, describiendo el comportamiento del sistema a través del tiempo mediante diagramas de actividades, secuencia y estados. Se muestran los flujos principales de trabajo, las interacciones entre componentes y la evolución temporal de los procesos de negocio.
+
+%---------------------------------------------------------
+\section{Diagramas de actividades}
+
+Los diagramas de actividades muestran el flujo de trabajo y las decisiones que ocurren en los procesos principales de FinanzApp.
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Proceso de digitalización de ticket}
+
+\begin{figure}[htpb!]
+	\begin{center}
+		% TODO: Agregar imagen correspondiente
+		\caption{Diagrama de actividades - Digitalización de ticket}
+		\label{fig:actividadDigitalizacion}
+	\end{center}
+\end{figure}
+
+Este diagrama muestra el flujo completo desde que el usuario fotografía un ticket hasta que la transacción queda registrada y categorizada en el sistema. Incluye validaciones, procesamiento OCR, categorización automática y confirmación del usuario.
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Proceso de análisis predictivo}
+
+\begin{figure}[htpb!]
+	\begin{center}
+		% TODO: Agregar imagen correspondiente
+		\caption{Diagrama de actividades - Análisis predictivo}
+		\label{fig:actividadAnalisis}
+	\end{center}
+\end{figure}
+
+Este diagrama representa el proceso automatizado de análisis de patrones de gasto, generación de predicciones y creación de alertas proactivas para el usuario.
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Proceso de configuración de presupuesto}
+
+\begin{figure}[htpb!]
+	\begin{center}
+		% TODO: Agregar imagen correspondiente
+		\caption{Diagrama de actividades - Configuración de presupuesto}
+		\label{fig:actividadPresupuesto}
+	\end{center}
+\end{figure}
+
+Este diagrama muestra cómo el usuario configura un nuevo presupuesto, incluyendo la selección de categorías, definición de límites y configuración de alertas.
+
+%---------------------------------------------------------
+\section{Diagramas de secuencia}
+
+Los diagramas de secuencia muestran las interacciones entre los diferentes actores y componentes del sistema en orden cronológico.
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Secuencia de registro de gasto con OCR}
+
+\begin{figure}[htpb!]
+	\begin{center}
+		% TODO: Agregar imagen correspondiente
+		\caption{Diagrama de secuencia - Registro de gasto con OCR}
+		\label{fig:secuenciaOCR}
+	\end{center}
+\end{figure}
+
+Esta secuencia detalla la interacción entre el usuario, la aplicación móvil, el servicio OCR, el sistema de categorización y la base de datos durante el registro de un gasto mediante fotografía de ticket.
+
+\textbf{Actores participantes:}
+\begin{itemize}
+	\item \textcolor{userColor}{\textbf{Usuario}}: Inicia el proceso fotografiando un ticket
+	\item \textbf{App Móvil}: Interfaz de usuario y coordinación de servicios
+	\item \textbf{Servicio OCR}: Procesamiento de imagen y extracción de texto
+	\item \textbf{Motor de Categorización}: Clasificación automática de la transacción
+	\item \textbf{Base de Datos}: Almacenamiento persistente de la información
+\end{itemize}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Secuencia de generación de insights}
+
+\begin{figure}[htpb!]
+	\begin{center}
+		% TODO: Agregar imagen correspondiente
+		\caption{Diagrama de secuencia - Generación de insights}
+		\label{fig:secuenciaInsights}
+	\end{center}
+\end{figure}
+
+Esta secuencia muestra cómo el sistema analiza los datos históricos del usuario para generar insights financieros personalizados y recomendaciones proactivas.
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Secuencia de sincronización entre dispositivos}
+
+\begin{figure}[htpb!]
+	\begin{center}
+		% TODO: Agregar imagen correspondiente
+		\caption{Diagrama de secuencia - Sincronización entre dispositivos}
+		\label{fig:secuenciaSincronizacion}
+	\end{center}
+\end{figure}
+
+Esta secuencia ilustra cómo los datos se mantienen sincronizados en tiempo real entre la aplicación móvil y la plataforma web cuando el usuario realiza cambios desde cualquier dispositivo.
+
+%---------------------------------------------------------
+\section{Diagramas de comunicación}
+
+Los diagramas de comunicación muestran las interacciones entre objetos enfocándose en los enlaces y mensajes intercambiados.
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Comunicación en el procesamiento de tickets}
+
+\begin{figure}[htpb!]
+	\begin{center}
+		% TODO: Agregar imagen correspondiente
+		\caption{Diagrama de comunicación - Procesamiento de tickets}
+		\label{fig:comunicacionTickets}
+	\end{center}
+\end{figure}
+
+Este diagrama muestra la estructura de comunicación entre los componentes involucrados en el procesamiento de tickets, destacando los tipos de mensajes y la coordinación entre servicios.
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Comunicación en el sistema de notificaciones}
+
+\begin{figure}[htpb!]
+	\begin{center}
+		% TODO: Agregar imagen correspondiente
+		\caption{Diagrama de comunicación - Sistema de notificaciones}
+		\label{fig:comunicacionNotificaciones}
+	\end{center}
+\end{figure}
+
+Este diagrama representa cómo los diferentes componentes del sistema colaboran para generar, filtrar y entregar notificaciones relevantes al usuario.
+
+%---------------------------------------------------------
+\section{Análisis de concurrencia}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Procesamiento concurrente de tickets}
+
+El sistema debe manejar múltiples usuarios procesando tickets simultáneamente. Se implementa un patrón de cola de mensajes para gestionar la carga del servicio OCR:
+
+\begin{itemize}
+	\item \textbf{Cola de procesamiento}: Máximo 100 tickets en cola simultáneamente
+	\item \textbf{Workers paralelos}: 10 procesos OCR trabajando en paralelo
+	\item \textbf{Timeout}: 30 segundos máximo por procesamiento
+	\item \textbf{Reintentos}: Hasta 3 intentos automáticos en caso de falla
+	\item \textbf{Balanceador de carga}: Distribución equitativa entre workers disponibles
+\end{itemize}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Sincronización de datos}
+
+Para mantener la consistencia de datos entre dispositivos, se implementa un patrón de sincronización eventual:
+
+\begin{itemize}
+	\item \textbf{Versionado optimista}: Cada registro incluye timestamp y version
+	\item \textbf{Resolución de conflictos}: Last-write-wins con notificación al usuario
+	\item \textbf{Sincronización incremental}: Solo se transfieren cambios desde la última sincronización
+	\item \textbf{Caché local}: Datos disponibles offline con sincronización al reconectar
+	\item \textbf{Notificaciones push}: Actualizaciones en tiempo real vía WebSockets
+\end{itemize}
+
+%---------------------------------------------------------
+\section{Patrones de comportamiento identificados}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Patrón Observer para notificaciones}
+
+El sistema utiliza el patrón Observer para notificar cambios de estado relevantes:
+
+\begin{itemize}
+	\item \textbf{Sujetos observados}: Presupuestos, metas financieras, transacciones
+	\item \textbf{Observadores}: Sistema de notificaciones, dashboard, widgets de resumen
+	\item \textbf{Eventos}: Exceso de presupuesto, meta alcanzada, gasto atípico detectado
+	\item \textbf{Filtros}: Configuración de usuario para tipos de notificación deseados
+\end{itemize}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Patrón State para gestión de transacciones}
+
+Las transacciones siguen el patrón State para manejar su ciclo de vida:
+
+\begin{itemize}
+	\item \textbf{Estados definidos}: Pendiente, Procesando, Categorizada, Confirmada
+	\item \textbf{Transiciones controladas}: Validación de prerrequisitos antes de cambio de estado
+	\item \textbf{Acciones por estado}: Diferentes operaciones disponibles según el estado actual
+	\item \textbf{Rollback}: Capacidad de revertir a estados anteriores en caso de error
+\end{itemize}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Patrón Strategy para categorización}
+
+El sistema de categorización implementa el patrón Strategy para diferentes algoritmos:
+
+\begin{itemize}
+	\item \textbf{Estrategias disponibles}: ML automático, reglas basadas en texto, aprendizaje del usuario
+	\item \textbf{Selección dinámica}: Algoritmo elegido según confianza y contexto
+	\item \textbf{Combinación de estrategias}: Voting ensemble para mayor precisión
+	\item \textbf{Aprendizaje continuo}: Retroalimentación del usuario mejora las estrategias
+\end{itemize}

@@ -1,0 +1,188 @@
+% !TeX root = analisis-diseno.tex
+
+%=========================================================
+\chapter{Modelo del alcance}
+\label{cap:alcance}
+
+Este capítulo presenta el análisis detallado de la problemática que atiende FinanzApp, definiendo el alcance del proyecto, los objetivos a alcanzar, y los límites del sistema. Se identifican los actores principales, casos de uso del sistema y se establece el contexto de operación de la aplicación de finanzas personales.
+	
+%---------------------------------------------------------
+\section{Análisis de la problemática}
+
+La problemática del manejo financiero en jóvenes adultos se presenta como un desafío multifacético que requiere soluciones tecnológicas innovadoras. A continuación se detallan los aspectos específicos del problema, sus causas y las características de la solución propuesta.
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Contexto del proyecto}
+
+En México, los jóvenes adultos de 18 a 30 años representan el 23\% de la población económicamente activa, sin embargo, solo el 32\% cuenta con productos financieros formales según la CNBV (2021). Este grupo demográfico enfrenta desafíos únicos en la gestión de sus finanzas personales: ingresos variables, gastos impulsivos, falta de educación financiera formal y resistencia a utilizar herramientas tradicionales de control de gastos.
+
+El ecosistema actual de aplicaciones financieras está dominado por soluciones que requieren entrada manual de datos o están orientadas a usuarios con ingresos estables y conocimientos financieros avanzados. Los jóvenes prefieren soluciones móviles, intuitivas y que requieran mínimo esfuerzo de configuración y mantenimiento.
+
+La penetración de smartphones en este segmento es del 95\%, y el 87\% utiliza aplicaciones móviles para actividades de compra y pagos, según datos del INEGI (2023). Sin embargo, menos del 15\% utiliza aplicaciones especializadas en gestión financiera personal.
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Problemas identificados}
+
+El problema general que atiende el presente proyecto es: 
+
+\begin{quotation}
+	{\em ``Los jóvenes adultos carecen de herramientas efectivas y automatizadas para la gestión de sus finanzas personales, lo que resulta en decisiones financieras poco informadas, gastos descontrolados y ausencia de hábitos de ahorro, afectando su bienestar económico presente y futuro.''}
+\end{quotation}
+
+Los problemas identificados son\FootnotePrioridad
+
+\begin{problemas}
+   \problema{P-01}{Registro manual tedioso}{Los usuarios abandonan las aplicaciones de finanzas debido a la necesidad de registrar manualmente cada gasto, lo que consume tiempo y genera errores}{MA}
+   \problema{P-02}{Falta de categorización automática}{Los gastos no se categorizan automáticamente, requiriendo que el usuario clasifique cada transacción manualmente}{MA}
+   \problema{P-03}{Ausencia de análisis predictivo}{Las herramientas existentes no proporcionan análisis predictivo de patrones de gasto ni alertas proactivas}{A}
+   \problema{P-04}{Interfaces poco intuitivas}{Las aplicaciones financieras existentes tienen interfaces complejas no adaptadas a jóvenes usuarios}{A}
+   \problema{P-05}{Sincronización limitada}{Falta de sincronización entre dispositivos móviles y plataformas web para acceso multiplataforma}{M}
+   \problema{P-06}{Educación financiera pasiva}{Ausencia de consejos contextuales y educación financiera integrada en el flujo de uso}{M}
+\end{problemas}
+ 
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Análisis de causas probables}
+
+\begin{description}
+	\item[P-01] La entrada manual de datos requiere disciplina y tiempo que los jóvenes usuarios no están dispuestos a invertir, especialmente cuando realizan múltiples transacciones diarias.
+	\item[P-02] Los algoritmos de categorización existentes son genéricos y no se adaptan a los patrones de consumo específicos de jóvenes adultos mexicanos.
+	\item[P-03] Las herramientas actuales se centran en reportes históricos sin aprovechar el potencial de machine learning para predicción de comportamientos.
+	\item[P-04] El diseño de interfaces sigue patrones de aplicaciones bancarias tradicionales, no considerando la experiencia de usuario esperada por nativos digitales.
+	\item[P-05] El desarrollo se enfoca en una sola plataforma sin considerar el comportamiento multi-dispositivo actual de los usuarios.
+	\item[P-06] La educación financiera se presenta como contenido estático separado del contexto de uso real de la aplicación.
+\end{description}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Análisis de posibles consecuencias}
+
+\begin{description}
+	\item[P-01] Abandono de herramientas de control financiero, perpetuando la gestión desordenada de finanzas personales.
+	\item[P-02] Categorización incorrecta de gastos, generando reportes inexactos que no reflejan la realidad financiera del usuario.
+	\item[P-03] Decisiones financieras reactivas en lugar de proactivas, perdiendo oportunidades de ahorro y control de gastos.
+	\item[P-04] Resistencia a adoptar tecnología financiera, manteniendo métodos tradicionales ineficientes.
+	\item[P-05] Pérdida de continuidad en el seguimiento financiero cuando el usuario cambia de dispositivo.
+	\item[P-06] Perpetuación de la falta de educación financiera práctica en la población joven.
+\end{description}
+ 
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Características de la solución}
+
+Para atender la problemática anterior se propone implementar las siguientes acciones.
+
+\begin{description}
+	\item[P-01] Implementar tecnología OCR avanzada que permita digitalizar automáticamente tickets y recibos, eliminando la necesidad de entrada manual de datos.
+	\item[P-02] Desarrollar un sistema de categorización inteligente basado en machine learning, entrenado específicamente con patrones de consumo de jóvenes mexicanos.
+	\item[P-03] Integrar algoritmos de análisis predictivo que identifiquen patrones de gasto y generen alertas proactivas sobre presupuestos y metas financieras.
+	\item[P-04] Diseñar una interfaz de usuario moderna, intuitiva y gamificada que mantenga el engagement del usuario joven.
+	\item[P-05] Crear una arquitectura multiplataforma que sincronice datos en tiempo real entre aplicación móvil y plataforma web.
+	\item[P-06] Incorporar un sistema de consejos contextuales y educación financiera just-in-time, integrada en el flujo natural de uso de la aplicación.
+\end{description}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Síntesis de la problemática}
+
+El análisis revela que la gestión financiera deficiente en jóvenes adultos se debe principalmente a la ausencia de herramientas que se adapten a sus hábitos digitales y estilo de vida. FinanzApp propone una solución integral que combina automatización mediante OCR, inteligencia artificial para categorización y análisis predictivo, y una experiencia de usuario diseñada específicamente para nativos digitales.
+
+La implementación de esta solución beneficiará a los usuarios mediante: reducción del 90\% del tiempo invertido en registro de gastos, mejora del 85\% en precisión de categorización, incremento del 60\% en el seguimiento consistente de finanzas personales, y desarrollo de mejores hábitos financieros a través de educación contextual integrada.
+
+%---------------------------------------------------------
+\section{Objetivos del proyecto}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Objetivo general}
+
+\begin{quotation}
+	{\em ``Desarrollar una aplicación móvil y web de finanzas personales con tecnología OCR y análisis predictivo para automatizar el seguimiento de gastos y mejorar la educación financiera de jóvenes adultos mediante una interfaz intuitiva, categorización inteligente y consejos contextuales.''}
+\end{quotation}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Objetivos específicos}
+
+\begin{description}
+	\item[OE-01] Implementar un sistema OCR con precisión mínima del 85\% para digitalización automática de tickets y recibos de compra.
+	\item[OE-02] Desarrollar un algoritmo de categorización automática de gastos con precisión mínima del 80\% basado en patrones de consumo de jóvenes mexicanos.
+	\item[OE-03] Crear un sistema de análisis predictivo que identifique patrones de gasto y genere alertas proactivas con 72 horas de anticipación.
+	\item[OE-04] Diseñar una interfaz de usuario que logre un tiempo de onboarding menor a 3 minutos y una retención del 70\% a 30 días.
+	\item[OE-05] Implementar sincronización en tiempo real entre aplicación móvil y plataforma web con latencia máxima de 2 segundos.
+	\item[OE-06] Integrar un sistema de educación financiera contextual que incremente el conocimiento financiero medido en un 40\%.
+	\item[OE-07] Desarrollar un sistema de notificaciones inteligentes que mejore el engagement sin generar fatiga de notificaciones.
+	\item[OE-08] Garantizar la seguridad de datos financieros mediante cifrado AES-256 y cumplimiento de estándares PCI DSS nivel 1.
+\end{description}
+
+%---------------------------------------------------------
+\section{Límites del sistema}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Límites de funcionalidad}
+
+El sistema FinanzApp incluye las siguientes funcionalidades:
+
+\begin{itemize}
+	\item Digitalización automática de tickets y recibos mediante OCR
+	\item Categorización inteligente de gastos e ingresos
+	\item Dashboard financiero con visualizaciones interactivas
+	\item Sistema de presupuestos y metas financieras
+	\item Análisis predictivo de patrones de gasto
+	\item Notificaciones y alertas proactivas
+	\item Educación financiera contextual
+	\item Reportes y análisis históricos
+	\item Sincronización multiplataforma
+	\item Exportación de datos en formatos estándar
+\end{itemize}
+
+El sistema NO incluye:
+
+\begin{itemize}
+	\item Procesamiento de pagos o transferencias monetarias
+	\item Integración completa con todas las instituciones bancarias mexicanas
+	\item Asesoría financiera personalizada por expertos humanos
+	\item Funcionalidades de inversión en bolsa o criptomonedas
+	\item Sistema de préstamos peer-to-peer
+	\item Integración con sistemas contables empresariales
+	\item Funcionalidades de banca en línea
+\end{itemize}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Límites de operación}
+
+\begin{itemize}
+	\item \textbf{Usuarios simultáneos:} Máximo 10,000 usuarios concurrentes
+	\item \textbf{Almacenamiento:} Máximo 100 MB por usuario para imágenes de tickets
+	\item \textbf{Procesamiento OCR:} Máximo 50 tickets por usuario por día
+	\item \textbf{Soporte de idiomas:} Español (México) únicamente
+	\item \textbf{Monedas soportadas:} Peso mexicano (MXN) únicamente
+	\item \textbf{Plataformas móviles:} Android 8.0+ e iOS 12.0+
+	\item \textbf{Navegadores web:} Chrome 90+, Firefox 88+, Safari 14+
+	\item \textbf{Conectividad:} Requiere conexión a internet para sincronización
+\end{itemize}
+
+%---------------------------------------------------------
+\section{Alcance del sistema}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Casos de uso del sistema}
+
+\begin{figure}[htpb!]
+	\begin{center}
+		% TODO: Agregar imagen correspondiente
+		\caption{Diagrama de casos de uso general del sistema FinanzApp}
+		\label{fig:casosUsoGeneral}
+	\end{center}
+\end{figure}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Actores del sistema}
+
+\begin{description}
+	\item[\textcolor{userColor}{\textbf{Usuario Joven}}] Persona de 18 a 30 años que utiliza la aplicación para gestionar sus finanzas personales. Es el actor principal del sistema.
+	
+	\item[\textcolor{userColor}{\textbf{Administrador del Sistema}}] Responsable técnico de mantener la operación del sistema, monitorear el rendimiento y gestionar la infraestructura.
+	
+	\item[\textcolor{userColor}{\textbf{Analista de Datos}}] Especialista encargado de analizar patrones de uso, mejorar algoritmos de categorización y generar reportes de rendimiento del sistema.
+	
+	\item[\textcolor{userColor}{\textbf{Sistema Bancario}}] Actor de sistema que representa las APIs de instituciones bancarias para obtener información de transacciones.
+	
+	\item[\textcolor{userColor}{\textbf{Servicio OCR}}] Actor de sistema que proporciona capacidades de reconocimiento óptico de caracteres para digitalizar tickets.
+	
+	\item[\textcolor{userColor}{\textbf{Sistema de Notificaciones}}] Actor de sistema responsable de enviar notificaciones push, SMS y emails a los usuarios.
+\end{description}

@@ -1,0 +1,53 @@
+% !TeX root = analisis-diseno.tex
+
+%=========================================================
+\chapter{Introducción}
+
+	Este documento contiene el análisis y diseño completo del proyecto ``{\em FinanzApp - Aplicación de Finanzas Personales}'' que servirá como base para el análisis, diseño, construcción, pruebas y aceptación del sistema.
+
+%---------------------------------------------------------
+\section{Presentación}
+
+En la actualidad, los jóvenes adultos enfrentan significativos desafíos en la gestión de sus finanzas personales. La falta de herramientas accesibles y automatizadas para el seguimiento de gastos, combinada con la ausencia de educación financiera práctica, resulta en una gestión deficiente de los recursos económicos personales. La mayoría de las aplicaciones existentes requieren entrada manual de datos, lo que genera resistencia al uso y abandono de la herramienta.
+
+FinanzApp surge como una solución innovadora que aprovecha la tecnología OCR (Reconocimiento Óptico de Caracteres) para automatizar la captura de gastos mediante el escaneo de tickets y recibos. El sistema está específicamente diseñado para jóvenes adultos de 18 a 30 años, proporcionando una interfaz intuitiva, categorización automática inteligente y análisis predictivo de patrones de consumo.
+
+Este documento está dirigido al equipo de desarrollo, profesores evaluadores, y futuras iteraciones del proyecto. Debe utilizarse como referencia completa para comprender la arquitectura, funcionalidades, y decisiones de diseño del sistema FinanzApp.
+	
+%---------------------------------------------------------
+\section{Organización del contenido}
+
+El documento está organizado en los siguientes capítulos:
+
+En el capítulo \ref{cap:alcance} se presenta el modelo del alcance, definiendo los límites del sistema, actores involucrados y casos de uso principales.
+
+En el capítulo \ref{cap:negocio} se describe el modelo del negocio, incluyendo las reglas de negocio, entidades principales y procesos organizacionales.
+
+En el capítulo \ref{cap:dinamico} se presenta el modelo dinámico del sistema, mostrando los diagramas de secuencia y actividades que representan el comportamiento del sistema.
+
+En el capítulo \ref{cap:interaccion} se detalla el modelo de interacción, incluyendo los diagramas de comunicación y colaboración entre los componentes del sistema.
+
+En el capítulo \ref{cap:arquitectura} se presenta la arquitectura del sistema, definiendo la estructura tecnológica, patrones de diseño y componentes principales.
+
+En el capítulo \ref{cap:interfaces} se describe el diseño de la interfaz de usuario, incluyendo mockups, flujos de navegación y principios de UX aplicados.
+
+En el capítulo \ref{cap:datos} se presenta el modelo de datos, con el diseño de la base de datos y las relaciones entre entidades.
+
+En el capítulo \ref{cap:conclusiones} se presentan las conclusiones del análisis y diseño, junto con recomendaciones para la implementación.
+
+%---------------------------------------------------------
+\section{Notación, símbolos y convenciones utilizadas}
+
+Este documento utiliza la notación estándar UML (Unified Modeling Language) versión 2.5 para todos los diagramas de modelado. Se siguen las convenciones establecidas por la OMG (Object Management Group).
+
+Para la documentación de casos de uso se utiliza la plantilla estándar de Cockburn, incluyendo precondiciones, postcondiciones, flujo principal y flujos alternativos.
+
+Los requerimientos funcionales se identifican con el prefijo ``RF'' seguido de un número secuencial (ejemplo: RF-001). Los requerimientos no funcionales utilizan el prefijo ``RNF'' (ejemplo: RNF-001).
+
+Las reglas de negocio se identifican con el prefijo ``RN'' seguido de un número secuencial (ejemplo: RN-001).
+
+Los actores del sistema se representan en {\color{userColor}\textbf{color verde}} en el texto.
+
+Las referencias a casos de uso se muestran como enlaces activos en {\color{UCExtensionPointColor}\textbf{color azul}}.
+
+Los términos técnicos específicos del dominio financiero se presentan en {\em cursiva} la primera vez que aparecen en el documento.

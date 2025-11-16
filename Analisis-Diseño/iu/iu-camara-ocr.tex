@@ -1,0 +1,124 @@
+% !TeX root = ../analisis-diseno.tex
+
+%=========================================================
+% Interfaz de usuario: Cámara OCR
+
+\begin{interfaceUsario}{IU-002}{Interfaz de cámara OCR}{
+	Interfaz especializada para la captura y procesamiento de tickets mediante tecnología OCR, optimizada para facilitar el escaneo preciso y proporcionar feedback inmediato al usuario durante el proceso.
+}
+	\IUactores{\cdtActorRef{Usuario Joven}{Usuario que desea registrar un gasto escaneando un ticket físico}}
+	\IUitem[Tipo]{Pantalla modal de captura}
+	\IUitem[Plataforma]{Móvil únicamente}
+	\IUitem[Prioridad]{Alta}
+	\IUitem[Estatus]{Activo}
+	\IUitem[Fecha]{Noviembre 2024}
+
+	% Elementos de la interfaz
+	\IUelem{Viewfinder de cámara}{
+		\IUli{Vista previa en tiempo real de la cámara}
+		\IUli{Overlay con guías de alineación rectangulares}
+		\IUli{Detección automática de bordes del ticket}
+		\IUli{Indicadores de calidad de imagen en tiempo real}
+	}
+
+	\IUelem{Controles de captura}{
+		\IUli{Botón de captura central (redondo, grande) con animación}
+		\IUli{Toggle de flash automático/manual en esquina superior}
+		\IUli{Botón de galería para seleccionar imagen existente}
+		\IUli{Botón de cancelar/cerrar en esquina superior izquierda}
+	}
+
+	\IUelem{Asistencia inteligente}{
+		\IUli{Sugerencias contextuales: ``Acerca más el ticket'', ``Mejora la iluminación''}
+		\IUli{Detección automática cuando el ticket está bien posicionado}
+		\IUli{Captura automática opcional cuando se detecta estabilidad}
+		\IUli{Indicador de calidad de imagen (verde/amarillo/rojo)}
+	}
+
+	\IUelem{Preview y confirmación}{
+		\IUli{Vista previa de imagen capturada en pantalla completa}
+		\IUli{Botones ``Usar esta foto'' y ``Tomar otra''}
+		\IUli{Opción de recorte manual si la detección automática falla}
+		\IUli{Zoom y pan para verificar legibilidad del texto}
+	}
+
+	\IUelem{Procesamiento OCR}{
+		\IUli{Indicador de progreso animado durante procesamiento}
+		\IUli{Mensaje motivacional: ``Analizando tu ticket...''}
+		\IUli{Tiempo estimado de procesamiento (5-15 segundos)}
+		\IUli{Opción de cancelar procesamiento y retomar}
+	}
+
+	\IUelem{Resultados extraídos}{
+		\IUli{Formulario con campos pre-llenados: monto, fecha, establecimiento}
+		\IUli{Indicador de confianza del OCR para cada campo}
+		\IUli{Campos editables para corrección manual}
+		\IUli{Sugerencias de categoría basadas en establecimiento}
+	}
+
+	% Interacciones principales
+	\IUinter{
+		\IUli{Tap en botón captura: Toma fotografía con feedback háptico}
+		\IUli{Tap en toggle flash: Alterna entre auto/on/off con indicador visual}
+		\IUli{Pinch en viewfinder: Zoom digital de la cámara}
+		\IUli{Tap en campo de resultado: Editar manualmente valor extraído}
+		\IUli{Tap fuera del ticket en preview: Mostrar herramientas de recorte}
+		\IUli{Double tap en preview: Zoom rápido para verificar legibilidad}
+	}
+
+	% Estados de la interfaz
+	\IUestados{
+		\IUli{\textbf{Inicializando cámara}: Loading spinner mientras se accede a hardware}
+		\IUli{\textbf{Cámara activa}: Viewfinder funcionando con controles disponibles}
+		\IUli{\textbf{Capturando}: Animación de flash y feedback de captura exitosa}
+		\IUli{\textbf{Procesando OCR}: Indicador de progreso con tiempo estimado}
+		\IUli{\textbf{Error OCR}: Mensaje de error con opciones de reintento o manual}
+		\IUli{\textbf{Resultado exitoso}: Formulario con datos extraídos para confirmación}
+	}
+
+	% Validaciones y reglas
+	\IUval{
+		\IUli{Solo se permite captura si hay buena iluminación detectada}
+		\IUli{La imagen debe tener resolución mínima de 1280x720}
+		\IUli{Se verifica que el archivo no exceda 10MB antes de procesamiento}
+		\IUli{Los campos de monto solo aceptan números y formato monetario}
+		\IUli{Las fechas se validan contra rango lógico (no futuras, no más de 1 año)}
+	}
+
+	% Optimizaciones de UX
+	\IUoptim{
+		\IUli{\textbf{Auto-capture}: Captura automática cuando ticket está perfectamente alineado}
+		\IUli{\textbf{Smart flash}: Flash automático basado en condiciones de luz ambiente}
+		\IUli{\textbf{Edge detection}: Detección de bordes para sugerir mejor posicionamiento}
+		\IUli{\textbf{Stability detection}: Evita capturas borrosas por movimiento}
+		\IUli{\textbf{Pre-processing}: Mejora de imagen antes del OCR (contraste, nitidez)}
+	}
+
+	% Manejo de errores
+	\IUerror{
+		\IUli{\textbf{Cámara no disponible}: Fallback a selección de galería}
+		\IUli{\textbf{Permisos denegados}: Mensaje explicativo con enlace a configuración}
+		\IUli{\textbf{OCR falla}: Opción de reintento o registro manual}
+		\IUli{\textbf{Imagen borrosa}: Sugerencia de mejor iluminación y estabilidad}
+		\IUli{\textbf{Sin conexión}: Queue del procesamiento para cuando se reconecte}
+	}
+
+	% Accesibilidad
+	\IUaccessibility{
+		\IUli{Botones con labels descriptivos para lectores de pantalla}
+		\IUli{Feedback háptico para usuarios con problemas auditivos}
+		\IUli{High contrast mode compatible}
+		\IUli{Tamaño de botones mínimo 44px para accesibilidad táctil}
+		\IUli{Voice over compatible con descripciones de elementos}
+	}
+
+	% Referencias
+	\IUref{
+		\UCref{CU-001}{Registrar gasto mediante OCR}
+		\BRref{RN-003}{Límite de procesamiento OCR}
+		\BRref{RN-016}{Validación de tickets}
+		\MSGref{MSG-002}{OCR en progreso}
+		\MSGref{MSG-003}{OCR exitoso}
+		\MSGref{MSG-004}{Error en OCR}
+	}
+\end{interfaceUsario}

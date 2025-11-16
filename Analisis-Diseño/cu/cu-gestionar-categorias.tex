@@ -1,0 +1,107 @@
+% !TeX root = ../analisis-diseno.tex
+
+%=========================================================
+% Caso de uso: Gestionar categorías personalizadas
+
+\begin{UseCase}{CU-004}{Gestionar categorías personalizadas}{
+	El usuario crea, modifica y organiza categorías personalizadas para clasificar sus transacciones de acuerdo a sus necesidades específicas, mejorando la precisión del análisis financiero personal.
+}
+	\UCactor{\cdtActorRef{Usuario Joven}{Persona que desea personalizar la clasificación de sus gastos según sus hábitos específicos}}
+	\UCitem[Versión]{1.0}
+	\UCitem[Autor]{Equipo FinanzApp}
+	\UCitem[Fuente]{Análisis de requerimientos de personalización}
+	\UCitem[Prioridad]{Media}
+	\UCitem[Estatus]{Activo}
+	\UCitem[Fecha]{Noviembre 2024}
+
+	% Precondiciones
+	\UCpre{
+		\UCli{El usuario debe estar autenticado en la aplicación}
+		\UCli{El usuario no debe tener más de 20 categorías personalizadas creadas}
+		\UCli{Deben existir categorías predefinidas del sistema como base}
+	}
+
+	% Postcondiciones
+	\UCpost{
+		\UCli{Las categorías modificadas quedan actualizadas en el sistema}
+		\UCli{Las transacciones futuras pueden utilizar las nuevas categorías}
+		\UCli{El algoritmo de categorización automática aprende de las nuevas categorías}
+		\UCli{Los reportes y analytics incorporan las categorías personalizadas}
+	}
+
+	% Flujo principal
+	\UCstart
+		\UCstep[\UCactor] El usuario accede a ``Configuración'' > ``Gestionar categorías''
+		\UCstep[\UCsystem] El sistema muestra la lista de categorías disponibles: predefinidas y personalizadas
+		\UCstep[\UCsystem] El sistema diferencia visualmente las categorías del sistema vs personalizadas
+		\UCstep[\UCactor] El usuario selecciona ``Crear nueva categoría''
+		\UCstep[\UCsystem] El sistema muestra el formulario de creación de categoría
+		\UCstep[\UCactor] El usuario ingresa el nombre de la nueva categoría (ej: ``Mascotas'')
+		\UCstep[\UCactor] El usuario añade una descripción opcional de la categoría
+		\UCstep[\UCactor] El usuario selecciona un icono de la galería disponible
+		\UCstep[\UCactor] El usuario elige un color representativo de una paleta predefinida
+		\UCstep[\UCsystem] El sistema muestra preview de cómo se verá la categoría en la interfaz
+		\UCstep[\UCactor] El usuario puede definir una categoría padre si desea crear subcategorías
+		\UCstep[\UCactor] El usuario puede establecer un presupuesto por defecto para la categoría
+		\UCstep[\UCactor] El usuario confirma la creación de la categoría
+		\UCstep[\UCsystem] El sistema valida que el nombre no esté duplicado
+		\UCstep[\UCsystem] El sistema crea la categoría y la añade a la lista personalizada
+		\UCstep[\UCsystem] El sistema actualiza el motor de categorización para reconocer la nueva categoría
+		\UCstep[\UCsystem] El sistema muestra mensaje de confirmación y retorna a la lista de categorías
+	\UCend
+
+	% Trayectorias alternativas
+	\UCitem[Trayectorias alternativas]{
+		\UCaltBegin{A}
+			\UCaltitem[Condición]{En el paso 14 el nombre de la categoría ya existe}
+			\UCaltitem[\UCsystem] El sistema muestra mensaje de error: ``Ya existe una categoría con este nombre''
+			\UCaltitem[\UCsystem] El sistema sugiere nombres alternativos similares
+			\UCaltitem[\UCactor] El usuario modifica el nombre o selecciona una sugerencia
+			\UCaltitem[\UCsystem] Continúa con el paso 15 del flujo principal
+		\UCaltEnd
+
+		\UCaltBegin{B}
+			\UCaltitem[Condición]{El usuario selecciona ``Editar'' en una categoría existente}
+			\UCaltitem[\UCsystem] El sistema verifica si la categoría es editable (no es categoría del sistema)
+			\UCaltitem[\UCsystem] El sistema abre el formulario con los datos actuales pre-cargados
+			\UCaltitem[\UCactor] El usuario modifica los campos deseados
+			\UCaltitem[\UCactor] El usuario confirma los cambios
+			\UCaltitem[\UCsystem] El sistema actualiza la categoría y todas las transacciones asociadas
+			\UCaltitem[\UCsystem] El sistema muestra confirmación de actualización exitosa
+		\UCaltEnd
+
+		\UCaltBegin{C}
+			\UCaltitem[Condición]{El usuario intenta eliminar una categoría con transacciones asociadas}
+			\UCaltitem[\UCsystem] El sistema detecta transacciones vinculadas a la categoría
+			\UCaltitem[\UCsystem] El sistema muestra mensaje: ``Esta categoría tiene X transacciones asociadas''
+			\UCaltitem[\UCsystem] El sistema ofrece opciones: ``Reasignar transacciones'' o ``Cancelar eliminación''
+			\UCaltitem[\UCactor] El usuario selecciona una nueva categoría para reasignar las transacciones
+			\UCaltitem[\UCsystem] El sistema migra las transacciones y elimina la categoría original
+		\UCaltEnd
+
+		\UCaltBegin{D}
+			\UCaltitem[Condición]{El usuario ha alcanzado el límite de 20 categorías personalizadas}
+			\UCaltitem[\UCsystem] El sistema muestra mensaje de límite alcanzado
+			\UCaltitem[\UCsystem] El sistema sugiere: ``Elimina categorías no utilizadas o combina categorías similares''
+			\UCaltitem[\UCsystem] El sistema muestra estadísticas de uso de cada categoría personalizada
+			\UCaltitem[\UCactor] El usuario puede eliminar categorías poco utilizadas
+			\UCaltitem[\UCsystem] Una vez liberado espacio, permite crear nueva categoría
+		\UCaltEnd
+
+		\UCaltBegin{E}
+			\UCaltitem[Condición]{El usuario selecciona ``Importar categorías'' de otro usuario}
+			\UCaltitem[\UCsystem] El sistema muestra categorías públicas populares de la comunidad
+			\UCaltitem[\UCsystem] El sistema permite filtrar por tipo de usuario (estudiante, profesional, etc.)}
+			\UCaltitem[\UCactor] El usuario selecciona categorías de interés para importar
+			\UCaltitem[\UCsystem] El sistema añade las categorías seleccionadas como personalizadas del usuario
+			\UCaltitem[\UCsystem] El sistema actualiza el motor de categorización con las nuevas categorías
+		\UCaltEnd
+	}
+
+	% Referencias
+	\UCitem[Referencias]{
+		\UCli \BRref{RN-018}{Categorías personalizadas}
+		\UCli \RFref{RF-008}{Gestión de categorías personalizadas}
+		\UCli \RFref{RF-009}{Importación de categorías de comunidad}
+	}
+\end{UseCase}

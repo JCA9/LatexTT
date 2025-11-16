@@ -1,0 +1,319 @@
+% !TeX root = analisis-diseno.tex
+
+%=========================================================
+\chapter{Diseño de interfaz de usuario}
+\label{cap:interfaces}
+
+Este capítulo presenta el diseño de la interfaz de usuario de FinanzApp, incluyendo los principios de diseño UX/UI aplicados, wireframes, mockups de alta fidelidad, y especificaciones de interacción para las plataformas móvil y web.
+
+%---------------------------------------------------------
+\section{Principios de diseño}
+
+El diseño de FinanzApp se basa en principios de usabilidad y experiencia de usuario específicamente adaptados para jóvenes adultos y el contexto de finanzas personales.
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Principios fundamentales}
+
+\begin{description}
+	\item[\textbf{Simplicidad intuitiva}] Interfaces limpias que minimizan la carga cognitiva y permiten completar tareas financieras sin fricción.
+	
+	\item[\textbf{Feedback inmediato}] Respuesta visual instantánea a todas las acciones del usuario, especialmente importante en el procesamiento OCR.
+	
+	\item[\textbf{Gamificación sutil}] Elementos de gamificación que motivan el uso consistente sin ser intrusivos o infantiles.
+	
+	\item[\textbf{Personalización adaptativa}] La interfaz se adapta a los patrones de uso y preferencias individuales del usuario.
+	
+	\item[\textbf{Accesibilidad universal}] Diseño inclusivo que cumple con WCAG 2.1 AA para usuarios con diferentes capacidades.
+	
+	\item[\textbf{Confianza y seguridad}] Elementos visuales que transmiten seguridad y confiabilidad en el manejo de datos financieros.
+\end{description}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Guía de estilo visual}
+
+\begin{figure}[htpb!]
+	\begin{center}
+		% TODO: Agregar imagen correspondiente
+		\caption{Guía de estilo visual de FinanzApp}
+		\label{fig:guiaEstilo}
+	\end{center}
+\end{figure}
+
+\textbf{Paleta de colores:}
+\begin{itemize}
+	\item \textbf{Primario}: \#2563EB (Azul confianza) - Botones principales, enlaces
+	\item \textbf{Secundario}: \#059669 (Verde prosperidad) - Ingresos, metas alcanzadas
+	\item \textbf{Acento}: \#DC2626 (Rojo alerta) - Gastos, alertas, presupuestos excedidos
+	\item \textbf{Neutro}: \#6B7280 (Gris moderno) - Texto secundario, bordes
+	\item \textbf{Fondo}: \#F9FAFB (Blanco hueso) - Fondos, cards
+\end{itemize}
+
+\textbf{Tipografía:}
+\begin{itemize}
+	\item \textbf{Primaria}: Inter (Sans-serif moderna, alta legibilidad)
+	\item \textbf{Monoespaciada}: JetBrains Mono (Para montos y códigos)
+	\item \textbf{Jerarquía}: H1(32px), H2(24px), H3(20px), Body(16px), Caption(14px)
+\end{itemize}
+
+%---------------------------------------------------------
+\section{Arquitectura de información}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Estructura de navegación móvil}
+
+\begin{figure}[htpb!]
+	\begin{center}
+		% TODO: Agregar imagen correspondiente
+		\caption{Estructura de navegación de la aplicación móvil}
+		\label{fig:navegacionMovil}
+	\end{center}
+\end{figure}
+
+La navegación móvil utiliza un patrón de tabs inferiores para acceso rápido a las funciones principales:
+
+\begin{itemize}
+	\item \textbf{Inicio}: Dashboard con resumen financiero y acciones rápidas
+	\item \textbf{Gastos}: Historial de transacciones y funcionalidad de escaneo
+	\item \textbf{Analytics}: Gráficos, insights y análisis predictivo  
+	\item \textbf{Presupuestos}: Configuración y monitoreo de presupuestos
+	\item \textbf{Perfil}: Configuración de usuario y preferencias
+\end{itemize}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Estructura de navegación web}
+
+\begin{figure}[htpb!]
+	\begin{center}
+		% TODO: Agregar imagen correspondiente
+		\caption{Estructura de navegación de la plataforma web}
+		\label{fig:navegacionWeb}
+	\end{center}
+\end{figure}
+
+La plataforma web utiliza un sidebar colapsible que se adapta al tamaño de pantalla:
+
+\begin{itemize}
+	\item \textbf{Dashboard}: Vista general con widgets configurables
+	\item \textbf{Transacciones}: Gestión completa de gastos e ingresos
+	\item \textbf{Análisis}: Reportes detallados y visualizaciones avanzadas
+	\item \textbf{Presupuestos y Metas}: Herramientas de planificación financiera
+	\item \textbf{Configuración}: Ajustes avanzados y administración de cuenta
+\end{itemize}
+
+%---------------------------------------------------------
+\section{Diseño de pantallas principales}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Dashboard principal móvil}
+
+\begin{figure}[htpb!]
+	\begin{center}
+		% TODO: Agregar imagen correspondiente
+		\caption{Mockup del dashboard principal móvil}
+		\label{fig:dashboardMovil}
+	\end{center}
+\end{figure}
+
+El dashboard móvil presenta información financiera clave de forma concisa:
+
+\textbf{Componentes principales:}
+\begin{itemize}
+	\item Header con saludo personalizado y notificaciones
+	\item Card de balance actual con tendencia visual
+	\item Resumen de gastos del mes con gráfico circular
+	\item Lista de transacciones recientes (últimas 5)
+	\item Floating Action Button para registro rápido de gastos
+	\item Quick actions para funciones frecuentes
+\end{itemize}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Interfaz de cámara OCR}
+
+\begin{figure}[htpb!]
+	\begin{center}
+		% TODO: Agregar imagen correspondiente
+		\caption{Mockup de la interfaz de cámara OCR}
+		\label{fig:camaraOCR}
+	\end{center}
+\end{figure}
+
+La interfaz de captura está optimizada para facilitar el escaneo de tickets:
+
+\textbf{Elementos de la interfaz:}
+\begin{itemize}
+	\item Viewfinder con guías de alineación para tickets
+	\item Botón de captura con feedback háptico
+	\item Toggle para flash automático según condiciones de luz
+	\item Preview de imagen capturada con opción de rehacer
+	\item Indicador de progreso durante procesamiento OCR
+	\item Resultados extraídos con opción de corrección manual
+\end{itemize}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Dashboard web con widgets}
+
+\begin{figure}[htpb!]
+	\begin{center}
+		% TODO: Agregar imagen correspondiente
+		\caption{Mockup del dashboard web con widgets configurables}
+		\label{fig:dashboardWeb}
+	\end{center}
+\end{figure}
+
+El dashboard web aprovecha el espacio adicional para mostrar más información:
+
+\textbf{Widgets disponibles:}
+\begin{itemize}
+	\item Resumen financiero mensual con comparativa
+	\item Gráfico de tendencias de gastos por categoría
+	\item Progreso de presupuestos con alertas visuales
+	\item Metas financieras con timeline de progreso
+	\item Transacciones recientes con filtros rápidos
+	\item Quick insights y recomendaciones personalizadas
+\end{itemize}
+
+%---------------------------------------------------------
+\section{Patrones de interacción}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Gestos táctiles móviles}
+
+\begin{figure}[htpb!]
+	\begin{center}
+		% TODO: Agregar imagen correspondiente
+		\caption{Patrones de gestos táctiles implementados}
+		\label{fig:gestosTactiles}
+	\end{center}
+\end{figure}
+
+\textbf{Gestos implementados:}
+\begin{itemize}
+	\item \textbf{Swipe right}: Categorizar transacción como gasto frecuente
+	\item \textbf{Swipe left}: Eliminar o archivar transacción
+	\item \textbf{Pull to refresh}: Actualizar datos y sincronizar
+	\item \textbf{Long press}: Mostrar menú contextual con acciones secundarias
+	\item \textbf{Pinch to zoom}: Ampliar gráficos para análisis detallado
+	\item \textbf{Double tap}: Marcar transacción como favorita o recurrente
+\end{itemize}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Estados de interacción}
+
+\textbf{Estados visuales definidos:}
+\begin{itemize}
+	\item \textbf{Default}: Estado normal de elementos interactivos
+	\item \textbf{Hover}: Retroalimentación en web para elementos clickeables
+	\item \textbf{Active/Pressed}: Feedback táctil inmediato al tocar
+	\item \textbf{Focused}: Estado de navegación por teclado (accesibilidad)
+	\item \textbf{Disabled}: Elementos no disponibles con indicación visual clara
+	\item \textbf{Loading}: Estados de carga con spinners y skeleton screens
+	\item \textbf{Error}: Indicadores de error con guías de recuperación
+\end{itemize}
+
+%---------------------------------------------------------
+\section{Responsive design}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Breakpoints y adaptaciones}
+
+\begin{figure}[htpb!]
+	\begin{center}
+		% TODO: Agregar imagen correspondiente
+		\caption{Adaptaciones responsive para diferentes dispositivos}
+		\label{fig:responsiveBreakpoints}
+	\end{center}
+\end{figure}
+
+\textbf{Breakpoints definidos:}
+\begin{itemize}
+	\item \textbf{Mobile}: 320px - 767px (Navegación por tabs, stacks verticales)
+	\item \textbf{Tablet}: 768px - 1023px (Navegación híbrida, 2 columnas)
+	\item \textbf{Desktop}: 1024px+ (Sidebar fijo, múltiples columnas)
+	\item \textbf{Large Desktop}: 1440px+ (Dashboard expandido, widgets adicionales)
+\end{itemize}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Adaptaciones específicas}
+
+\textbf{Mobile-first adaptaciones:}
+\begin{itemize}
+	\item Navegación colapsible con hamburger menu
+	\item Cards apiladas verticalmente con scroll
+	\item Formularios de una columna con inputs optimizados para touch
+	\item Gráficos simplificados con gestos de zoom
+	\item FAB (Floating Action Button) para acción principal
+\end{itemize}
+
+\textbf{Desktop enhancements:}
+\begin{itemize}
+	\item Sidebar persistente con navegación contextual
+	\item Dashboard de múltiples columnas con drag-and-drop
+	\item Tooltips informativos sin interferir con el flujo
+	\item Keyboard shortcuts para power users
+	\item Multi-panel views para comparación de datos
+\end{itemize}
+
+%---------------------------------------------------------
+\section{Accesibilidad y usabilidade}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Cumplimiento WCAG 2.1}
+
+\textbf{Nivel AA compliance:}
+\begin{itemize}
+	\item \textbf{Perceptible}: Contraste mínimo 4.5:1, texto escalable hasta 200\%
+	\item \textbf{Operable}: Navegación por teclado completa, tiempo ajustable
+	\item \textbf{Comprensible}: Lenguaje claro, patrones consistentes
+	\item \textbf{Robusto}: Compatible con lectores de pantalla, HTML semántico
+\end{itemize}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Consideraciones especiales}
+
+\textbf{Finanzas y accesibilidad:}
+\begin{itemize}
+	\item Representación alternativa de gráficos (tablas, texto descriptivo)
+	\item Alertas de presupuesto en múltiples modalidades (visual, auditiva, háptica)
+	\item Confirmaciones adicionales para acciones financieras críticas
+	\item Soporte para tecnologías asistivas (VoiceOver, TalkBack)
+	\item Modo alto contraste para usuarios con problemas visuales
+	\item Tamaños de texto adaptables para diferentes necesidades
+\end{itemize}
+
+%---------------------------------------------------------
+\section{Prototipado y validación}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Proceso de diseño iterativo}
+
+\begin{figure}[htpb!]
+	\begin{center}
+		% TODO: Agregar imagen correspondiente
+		\caption{Proceso de diseño iterativo con validación de usuarios}
+		\label{fig:procesoIterativo}
+	\end{center}
+\end{figure}
+
+\textbf{Fases del proceso:}
+\begin{enumerate}
+	\item \textbf{Research}: Entrevistas con usuarios target, análisis de competencia
+	\item \textbf{Wireframing}: Sketches y wireframes de baja fidelidad
+	\item \textbf{Prototyping}: Prototipos interactivos en Figma
+	\item \textbf{User Testing}: Pruebas de usabilidad con usuarios reales
+	\item \textbf{Iteration}: Refinamiento basado en feedback
+	\item \textbf{Implementation}: Desarrollo con design system
+	\item \textbf{Validation}: A/B testing y métricas de uso
+\end{enumerate}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\subsection{Métricas de validación UX}
+
+\textbf{KPIs de experiencia de usuario:}
+\begin{itemize}
+	\item \textbf{Task completion rate}: >90\% para flujos principales
+	\item \textbf{Time on task}: <15 segundos para registro de gasto
+	\item \textbf{Error rate}: <5\% en formularios críticos
+	\item \textbf{User satisfaction}: SUS score >80/100
+	\item \textbf{Retention}: >70\% usuarios activos a 30 días
+	\item \textbf{Feature adoption}: >60\% usuarios usan OCR regularmente
+\end{itemize}

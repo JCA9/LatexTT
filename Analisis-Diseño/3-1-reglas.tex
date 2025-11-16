@@ -1,0 +1,56 @@
+% !TeX root = analisis-diseno.tex
+
+%=========================================================
+% Reglas de negocio para FinanzApp
+
+\begin{description}
+	\item[\hypertarget{RN-001}{RN-001}] \textbf{Registro único de usuario:} Cada usuario debe tener un email único en el sistema. No se permiten cuentas duplicadas con el mismo email.
+	
+	\item[\hypertarget{RN-002}{RN-002}] \textbf{Edad mínima:} Los usuarios deben tener al menos 18 años para registrarse en el sistema, validado mediante fecha de nacimiento.
+	
+	\item[\hypertarget{RN-003}{RN-003}] \textbf{Límite de procesamiento OCR:} Cada usuario puede procesar máximo 50 tickets por día mediante OCR para optimizar recursos del sistema.
+	
+	\item[\hypertarget{RN-004}{RN-004}] \textbf{Validación de montos:} Los montos de transacciones deben ser positivos y no pueden exceder \$100,000.00 MXN por transacción individual.
+	
+	\item[\hypertarget{RN-005}{RN-005}] \textbf{Retención de imágenes:} Las imágenes de tickets se conservan por 90 días después del procesamiento exitoso, luego se eliminan automáticamente por privacidad.
+	
+	\item[\hypertarget{RN-006}{RN-006}] \textbf{Categorización automática:} El sistema debe categorizar automáticamente las transacciones con un nivel de confianza mínimo del 60\%. Transacciones con menor confianza requieren validación manual.
+	
+	\item[\hypertarget{RN-007}{RN-007}] \textbf{Presupuestos activos:} Un usuario puede tener máximo 10 presupuestos activos simultáneamente para evitar complejidad excesiva.
+	
+	\item[\hypertarget{RN-008}{RN-008}] \textbf{Período de presupuesto:} Los presupuestos pueden configurarse para períodos de 1 semana, 1 mes o 3 meses únicamente.
+	
+	\item[\hypertarget{RN-009}{RN-009}] \textbf{Alertas de presupuesto:} Se envían alertas automáticas al alcanzar 70\%, 90\% y 100\% del presupuesto asignado a cada categoría.
+	
+	\item[\hypertarget{RN-010}{RN-010}] \textbf{Metas financieras:} Las metas de ahorro deben tener una fecha límite entre 1 mes y 5 años desde su creación.
+	
+	\item[\hypertarget{RN-011}{RN-011}] \textbf{Sincronización de datos:} Los datos deben sincronizarse entre dispositivos en un máximo de 5 segundos después de una transacción.
+	
+	\item[\hypertarget{RN-012}{RN-012}] \textbf{Backup automático:} El sistema debe crear respaldos automáticos de los datos del usuario cada 24 horas.
+	
+	\item[\hypertarget{RN-013}{RN-013}] \textbf{Inactividad de cuenta:} Las cuentas inactivas por más de 365 días se marcan para archivado, con notificación previa de 30 días al usuario.
+	
+	\item[\hypertarget{RN-014}{RN-014}] \textbf{Exportación de datos:} Los usuarios pueden exportar todos sus datos personales en formato JSON o CSV en cualquier momento.
+	
+	\item[\hypertarget{RN-015}{RN-015}] \textbf{Eliminación de cuenta:} Al eliminar una cuenta, todos los datos se eliminan permanentemente después de 30 días de período de gracia.
+	
+	\item[\hypertarget{RN-016}{RN-016}] \textbf{Validación de tickets:} Solo se aceptan imágenes en formato JPEG, PNG o PDF, con tamaño máximo de 10 MB.
+	
+	\item[\hypertarget{RN-017}{RN-017}] \textbf{Moneda única:} El sistema opera únicamente con pesos mexicanos (MXN). No se soportan múltiples monedas.
+	
+	\item[\hypertarget{RN-018}{RN-018}] \textbf{Categorías personalizadas:} Los usuarios pueden crear máximo 20 categorías personalizadas además de las categorías predefinidas del sistema.
+	
+	\item[\hypertarget{RN-019}{RN-019}] \textbf{Histórico mínimo:} Se requieren mínimo 30 días de datos históricos para generar análisis predictivos y recomendaciones personalizadas.
+	
+	\item[\hypertarget{RN-020}{RN-020}] \textbf{Notificaciones:} Los usuarios pueden recibir máximo 5 notificaciones push por día para evitar fatiga de notificaciones.
+	
+	\item[\hypertarget{RN-021}{RN-021}] \textbf{Sesión de usuario:} Las sesiones expiran automáticamente después de 30 días de inactividad por seguridad.
+	
+	\item[\hypertarget{RN-022}{RN-022}] \textbf{Corrección de OCR:} Los usuarios pueden corregir manualmente los datos extraídos por OCR dentro de las primeras 48 horas del procesamiento.
+	
+	\item[\hypertarget{RN-023}{RN-023}] \textbf{Análisis de tendencias:} El sistema requiere mínimo 90 días de datos para mostrar análisis de tendencias confiables.
+	
+	\item[\hypertarget{RN-024}{RN-024}] \textbf{Compartir datos:} Los datos financieros personales no pueden compartirse con terceros sin consentimiento explícito del usuario.
+	
+	\item[\hypertarget{RN-025}{RN-025}] \textbf{Recuperación de contraseña:} Los tokens de recuperación de contraseña expiran en 1 hora y solo pueden usarse una vez.
+\end{description}
