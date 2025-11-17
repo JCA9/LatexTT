@@ -216,9 +216,9 @@ La digitalización nos permite ademas de toda la seguridad y automatización, el
 
 
 \section{Tecnologías de Desarrollo y Arquitectura del Sistema}
-La solucion que se propuso se fundamenta en una arquitectura cliente - servidor con una separación clara entre la captura y visualizacion (aplicación movil y web),
-la logica de negocio (servidor backend) y la persistencia (base de datos). Este enfoque promueve la modularidad, el despliegue independiente y la escalabilidad
-horizontal cuando los componentes requieren mayor capacidad. \cite{C4Model} \cite{Architectural Styles}
+LLa solución propuesta se fundamenta en una arquitectura cliente-servidor con una separación clara entre la captura y visualización (aplicación móvil y web), la lógica de negocio (servidor backend) y la persistencia (base de datos). 
+Este enfoque sigue los principios de la arquitectura por capas y la separación de responsabilidades, los cuales facilitan la modularidad, el despliegue independiente y la escalabilidad horizontal cuando los componentes requieren mayor capacidad \cite{FowlerArchStyles}.
+
 Haremos la comparación de diferentes tecnologias en el capitulo 3 (Desarrollo)
 
 \subsection{Arquitectura cliente-servidor}
@@ -244,9 +244,9 @@ por otra parte, una desventaja es que si el servidor falla, todos los clientes s
 
 
 \subsection{Tecnologías web y móviles}
-Para la capa de la presentación web ocuparemos \textbf{Next.js}, nos decidimos por esta tecnología ya que sabemos como funciona React.js y Next.js es un framework basado en React que facilita la creación de aplicaciones web,
-por otra parte una ventaja de este framework recae en su capacidad para manejar grandes volúmenes de tráfico y contenido dinámico lo hace indicado para nuestro proyecto. 
-Ademas, debido a su sistema de renderizado híbrido y optimización automática, Next.js garantiza que tus aplicaciones sean rápidas y eficientes. \cite{WhyNextJS}
+Para la capa de la presentación web ocuparemos \textbf{Next.js}, ya que al estar basado en React permite aprovechar los conocimientos previos del equipo y simplifica el desarrollo mediante su enfoque estructurado para rutas, renderizado y manejo del servidor.
+Una ventaja clave es su capacidad para gestionar tráfico elevado y contenido dinámico gracias a su sistema de renderizado híbrido (SSR, SSG, ISR), además de sus herramientas de optimización automática que mejoran tiempos de carga y rendimiento general.
+Estas características lo convierten en un framework adecuado para aplicaciones que buscan eficiencia y escalabilidad. \cite{NextJSOfficial}
 
 Para la aplicacion movil utilizaremos \textbf{Flutter}, al igual que Next.js, escogimos Flutter por la experiencia que tenemos con este framework.
 Flutter se destaca en la creación de interfaces de usuario ricas y personalizables utilizando su propio motor de renderizado. Esto lo hace independiente de la plataforma y muy versátil, lo que permite interfaces de usuario 
