@@ -1,0 +1,56 @@
+\babel@toc {spanish}{}\relax 
+\contentsline {chapter}{\numberline {1}Introducción}{13}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Objetivo del documento}{13}{section.1.1}%
+\contentsline {chapter}{\numberline {2}Análisis del Sistema}{14}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Descripción general}{14}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Actores}{15}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Requerimientos funcionales}{15}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Requerimientos no funcionales}{16}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Reglas de negocio}{16}{section.2.5}%
+\contentsline {section}{\numberline {2.6}Lista de casos de uso}{18}{section.2.6}%
+\contentsline {section}{\numberline {2.7}Descripción breve de casos de uso clave}{18}{section.2.7}%
+\contentsline {subsection}{\numberline {2.7.1}CU-001: Registrar gasto mediante OCR}{19}{subsection.2.7.1}%
+\contentsline {subsection}{\numberline {2.7.2}CU-002: Configurar presupuesto}{19}{subsection.2.7.2}%
+\contentsline {subsection}{\numberline {2.7.3}CU-003: Consultar analytics}{19}{subsection.2.7.3}%
+\contentsline {section}{\numberline {2.8}Suposiciones y restricciones}{19}{section.2.8}%
+\contentsline {subsection}{\numberline {2.8.1}Suposiciones}{19}{subsection.2.8.1}%
+\contentsline {subsection}{\numberline {2.8.2}Restricciones}{20}{subsection.2.8.2}%
+\contentsline {section}{\numberline {2.9}Alcance del sistema}{20}{section.2.9}%
+\contentsline {subsection}{\numberline {2.9.1}Dentro del alcance}{20}{subsection.2.9.1}%
+\contentsline {subsection}{\numberline {2.9.2}Fuera del alcance}{20}{subsection.2.9.2}%
+\contentsline {chapter}{\numberline {3}Diseño del Sistema}{21}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Arquitectura}{21}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Arquitectura de tres capas}{21}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Patrón Cliente-Servidor}{22}{subsection.3.1.2}%
+\contentsline {section}{\numberline {3.2}Diseño estático}{22}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Diagrama de clases}{22}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Modelo entidad-relación}{23}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Modelo relacional}{23}{subsection.3.2.3}%
+\contentsline {section}{\numberline {3.3}Diseño dinámico}{24}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Diagrama de secuencia 1: Registro}{24}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Diagrama de secuencia 2: Procesamiento OCR}{24}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Diagrama de secuencia 3: Categorización automática}{25}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.4}Diagrama de actividad del flujo principal}{25}{subsection.3.3.4}%
+\contentsline {chapter}{\numberline {4}Conclusiones}{27}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Logros del análisis y diseño}{27}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Definición clara del alcance}{27}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Arquitectura escalable y mantenible}{27}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}Diseño centrado en el usuario}{28}{subsection.4.1.3}%
+\contentsline {section}{\numberline {4.2}Decisiones técnicas relevantes}{28}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Tecnología OCR como diferenciador}{28}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Categorización inteligente}{28}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Arquitectura de microservicios}{28}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}Enfoque mobile-first}{29}{subsection.4.2.4}%
+\contentsline {section}{\numberline {4.3}Riesgos identificados y mitigaciones}{29}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Precisión del procesamiento OCR}{29}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Dependencia de servicios externos}{29}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Adopción de usuario}{29}{subsection.4.3.3}%
+\contentsline {section}{\numberline {4.4}Recomendaciones para la implementación}{29}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Desarrollo incremental}{29}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Testing y validación}{30}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Métricas de éxito}{30}{subsection.4.4.3}%
+\contentsline {section}{\numberline {4.5}Trabajo futuro}{30}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Funcionalidades avanzadas}{30}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Expansión de mercado}{31}{subsection.4.5.2}%
+\contentsline {subsection}{\numberline {4.5.3}Optimizaciones técnicas}{31}{subsection.4.5.3}%
+\contentsline {section}{\numberline {4.6}Consideraciones finales}{31}{section.4.6}%

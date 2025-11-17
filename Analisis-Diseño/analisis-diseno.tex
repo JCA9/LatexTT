@@ -1,34 +1,46 @@
-\documentclass[10pt]{book}
+\documentclass[a4paper,12pt]{report}
 
+% ======= PAQUETES =======
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{listings}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{textcomp}
 \usepackage{cdt/cdtUsecases}
 \usepackage{txfonts}
 
+% ======= FORMATOS =======
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+\setlength{\headheight}{14.5pt}
+
+\pagestyle{fancy}
+\fancyhead[L]{Instituto Politécnico Nacional \,|\, Escuela Superior de Cómputo}
+\fancyhead[R]{TT 2026–A062}
+\fancyfoot[C]{\thepage}
+
 \input{config}
 
-\title{\Proyecto\bigskip\\\Componente}
-\subtitle{\Etapa}
-\author{\Consultora}
-\organization{\Cliente}
-\showInstrucciones
-\date{\color{red}Borrador Fecha de creación de documento\\(para revisión)}
-
-%\date{\color{green}Version 1.0}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ======= DOCUMENTO =======
 \begin{document}
-\renewcommand{\listtablename}{Índice de tablas}
-\renewcommand{\tablename}{Tabla} 
-\maketitle
-\thispagestyle{empty}
 
-\frontmatter
+\input{portada}
+
 \tableofcontents
-\listoffigures
+\newpage
 \listoftables
-
-\include{projectCharter}
-
-\mainmatter
+\newpage
+\listoffigures
+\newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -36,27 +48,12 @@
 \include{1introduccion}
 
 %=========================================================
-\include{2ModeloDelAlcance}
+\include{2AnalisisDelSistema}
 
 %=========================================================
-\include{3ModeloDelNegocio}
+\include{3DisenoDelSistema}
 
 %=========================================================
-\include{4ModeloDinamico}
-
-%=========================================================
-\include{5ModeloDeInteraccion}
-
-%=========================================================
-\include{6ArquitecturaDelSistema}
-
-%=========================================================
-\include{7DiseñoDeInterfazDeUsuario}
-
-%=========================================================
-\include{8ModeloDeDatos}
-
-%=========================================================
-\include{9Conclusiones}
+\include{4Conclusiones}
 
 \end{document}
