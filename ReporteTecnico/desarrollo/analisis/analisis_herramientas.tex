@@ -141,42 +141,10 @@ servicios en la nube. Además, nos decidimos por esta ya que es de uso gratuito 
     Ofrece soporte para múltiples idiomas y es capaz de manejar una variedad de formatos de texto, incluyendo texto impreso y manuscrito. Una desventaja de Paddle OCR es 
     que puede requerir una configuración y entrenamiento adicionales para optimizar su rendimiento en casos específicos. \cite{PaddleOCR}
 
-    \item Azure Form Recognizer
-    
-    Azure Form Recognizer es un servicio de inteligencia artificial proporcionado por Microsoft Azure que permite extraer información estructurada de documentos y formularios.
-    Utiliza técnicas avanzadas de aprendizaje automático para identificar y extraer texto, tablas y campos clave-valor de una variedad de formatos de documentos. \cite{AzureDocumentI}
-    Una ventaja de Azure Form Recognizer es su capacidad para manejar documentos complejos y variados sin necesidad de un entrenamiento extenso. Sin embargo, una 
-    desventaja es que es un servicio basado en la nube, lo que puede implicar costos adicionales y preocupaciones de privacidad para algunos usuarios. \cite{AzureDocumentI}
 \end{itemize}
 
 Para la extracción de texto se optó por Tesseract OCR, por ser una herramienta gratuita, de código abierto y con buena precisión en documentos impresos o escaneados. 
 Esto permitió realizar el reconocimiento de texto de los tickets sin depender de servicios externos.
-
-\subsection{Análisis de la Infraestructura en la nube}
-\begin{itemize}
-    \item Amazon Web Services (AWS)
-    
-    Azure Web Services (AWS) es una plataforma de servicios en la nube proporcionada por Amazon. Ofrece una amplia gama de servicios, incluyendo computación, almacenamiento,
-    bases de datos, análisis y redes. AWS es conocido por su escalabilidad, flexibilidad y seguridad, y es utilizado por empresas de todos los tamaños en todo el mundo. \cite{AWS} 
-    En comparación con otras plataformas en la nube, AWS puede ser más complejo de configurar y administrar, lo que puede requerir un mayor conocimiento técnico por parte del
-    administrador de la nube.
-
-    \item Microsoft Azure
-    
-    Microsoft Azure es una plataforma de servicios en la nube proporcionada por Microsoft. Ofrece una amplia gama de servicios, incluyendo computación, almacenamiento, bases de
-    datos, análisis y redes. Azure es conocido por su integración con productos de Microsoft, su escalabilidad y seguridad, y es utilizado por empresas de todos los tamaños en 
-    todo el mundo. \cite{Azure} Una ventaja de Azure es su integración nativa con herramientas de desarrollo como Visual Studio y servicios empresariales como Office 365 y 
-    Dynamics 365.
-
-    \item Google Cloud Platform (GCP)
-    
-    Google Cloud Platform (GCP) es una plataforma de servicios en la nube proporcionada por Google. Ofrece una amplia gama de servicios, incluyendo computación, almacenamiento,
-    bases de datos, análisis y redes. GCP es conocido por su innovación en inteligencia artificial y aprendizaje automático, así como por su infraestructura global. \cite{GCP}
-    Una desventaja de GCP es que puede tener una menor cuota de mercado en comparación con AWS y Azure, lo que puede afectar la disponibilidad de recursos y soporte 
-    en algunas regiones.
-\end{itemize}
-La infraestructura se desplegará en Microsoft Azure, debido a su buena integración con entornos de desarrollo basados en Microsoft, su facilidad para manejar 
-contenedores y servicios serverless, y su compatibilidad con bases de datos y análisis en la nube.
 
 \subsection{Análisis de Frameworks frontend web}
 
