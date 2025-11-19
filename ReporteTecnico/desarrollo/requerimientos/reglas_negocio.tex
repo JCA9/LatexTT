@@ -1,8 +1,6 @@
 
 \subsection{Reglas de negocio}
-Las reglas de negocio son directrices específicas que definen o restringen ciertos aspectos del funcionamiento del sistema, asegurando que las operaciones se realicen 
-de acuerdo con las políticas y objetivos establecidos. Estas reglas son fundamentales para mantener la integridad y coherencia del sistema. A continuación, presentamos 
-las principales reglas de negocio identificadas para nuestro sistema. \cite{ReglasNegocio}
+Las reglas de negocio son directrices específicas que definen o restringen ciertos aspectos del funcionamiento del sistema de administración de finanzas personales, asegurando que las operaciones se realicen de acuerdo con las políticas financieras y objetivos establecidos. Estas reglas son fundamentales para mantener la integridad, coherencia y funcionalidad del sistema orientado a jóvenes adultos. A continuación, presentamos las principales reglas de negocio identificadas para nuestro sistema. \cite{ReglasNegocio}
 
 \begin{table}[H]
 \centering
@@ -11,48 +9,52 @@ las principales reglas de negocio identificadas para nuestro sistema. \cite{Regl
 \toprule
 \textbf{Código} & \textbf{Nombre} & \textbf{Descripción} \\
 \midrule
+
+\multicolumn{3}{c}{\textbf{GESTIÓN DE USUARIOS Y SEGURIDAD}} \\
+\midrule
+
 RN01 & Registro único de usuario &
-Cada usuario debe tener una cuenta única asociada a un correo electrónico válido y no podrá registrar duplicados. \\
+Cada usuario debe tener una cuenta única asociada a un correo electrónico válido. No se permiten cuentas duplicadas con el mismo correo electrónico. \\
 
-RN02 & Validación de credenciales &
-Las credenciales ingresadas deben ser verificadas en la base de datos antes de permitir el acceso al sistema. \\
+RN02 & Autenticación múltiple &
+Los usuarios pueden acceder simultáneamente desde la aplicación móvil y la plataforma web con las mismas credenciales. \\
 
-RN03 & Límite de tamaño de ticket &
-Las imágenes de los tickets no deben superar los 10 MB para evitar saturación del servidor. \\
+RN03 & Tiempo de sesión &
+Las sesiones de usuario expiran automáticamente después de 5 minutos de inactividad por motivos de seguridad. \\
 
-RN04 & Formato de imagen permitido &
-Solo se aceptan imágenes en formato JPG, PNG o PDF para la carga de tickets. \\
+RN04 & Validación de credenciales &
+Todas las credenciales deben ser verificadas contra la base de datos antes de permitir el acceso al sistema. \\
 
-RN05 & Procesamiento OCR controlado &
-Cada ticket se procesa una sola vez para evitar duplicación de datos en la base de datos. \\
+\midrule
+\multicolumn{3}{c}{\textbf{PROCESAMIENTO OCR Y TICKETS}} \\
+\midrule
 
-RN06 & Categorización automática &
-Los gastos se clasifican automáticamente según palabras clave o coincidencias con categorías predefinidas. \\
+RN05 & Límite de tamaño de imagen &
+Las imágenes de tickets no deben superar los 10 MB para optimizar el rendimiento del servidor y la experiencia del usuario. \\
 
-RN07 & Corrección manual de datos &
-El usuario podrá editar los datos extraídos, pero los cambios quedarán registrados en la bitácora. \\
+RN06 & Formatos de imagen permitidos &
+Solo se aceptan imágenes en formato JPG, PNG o PDF para la carga y procesamiento de tickets. \\
 
-RN08 & Generación de reportes &
-El sistema solo generará reportes cuando existan datos válidos en el rango de fechas seleccionado. \\
+RN07 & Idioma de procesamiento OCR &
+El sistema de OCR únicamente procesa tickets en idioma español. Tickets en otros idiomas requieren registro manual. \\
 
-RN09 & Notificaciones de presupuesto &
-Las alertas se enviarán únicamente cuando el gasto acumulado supere el 80\% del presupuesto configurado. \\
+RN08 & Antigüedad recomendada de tickets &
+Se recomienda fotografiar tickets al momento de la compra. Tickets con más de 30 días de antigüedad pueden tener menor calidad de escaneo. \\
 
-RN10 & Eliminación de datos &
-Los usuarios podrán eliminar sus datos personales y gastos registrados, lo cual será irreversible. \\
+RN09 & Procesamiento único por ticket &
+Cada imagen de ticket se procesa una sola vez para evitar duplicación de datos. Si se requiere reprocesamiento, debe eliminarse el registro anterior. \\
 
-RN11 & Acceso por roles &
-Solo los usuarios autenticados podrán acceder a sus datos y reportes personales. \\
+RN10 & Validación manual obligatoria &
+Cuando el OCR presenta discrepancias o baja confianza en la extracción, se solicita validación manual obligatoria del usuario. \\
 
-RN12 & Actualización de precios o montos &
-Los valores de los gastos no podrán modificarse después de generar un reporte cerrado. \\
+RN11 & Corrección y auditoria de datos &
+Todos los cambios realizados por el usuario a los datos extraídos por OCR quedan registrados en la bitácora del sistema para auditoria. \\
 
 \bottomrule
 \end{tabularx}
-\caption{Reglas de Negocio (RN01–RN12)}
+\caption{Reglas de Negocio del Sistema (RN01–RN11)}
 \end{table}
 
-\newpage
 \begin{table}[H]
 \centering
 \renewcommand{\arraystretch}{1.2}
@@ -61,13 +63,133 @@ Los valores de los gastos no podrán modificarse después de generar un reporte 
 \textbf{Código} & \textbf{Nombre} & \textbf{Descripción} \\
 \midrule
 
-RN14 & Periodos de análisis &
-Los reportes financieros se generan por día, semana, mes o año, según la elección del usuario. \\
+\multicolumn{3}{c}{\textbf{CATEGORIZACIÓN Y PRESUPUESTOS}} \\
+\midrule
 
-RN15 & Tolerancia de OCR &
-Si el reconocimiento de texto tiene menos del 60\% de precisión, se solicitará revisión manual al usuario. \\
+RN12 & Límite de categorías personalizadas &
+Cada usuario puede crear máximo 10 categorías personalizadas, siguiendo el modelo de presupuestación por sobres de Dave Ramsey. \\
+
+RN13 & Categorías del sistema no eliminables &
+Las categorías básicas del sistema (Alimentos/Despensa, Transporte, Ahorro) no pueden ser eliminadas por el usuario. \\
+
+RN14 & Asignación única de categoría &
+Cada gasto debe asignarse únicamente a una categoría. No se permite la división de gastos entre múltiples categorías. \\
+
+RN15 & Categorización automática &
+Los gastos se clasifican automáticamente según palabras clave y patrones de coincidencia con categorías predefinidas. \\
+
+RN16 & Presupuestos mensuales &
+Todos los presupuestos se configuran y controlan por períodos mensuales. \\
+
+RN17 & Reasignación automática &
+Al modificar o eliminar una categoría, todos los gastos asociados se reasignan automáticamente según las reglas de categorización definidas. \\
+
+\midrule
+\multicolumn{3}{c}{\textbf{GESTIÓN DE INGRESOS Y EGRESOS}} \\
+\midrule
+
+RN18 & Registro sin monto mínimo &
+No existe monto mínimo para registrar ingresos o egresos. Se acepta cualquier valor mayor a cero. \\
+
+RN19 & Período de modificación &
+Las transacciones (ingresos y egresos) pueden modificarse únicamente durante los primeros 7 días después de su registro. \\
+
+RN20 & Ingresos recurrentes &
+El sistema permite configurar ingresos recurrentes mensuales que se registran automáticamente (ej: salario, mesada). \\
 
 \bottomrule
 \end{tabularx}
-\caption{Reglas de Negocio (RN14 - RN01–RN15)}
+\caption{Reglas de Negocio del Sistema (RN12–RN21)}
+\end{table}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{@{} l l X @{}}
+\toprule
+\textbf{Código} & \textbf{Nombre} & \textbf{Descripción} \\
+\midrule
+
+\multicolumn{3}{c}{\textbf{GESTIÓN DE DEUDAS}} \\
+\midrule
+
+RN21 & Límite máximo de deudas &
+Cada usuario puede registrar máximo 20 deudas activas simultáneamente para mantener un control financiero efectivo. \\
+
+RN22 & Tipos de deuda soportados &
+El sistema maneja diferentes tipos de deuda: tarjetas de crédito, préstamos personales, deudas familiares, y otras deudas sin clasificar. \\
+
+RN23 & Tasas de interés manuales &
+Las tasas de interés de las deudas deben ser ingresadas manualmente por el usuario según la información del acreedor. \\
+
+RN24 & Deudas sin interés &
+El sistema permite registrar deudas sin tasa de interés para préstamos familiares o acuerdos sin costo financiero. \\
+
+RN25 & Alertas de vencimiento &
+Se generan alertas automáticas para recordar pagos de deudas según la configuración del usuario. \\
+
+\midrule
+\multicolumn{3}{c}{\textbf{NOTIFICACIONES Y ALERTAS}} \\
+\midrule
+
+RN26 & Límite diario de notificaciones &
+El sistema envía máximo 5 notificaciones regulares por día para evitar saturación del usuario. \\
+
+RN27 & Alertas urgentes prioritarias &
+Las alertas urgentes (vencimiento mismo día, superar 100\% presupuesto) pueden superar el límite diario de notificaciones. \\
+
+RN28 & Configuración personalizable &
+Los usuarios pueden habilitar o deshabilitar tipos específicos de alertas por módulo (presupuestos, deudas, reportes). \\
+
+RN29 & Alertas de presupuesto &
+Se envían alertas cuando el gasto acumulado supera el 80\% del presupuesto configurado por categoría. \\
+
+RN30 & Recordatorios de deuda &
+Las alertas de deuda se configuran con anticipación personalizable (3, 7, 15 días antes del vencimiento). \\
+
+\bottomrule
+\end{tabularx}
+\caption{Reglas de Negocio del Sistema (RN22–RN32)}
+\end{table}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{@{} l l X @{}}
+\toprule
+\textbf{Código} & \textbf{Nombre} & \textbf{Descripción} \\
+\midrule
+
+\multicolumn{3}{c}{\textbf{REPORTES Y ANÁLISIS}} \\
+\midrule
+
+RN31 & Períodos de reporte &
+Los reportes se generan por día, semana, mes o año según la disponibilidad de la plataforma (móvil para reportes simples, web para reportes complejos). \\
+
+RN32 & Rango de fechas limitado &
+Los reportes se generan únicamente para fechas donde existan transacciones registradas en el sistema. \\
+
+RN33 & Formatos de exportación &
+Los reportes pueden exportarse en formato PDF para visualización o Excel para análisis adicional. \\
+
+RN34 & Reportes por plataforma &
+Los reportes complejos y anuales se generan únicamente en la plataforma web. La aplicación móvil maneja reportes básicos y mensuales. \\
+
+\midrule
+\multicolumn{3}{c}{\textbf{INTEGRIDAD Y SEGURIDAD DE DATOS}} \\
+\midrule
+
+RN35 & Eliminación irreversible &
+La eliminación de datos personales, transacciones o categorías es irreversible y requiere confirmación explícita del usuario. \\
+
+RN36 & Integridad referencial &
+Al eliminar una categoría, todos los gastos asociados deben reasignarse a una categoría válida antes de completar la operación. \\
+
+RN37 & Validación de montos &
+Todos los montos ingresados deben ser valores numéricos positivos mayores a cero con máximo dos decimales. \\
+
+
+\bottomrule
+\end{tabularx}
+\caption{Reglas de Negocio del Sistema (RN33–RN43)}
 \end{table}
