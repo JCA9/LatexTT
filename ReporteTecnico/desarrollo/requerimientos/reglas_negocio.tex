@@ -17,7 +17,7 @@ RN01 & Registro único de usuario &
 Cada usuario debe tener una cuenta única asociada a un correo electrónico válido. No se permiten cuentas duplicadas con el mismo correo electrónico. \\
 
 RN02 & Autenticación múltiple &
-Los usuarios pueden acceder simultáneamente desde la aplicación móvil y la plataforma web con las mismas credenciales. \\
+Los usuarios pueden acceder a la aplicación móvil y la plataforma web con las mismas credenciales. \\
 
 RN03 & Tiempo de sesión &
 Las sesiones de usuario expiran automáticamente después de 5 minutos de inactividad por motivos de seguridad. \\
@@ -47,12 +47,9 @@ Cada imagen de ticket se procesa una sola vez para evitar duplicación de datos.
 RN10 & Validación manual obligatoria &
 Cuando el OCR presenta discrepancias o baja confianza en la extracción, se solicita validación manual obligatoria del usuario. \\
 
-RN11 & Corrección y auditoria de datos &
-Todos los cambios realizados por el usuario a los datos extraídos por OCR quedan registrados en la bitácora del sistema para auditoria. \\
-
 \bottomrule
 \end{tabularx}
-\caption{Reglas de Negocio del Sistema (RN01–RN11)}
+\caption{Reglas de Negocio del Sistema (RN01–RN10)}
 \end{table}
 
 \begin{table}[H]
@@ -66,40 +63,37 @@ Todos los cambios realizados por el usuario a los datos extraídos por OCR queda
 \multicolumn{3}{c}{\textbf{CATEGORIZACIÓN Y PRESUPUESTOS}} \\
 \midrule
 
-RN12 & Límite de categorías personalizadas &
+RN11 & Límite de categorías personalizadas &
 Cada usuario puede crear máximo 10 categorías personalizadas, siguiendo el modelo de presupuestación por sobres de Dave Ramsey. \\
 
-RN13 & Categorías del sistema no eliminables &
+RN12 & Categorías del sistema no eliminables &
 Las categorías básicas del sistema (Alimentos/Despensa, Transporte, Ahorro) no pueden ser eliminadas por el usuario. \\
 
-RN14 & Asignación única de categoría &
+RN13 & Asignación única de categoría &
 Cada gasto debe asignarse únicamente a una categoría. No se permite la división de gastos entre múltiples categorías. \\
 
-RN15 & Categorización automática &
+RN14 & Categorización automática &
 Los gastos se clasifican automáticamente según palabras clave y patrones de coincidencia con categorías predefinidas. \\
 
-RN16 & Presupuestos mensuales &
-Todos los presupuestos se configuran y controlan por períodos mensuales. \\
+RN15 & Presupuestos mensuales &
+Los presupuestos se configuran y controlan por períodos mensuales. \\
 
-RN17 & Reasignación automática &
+RN16 & Reasignación automática &
 Al modificar o eliminar una categoría, todos los gastos asociados se reasignan automáticamente según las reglas de categorización definidas. \\
 
 \midrule
 \multicolumn{3}{c}{\textbf{GESTIÓN DE INGRESOS Y EGRESOS}} \\
 \midrule
 
-RN18 & Registro sin monto mínimo &
+RN17 & Registro sin monto mínimo &
 No existe monto mínimo para registrar ingresos o egresos. Se acepta cualquier valor mayor a cero. \\
 
-RN19 & Período de modificación &
-Las transacciones (ingresos y egresos) pueden modificarse únicamente durante los primeros 7 días después de su registro. \\
-
-RN20 & Ingresos recurrentes &
+RN18 & Ingresos recurrentes &
 El sistema permite configurar ingresos recurrentes mensuales que se registran automáticamente (ej: salario, mesada). \\
 
 \bottomrule
 \end{tabularx}
-\caption{Reglas de Negocio del Sistema (RN12–RN21)}
+\caption{Reglas de Negocio del Sistema (RN11–RN18)}
 \end{table}
 
 \begin{table}[H]
@@ -113,43 +107,28 @@ El sistema permite configurar ingresos recurrentes mensuales que se registran au
 \multicolumn{3}{c}{\textbf{GESTIÓN DE DEUDAS}} \\
 \midrule
 
-RN21 & Límite máximo de deudas &
+RN19 & Límite máximo de deudas &
 Cada usuario puede registrar máximo 20 deudas activas simultáneamente para mantener un control financiero efectivo. \\
 
-RN22 & Tipos de deuda soportados &
+RN20 & Tipos de deuda soportados &
 El sistema maneja diferentes tipos de deuda: tarjetas de crédito, préstamos personales, deudas familiares, y otras deudas sin clasificar. \\
 
-RN23 & Tasas de interés manuales &
-Las tasas de interés de las deudas deben ser ingresadas manualmente por el usuario según la información del acreedor. \\
-
-RN24 & Deudas sin interés &
-El sistema permite registrar deudas sin tasa de interés para préstamos familiares o acuerdos sin costo financiero. \\
-
-RN25 & Alertas de vencimiento &
+RN21 & Alertas de vencimiento &
 Se generan alertas automáticas para recordar pagos de deudas según la configuración del usuario. \\
 
 \midrule
 \multicolumn{3}{c}{\textbf{NOTIFICACIONES Y ALERTAS}} \\
 \midrule
 
-RN26 & Límite diario de notificaciones &
-El sistema envía máximo 5 notificaciones regulares por día para evitar saturación del usuario. \\
-
-RN27 & Alertas urgentes prioritarias &
-Las alertas urgentes (vencimiento mismo día, superar 100\% presupuesto) pueden superar el límite diario de notificaciones. \\
-
-RN28 & Configuración personalizable &
+RN22 & Configuración personalizable &
 Los usuarios pueden habilitar o deshabilitar tipos específicos de alertas por módulo (presupuestos, deudas, reportes). \\
 
-RN29 & Alertas de presupuesto &
+RN23 & Alertas de presupuesto &
 Se envían alertas cuando el gasto acumulado supera el 80\% del presupuesto configurado por categoría. \\
-
-RN30 & Recordatorios de deuda &
-Las alertas de deuda se configuran con anticipación personalizable (3, 7, 15 días antes del vencimiento). \\
 
 \bottomrule
 \end{tabularx}
-\caption{Reglas de Negocio del Sistema (RN22–RN32)}
+\caption{Reglas de Negocio del Sistema (RN19–RN23)}
 \end{table}
 
 \begin{table}[H]
@@ -163,33 +142,30 @@ Las alertas de deuda se configuran con anticipación personalizable (3, 7, 15 d�
 \multicolumn{3}{c}{\textbf{REPORTES Y ANÁLISIS}} \\
 \midrule
 
-RN31 & Períodos de reporte &
-Los reportes se generan por día, semana, mes o año según la disponibilidad de la plataforma (móvil para reportes simples, web para reportes complejos). \\
+RN24 & Períodos de reporte &
+Los reportes se generan por día, semana, mes o año desde la plataforma web. \\
 
-RN32 & Rango de fechas limitado &
+RN25 & Rango de fechas limitado &
 Los reportes se generan únicamente para fechas donde existan transacciones registradas en el sistema. \\
 
-RN33 & Formatos de exportación &
+RN26 & Formatos de exportación &
 Los reportes pueden exportarse en formato PDF para visualización o Excel para análisis adicional. \\
-
-RN34 & Reportes por plataforma &
-Los reportes complejos y anuales se generan únicamente en la plataforma web. La aplicación móvil maneja reportes básicos y mensuales. \\
 
 \midrule
 \multicolumn{3}{c}{\textbf{INTEGRIDAD Y SEGURIDAD DE DATOS}} \\
 \midrule
 
-RN35 & Eliminación irreversible &
+RN27 & Eliminación irreversible &
 La eliminación de datos personales, transacciones o categorías es irreversible y requiere confirmación explícita del usuario. \\
 
-RN36 & Integridad referencial &
+RN28 & Integridad referencial &
 Al eliminar una categoría, todos los gastos asociados deben reasignarse a una categoría válida antes de completar la operación. \\
 
-RN37 & Validación de montos &
+RN29 & Validación de montos &
 Todos los montos ingresados deben ser valores numéricos positivos mayores a cero con máximo dos decimales. \\
 
 
 \bottomrule
 \end{tabularx}
-\caption{Reglas de Negocio del Sistema (RN33–RN43)}
+\caption{Reglas de Negocio del Sistema (RN24–RN29)}
 \end{table}
