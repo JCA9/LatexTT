@@ -92,17 +92,17 @@ Cada tabla posee una clave primaria que garantiza la unicidad de los registros y
 
 Las relaciones más relevantes son:
 
-Usuarios-Tickets: relación 1:N, donde un usuario puede registrar varios tickets.
+Usuarios-Tickets: relación 1:0..N, donde un usuario puede registrar varios tickets.
 
-Tickets-ProductosTickets: relación 1:N, cada ticket puede contener múltiples productos asociados.
+Tickets-ProductosTickets: relación 1:0..N, cada ticket puede contener múltiples productos asociados.
 
-Usuarios-Movimientos: relación 1:N, un usuario genera múltiples registros financieros.
+Usuarios-Movimientos: relación 1:0..N, un usuario genera múltiples registros financieros.
 
 Categorías-Movimientos: relación 1:N, cada movimiento pertenece a una categoría definida por el usuario.
 
-Usuarios-Deudas-Usuarios: relación 1:N, que permite asignar deudas a usuarios específicos.
+Usuarios-Deudas-Usuarios: relación 1:0..N, que permite asignar deudas a usuarios específicos.
 
-Movimientos-Predicciones: relación 1:N, cada movimiento puede tener una predicción asociada.
+Categorías-Presupuestos: relación 1:1, cada categoria puede tener un presupuesto.
 
 Según Elmasri y Navathe \cite{TablasYRelaciones}, un buen diseño relacional debe “mantener una estructura normalizada, clara y eficiente, minimizando redundancias y asegurando la 
 integridad de los datos”.
@@ -173,14 +173,6 @@ Este proceso asegura una estructura coherente, favorece la integridad referencia
     \caption{Diagrama UML de Secuencia - Generación de Reportes}
     \end{figure}
 
-    \item \textbf{Diagrama de Base de Datos}
-    
-    
-    \begin{figure}[H]
-    \centering
-    \includegraphics[width=1\linewidth]{./images/E-R BD.png}
-    \caption{Diagrama Entidad-Relación UML del sistema propuesto}
-    \end{figure}
     \item \textbf{Análisis del flujo del Sistema}
 
     En esta sección, se presenta un análisis detallado del flujo del sistema, identificando los diferentes procesos y cómo interactúan entre sí. 
@@ -188,7 +180,7 @@ Este proceso asegura una estructura coherente, favorece la integridad referencia
 
     \begin{figure}[H]
     \centering
-    \includegraphics[width=1\linewidth]{./images/Flujo del Sistema.png}
+    \includegraphics[width=1\linewidth, height=0.3\textheight]{./images/Flujo del Sistema.jpg}
     \caption{Diagrama del sistema propuesto}
     \end{figure}
 
@@ -196,11 +188,13 @@ Este proceso asegura una estructura coherente, favorece la integridad referencia
     
     El siguiente diagrama ilustra un prototipo del flujo del proceso de Reconocimiento Óptico de Caracteres (OCR) dentro del sistema.
     
+    \begin{landscape}
     \begin{figure}[H]
     \centering
-    \includegraphics[width=1\linewidth]{./images/FlujoOCR.png}
+    \includegraphics[width=\linewidth, height=\textheight, keepaspectratio]{./images/FlujoOCR.png}
     \caption{Diagrama del flujo del OCR}
     \end{figure}
+    \end{landscape}
 
 \end{itemize}
 
@@ -213,32 +207,50 @@ Estos wireframes sirven como guía visual para el desarrollo de la interfaz, ase
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\linewidth]{./images/wireframesApp/LogIn.JPG}
+    \includegraphics[width=0.5\linewidth]{./images/wireframesApp/LogIn.png}
     \caption{Wireframe de la pantalla de inicio de sesión - App Móvil}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.2\linewidth]{./images/wireframesApp/Carrusel.JPG}
+    \includegraphics[width=0.6\linewidth]{./images/wireframesApp/Carrusel.png}
     \caption{Wireframe de la pantalla de carrusel - App Móvil}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\linewidth]{./images/wireframesApp/Principal y Transacciones.JPG}
-    \caption{Wireframe de la pantalla de principal y transacciones - App Móvil}
+    \includegraphics[width=1\linewidth]{./images/wireframesApp/Principal.png}
+    \caption{Wireframe de la pantalla de principal - App Móvil}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\linewidth]{./images/wireframesApp/Presupuestos-Deudas-Notificaciones.JPG}
-    \caption{Wireframe de la pantalla de presupuestos, deudas y notificaciones - App Móvil}
+    \includegraphics[width=1\linewidth]{./images/wireframesApp/Transacciones.png}
+    \caption{Wireframe de la pantalla de transacciones - App Móvil}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\linewidth]{./images/wireframesApp/Escaneo-Verificacion-Tickets.JPG}
-    \caption{Wireframe de la pantalla de escaneo y verificación de tickets - App Móvil}
+    \includegraphics[width=1\linewidth]{./images/wireframesApp/Presupuestos.png}
+    \caption{Wireframe de la pantalla de presupuestos - App Móvil}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{./images/wireframesApp/Deudas.png}
+    \caption{Wireframe de la pantalla de deudas - App Móvil}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{./images/wireframesApp/Notificaciones.png}
+    \caption{Wireframe de la pantalla de Notificaciones - App Móvil}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{./images/wireframesApp/Escanear Tickets.png}
+    \caption{Wireframe de la pantalla de Escaneo de Tickets - App Móvil}
 \end{figure}
 
     \item \textbf{Wireframes Panel Web}
@@ -247,38 +259,44 @@ Estos wireframes sirven como guía visual para el desarrollo de la interfaz, ase
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\linewidth]{./images/wireframesWeb/Dashboard_web.png}
-    \caption{Wireframe del Dashboard Principal - Panel Web}
+    \includegraphics[width=1\linewidth]{./images/wireframesWeb/LandingPage.png}
+    \caption{Wireframe de la Landing Page - Panel Web}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\linewidth]{./images/wireframesWeb/Presupuestos_web.png}
+    \includegraphics[width=1\linewidth]{./images/wireframesWeb/IniciarSesion.png}
+    \caption{Wireframe de la pantalla de Iniciar Sesión - Panel Web}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{./images/wireframesWeb/DashInicio.png}
+    \caption{Wireframe de la pantalla de Dashboard Inicial - Panel Web}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{./images/wireframesWeb/DashTransacciones.png}
+    \caption{Wireframe de la pantalla de Transacciones - Panel Web}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{./images/wireframesWeb/DashPresupuestos.png}
     \caption{Wireframe de la pantalla de Presupuestos - Panel Web}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\linewidth]{./images/wireframesWeb/Analisis_web.png}
-    \caption{Wireframe de la pantalla de Análisis - Panel Web}
+    \includegraphics[width=1\linewidth]{./images/wireframesWeb/DashDeudas.png}
+    \caption{Wireframe de la pantalla de Deudas - Panel Web}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\linewidth]{./images/wireframesWeb/Dudas_web.png}
-    \caption{Wireframe de la pantalla de Dudas - Panel Web}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\linewidth]{./images/wireframesWeb/Notificaciones_web.png}
-    \caption{Wireframe de la pantalla de Notificaciones - Panel Web}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\linewidth]{./images/wireframesWeb/Soluciones_web.png}
-    \caption{Wireframe de la pantalla de Soluciones - Panel Web}
+    \includegraphics[width=1\linewidth]{./images/wireframesWeb/DashRecomendaciones.png}
+    \caption{Wireframe de la pantalla de Recomendaciones por IA - Panel Web}
 \end{figure}
 
 \end{itemize}
