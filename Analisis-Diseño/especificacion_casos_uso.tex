@@ -1,0 +1,2015 @@
+\chapter{Especificación de Casos de Uso}
+
+\section{Introducción}
+
+Los casos de uso describen las interacciones entre los usuarios (actores) y el sistema de gestión financiera personal. Cada caso de uso detalla un flujo de trabajo específico que el sistema debe soportar para cumplir con los objetivos del usuario.
+
+El sistema está diseñado para un único tipo de actor principal: el \textbf{Administrador Financiero}, quien es el usuario propietario de la aplicación y responsable de gestionar sus finanzas personales.
+
+\section{Mapeo de Requerimientos Funcionales a Casos de Uso}
+
+La siguiente tabla muestra la relación entre los 40 requerimientos funcionales identificados y los casos de uso especificados:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{RF} & \textbf{Nombre} & \textbf{Caso de Uso} \\
+\hline
+\multicolumn{3}{|c|}{\textbf{Casos de Uso Compartidos (App Móvil y Web)}} \\
+\hline
+RF01 & Registro de usuario & CU-01: Registrar Usuario \\
+RF02 & Inicio de sesión & CU-02: Iniciar Sesión \\
+RF03 & Recuperación de contraseña & CU-03: Recuperar Contraseña \\
+RF04 & Edición de perfil & CU-21: Editar Perfil \\
+RF05 & Eliminación de cuenta & CU-22: Eliminar Cuenta \\
+RF06 & Registro de ingresos & CU-04: Registrar Ingreso \\
+RF07-RF08 & Registro de egresos & CU-05: Registrar Egreso \\
+RF08 & Registro de egresos manualmente & CU-06: Registrar Egreso Manualmente \\
+RF09 & Registro de ticket manualmente & CU-08: Registrar Ticket Manualmente \\
+RF10 & Configuración de presupuesto & CU-16: Configurar Presupuestos \\
+RF11 & Visualización de historial & CU-18: Consultar Historial de Transacciones \\
+RF12 & Visualización de gráficas & CU-23: Visualizar Gráficas \\
+RF13 & Generación de reportes PDF & CU-24: Generar Reportes PDF \\
+RF14 & Configuración de metas de ahorro & CU-17: Configurar Metas de Ahorro \\
+\hline
+\multicolumn{3}{|c|}{\textbf{Casos de Uso Exclusivos App Móvil}} \\
+\hline
+RF15 & Cambio de tema & CU-25: Cambiar Tema Aplicación \\
+RF16-RF20 & Captura de foto del ticket & CU-07: Tomar Foto de Ticket \\
+RF19 & Etiquetado personalizado & CU-26: Etiquetar Tickets \\
+RF20 & Corrección de datos OCR & CU-27: Corregir Datos Escaneados \\
+RF21 & Historial de notificaciones & CU-09: Ver Historial de Notificaciones \\
+RF22 & Estadísticas por categoría & CU-10: Visualizar Estadísticas por Categoría \\
+RF23 & Modificación de categorías & CU-11: Modificar Categoría de Gastos \\
+RF24 & Alertas de deudas & CU-13: Establecer Alertas de Pago de Deudas \\
+RF25 & Configuración de deudas & CU-14: Configurar Deudas \\
+RF26 & Registro de deudas & CU-15: Registrar Deudas \\
+RF27 & Planificación de pago de deudas & CU-12: Planificar Pago de Deudas \\
+RF28 & Presupuestos personales & CU-28: Planificar Presupuestos Personales \\
+RF29 & Consulta de tickets & CU-19: Consultar Tickets \\
+RF30 & Visualización de gastos & CU-29: Visualizar Gastos \\
+RF31 & Eliminación de tickets & CU-20: Eliminar Tickets \\
+\hline
+\multicolumn{3}{|c|}{\textbf{Casos de Uso Exclusivos Plataforma Web}} \\
+\hline
+RF32 & Consejos personalizados & CU-30: Consultar Consejos Personalizados \\
+RF33 & Búsqueda y filtrado & CU-31: Buscar y Filtrar Tickets \\
+RF34 & Reportes en Excel & CU-32: Generar Reportes Excel \\
+RF35 & Compartir reportes por correo & CU-33: Compartir Reportes por Correo \\
+RF36 & Comparación entre meses & CU-34: Comparar Gastos entre Meses \\
+RF37 & Balance vs egresos & CU-35: Consultar Balance vs Egresos \\
+RF38 & Estadísticas avanzadas & CU-36: Visualizar Estadísticas Avanzadas \\
+RF39 & Carga de ticket digital & CU-37: Cargar Ticket Digital \\
+RF40 & Metas de ahorro desde web & CU-38: Configurar Metas desde Web \\
+\hline
+\end{tabular}
+\caption{Mapeo Completo de Requerimientos Funcionales a Casos de Uso}
+\end{table}
+
+\section{CU-01: Registrar Usuario}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El usuario se registra por primera vez en el sistema proporcionando sus datos personales y creando credenciales de acceso.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El sistema debe estar disponible
+    \item El usuario no debe tener una cuenta existente
+    \item El usuario debe tener acceso a un correo electrónico válido
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item Se crea una nueva cuenta de usuario en el sistema
+    \item Se envía un correo de confirmación al usuario
+    \item El usuario puede iniciar sesión con sus credenciales
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a la pantalla de registro
+    \item El sistema presenta el formulario de registro
+    \item El usuario ingresa la información requerida:
+    \begin{itemize}
+        \item Nombre completo
+        \item Correo electrónico
+        \item Contraseña
+        \item Confirmación de contraseña
+    \end{itemize}
+    \item El usuario acepta los términos y condiciones
+    \item El usuario presiona el botón "Registrarse"
+    \item El sistema valida los datos ingresados
+    \item El sistema verifica que el correo no esté registrado
+    \item El sistema crea la cuenta del usuario
+    \item El sistema envía correo de confirmación
+    \item El sistema muestra mensaje de registro exitoso
+    \item El usuario es redirigido a la pantalla de inicio de sesión
+\end{enumerate}
+
+\noindent\textbf{Flujos Alternativos:}
+
+\textbf{FA-01: Correo ya registrado}
+\begin{enumerate}
+    \item En el paso 7, si el correo ya está registrado
+    \item El sistema muestra mensaje de error
+    \item El usuario debe usar un correo diferente
+    \item Regresa al paso 3
+\end{enumerate}
+
+\textbf{FA-02: Contraseñas no coinciden}
+\begin{enumerate}
+    \item En el paso 6, si las contraseñas no coinciden
+    \item El sistema muestra mensaje de error
+    \item El usuario debe corregir las contraseñas
+    \item Regresa al paso 3
+\end{enumerate}
+
+\textbf{FA-03: Datos inválidos}
+\begin{enumerate}
+    \item En el paso 6, si los datos no cumplen los requisitos
+    \item El sistema muestra mensajes de error específicos
+    \item El usuario corrige los datos
+    \item Regresa al paso 3
+\end{enumerate}
+
+\section{CU-02: Iniciar Sesión}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero accede al sistema utilizando sus credenciales de autenticación (correo/contraseña o cuenta de Google).
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El sistema debe estar disponible
+    \item El usuario debe tener una cuenta registrada en el sistema
+    \item Para autenticación con Google, el usuario debe tener una cuenta de Google válida
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item El usuario queda autenticado en el sistema
+    \item Se establece una sesión activa
+    \item El usuario es redirigido al dashboard principal
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a la pantalla de inicio de sesión
+    \item El sistema presenta las opciones de autenticación:
+    \begin{itemize}
+        \item Correo electrónico y contraseña
+        \item Iniciar sesión con Google
+    \end{itemize}
+    \item El usuario selecciona el método de autenticación deseado
+    \item Si selecciona correo/contraseña:
+    \begin{enumerate}
+        \item Ingresa su correo electrónico
+        \item Ingresa su contraseña
+        \item Presiona el botón "Iniciar Sesión"
+    \end{enumerate}
+    \item Si selecciona Google:
+    \begin{enumerate}
+        \item Presiona el botón "Iniciar con Google"
+        \item Es redirigido a la página de autenticación de Google
+        \item Autoriza el acceso a la aplicación
+    \end{enumerate}
+    \item El sistema valida las credenciales
+    \item El sistema establece la sesión del usuario
+    \item El usuario es redirigido al dashboard principal
+\end{enumerate}
+
+\noindent\textbf{Flujos Alternativos:}
+
+\textbf{FA-01: Credenciales inválidas}
+\begin{enumerate}
+    \item En el paso 6, si las credenciales son incorrectas
+    \item El sistema muestra un mensaje de error
+    \item El usuario regresa al paso 3
+\end{enumerate}
+
+\textbf{FA-02: Error de autenticación con Google}
+\begin{enumerate}
+    \item En el paso 5c, si la autenticación con Google falla
+    \item El sistema muestra un mensaje de error
+    \item El usuario regresa al paso 2
+\end{enumerate}
+
+\section{CU-03: Recuperar Contraseña}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El usuario recupera su contraseña cuando la ha olvidado, mediante un enlace de restablecimiento enviado a su correo electrónico.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El sistema debe estar disponible
+    \item El usuario debe tener una cuenta registrada
+    \item El usuario debe tener acceso a su correo electrónico registrado
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item Se genera un enlace temporal de restablecimiento
+    \item Se envía el enlace al correo del usuario
+    \item El usuario puede crear una nueva contraseña
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a la pantalla de inicio de sesión
+    \item El usuario presiona "¿Olvidaste tu contraseña?"
+    \item El sistema presenta el formulario de recuperación
+    \item El usuario ingresa su correo electrónico registrado
+    \item El usuario presiona "Enviar enlace de recuperación"
+    \item El sistema valida que el correo esté registrado
+    \item El sistema genera un token temporal de recuperación
+    \item El sistema envía correo con enlace de restablecimiento
+    \item El sistema muestra mensaje de confirmación
+    \item El usuario accede al enlace desde su correo
+    \item El sistema presenta formulario de nueva contraseña
+    \item El usuario ingresa su nueva contraseña
+    \item El usuario confirma la nueva contraseña
+    \item El sistema actualiza la contraseña
+    \item El sistema muestra confirmación de cambio exitoso
+\end{enumerate}
+
+\noindent\textbf{Flujos Alternativos:}
+
+\textbf{FA-01: Correo no registrado}
+\begin{enumerate}
+    \item En el paso 6, si el correo no está registrado
+    \item El sistema muestra mensaje de error
+    \item El usuario debe verificar el correo o registrarse
+    \item Regresa al paso 4
+\end{enumerate}
+
+\textbf{FA-02: Enlace expirado}
+\begin{enumerate}
+    \item En el paso 10, si el enlace ha expirado
+    \item El sistema muestra mensaje de enlace expirado
+    \item El usuario debe solicitar un nuevo enlace
+    \item Regresa al paso 1
+\end{enumerate}
+
+\section{CU-04: Registrar Ingreso}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero registra un ingreso de dinero en el sistema, especificando el monto y agregando notas descriptivas.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en el sistema
+    \item Debe existir un ingreso real de dinero para registrar
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item El ingreso queda registrado en el sistema
+    \item Se actualiza el balance general del usuario
+    \item El registro es visible en el historial de transacciones
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a la opción "Registrar Ingreso" desde el dashboard
+    \item El sistema presenta el formulario de registro de ingreso
+    \item El usuario ingresa la información requerida:
+    \begin{itemize}
+        \item Monto del ingreso
+        \item Fecha del ingreso
+        \item Fuente del ingreso (opcional)
+        \item Notas descriptivas (opcional)
+    \end{itemize}
+    \item El usuario confirma la información ingresada
+    \item El sistema valida los datos ingresados
+    \item El sistema registra el ingreso en la base de datos
+    \item El sistema actualiza el balance del usuario
+    \item El sistema muestra mensaje de confirmación
+    \item El usuario regresa al dashboard actualizado
+\end{enumerate}
+
+\noindent\textbf{Flujos Alternativos:}
+
+\textbf{FA-01: Datos inválidos}
+\begin{enumerate}
+    \item En el paso 5, si los datos no son válidos (monto negativo, fechas invalidas)
+    \item El sistema muestra mensaje de error específico
+    \item El sistema marca los campos con errores
+    \item El usuario corrige los datos y regresa al paso 4
+\end{enumerate}
+
+\section{CU-05: Registrar Egreso}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero inicia el proceso de registro de un egreso, seleccionando entre las opciones disponibles: registro manual o captura de ticket.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en el sistema
+    \item Debe existir un gasto real para registrar
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item Se inicia el flujo de registro correspondiente (manual o por foto)
+    \item El usuario es dirigido a la pantalla de confirmación de datos
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario presiona el botón "Registrar Egreso" desde el dashboard
+    \item El sistema presenta las opciones de registro:
+    \begin{itemize}
+        \item Registro Manual
+        \item Tomar Foto de Ticket
+    \end{itemize}
+    \item El usuario selecciona el método deseado
+    \item Si selecciona "Registro Manual": se ejecuta CU-06
+    \item Si selecciona "Tomar Foto de Ticket": se ejecuta CU-07
+\end{enumerate}
+
+\noindent\textbf{Flujos Alternativos:}
+
+\textbf{FA-01: Cancelar operación}
+\begin{enumerate}
+    \item En cualquier momento del proceso
+    \item El usuario puede cancelar y regresar al dashboard
+\end{enumerate}
+
+\section{CU-06: Registrar Egreso Manualmente}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero registra manualmente un egreso ingresando todos los datos del gasto, incluyendo artículos, costos y lugar de compra.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en el sistema
+    \item Se debe haber seleccionado "Registro Manual" en CU-03
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item El egreso queda registrado en el sistema
+    \item Se actualiza el balance general del usuario
+    \item Se actualizan las estadísticas por categoría
+    \item El registro es visible en el historial de transacciones
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El sistema presenta el formulario de registro manual
+    \item El usuario ingresa la información básica:
+    \begin{itemize}
+        \item Lugar de compra
+        \item Fecha y hora de la transacción
+        \item Monto total
+    \end{itemize}
+    \item El usuario agrega los artículos comprados:
+    \begin{itemize}
+        \item Nombre del artículo
+        \item Cantidad
+        \item Precio unitario
+        \item Precio total
+    \end{itemize}
+    \item El sistema realiza categorización automática de artículos
+    \item El usuario revisa y confirma las categorías asignadas
+    \item El usuario puede agregar una etiqueta personalizada (opcional)
+    \item El usuario confirma toda la información
+    \item El sistema valida los datos y calcula totales
+    \item El sistema registra el egreso en la base de datos
+    \item El sistema actualiza balances y estadísticas
+    \item El sistema muestra mensaje de confirmación
+    \item El usuario regresa al dashboard actualizado
+\end{enumerate}
+
+\noindent\textbf{Flujos Alternativos:}
+
+\textbf{FA-01: Datos inválidos}
+\begin{enumerate}
+    \item En el paso 3, si los datos no son válidos
+    \item El sistema muestra mensaje de error específico
+    \item El sistema marca los campos con errores
+    \item El usuario corrige los datos y regresa al paso 3
+\end{enumerate}
+
+\textbf{FA-02: Error en categorización automática}
+\begin{enumerate}
+    \item En el paso 4, si no se puede categorizar automáticamente
+    \item El sistema solicita al usuario categorizar manualmente
+    \item El usuario selecciona la categoría apropiada
+    \item Continúa en el paso 7
+\end{enumerate}
+
+\section{CU-07: Tomar Foto de Ticket}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero registra un egreso tomando una o varias fotografías del ticket de compra, confirmando los datos escaneados por OCR.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en el sistema
+    \item Se debe haber seleccionado "Tomar Foto de Ticket" en CU-03
+    \item La cámara del dispositivo debe estar disponible
+    \item Debe existir un ticket físico para fotografiar
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item El egreso queda registrado en el sistema
+    \item Se almacenan las fotografías del ticket
+    \item Se actualiza el balance general del usuario
+    \item Se actualizan las estadísticas por categoría
+    \item El registro es visible en el historial de transacciones
+    \item Se asigna la etiqueta opcional si fue proporcionada
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El sistema activa la cámara del dispositivo
+    \item El usuario toma una o varias fotografías del ticket
+    \item El sistema procesa las imágenes con OCR
+    \item El sistema extrae la información del ticket:
+    \begin{itemize}
+        \item Lugar de compra
+        \item Fecha y hora
+        \item Lista de artículos con precios
+        \item Monto total
+    \end{itemize}
+    \item El sistema presenta los datos extraídos para confirmación
+    \item El usuario revisa y edita los datos si es necesario
+    \item El sistema realiza categorización automática de artículos
+    \item El usuario revisa y confirma las categorías asignadas
+    \item El usuario puede agregar una etiqueta personalizada (opcional)
+    \item El usuario confirma toda la información
+    \item El sistema valida los datos y calcula totales
+    \item El sistema registra el egreso en la base de datos
+    \item El sistema almacena las fotografías del ticket
+    \item El sistema actualiza balances y estadísticas
+    \item El sistema muestra mensaje de confirmación
+    \item El usuario regresa al dashboard actualizado
+\end{enumerate}
+
+\noindent\textbf{Flujos Alternativos:}
+
+\textbf{FA-01: OCR no funciona correctamente}
+\begin{enumerate}
+    \item En el paso 3, si el OCR no puede procesar las imágenes
+    \item El sistema muestra mensaje informativo
+    \item Se ejecuta CU-08: Registrar Ticket Manualmente
+\end{enumerate}
+
+\textbf{FA-02: Datos extraídos incorrectos}
+\begin{enumerate}
+    \item En el paso 6, si los datos extraídos son incorrectos
+    \item El usuario corrige manualmente los datos
+    \item Continúa en el paso 7
+\end{enumerate}
+
+\textbf{FA-03: Calidad de imagen insuficiente}
+\begin{enumerate}
+    \item En el paso 3, si la calidad de la imagen es insuficiente
+    \item El sistema sugiere tomar una nueva fotografía
+    \item El usuario regresa al paso 2
+\end{enumerate}
+
+\section{CU-08: Registrar Ticket Manualmente}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero registra manualmente los datos de un ticket cuando el OCR no funciona correctamente, digitando los artículos y costos mientras mantiene las fotografías del ticket.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en el sistema
+    \item Deben existir fotografías del ticket previamente capturadas
+    \item El OCR debe haber fallado en la extracción de datos
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item El egreso queda registrado en el sistema con datos ingresados manualmente
+    \item Se mantienen las fotografías del ticket asociadas
+    \item Se actualiza el balance general del usuario
+    \item Se actualizan las estadísticas por categoría
+    \item El registro es visible en el historial de transacciones
+    \item Se asigna la etiqueta opcional si fue proporcionada
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El sistema presenta un formulario de entrada manual con las fotografías del ticket visibles
+    \item El usuario consulta las fotografías para extraer la información
+    \item El usuario ingresa la información del ticket:
+    \begin{itemize}
+        \item Lugar de compra
+        \item Fecha y hora de la transacción
+        \item Lista de artículos comprados
+        \item Precios individuales y cantidades
+        \item Monto total
+    \end{itemize}
+    \item El usuario confirma que la suma de artículos coincide con el total
+    \item El sistema realiza categorización automática de artículos
+    \item El usuario revisa y confirma las categorías asignadas
+    \item El usuario puede agregar una etiqueta personalizada (opcional)
+    \item El usuario confirma toda la información
+    \item El sistema valida los datos y calcula totales
+    \item El sistema registra el egreso en la base de datos
+    \item El sistema mantiene la asociación con las fotografías del ticket
+    \item El sistema actualiza balances y estadísticas
+    \item El sistema muestra mensaje de confirmación
+    \item El usuario regresa al dashboard actualizado
+\end{enumerate}
+
+\noindent\textbf{Flujos Alternativos:}
+
+\textbf{FA-01: Datos inválidos}
+\begin{enumerate}
+    \item En el paso 4, si los datos ingresados no son válidos
+    \item El sistema muestra mensaje de error específico
+    \item El sistema marca los campos con errores
+    \item El usuario corrige los datos y regresa al paso 4
+\end{enumerate}
+
+\textbf{FA-02: Totales no coinciden}
+\begin{enumerate}
+    \item En el paso 4, si la suma de artículos no coincide con el total
+    \item El sistema muestra mensaje de advertencia
+    \item El usuario debe revisar y corregir los importes
+    \item Regresa al paso 4
+\end{enumerate}
+
+\section{CU-09: Ver Historial de Notificaciones}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero consulta el historial completo de notificaciones recibidas del sistema, con capacidad de filtrado por tipo de alerta para revisar alertas de presupuestos, recordatorios de deudas y otras notificaciones importantes.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en el sistema
+    \item Deben existir notificaciones previas en el sistema
+    \item El usuario debe tener presupuestos configurados y alertas activas
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item Se muestra el historial de notificaciones según los filtros aplicados
+    \item Las notificaciones consultadas se marcan como leídas
+    \item Se actualiza el contador de notificaciones pendientes
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a la opción "Historial de Notificaciones" desde el menú principal
+    \item El sistema muestra la lista completa de notificaciones ordenadas por fecha
+    \item El usuario puede aplicar filtros:
+    \begin{itemize}
+        \item Por tipo de notificación (presupuesto, deuda, recordatorio)
+        \item Por rango de fechas
+        \item Por estado (leída/no leída)
+    \end{itemize}
+    \item El sistema actualiza la lista según los filtros aplicados
+    \item El usuario puede seleccionar notificaciones individuales para ver detalles
+    \item El sistema muestra información detallada de la notificación seleccionada
+    \item El usuario puede marcar notificaciones como leídas/no leídas
+    \item El usuario puede eliminar notificaciones individuales o en lote
+\end{enumerate}
+
+\noindent\textbf{Flujos Alternativos:}
+
+\textbf{FA-01: Sin notificaciones disponibles}
+\begin{enumerate}
+    \item En el paso 2, si no existen notificaciones en el sistema
+    \item El sistema muestra mensaje informativo
+    \item Se sugiere al usuario configurar alertas y presupuestos
+\end{enumerate}
+
+\textbf{FA-02: Filtro sin resultados}
+\begin{enumerate}
+    \item En el paso 5, si el filtro aplicado no devuelve resultados
+    \item El sistema muestra mensaje de "sin resultados"
+    \item El usuario puede cambiar el filtro o ver todas las notificaciones
+\end{enumerate}
+
+\section{CU-10: Visualizar Estadísticas por Categoría}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero visualiza estadísticas detalladas de sus gastos organizadas por categorías, incluyendo gráficos comparativos de presupuesto vs gasto real, análisis de productos por categoría y seguimiento mensual de patrones de consumo.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en el sistema
+    \item Deben existir transacciones registradas en el sistema
+    \item Debe tener presupuestos asignados por categorías
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item Se visualizan las estadísticas actualizadas por categoría
+    \item Se muestran comparativos con períodos anteriores
+    \item El usuario obtiene insights sobre sus patrones de gasto
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a la opción "Estadísticas por Categoría" desde el dashboard
+    \item El sistema presenta un resumen general con todas las categorías
+    \item El usuario puede seleccionar una categoría específica para análisis detallado
+    \item El sistema muestra estadísticas detalladas de la categoría:
+    \begin{itemize}
+        \item Gráfico de presupuesto vs gasto real
+        \item Lista de productos más comprados
+        \item Tendencia de gastos por mes
+        \item Comparativo con el mismo período del año anterior
+    \end{itemize}
+    \item El usuario puede cambiar el período de análisis (mensual, trimestral, anual)
+    \item El sistema actualiza las estadísticas según el período seleccionado
+    \item El usuario puede exportar los reportes estadísticos
+    \item El sistema actualiza automáticamente las estadísticas con cada nueva transacción
+\end{enumerate}
+
+\noindent\textbf{Flujos Alternativos:}
+
+\textbf{FA-01: Sin datos suficientes}
+\begin{enumerate}
+    \item En el paso 2, si no hay suficientes datos para generar estadísticas
+    \item El sistema muestra mensaje informativo
+    \item Se sugiere registrar más transacciones para obtener análisis completos
+\end{enumerate}
+
+\textbf{FA-02: Categoría sin movimientos}
+\begin{enumerate}
+    \item En el paso 4, si la categoría seleccionada no tiene transacciones
+    \item El sistema muestra mensaje específico
+    \item Se muestra solo el presupuesto asignado y se sugiere comenzar a registrar gastos
+\end{enumerate}
+
+\section{CU-11: Modificar Categoría de Gastos}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero modifica las configuraciones de sus categorías de gastos, incluyendo cambios de presupuesto, reasignación de productos, modificación de nombres y eliminación de productos mal categorizados.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en el sistema
+    \item Deben existir categorías previamente configuradas
+    \item El usuario debe tener permisos para modificar categorías
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item La categoría queda actualizada con las nuevas configuraciones
+    \item Se actualizan las estadísticas y presupuestos relacionados
+    \item Los productos reasignados cambian de categoría
+    \item Se registra el cambio en el log de auditoría
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a "Gestión de Categorías" desde el menú de configuración
+    \item El sistema muestra la lista de categorías existentes
+    \item El usuario selecciona la categoría a modificar
+    \item El sistema presenta el formulario de edición con los datos actuales
+    \item El usuario puede modificar:
+    \begin{itemize}
+        \item Nombre de la categoría
+        \item Presupuesto asignado
+        \item Color de identificación
+        \item Productos asignados a la categoría
+    \end{itemize}
+    \item El sistema valida los cambios realizados
+    \item Si existe reasignación de productos:
+    \begin{enumerate}
+        \item El sistema muestra lista de productos a reasignar
+        \item El usuario confirma las reasignaciones
+        \item El sistema actualiza las transacciones históricas afectadas
+    \end{enumerate}
+    \item El usuario confirma todos los cambios
+    \item El sistema actualiza la categoría y sus relaciones
+    \item El sistema recalcula estadísticas y presupuestos
+    \item Se muestra mensaje de confirmación con resumen de cambios aplicados
+\end{enumerate}
+
+\noindent\textbf{Flujos Alternativos:}
+
+\textbf{FA-01: Nombre duplicado}
+\begin{enumerate}
+    \item En el paso 6, si el nuevo nombre ya existe en otra categoría
+    \item El sistema muestra mensaje de error
+    \item El usuario debe ingresar un nombre diferente
+    \item Regresa al paso 5
+\end{enumerate}
+
+\textbf{FA-02: Presupuesto inválido}
+\begin{enumerate}
+    \item En el paso 6, si el presupuesto ingresado es menor o igual a cero
+    \item El sistema muestra mensaje de error
+    \item El usuario debe corregir el valor del presupuesto
+    \item Continúa en el paso 6
+\end{enumerate}
+
+\textbf{FA-03: Error en reasignación}
+\begin{enumerate}
+    \item En el paso 8, si ocurre un error al reasignar productos
+    \item El sistema muestra mensaje de error detallado
+    \item Se revierten los cambios parciales realizados
+    \item El usuario puede reintentar la operación
+\end{enumerate}
+
+\section{CU-12: Planificar Pago de Deudas}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero visualiza y organiza sus deudas pendientes, recibe sugerencias del sistema para estrategias de pago optimizadas y planifica el orden y cronograma de pagos para minimizar intereses y cumplir con los compromisos financieros.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en el sistema
+    \item Deben existir deudas registradas en el sistema
+    \item Las deudas deben tener información completa (monto, tasa de interés, fecha de vencimiento)
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item Se genera un plan de pago optimizado para las deudas
+    \item Se establecen recordatorios automáticos para los pagos
+    \item Se calcula el cronograma de liberación de deudas
+    \item Se actualiza el dashboard con el cronograma de pagos
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a la opción "Planificar Pago de Deudas" desde el menú principal
+    \item El sistema muestra la lista de todas las deudas pendientes
+    \item El sistema presenta estrategias de pago disponibles:
+    \begin{itemize}
+        \item Método de bola de nieve (menor saldo primero)
+        \item Método de avalancha (mayor interés primero)
+        \item Pago equilibrado proporcional
+    \end{itemize}
+    \item El usuario selecciona la estrategia preferida
+    \item El usuario ingresa el monto mensual disponible para pago de deudas
+    \item El sistema calcula y presenta el plan de pagos optimizado:
+    \begin{itemize}
+        \item Orden de pago de deudas
+        \item Montos mensuales por deuda
+        \item Tiempo estimado para liquidar cada deuda
+        \item Total de intereses a pagar
+        \item Fecha estimada de liberación total
+    \end{itemize}
+    \item El usuario revisa y ajusta el plan si es necesario
+    \item El usuario confirma y activa el plan de pagos
+    \item El sistema establece recordatorios automáticos
+    \item El sistema registra el plan en el cronograma personal
+    \item Se genera un calendario de pagos visible en el dashboard
+\end{enumerate}
+
+\noindent\textbf{Flujos Alternativos:}
+
+\textbf{FA-01: Monto insuficiente para pagos mínimos}
+\begin{enumerate}
+    \item En el paso 6, si el monto disponible no cubre los pagos mínimos requeridos
+    \item El sistema muestra alerta con el déficit calculado
+    \item Se sugiere revisar el presupuesto o consolidar deudas
+    \item El usuario debe ajustar el monto o revisar las deudas registradas
+\end{enumerate}
+
+\textbf{FA-02: Sin deudas registradas}
+\begin{enumerate}
+    \item En el paso 2, si no existen deudas registradas en el sistema
+    \item El sistema muestra mensaje informativo
+    \item Se ofrece la opción de registrar deudas
+    \item Se redirige al caso de uso CU-15: Registrar Deudas
+\end{enumerate}
+
+\section{CU-13: Establecer Alertas de Pago de Deudas}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero configura alertas y recordatorios automáticos para los pagos de sus deudas, estableciendo diferentes tipos de notificaciones para evitar pagos tardíos y cargos por intereses adicionales.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en el sistema
+    \item Deben existir deudas registradas con fechas de vencimiento
+    \item Las notificaciones deben estar habilitadas en el dispositivo
+    \item El usuario debe tener permisos para configurar alertas
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item Las alertas quedan configuradas y activas para las deudas seleccionadas
+    \item Se programan las notificaciones según los intervalos establecidos
+    \item Se registran las preferencias de alerta del usuario
+    \item Las alertas aparecen en el calendario del usuario
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a "Configurar Alertas de Deudas" desde el menú de deudas
+    \item El sistema muestra la lista de deudas disponibles para configurar alertas
+    \item El usuario selecciona las deudas para las cuales desea alertas
+    \item Para cada deuda seleccionada, el usuario configura:
+    \begin{itemize}
+        \item Días de anticipación para la alerta (7, 3, 1 día antes)
+        \item Tipo de notificación (push, email, ambas)
+        \item Horario preferido para recibir alertas
+        \item Recordatorios recurrentes (diario hasta el pago)
+    \end{itemize}
+    \item El sistema valida que las fechas de vencimiento estén definidas
+    \item El usuario confirma la configuración de alertas
+    \item El sistema programa las notificaciones automáticas
+    \item El sistema registra las preferencias en el perfil del usuario
+    \item Se muestra confirmación con resumen de alertas configuradas
+    \item El sistema comienza a enviar notificaciones según la programación establecida
+\end{enumerate}
+
+\noindent\textbf{Flujos Alternativos:}
+
+\textbf{FA-01: Notificaciones deshabilitadas}
+\begin{enumerate}
+    \item En cualquier paso, si las notificaciones están deshabilitadas en el dispositivo
+    \item El sistema detecta la restricción y muestra alerta
+    \item Se proporciona guía para habilitar notificaciones
+    \item El usuario debe habilitar notificaciones para continuar
+\end{enumerate}
+
+\textbf{FA-02: Deuda sin fecha de vencimiento}
+\begin{enumerate}
+    \item En el paso 4, si una deuda no tiene fecha de vencimiento definida
+    \item El sistema solicita establecer la fecha de vencimiento
+    \item El usuario ingresa la fecha requerida
+    \item Una vez establecida la fecha, regresa al paso 4
+\end{enumerate}
+
+\section{CU-14: Configurar Deudas}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero modifica y actualiza la información de deudas existentes, incluyendo ajustes de montos, plazos, tasas de interés y programación de pagos periódicos para mantener la información actualizada y precisa.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en el sistema
+    \item Deben existir deudas previamente registradas
+    \item El usuario debe tener permisos para modificar información de deudas
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item La información de la deuda queda actualizada en el sistema
+    \item Se recalculan los planes de pago asociados si existen
+    \item Se actualizan las alertas programadas relacionadas
+    \item Se registra el cambio en el historial de modificaciones
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a "Gestión de Deudas" desde el menú principal
+    \item El sistema muestra la lista de deudas registradas
+    \item El usuario selecciona la deuda a modificar
+    \item El sistema presenta el formulario de edición con los datos actuales
+    \item El usuario puede modificar:
+    \begin{itemize}
+        \item Nombre del acreedor
+        \item Monto actual de la deuda
+        \item Tasa de interés
+        \item Fecha de vencimiento
+        \item Pago mínimo mensual
+        \item Notas adicionales
+    \end{itemize}
+    \item El sistema valida los datos ingresados
+    \item Si los cambios afectan planes de pago existentes:
+    \begin{enumerate}
+        \item El sistema muestra advertencia sobre impacto en planes
+        \item El usuario confirma que desea continuar
+        \item El sistema recalcula automáticamente los planes afectados
+    \end{enumerate}
+    \item El usuario confirma todos los cambios
+    \item El sistema actualiza la información de la deuda
+    \item El sistema actualiza alertas y recordatorios asociados
+    \item Se registra la modificación en el historial
+    \item Se muestra mensaje de confirmación con resumen de cambios aplicados
+\end{enumerate}
+
+\noindent\textbf{Flujos Alternativos:}
+
+\textbf{FA-01: Datos inválidos}
+\begin{enumerate}
+    \item En el paso 6, si los datos ingresados no son válidos
+    \item El sistema muestra mensajes de error específicos
+    \item Se marcan los campos con errores
+    \item Regresa al paso 5 para realizar las correcciones
+\end{enumerate}
+
+\textbf{FA-02: Conflicto con plan de pagos activo}
+\begin{enumerate}
+    \item En el paso 9, si los cambios afectan un plan de pagos activo
+    \item El sistema muestra opciones: mantener plan actual o recalcular
+    \item El usuario decide cómo proceder con el plan de pagos
+\end{enumerate}
+
+\section{CU-15: Registrar Deudas}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero registra nuevas deudas en el sistema, capturando toda la información necesaria para su seguimiento y gestión, incluyendo detalles del acreedor, montos, plazos y condiciones de pago.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en el sistema
+    \item Debe existir una deuda real para registrar
+    \item El sistema debe tener espacio disponible para nuevas deudas
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item La nueva deuda queda registrada y activa en el sistema
+    \item Se incluye en los cálculos de planificación financiera
+    \item Está disponible para configuración de alertas y planes de pago
+    \item Se registra la fecha de creación en el historial
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a la opción "Registrar Nueva Deuda" desde el menú de deudas
+    \item El sistema presenta el formulario de registro de deuda
+    \item El usuario ingresa la información requerida:
+    \begin{itemize}
+        \item Nombre del acreedor (banco, empresa, persona)
+        \item Tipo de deuda (tarjeta de crédito, préstamo personal, hipoteca, etc.)
+        \item Monto total de la deuda
+        \item Tasa de interés anual
+        \item Fecha de vencimiento o plazo
+        \item Pago mínimo mensual requerido
+        \item Fecha del primer pago
+        \item Notas adicionales (opcional)
+    \end{itemize}
+    \item El usuario revisa toda la información ingresada
+    \item El sistema valida los datos:
+    \begin{itemize}
+        \item Monto debe ser mayor a cero
+        \item Fechas deben ser válidas y coherentes
+        \item Tasa de interés debe ser un valor válido
+    \end{itemize}
+    \item El sistema verifica si existe una deuda similar ya registrada
+    \item El usuario confirma el registro de la nueva deuda
+    \item El sistema registra la deuda en la base de datos
+    \item El sistema calcula proyecciones iniciales de pagos
+    \item El sistema ofrece configurar alertas inmediatamente
+    \item Se actualiza el dashboard con la nueva información
+    \item Se muestra mensaje de confirmación con resumen de la deuda registrada
+\end{enumerate}
+
+\noindent\textbf{Flujos Alternativos:}
+
+\textbf{FA-01: Información incompleta}
+\begin{enumerate}
+    \item En el paso 6, si faltan campos obligatorios
+    \item El sistema marca los campos faltantes
+    \item Se muestra mensaje indicando los datos requeridos
+    \item Regresa al paso 3 para completar datos
+\end{enumerate}
+
+\textbf{FA-02: Deuda duplicada}
+\begin{enumerate}
+    \item En el paso 7, si ya existe una deuda similar registrada
+    \item El sistema muestra la deuda existente para comparación
+    \item El usuario puede confirmar que es una deuda diferente o cancelar el registro
+\end{enumerate}
+
+\textbf{FA-03: Monto inválido}
+\begin{enumerate}
+    \item En el paso 6, si el monto ingresado es menor o equal a cero
+    \item El sistema muestra mensaje de error
+    \item El usuario debe corregir el monto
+    \item Continúa en el paso 5
+\end{enumerate}
+
+\section{CU-16: Configurar Presupuestos}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero configura presupuestos personalizados por categoría o período para controlar sus gastos según la metodología Dave Ramsey (máximo 10 categorías).
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en el sistema
+    \item Deben existir categorías de gastos creadas
+    \item El usuario debe tener ingresos registrados para establecer presupuestos
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item Los presupuestos quedan configurados y activos
+    \item Se establecen límites de gasto por categoría
+    \item Se activan alertas automáticas de límites
+    \item El sistema comienza a monitorear los gastos contra el presupuesto
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a "Configuración de Presupuestos" desde el menú principal
+    \item El sistema muestra las categorías disponibles (máximo 10)
+    \item El usuario selecciona el período del presupuesto (mensual, semanal)
+    \item Para cada categoría, el usuario:
+    \begin{itemize}
+        \item Establece el monto límite
+        \item Define el porcentaje de alerta (70%, 90%, 100%)
+        \item Configura acciones automáticas al exceder límites
+    \end{itemize}
+    \item El sistema valida que la suma no exceda los ingresos disponibles
+    \item El usuario revisa el resumen del presupuesto
+    \item El usuario confirma la configuración
+    \item El sistema guarda los presupuestos
+    \item El sistema activa el monitoreo automático
+    \item Se muestra confirmación con resumen de presupuestos activos
+\end{enumerate}
+
+\noindent\textbf{Flujos Alternativos:}
+
+\textbf{FA-01: Presupuesto excede ingresos}
+\begin{enumerate}
+    \item En el paso 5, si la suma de presupuestos excede los ingresos
+    \item El sistema muestra alerta de presupuesto inviable
+    \item El sistema sugiere ajustes automáticos
+    \item El usuario debe reducir los montos asignados
+    \item Regresa al paso 4
+\end{enumerate}
+
+\textbf{FA-02: Más de 10 categorías}
+\begin{enumerate}
+    \item En el paso 2, si hay más de 10 categorías
+    \item El sistema muestra mensaje de límite de categorías
+    \item El usuario debe consolidar o eliminar categorías
+    \item Se redirige a CU-11: Modificar Categoría de Gastos
+\end{enumerate}
+
+\section{CU-17: Configurar Metas de Ahorro}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero establece metas de ahorro personalizadas con plazos y montos específicos, monitoreando su progreso mediante indicadores visuales.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en el sistema
+    \item Debe tener presupuestos configurados
+    \item Debe existir capacidad de ahorro en su presupuesto
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item La meta de ahorro queda registrada y activa
+    \item Se establece un plan de ahorro automático
+    \item Se configuran recordatorios periódicos
+    \item Se actualiza el dashboard con indicadores de progreso
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a "Metas de Ahorro" desde el menú principal
+    \item El usuario presiona "Nueva Meta de Ahorro"
+    \item El usuario ingresa la información de la meta:
+    \begin{itemize}
+        \item Nombre descriptivo de la meta
+        \item Monto total objetivo
+        \item Fecha límite para alcanzar la meta
+        \item Prioridad de la meta (alta, media, baja)
+    \end{itemize}
+    \item El sistema calcula el ahorro mensual requerido
+    \item El sistema verifica disponibilidad en el presupuesto
+    \item El usuario revisa el plan de ahorro sugerido
+    \item El usuario puede ajustar el plan o la fecha límite
+    \item El usuario confirma la meta de ahorro
+    \item El sistema registra la meta y el plan
+    \item El sistema configura recordatorios automáticos
+    \item Se muestra confirmación con detalles del plan de ahorro
+\end{enumerate}
+
+\noindent\textbf{Flujos Alternativos:}
+
+\textbf{FA-01: Ahorro requerido excede capacidad}
+\begin{enumerate}
+    \item En el paso 5, si el ahorro mensual requerido excede la capacidad
+    \item El sistema muestra alerta de meta no viable
+    \item El sistema sugiere ajustar la fecha límite o el monto
+    \item El usuario debe modificar los parámetros
+    \item Regresa al paso 3
+\end{enumerate}
+
+\textbf{FA-02: Conflicto con metas existentes}
+\begin{enumerate}
+    \item En el paso 5, si la nueva meta conflicta con metas existentes
+    \item El sistema muestra las metas que entran en conflicto
+    \item El usuario debe repriorizar las metas
+    \item El sistema recalcula los planes de ahorro
+    \item Continúa en el paso 6
+\end{enumerate}
+
+\section{CU-18: Consultar Historial de Transacciones}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero consulta el historial completo de sus transacciones (ingresos y egresos) con capacidades de filtrado por fecha, categoría y tipo.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en el sistema
+    \item Deben existir transacciones registradas en el sistema
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item Se muestra el historial filtrado según los criterios seleccionados
+    \item El usuario puede exportar los resultados
+    \item Se actualiza la información de última consulta
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a "Historial de Transacciones" desde el menú principal
+    \item El sistema muestra todas las transacciones ordenadas por fecha (más recientes primero)
+    \item El usuario puede aplicar filtros:
+    \begin{itemize}
+        \item Rango de fechas (desde/hasta)
+        \item Tipo de transacción (ingreso/egreso/ambos)
+        \item Categoría específica
+        \item Rango de montos (mínimo/máximo)
+        \item Método de registro (manual/OCR)
+    \end{itemize}
+    \item El sistema actualiza la lista según los filtros aplicados
+    \item El usuario puede seleccionar transacciones individuales para ver detalles
+    \item El sistema muestra información detallada incluyendo:
+    \begin{itemize}
+        \item Tickets asociados (si aplica)
+        \item Categorización aplicada
+        \item Fecha y hora exacta
+        \item Método de registro utilizado
+    \end{itemize}
+    \item El usuario puede exportar los resultados en PDF o Excel
+    \item El usuario puede editar transacciones individuales (si tiene permisos)
+\end{enumerate}
+
+\noindent\textbf{Flujos Alternativos:}
+
+\textbf{FA-01: Sin transacciones en el período}
+\begin{enumerate}
+    \item En el paso 4, si no existen transacciones para los filtros aplicados
+    \item El sistema muestra mensaje de "sin resultados"
+    \item El usuario puede ajustar los filtros o crear nueva transacción
+    \item Se sugiere expandir el rango de fechas
+\end{enumerate}
+
+\textbf{FA-02: Error en exportación}
+\begin{enumerate}
+    \item En el paso 7, si ocurre error al exportar
+    \item El sistema muestra mensaje de error específico
+    \item El usuario puede reintentar con diferente formato
+    \item Se ofrece opción de reporte simplificado
+\end{enumerate}
+
+\section{CU-19: Consultar Tickets}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero consulta los tickets registrados previamente, pudiendo filtrar por fecha, categoría, monto y visualizar las imágenes asociadas.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en el sistema
+    \item Deben existir tickets registrados en el sistema
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item Se muestran los tickets según los filtros aplicados
+    \item El usuario puede acceder a las imágenes originales
+    \item Se actualiza la información de última consulta
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a "Consultar Tickets" desde el menú principal
+    \item El sistema muestra todos los tickets con vista previa
+    \item El usuario puede aplicar filtros:
+    \begin{itemize}
+        \item Fecha de registro
+        \item Establecimiento/lugar
+        \item Categoría de productos
+        \item Rango de montos
+        \item Método de procesamiento (OCR exitoso/manual)
+    \end{itemize}
+    \item El sistema actualiza la lista según los filtros
+    \item El usuario selecciona un ticket para ver detalles completos
+    \item El sistema muestra:
+    \begin{itemize}
+        \item Imágenes originales del ticket
+        \item Datos extraídos o ingresados manualmente
+        \item Lista detallada de productos
+        \item Categorización aplicada
+        \item Fecha y método de registro
+    \end{itemize}
+    \item El usuario puede:
+    \begin{itemize}
+        \item Descargar las imágenes originales
+        \item Editar la información del ticket
+        \item Recategorizar productos
+        \item Agregar notas adicionales
+    \end{itemize}
+\end{enumerate}
+
+\noindent\textbf{Flujos Alternativos:}
+
+\textbf{FA-01: Imagen no disponible}
+\begin{enumerate}
+    \item En el paso 6, si la imagen original no está disponible
+    \item El sistema muestra mensaje informativo
+    \item Se muestran solo los datos extraídos
+    \item Se ofrece opción de subir nueva imagen
+\end{enumerate}
+
+\textbf{FA-02: Sin tickets registrados}
+\begin{enumerate}
+    \item En el paso 2, si no existen tickets registrados
+    \item El sistema muestra mensaje informativo
+    \item Se ofrece opción de registrar primer ticket
+    \item Se redirige a CU-07: Tomar Foto de Ticket
+\end{enumerate}
+
+\section{CU-20: Eliminar Tickets}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero elimina tickets registrados, ya sea de forma individual o masiva, con confirmaciones previas para evitar pérdidas accidentales.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en el sistema
+    \item Deben existir tickets registrados para eliminar
+    \item El usuario debe tener permisos de eliminación
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item Los tickets seleccionados se eliminan permanentemente
+    \item Se actualizan las estadísticas y balances
+    \item Se registra la acción en el log de auditoría
+    \item Se liberan los recursos de almacenamiento
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a la funcionalidad desde "Consultar Tickets"
+    \item El usuario selecciona los tickets a eliminar:
+    \begin{itemize}
+        \item Selección individual con checkbox
+        \item Selección múltiple con filtros
+        \item Selección de rango por fechas
+    \end{itemize}
+    \item El usuario presiona "Eliminar Seleccionados"
+    \item El sistema muestra resumen de tickets a eliminar:
+    \begin{itemize}
+        \item Cantidad de tickets
+        \item Monto total afectado
+        \item Impacto en estadísticas
+        \item Advertencia de acción irreversible
+    \end{itemize}
+    \item El usuario confirma la eliminación ingresando su contraseña
+    \item El sistema valida la autorización
+    \item El sistema elimina los tickets y sus imágenes asociadas
+    \item El sistema recalcula balances y estadísticas
+    \item El sistema registra la acción en el log
+    \item Se muestra confirmación de eliminación exitosa
+\end{enumerate}
+
+\noindent\textbf{Flujos Alternativos:}
+
+\textbf{FA-01: Cancelar eliminación}
+\begin{enumerate}
+    \item En cualquier momento antes del paso 6
+    \item El usuario puede cancelar la operación
+    \item No se realizan cambios en el sistema
+    \item El usuario regresa a la consulta de tickets
+\end{enumerate}
+
+\textbf{FA-02: Contraseña incorrecta}
+\begin{enumerate}
+    \item En el paso 6, si la contraseña es incorrecta
+    \item El sistema muestra mensaje de error
+    \item El usuario puede reintentar (máximo 3 veces)
+    \item Después de 3 intentos fallidos, se cancela la operación
+\end{enumerate}
+
+\textbf{FA-03: Error en eliminación}
+\begin{enumerate}
+    \item En el paso 7, si ocurre error durante la eliminación
+    \item El sistema muestra mensaje de error específico
+    \item Se revierten los cambios parciales
+    \item El usuario puede reintentar la operación
+\end{enumerate}
+
+\section{CU-21: Editar Perfil}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero modifica su información personal como nombre, correo electrónico o fotografía de perfil desde la aplicación o la web.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en el sistema
+    \item Debe existir un perfil de usuario previamente registrado
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item La información del perfil queda actualizada
+    \item Los cambios se reflejan en toda la aplicación
+    \item Se registra la modificación en el log de actividad
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a "Configuración de Perfil" desde el menú
+    \item El sistema presenta el formulario con datos actuales
+    \item El usuario puede modificar:
+    \begin{itemize}
+        \item Nombre completo
+        \item Correo electrónico
+        \item Fotografía de perfil
+        \item Preferencias de notificación
+    \end{itemize}
+    \item El usuario confirma los cambios
+    \item El sistema valida los nuevos datos
+    \item El sistema actualiza la información del perfil
+    \item Se muestra confirmación de cambios exitosos
+\end{enumerate}
+
+\noindent\textbf{Flujos Alternativos:}
+
+\textbf{FA-01: Correo ya en uso}
+\begin{enumerate}
+    \item En el paso 5, si el nuevo correo ya está registrado
+    \item El sistema muestra mensaje de error
+    \item El usuario debe usar un correo diferente
+    \item Regresa al paso 3
+\end{enumerate}
+
+\section{CU-22: Eliminar Cuenta}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero elimina permanentemente su cuenta y todos los datos asociados, con confirmaciones previas para prevenir eliminaciones accidentales.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en el sistema
+    \item No deben existir transacciones pendientes o planes de pago activos
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item La cuenta del usuario es eliminada permanentemente
+    \item Todos los datos asociados son eliminados
+    \item Se cierra la sesión activa
+    \item Se envía confirmación por correo electrónico
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a "Configuración de Cuenta"
+    \item El usuario selecciona "Eliminar Cuenta"
+    \item El sistema muestra advertencia sobre permanencia de la acción
+    \item El sistema solicita confirmación ingresando contraseña
+    \item El usuario confirma ingresando su contraseña
+    \item El sistema valida la contraseña
+    \item El sistema elimina todos los datos del usuario
+    \item El sistema cierra la sesión
+    \item Se envía correo de confirmación de eliminación
+\end{enumerate}
+
+\noindent\textbf{Flujos Alternativos:}
+
+\textbf{FA-01: Contraseña incorrecta}
+\begin{enumerate}
+    \item En el paso 6, si la contraseña es incorrecta
+    \item El sistema muestra mensaje de error
+    \item El usuario puede reintentar o cancelar
+    \item Regresa al paso 5
+\end{enumerate}
+
+\section{CU-23: Visualizar Gráficas}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero visualiza gráficas y estadísticas interactivas que representan su comportamiento financiero de manera clara y comprensible.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en el sistema
+    \item Deben existir transacciones registradas para generar gráficas
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item Se muestran gráficas actualizadas del comportamiento financiero
+    \item El usuario puede exportar o compartir las gráficas
+    \item Se actualiza la información de última consulta
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a "Gráficas y Estadísticas"
+    \item El sistema presenta diferentes tipos de gráficas:
+    \begin{itemize}
+        \item Gráfica circular de gastos por categoría
+        \item Gráfica de barras de ingresos vs egresos
+        \item Línea de tendencia temporal
+        \item Gráfica de progreso de metas
+    \end{itemize}
+    \item El usuario puede personalizar las gráficas:
+    \begin{itemize}
+        \item Seleccionar período de tiempo
+        \item Filtrar por categorías
+        \item Cambiar tipo de visualización
+    \end{itemize}
+    \item El sistema actualiza las gráficas según selección
+    \item El usuario puede exportar gráficas en PDF o imagen
+\end{enumerate}
+
+\section{CU-24: Generar Reportes PDF}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero genera reportes financieros en formato PDF para descarga o visualización, tanto desde la aplicación móvil como desde la plataforma web.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en el sistema
+    \item Deben existir datos financieros para incluir en el reporte
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item Se genera un reporte PDF completo
+    \item El reporte está disponible para descarga
+    \item Se registra la generación del reporte
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a "Generar Reportes"
+    \item El usuario selecciona tipo de reporte:
+    \begin{itemize}
+        \item Reporte mensual completo
+        \item Reporte por categorías
+        \item Reporte de metas y ahorro
+        \item Reporte de deudas y pagos
+    \end{itemize}
+    \item El usuario configura parámetros:
+    \begin{itemize}
+        \item Período de tiempo
+        \item Categorías a incluir
+        \item Nivel de detalle
+    \end{itemize}
+    \item El sistema genera el reporte PDF
+    \item El sistema presenta opciones:
+    \begin{itemize}
+        \item Descargar archivo
+        \item Visualizar en pantalla
+        \item Enviar por correo
+    \end{itemize}
+\end{enumerate}
+
+\section{CU-25: Cambiar Tema Aplicación}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero cambia el tema visual de la aplicación móvil entre modo claro y oscuro para mejorar la experiencia de uso.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en la aplicación móvil
+    \item La aplicación debe soportar múltiples temas
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item El tema visual de la aplicación cambia inmediatamente
+    \item La preferencia se guarda para futuras sesiones
+    \item Todos los elementos de la interfaz se actualizan
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a "Configuración" en la app móvil
+    \item El usuario selecciona "Apariencia"
+    \item El sistema muestra opciones de tema:
+    \begin{itemize}
+        \item Modo claro
+        \item Modo oscuro
+        \item Automático (según sistema)
+    \end{itemize}
+    \item El usuario selecciona el tema deseado
+    \item El sistema aplica el cambio inmediatamente
+    \item El sistema guarda la preferencia del usuario
+\end{enumerate}
+
+\section{CU-26: Etiquetar Tickets}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero agrega etiquetas personalizadas a los tickets para clasificar los gastos según sus propios criterios o proyectos personales.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en el sistema
+    \item Debe existir un ticket registrado para etiquetar
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item El ticket queda etiquetado con las etiquetas seleccionadas
+    \item Las etiquetas están disponibles para filtros y búsquedas
+    \item Se actualiza el sistema de categorización personalizada
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario selecciona un ticket desde la consulta de tickets
+    \item El usuario presiona "Agregar Etiquetas"
+    \item El sistema presenta:
+    \begin{itemize}
+        \item Lista de etiquetas existentes
+        \item Opción para crear nueva etiqueta
+    \end{itemize}
+    \item El usuario selecciona etiquetas existentes o crea nuevas
+    \item El usuario puede asignar múltiples etiquetas al ticket
+    \item El sistema guarda las etiquetas asociadas al ticket
+    \item Se actualiza la visualización del ticket con las etiquetas
+\end{enumerate}
+
+\section{CU-27: Corregir Datos Escaneados}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero corrige manualmente los datos que fueron mal reconocidos durante el proceso de OCR.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en el sistema
+    \item Debe existir un ticket procesado por OCR con datos incorrectos
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item Los datos del ticket quedan corregidos
+    \item Se mejora el sistema de reconocimiento OCR
+    \item El ticket corregido se almacena correctamente
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario identifica datos incorrectos en un ticket OCR
+    \item El usuario selecciona "Corregir Datos"
+    \item El sistema presenta formulario editable con:
+    \begin{itemize}
+        \item Imagen original del ticket
+        \item Datos extraídos por OCR
+        \item Campos editables para corrección
+    \end{itemize}
+    \item El usuario corrige los datos incorrectos
+    \item El usuario confirma las correcciones
+    \item El sistema actualiza los datos del ticket
+    \item El sistema aprende de la corrección para mejorar futuro OCR
+\end{enumerate}
+
+\section{CU-28: Planificar Presupuestos Personales}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero define presupuestos personalizados por categoría o tipo de gasto específicamente en la aplicación móvil para un mejor control financiero.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en la aplicación móvil
+    \item Deben existir categorías de gasto configuradas
+    \item El usuario debe tener ingresos registrados
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item Los presupuestos personalizados quedan configurados
+    \item Se establecen alertas automáticas específicas
+    \item El sistema móvil monitorea los gastos contra estos presupuestos
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a "Presupuestos Personales" en la app móvil
+    \item El usuario selecciona "Crear Presupuesto Personalizado"
+    \item El usuario define parámetros específicos:
+    \begin{itemize}
+        \item Categorías incluidas
+        \item Monto total o por categoría
+        \item Período (semanal, quincenal, mensual)
+        \item Alertas personalizadas (50%, 75%, 90%)
+    \end{itemize}
+    \item El usuario configura notificaciones móviles
+    \item El sistema valida y guarda el presupuesto personalizado
+    \item Se activa el monitoreo automático en la app móvil
+\end{enumerate}
+
+\section{CU-29: Visualizar Gastos}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero visualiza un resumen de sus gastos organizados por día, semana y mes, junto con las categorías más frecuentes en la aplicación móvil.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en la aplicación móvil
+    \item Deben existir gastos registrados en el sistema
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item Se muestran los gastos organizados según el período seleccionado
+    \item Se identifican las categorías más frecuentes
+    \item Se actualiza la información de consulta
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a "Visualizar Gastos" en la app móvil
+    \item El sistema presenta opciones de visualización:
+    \begin{itemize}
+        \item Vista diaria con gastos del día
+        \item Vista semanal con resumen semanal
+        \item Vista mensual con totales mensuales
+    \end{itemize}
+    \item El usuario selecciona el período deseado
+    \item El sistema muestra:
+    \begin{itemize}
+        \item Gastos organizados por fecha
+        \item Categorías más frecuentes
+        \item Gráficas de tendencias
+        \item Comparativa con períodos anteriores
+    \end{itemize}
+    \item El usuario puede filtrar por categorías específicas
+\end{enumerate}
+
+\section{CU-30: Consultar Consejos Personalizados}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero consulta consejos financieros personalizados basados en sus hábitos de consumo desde la plataforma web.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en la plataforma web
+    \item Deben existir suficientes datos de gastos para análisis
+    \item El sistema debe tener patrones de comportamiento identificados
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item Se muestran consejos personalizados actualizados
+    \item El usuario recibe recomendaciones específicas
+    \item Se registra la consulta para mejorar futuros consejos
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a "Consejos Personalizados" en la web
+    \item El sistema analiza los patrones de gasto del usuario
+    \item El sistema genera consejos basados en:
+    \begin{itemize}
+        \item Categorías de mayor gasto
+        \item Tendencias de consumo
+        \item Comparación con metas establecidas
+        \item Oportunidades de ahorro identificadas
+    \end{itemize}
+    \item El sistema presenta consejos categorizados:
+    \begin{itemize}
+        \item Consejos de reducción de gastos
+        \item Estrategias de ahorro
+        \item Optimización de presupuestos
+        \item Planificación financiera
+    \end{itemize}
+    \item El usuario puede marcar consejos como útiles
+\end{enumerate}
+
+\section{CU-31: Buscar y Filtrar Tickets}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero busca y filtra tickets según criterios avanzados como fecha, categoría, monto o palabras clave desde la plataforma web.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en la plataforma web
+    \item Deben existir tickets registrados en el sistema
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item Se muestran los tickets que coinciden con los criterios
+    \item Los resultados pueden ser exportados o procesados
+    \item Se guarda la consulta para reutilización
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a "Búsqueda Avanzada de Tickets" en la web
+    \item El sistema presenta criterios de búsqueda:
+    \begin{itemize}
+        \item Rango de fechas específico
+        \item Categorías múltiples
+        \item Rango de montos (mínimo/máximo)
+        \item Palabras clave en descripción
+        \item Establecimiento o lugar
+        \item Método de registro (OCR/Manual)
+    \end{itemize}
+    \item El usuario configura los filtros deseados
+    \item El usuario ejecuta la búsqueda
+    \item El sistema procesa y muestra resultados paginados
+    \item El usuario puede:
+    \begin{itemize}
+        \item Refinar la búsqueda
+        \item Exportar resultados
+        \item Guardar consulta como favorita
+    \end{itemize}
+\end{enumerate}
+
+\section{CU-32: Generar Reportes Excel}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero genera y descarga reportes financieros en formato Excel con hojas separadas por categorías o períodos desde la plataforma web.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en la plataforma web
+    \item Deben existir datos financieros para incluir en el reporte
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item Se genera un archivo Excel completo y estructurado
+    \item El archivo está listo para descarga
+    \item Se registra la generación del reporte
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a "Reportes Excel" en la plataforma web
+    \item El usuario configura el reporte:
+    \begin{itemize}
+        \item Período de tiempo
+        \item Categorías a incluir
+        \item Tipo de datos (transacciones, resúmenes, gráficas)
+        \item Formato de hojas (por categoría, por mes, consolidado)
+    \end{itemize}
+    \item El usuario presiona "Generar Reporte Excel"
+    \item El sistema procesa los datos y crea el archivo Excel
+    \item El sistema presenta el archivo para descarga
+    \item El usuario descarga el archivo Excel generado
+\end{enumerate}
+
+\section{CU-33: Compartir Reportes por Correo}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero comparte reportes generados directamente por correo electrónico desde la plataforma web, sin necesidad de descargarlos localmente.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en la plataforma web
+    \item Debe existir un reporte generado o datos para crear uno
+    \item El sistema debe tener configuración de correo habilitada
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item El reporte se envía por correo electrónico
+    \item Se confirma el envío al usuario
+    \item Se registra la acción de compartir
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario genera o selecciona un reporte existente
+    \item El usuario presiona "Compartir por Correo"
+    \item El sistema presenta formulario de envío:
+    \begin{itemize}
+        \item Destinatarios (múltiples direcciones)
+        \item Asunto personalizable
+        \item Mensaje opcional
+        \item Formato del archivo adjunto
+    \end{itemize}
+    \item El usuario completa la información de envío
+    \item El sistema valida las direcciones de correo
+    \item El sistema envía el correo con el reporte adjunto
+    \item Se muestra confirmación de envío exitoso
+\end{enumerate}
+
+\section{CU-34: Comparar Gastos entre Meses}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero visualiza comparativas gráficas y tabulares de gastos entre diferentes meses, mostrando incrementos o reducciones porcentuales desde la plataforma web.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en la plataforma web
+    \item Deben existir datos de al menos dos meses diferentes
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item Se muestran comparativas detalladas entre períodos
+    \item Se identifican tendencias y patrones
+    \item Los análisis pueden ser exportados
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a "Comparación Mensual" en la web
+    \item El usuario selecciona los meses a comparar
+    \item El sistema genera comparativas mostrando:
+    \begin{itemize}
+        \item Gráficas de barras comparativas
+        \item Tablas con diferencias porcentuales
+        \item Análisis por categorías
+        \item Tendencias de crecimiento/reducción
+    \end{itemize}
+    \item El usuario puede personalizar la visualización
+    \item El sistema destaca cambios significativos
+    \item El usuario puede exportar la comparativa
+\end{enumerate}
+
+\section{CU-35: Consultar Balance vs Egresos}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero consulta un balance general que compara ingresos frente a egresos, calculando el resultado neto del período seleccionado desde la plataforma web.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en la plataforma web
+    \item Deben existir registros de ingresos y egresos
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item Se muestra el balance financiero actualizado
+    \item Se calcula el resultado neto del período
+    \item Se identifican áreas de mejora
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a "Balance Financiero" en la web
+    \item El usuario selecciona el período de análisis
+    \item El sistema calcula y presenta:
+    \begin{itemize}
+        \item Total de ingresos del período
+        \item Total de egresos del período
+        \item Balance neto (ingresos - egresos)
+        \item Porcentaje de gastos vs ingresos
+        \item Gráfica de flujo de efectivo
+    \end{itemize}
+    \item El sistema destaca:
+    \begin{itemize}
+        \item Meses con balance positivo/negativo
+        \item Tendencias de mejora o deterioro
+        \item Recomendaciones basadas en el balance
+    \end{itemize}
+\end{enumerate}
+
+\section{CU-36: Visualizar Estadísticas Avanzadas}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero accede a un panel con estadísticas detalladas del comportamiento financiero, incluyendo tendencias, promedios y porcentajes avanzados desde la plataforma web.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en la plataforma web
+    \item Deben existir datos históricos suficientes para análisis
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item Se presentan estadísticas avanzadas completas
+    \item El usuario obtiene insights profundos sobre su comportamiento
+    \item Los análisis pueden ser utilizados para planificación
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a "Estadísticas Avanzadas" en la web
+    \item El sistema presenta dashboard con:
+    \begin{itemize}
+        \item Análisis de tendencias temporales
+        \item Promedios móviles de gastos
+        \item Desviaciones estándar por categoría
+        \item Análisis de correlaciones
+        \item Predicciones basadas en patrones históricos
+    \end{itemize}
+    \item El usuario puede personalizar el análisis:
+    \begin{itemize}
+        \item Seleccionar métricas específicas
+        \item Ajustar períodos de análisis
+        \item Filtrar por categorías
+    \end{itemize}
+    \item El sistema genera insights automatizados
+    \item El usuario puede exportar análisis completos
+\end{enumerate}
+
+\section{CU-37: Cargar Ticket Digital}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero carga tickets en formato digital (PDF o imagen) desde el explorador web, procesándolos automáticamente con el módulo OCR.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en la plataforma web
+    \item Debe tener tickets digitales disponibles para cargar
+    \item El módulo OCR debe estar operativo
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item Los tickets digitales quedan procesados y registrados
+    \item Los datos extraídos están disponibles para edición
+    \item Se almacenan los archivos originales
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a "Cargar Ticket Digital" en la web
+    \item El usuario selecciona archivos para cargar:
+    \begin{itemize}
+        \item Imágenes (JPG, PNG, GIF)
+        \item Documentos PDF
+        \item Múltiples archivos simultáneamente
+    \end{itemize}
+    \item El sistema valida los archivos cargados
+    \item El sistema procesa cada archivo con OCR
+    \item El sistema presenta datos extraídos para confirmación
+    \item El usuario revisa y confirma los datos
+    \item El sistema registra las transacciones procesadas
+\end{enumerate}
+
+\section{CU-38: Configurar Metas desde Web}
+
+\noindent\textbf{Actor:} Administrador Financiero
+
+\noindent\textbf{Descripción:} El administrador financiero define y modifica metas de ahorro directamente desde la plataforma web, sincronizándose con los datos de la aplicación móvil.
+
+\noindent\textbf{Precondiciones:}
+\begin{itemize}
+    \item El usuario debe estar autenticado en la plataforma web
+    \item Debe tener presupuestos configurados
+    \item La sincronización con la app móvil debe estar activa
+\end{itemize}
+
+\noindent\textbf{Postcondiciones:}
+\begin{itemize}
+    \item Las metas quedan configuradas y sincronizadas
+    \item Los cambios se reflejan en la aplicación móvil
+    \item Se establecen alertas y recordatorios automáticos
+\end{itemize}
+
+\noindent\textbf{Flujo Principal:}
+\begin{enumerate}
+    \item El usuario accede a "Gestión de Metas" en la plataforma web
+    \item El usuario puede:
+    \begin{itemize}
+        \item Crear nuevas metas de ahorro
+        \item Modificar metas existentes
+        \item Eliminar metas completadas
+        \item Configurar metas complejas con submetas
+    \end{itemize}
+    \item El usuario define parámetros avanzados:
+    \begin{itemize}
+        \item Metas escalonadas
+        \item Contribuciones automáticas
+        \item Alertas personalizadas
+        \item Integración con presupuestos
+    \end{itemize}
+    \item El sistema valida y guarda las configuraciones
+    \item El sistema sincroniza con la aplicación móvil
+    \item Se confirma la sincronización exitosa
+\end{enumerate}

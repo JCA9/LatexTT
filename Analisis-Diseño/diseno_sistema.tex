@@ -1,0 +1,103 @@
+\chapter{Diseño del Sistema}
+
+\section{Arquitectura General}
+
+El sistema sigue una arquitectura de tres capas:
+\begin{itemize}
+    \item \textbf{Capa de Presentación:} Interfaz de usuario móvil
+    \item \textbf{Capa de Lógica de Negocio:} Procesamiento de reglas financieras
+    \item \textbf{Capa de Datos:} Almacenamiento y persistencia de información
+\end{itemize}
+
+\section{Componentes Principales}
+
+\subsection{Módulo de Autenticación}
+\textbf{Función:} Gestionar el acceso seguro al sistema
+\textbf{Tecnologías:} Firebase Authentication, OAuth 2.0
+
+\subsection{Módulo OCR}
+\textbf{Función:} Procesar imágenes de tickets y extraer información
+\textbf{Tecnologías:} Google ML Kit, Tesseract
+
+\subsection{Módulo de Categorización}
+\textbf{Función:} Clasificar automáticamente gastos e ingresos
+\textbf{Tecnologías:} Algoritmos de machine learning, análisis de patrones
+
+\subsection{Módulo de Presupuestación}
+\textbf{Función:} Implementar metodología Dave Ramsey
+\textbf{Características:} Máximo 10 categorías, alertas automáticas
+
+\subsection{Módulo de Reportes}
+\textbf{Función:} Generar estadísticas y visualizaciones
+\textbf{Tecnologías:} Charts.js, generación de PDFs
+
+\section{Base de Datos}
+
+\subsection{Modelo Entidad-Relación}
+\textbf{Entidades principales:}
+\begin{itemize}
+    \item Usuario
+    \item Transaccion
+    \item Categoria
+    \item Presupuesto
+    \item Deuda
+    \item Notificacion
+\end{itemize}
+
+\subsection{Almacenamiento}
+\textbf{Base de datos principal:} Firebase Firestore
+\textbf{Almacenamiento de imágenes:} Firebase Storage
+\textbf{Datos locales:} SQLite para funcionalidad offline
+
+\section{Interfaces de Usuario}
+
+\subsection{Principios de Diseño}
+\begin{itemize}
+    \item Simplicidad y claridad
+    \item Navegación intuitiva
+    \item Feedback visual inmediato
+    \item Accesibilidad para todos los usuarios
+\end{itemize}
+
+\subsection{Pantallas Principales}
+\begin{itemize}
+    \item Dashboard principal
+    \item Captura de tickets (cámara)
+    \item Gestión de categorías
+    \item Reportes y estadísticas
+    \item Configuración de deudas
+    \item Historial de transacciones
+\end{itemize}
+
+\section{Seguridad}
+
+\subsection{Encriptación}
+\begin{itemize}
+    \item Datos en tránsito: TLS 1.3
+    \item Datos en reposo: AES-256
+    \item Comunicación con APIs: OAuth 2.0 + JWT
+\end{itemize}
+
+\subsection{Privacidad}
+\begin{itemize}
+    \item Datos personales nunca compartidos
+    \item Procesamiento OCR local cuando sea posible
+    \item Eliminación automática de imágenes procesadas
+\end{itemize}
+
+\section{Integración con Servicios Externos}
+
+\subsection{Servicios de Google}
+\begin{itemize}
+    \item Firebase Authentication
+    \item Firebase Firestore
+    \item Google ML Kit (OCR)
+    \item Google Drive (backup opcional)
+\end{itemize}
+
+\subsection{APIs Financieras}
+\begin{itemize}
+    \item Consulta de tipos de cambio
+    \item Validación de información bancaria
+    \item Integración con Open Banking (futuro)
+\end{itemize}

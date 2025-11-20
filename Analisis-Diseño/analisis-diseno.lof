@@ -2,12 +2,5 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Arquitectura de tres capas de FinanzApp}}{21}{figure.3.1}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Diagrama de clases principal de FinanzApp}}{22}{figure.3.2}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Modelo entidad-relación de FinanzApp}}{23}{figure.3.3}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Esquema relacional de la base de datos}}{23}{figure.3.4}%
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Diagrama de secuencia - Registro de usuario}}{24}{figure.3.5}%
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Diagrama de secuencia - Procesamiento OCR}}{24}{figure.3.6}%
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Diagrama de secuencia - Categorización automática}}{25}{figure.3.7}%
-\contentsline {figure}{\numberline {3.8}{\ignorespaces Diagrama de actividad - Flujo principal de registro de gasto}}{25}{figure.3.8}%
+\addvspace {10\p@ }
 \addvspace {10\p@ }

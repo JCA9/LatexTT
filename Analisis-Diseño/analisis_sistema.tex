@@ -1,0 +1,191 @@
+\chapter{Análisis del Sistema}
+
+\section{Descripción General}
+
+El sistema de gestión financiera personal es una aplicación móvil diseñada para ayudar a jóvenes adultos a desarrollar hábitos financieros saludables mediante la automatización del registro de gastos y la aplicación de metodologías de presupuestación probadas.
+
+\section{Objetivos del Sistema}
+
+\subsection{Objetivo General}
+Desarrollar una aplicación móvil que facilite la gestión financiera personal a través del registro automatizado de gastos mediante OCR y la implementación del método de presupuestación por sobres de Dave Ramsey.
+
+\subsection{Objetivos Específicos}
+\begin{itemize}
+    \item Automatizar el registro de gastos mediante captura y procesamiento OCR de tickets
+    \item Implementar un sistema de categorización inteligente de gastos
+    \item Proporcionar herramientas de planificación y seguimiento de presupuestos
+    \item Ofrecer funcionalidades de gestión y planificación de pagos de deudas
+    \item Generar reportes y estadísticas de comportamiento financiero
+\end{itemize}
+
+\section{Actores del Sistema}
+
+\subsection{Administrador Financiero}
+\textbf{Descripción:} Usuario principal del sistema, propietario de la cuenta financiera.
+
+\textbf{Responsabilidades:}
+\begin{itemize}
+    \item Registrar ingresos y egresos
+    \item Configurar presupuestos por categorías
+    \item Gestionar información de deudas
+    \item Consultar reportes y estadísticas
+    \item Configurar alertas y notificaciones
+\end{itemize}
+
+\section{Requisitos Funcionales}
+
+Los requerimientos funcionales describen las funciones específicas que el sistema debe realizar para satisfacer las necesidades del usuario. Se han identificado 40 requerimientos funcionales organizados por funcionalidad y plataforma.
+
+\subsection{Requerimientos Compartidos (App Móvil y Plataforma Web)}
+
+\subsubsection{Gestión de Usuarios}
+\textbf{RF-01: Registro de usuario} - El sistema debe permitir el registro de nuevos usuarios mediante correo electrónico y contraseña, validando los datos ingresados antes de crear la cuenta.
+
+\textbf{RF-02: Inicio de sesión} - El sistema debe permitir que los usuarios registrados inicien sesión de forma segura tanto en la aplicación móvil como en la plataforma web.
+
+\textbf{RF-03: Recuperación de contraseña} - El sistema debe permitir al usuario recuperar su contraseña mediante un enlace de restablecimiento enviado a su correo electrónico registrado.
+
+\textbf{RF-04: Edición de perfil} - El usuario podrá modificar su información personal, como nombre, correo electrónico o fotografía de perfil, desde la aplicación o la web.
+
+\textbf{RF-05: Eliminación de cuenta} - El sistema debe permitir al usuario eliminar permanentemente su cuenta y los datos asociados, solicitando confirmación previa antes de proceder.
+
+\subsubsection{Gestión de Transacciones}
+\textbf{RF-06: Registro de ingresos} - El usuario podrá registrar manualmente sus ingresos indicando el monto, la fecha y una descripción opcional, tanto desde la aplicación móvil como desde la plataforma web.
+
+\textbf{RF-07: Registro de egresos} - El usuario podrá registrar egresos de forma manual o automática, especificando monto, fecha, categoría y descripción.
+
+\textbf{RF-08: Registro de egresos manualmente} - El sistema permitirá al usuario ingresar egresos de manera manual cuando no disponga de un ticket digital o imagen para procesar automáticamente.
+
+\textbf{RF-09: Registro de ticket manualmente} - El usuario podrá registrar un ticket introduciendo manualmente los datos del comprobante, como fecha, monto y establecimiento.
+
+\subsubsection{Gestión de Presupuestos}
+\textbf{RF-10: Configuración de presupuesto} - El sistema debe permitir al usuario definir presupuestos por categoría o periodo, estableciendo límites de gasto que serán monitoreados automáticamente.
+
+\subsubsection{Consultas y Visualización}
+\textbf{RF-11: Visualización de historial de gastos} - El usuario podrá consultar el historial de gastos registrados en ambos entornos, filtrando por fecha, categoría o tipo de transacción.
+
+\textbf{RF-12: Visualización de gráficas o estadísticas} - El sistema debe generar gráficas y estadísticas interactivas que representen el comportamiento financiero del usuario de manera clara y comprensible.
+
+\subsubsection{Reportes}
+\textbf{RF-13: Generación de reportes en PDF} - La plataforma web y la aplicación móvil deberán permitir la generación de reportes financieros en formato PDF, con opción de descarga o visualización en pantalla.
+
+\subsubsection{Metas de Ahorro}
+\textbf{RF-14: Configuración de metas de ahorro} - El usuario podrá establecer metas de ahorro personalizadas, definir plazos y montos objetivo, y consultar su progreso mediante indicadores visuales.
+
+\subsection{Requerimientos Exclusivos de la Aplicación Móvil}
+
+\subsubsection{Personalización de Interfaz}
+\textbf{RF-15: Cambio de tema de la aplicación} - El sistema debe permitir al usuario cambiar el tema visual de la aplicación (modo claro u oscuro) para mejorar la experiencia de uso.
+
+\subsubsection{Procesamiento OCR}
+\textbf{RF-16: Captura de foto del ticket} - La aplicación móvil debe permitir al usuario tomar una fotografía del ticket de compra utilizando la cámara del dispositivo para su posterior procesamiento.
+
+\textbf{RF-17: Captura múltiple de tickets} - El sistema debe permitir tomar varias fotografías del mismo ticket en caso de que la información no sea visible en una sola imagen.
+
+\textbf{RF-18: Confirmación de datos escaneados} - El sistema debe mostrar los datos extraídos por el OCR para que el usuario los revise y confirme antes de su almacenamiento definitivo.
+
+\textbf{RF-19: Etiquetado personalizado de tickets} - El usuario podrá agregar etiquetas personalizadas a los tickets para clasificar los gastos según sus propios criterios o proyectos personales.
+
+\textbf{RF-20: Corrección de datos escaneados} - El sistema debe permitir al usuario editar manualmente los datos que fueron mal reconocidos durante el proceso de OCR.
+
+\subsubsection{Notificaciones y Alertas}
+\textbf{RF-21: Visualización de historial de notificaciones} - El usuario podrá consultar un historial de notificaciones dentro de la aplicación móvil, incluyendo alertas de presupuesto, deudas y movimientos recientes.
+
+\subsubsection{Análisis y Estadísticas}
+\textbf{RF-22: Visualización de estadísticas por categoría} - El sistema debe permitir al usuario visualizar las estadísticas de gasto organizadas por categoría y periodo, mostrando porcentajes o montos totales.
+
+\subsubsection{Gestión de Categorías}
+\textbf{RF-23: Modificación de categorías de gasto} - El usuario podrá crear, editar o eliminar categorías de gasto personalizadas para una organización más detallada de sus finanzas.
+
+\subsubsection{Gestión de Deudas}
+\textbf{RF-24: Establecimiento de alertas de deudas} - El sistema debe permitir configurar alertas automáticas para recordar al usuario fechas de vencimiento o pago de sus deudas registradas.
+
+\textbf{RF-25: Configuración de deudas} - El usuario podrá registrar nuevas deudas, especificando monto, acreedor, fecha de vencimiento y frecuencia de pago.
+
+\textbf{RF-26: Registro de deudas} - El sistema debe almacenar la información de las deudas registradas por el usuario y permitir su actualización o eliminación posterior.
+
+\textbf{RF-27: Planificación de pago de deudas} - El sistema debe generar un plan de pago de deudas que muestre fechas, montos parciales y estado de cada obligación financiera.
+
+\subsubsection{Presupuestos Personalizados}
+\textbf{RF-28: Planificación de presupuestos personales} - El sistema debe permitir al usuario definir presupuestos personalizados por categoría o tipo de gasto para un mejor control financiero.
+
+\subsubsection{Gestión de Tickets}
+\textbf{RF-29: Consulta de tickets} - El usuario podrá consultar los tickets previamente registrados, filtrando por fecha, categoría o monto.
+
+\textbf{RF-30: Visualización de gastos} - El sistema debe mostrar al usuario un resumen de sus gastos organizados por día, semana y mes, junto con las categorías más frecuentes.
+
+\textbf{RF-31: Eliminación de tickets} - El sistema debe permitir al usuario eliminar tickets registrados de forma manual o automática, previa confirmación para evitar pérdidas accidentales de información.
+
+\subsection{Requerimientos Exclusivos de la Plataforma Web}
+
+\subsubsection{Consejos Personalizados}
+\textbf{RF-32: Consulta de consejos personalizados} - La plataforma web debe mostrar consejos financieros personalizados basados en los hábitos de consumo del usuario, apoyándose en el análisis de sus gastos registrados.
+
+\subsubsection{Búsqueda Avanzada}
+\textbf{RF-33: Búsqueda y filtrado de tickets} - El sistema debe permitir al usuario buscar y filtrar tickets según criterios como fecha, categoría, monto o palabras clave dentro de las descripciones.
+
+\subsubsection{Reportes Especializados}
+\textbf{RF-34: Generación de reportes en Excel} - El sistema debe permitir generar y descargar reportes financieros en formato Excel, con hojas separadas por categorías o periodos.
+
+\textbf{RF-35: Compartir reportes por correo electrónico} - El usuario podrá compartir los reportes generados directamente por correo electrónico desde la plataforma web, sin necesidad de descargarlos localmente.
+
+\subsubsection{Análisis Comparativo}
+\textbf{RF-36: Comparación de gastos entre meses} - El sistema debe generar comparativas gráficas y tabulares de los gastos registrados en distintos meses, mostrando incrementos o reducciones porcentuales.
+
+\textbf{RF-37: Consulta de balance vs egresos} - El sistema debe mostrar un balance general que compare los ingresos frente a los egresos, calculando el resultado neto del periodo seleccionado.
+
+\subsubsection{Estadísticas Avanzadas}
+\textbf{RF-38: Visualización de estadísticas avanzadas} - La plataforma debe ofrecer un panel con estadísticas detalladas del comportamiento financiero del usuario, incluyendo tendencias, promedios y porcentajes de gasto por categoría.
+
+\subsubsection{Carga de Documentos}
+\textbf{RF-39: Carga de ticket digital} - El sistema debe permitir la carga de tickets en formato digital (PDF o imagen) desde el explorador web, procesándolos automáticamente con el módulo OCR.
+
+\subsubsection{Gestión Web de Metas}
+\textbf{RF-40: Configuración de metas de ahorro desde la web} - El usuario podrá definir y modificar metas de ahorro directamente desde la plataforma web, sincronizándose con los datos de la aplicación móvil.
+
+\section{Requisitos No Funcionales}
+
+Los requisitos no funcionales definen las características y restricciones del sistema que no están directamente relacionadas con las funcionalidades específicas, pero que son esenciales para garantizar su calidad, rendimiento, seguridad y usabilidad.
+
+\subsection{RNF-01: Seguridad}
+Las contraseñas y datos personales deben almacenarse cifrados utilizando un algoritmo seguro (bcrypt) y no se guardará texto plano. Toda la comunicación entre cliente y servidor debe utilizar protocolos seguros (HTTPS/TLS).
+
+\subsection{RNF-02: Mantenibilidad}
+El código debe estar modularizado, documentado y versionado con control GitHub para facilitar actualizaciones. Cada módulo podrá ser actualizado sin afectar la funcionalidad global del sistema.
+
+\subsection{RNF-03: Portabilidad}
+La aplicación móvil debe funcionar correctamente en dispositivos Android 10 o superior, manteniendo su funcionalidad y diseño sin errores en diferentes tipos de pantallas y resoluciones.
+
+\subsection{RNF-04: Compatibilidad}
+La plataforma web debe ser compatible con navegadores modernos como Chrome (v135), Edge (v135) y Firefox (v140), garantizando funcionalidad completa en cada uno de ellos.
+
+\subsection{RNF-05: Usabilidad}
+La interfaz de usuario de la aplicación móvil será desarrollada conforme a las Flutter Usability Guidelines y Material Design, asegurando botones, menús y elementos interactivos claros, consistentes y accesibles. La versión web seguirá las React Accessibility Guidelines, priorizando navegación intuitiva y tiempos de respuesta óptimos. El sistema deberá permitir su uso sin capacitación previa.
+
+\subsection{RNF-06: Rendimiento}
+\begin{itemize}
+    \item El sistema debe procesar imágenes OCR en menos de 5 segundos
+    \item Los tiempos de respuesta para consultas no deben exceder 2 segundos
+    \item La aplicación debe cargar completamente en menos de 3 segundos
+    \item El sistema debe soportar al menos 1000 usuarios concurrentes
+\end{itemize}
+
+\subsection{RNF-07: Disponibilidad}
+El sistema debe mantener una disponibilidad del 99.5% durante horarios de uso típicos (6:00 AM - 11:00 PM), con períodos de mantenimiento programados fuera de estos horarios.
+
+\subsection{RNF-08: Escalabilidad}
+El sistema debe ser capaz de escalar horizontalmente para manejar incrementos en la carga de usuarios, soportando un crecimiento del 200% en la base de usuarios sin degradación significativa del rendimiento.
+
+\subsection{RNF-09: Integridad de Datos}
+\begin{itemize}
+    \item Todas las transacciones financieras deben ser registradas con marca de tiempo inmutable
+    \item El sistema debe mantener respaldos automáticos diarios de todos los datos
+    \item Debe implementarse un sistema de auditoría que registre todas las modificaciones
+\end{itemize}
+
+\subsection{RNF-10: Privacidad}
+\begin{itemize}
+    \item Los datos personales y financieros deben cumplir con regulaciones de protección de datos
+    \item El sistema debe permitir la eliminación completa de datos del usuario bajo solicitud
+    \item Las imágenes de tickets deben ser procesadas localmente cuando sea posible
+\end{itemize}

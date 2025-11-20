@@ -14,21 +14,20 @@
 \usepackage{array}
 \usepackage{fancyhdr}
 \usepackage{hyperref}
+\usepackage{geometry}
 \usepackage{textcomp}
-\usepackage{cdt/cdtUsecases}
-\usepackage{txfonts}
+\usepackage{lscape}
 
 % ======= FORMATOS =======
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{1em}
+\geometry{top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
 \setlength{\headheight}{14.5pt}
 
 \pagestyle{fancy}
 \fancyhead[L]{Instituto Politécnico Nacional \,|\, Escuela Superior de Cómputo}
 \fancyhead[R]{TT 2026–A062}
 \fancyfoot[C]{\thepage}
-
-\input{config}
 
 % ======= DOCUMENTO =======
 \begin{document}
@@ -42,18 +41,10 @@
 \listoffigures
 \newpage
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%=========================================================
-\include{1introduccion}
-
-%=========================================================
-\include{2AnalisisDelSistema}
-
-%=========================================================
-\include{3DisenoDelSistema}
-
-%=========================================================
-\include{4Conclusiones}
+\input{introduccion}
+\input{analisis_sistema}
+\input{especificacion_casos_uso}
+\input{diseno_sistema}
+\input{conclusiones}
 
 \end{document}

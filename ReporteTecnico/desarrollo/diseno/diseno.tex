@@ -34,7 +34,7 @@ Esta arquitectura sirve como guía para el desarrollo, mantenimiento y evolució
     \item \textbf{Capa de aplicación o control}
     La capa de aplicación expone una API (REST) que coordina flujos entre la interfaz y los módulos de negocio (procesamiento de tickets, categorización, reportes), 
     maneja sesiones/autenticación y orquesta transacciones. El estilo REST promueve interfaces uniformes, desacoplamiento cliente-servidor y escalabilidad del sistema, 
-    según la tesis de Roy T. Fielding; en seguridad de endpoints y sesiones, se siguen lineamientos de OWASP ASVS. \cite{ArquitecturaAplicacion}
+    según la tesis de Roy T. Fielding; en seguridad de endpoints y sesiones, se siguen lineamientos de OWASP ASVS. \cite{Arquitectura}
 
     \item \textbf{Capa de lógica de negocio}
     Aquí residen los casos de uso y las reglas del dominio: validación de datos extraídos del ticket, normalización, categorización basada en reglas (regex/diccionarios) y 
@@ -134,13 +134,13 @@ Este proceso asegura una estructura coherente, favorece la integridad referencia
 
     \begin{figure}[H]
     \centering
-    \includegraphics[width=1\linewidth]{./images/CasosUsoApp.JPG}
+    \includegraphics[width=1\linewidth]{./images/CasosUsoApp.png}
     \caption{Diagrama UML de Casos de Uso - App Móvil}
     \end{figure}
 
     \begin{figure}[H]
     \centering
-    \includegraphics[width=1\linewidth]{./images/CasosUsoWeb.JPG}
+    \includegraphics[width=1\linewidth]{./images/CasosUsoWeb.png}
     \caption{Diagrama UML de Casos de Uso - Plataforma Web}
     \end{figure}
 
