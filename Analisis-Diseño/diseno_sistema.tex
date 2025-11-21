@@ -36,6 +36,12 @@ El sistema sigue una arquitectura de tres capas:
 
 \section{Diagrama de Contenedores}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{./images/Diagrama-Contenedores.JPG}
+    \caption{Diagrama de Contenedores del Sistema}
+\end{figure}
+
 \section{Base de Datos}
 
 \subsection{Modelo Entidad-Relación}
@@ -92,17 +98,6 @@ El sistema sigue una arquitectura de tres capas:
 
 \section{Integración con Servicios Externos}
 
-\subsection{Servicios de Google}
-\begin{itemize}
-    \item Firebase Authentication
-    \item Firebase Firestore
-    \item Google ML Kit (OCR)
-    \item Google Drive (backup opcional)
-\end{itemize}
-
-\subsection{APIs Financieras}
-\begin{itemize}
-    \item Consulta de tipos de cambio
-    \item Validación de información bancaria
-    \item Integración con Open Banking (futuro)
-\end{itemize}
+\subsection{API de alguna Inteligencia Artificial}
+Para realizar las recomendaciones personalizadas e intentar mejorar la categorización de gastos, proponemos integrar una API de inteligencia artificial que analizará los 
+patrones de gasto del usuario y ofrecerá sugerencias basadas en sus hábitos financieros. 
