@@ -20,16 +20,52 @@ Desarrollar una aplicación móvil que facilite la gestión financiera personal 
 
 \section{Actores del Sistema}
 
-\subsection{Administrador Financiero}
-\textbf{Descripción:} Usuario principal del sistema, propietario de la cuenta financiera.
+Los actores del sistema representan entidades externas que interactúan directamente con el sistema de gestión financiera personal. Para este prototipo se ha identificado un actor principal que abarca el alcance funcional definido para la aplicación.
 
-\textbf{Responsabilidades:}
+\subsection{Administrador Financiero}
+
+\subsubsection{Definición}
+Persona física que utiliza el sistema para gestionar sus finanzas personales de manera individual. Corresponde al usuario final propietario de la cuenta y los datos financieros almacenados en el sistema.
+
+\subsubsection{Características Demográficas}
 \begin{itemize}
-    \item Registrar ingresos y egresos
-    \item Configurar presupuestos por categorías
-    \item Gestionar información de deudas
-    \item Consultar reportes y estadísticas
-    \item Configurar alertas y notificaciones
+    \item \textbf{Edad:} Jóvenes adultos de 18 años en adelante
+    \item \textbf{Nivel tecnológico:} Usuario intermedio de dispositivos móviles y navegadores web
+    \item \textbf{Contexto de uso:} Personas que buscan desarrollar hábitos financieros saludables y mejorar su responsabilidad económica
+\end{itemize}
+
+\subsubsection{Objetivos y Motivaciones}
+\begin{itemize}
+    \item Automatizar el registro de gastos para reducir el esfuerzo manual
+    \item Obtener visibilidad clara de sus patrones de consumo
+    \item Implementar estrategias de presupuestación efectivas
+    \item Desarrollar disciplina financiera a través de herramientas digitales
+    \item Planificar y controlar el pago de deudas personales
+\end{itemize}
+
+\subsubsection{Responsabilidades en el Sistema}
+\begin{itemize}
+    \item \textbf{Gestión de cuenta:} Registrarse, autenticarse y mantener actualizada su información personal
+    \item \textbf{Registro de transacciones:} Capturar tickets mediante fotografías, registrar ingresos y egresos manuales
+    \item \textbf{Configuración de presupuestos:} Definir límites de gasto por categorías y períodos específicos
+    \item \textbf{Gestión de deudas:} Registrar obligaciones financieras y configurar recordatorios de pago
+    \item \textbf{Análisis de datos:} Consultar reportes, estadísticas y gráficas de comportamiento financiero
+    \item \textbf{Personalización:} Configurar categorías, alertas, notificaciones y preferencias de la aplicación
+\end{itemize}
+
+\subsubsection{Interacciones con el Sistema}
+\begin{itemize}
+    \item \textbf{Interfaz móvil:} Uso principal a través de la aplicación Android para registro cotidiano de gastos
+    \item \textbf{Interfaz web:} Acceso complementario para análisis detallado, generación de reportes y configuraciones avanzadas
+    \item \textbf{Frecuencia de uso:} Interacción diaria para registro de gastos, consulta semanal de reportes y configuración mensual de presupuestos
+\end{itemize}
+
+\subsubsection{Justificación del Alcance}
+Para este prototipo académico se ha definido un único actor principal dado que:
+\begin{itemize}
+    \item El sistema se enfoca en finanzas personales individuales, no corporativas o familiares
+    \item La complejidad de múltiples roles excedería el alcance del proyecto
+    \item No se requiere administración técnica del sistema en el entorno de prototipo controlado
 \end{itemize}
 
 \section{Requisitos Funcionales}
@@ -148,44 +184,285 @@ Los requerimientos funcionales describen las funciones específicas que el siste
 Los requisitos no funcionales definen las características y restricciones del sistema que no están directamente relacionadas con las funcionalidades específicas, pero que son esenciales para garantizar su calidad, rendimiento, seguridad y usabilidad.
 
 \subsection{RNF-01: Seguridad}
-Las contraseñas y datos personales deben almacenarse cifrados utilizando un algoritmo seguro (bcrypt) y no se guardará texto plano. Toda la comunicación entre cliente y servidor debe utilizar protocolos seguros (HTTPS/TLS).
+Las contraseñas y datos personales deben almacenarse cifrados utilizando un algoritmo de hash y no se guardará texto plano en la base de datos MySQL. Para el prototipo se utilizarán datos ficticios durante las demostraciones y el sistema funcionará en un entorno controlado de servidor local.
 
 \subsection{RNF-02: Mantenibilidad}
-El código debe estar modularizado, documentado y versionado con control GitHub para facilitar actualizaciones. Cada módulo podrá ser actualizado sin afectar la funcionalidad global del sistema.
+El código debe estar organizado en módulos separados para facilitar el mantenimiento por parte del equipo de 2 desarrolladores. Se implementará una arquitectura simple que separe la lógica de la aplicación móvil y plataforma web, el backend, y la base de datos.
 
 \subsection{RNF-03: Portabilidad}
-La aplicación móvil debe funcionar correctamente en dispositivos Android 10 o superior, manteniendo su funcionalidad y diseño sin errores en diferentes tipos de pantallas y resoluciones.
+La aplicación móvil debe funcionar correctamente en dispositivos Android 10 o superior con al menos 3GB de RAM, adaptándose automáticamente a diferentes tamaños de pantalla entre 5" y 6.7".
 
 \subsection{RNF-04: Compatibilidad}
-La plataforma web debe ser compatible con navegadores modernos como Chrome (v135), Edge (v135) y Firefox (v140), garantizando funcionalidad completa en cada uno de ellos.
+La plataforma web debe ser compatible con navegadores modernos como Chrome (v120+), Firefox (v115+) y Edge (v120+), funcionando correctamente en resoluciones desde 768px (tablet) hasta 1920px (desktop).
 
 \subsection{RNF-05: Usabilidad}
 La interfaz de usuario de la aplicación móvil será desarrollada conforme a las Flutter Usability Guidelines y Material Design, asegurando botones, menús y elementos interactivos claros, consistentes y accesibles. La versión web seguirá las React Accessibility Guidelines, priorizando navegación intuitiva y tiempos de respuesta óptimos. El sistema deberá permitir su uso sin capacitación previa.
 
-\subsection{RNF-06: Rendimiento}
+\section{Análisis de Riesgos}
+
+El análisis de riesgos permite identificar, evaluar y gestionar los eventos que podrían afectar negativamente el desarrollo y éxito del proyecto. Esta sección presenta una evaluación sistemática de los riesgos del proyecto, incluyendo su probabilidad de ocurrencia, impacto potencial y estrategias de mitigación preventivas.
+
+\subsection{Metodología de Evaluación}
+
+La evaluación de riesgos se realiza mediante una matriz de probabilidad/impacto que clasifica cada riesgo según:
+
 \begin{itemize}
-    \item El sistema debe procesar imágenes OCR en menos de 5 segundos
-    \item Los tiempos de respuesta para consultas no deben exceder 2 segundos
-    \item La aplicación debe cargar completamente en menos de 3 segundos
-    \item El sistema debe soportar al menos 1000 usuarios concurrentes
+    \item \textbf{Probabilidad:} Muy probable (81-100\%), Probable (61-80\%), Posible (41-60\%), Poco probable (21-40\%), Casi imposible (1-20\%)
+    \item \textbf{Impacto:} Severo, Mayor, Significativo, Menor, Insignificante
+    \item \textbf{Estrategia:} Evitar (E), Mitigar (M), Monitorear (B), Acción Recomendada (A)
 \end{itemize}
 
-\subsection{RNF-07: Disponibilidad}
-El sistema debe mantener una disponibilidad del 99.5% durante horarios de uso típicos (6:00 AM - 11:00 PM), con períodos de mantenimiento programados fuera de estos horarios.
+\subsection{Matriz de Evaluación de Riesgos}
 
-\subsection{RNF-08: Escalabilidad}
-El sistema debe ser capaz de escalar horizontalmente para manejar incrementos en la carga de usuarios, soportando un crecimiento del 200% en la base de usuarios sin degradación significativa del rendimiento.
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+\textbf{PROBABILIDAD} & \multicolumn{5}{c|}{\textbf{IMPACTO}} \\
+\hline
+& \textbf{Insignificante} & \textbf{Menor} & \textbf{Significativo} & \textbf{Mayor} & \textbf{Severo} \\
+\hline
+\textbf{Muy probable (81-100\%)} & A & A & M & E & E \\
+\hline
+\textbf{Probable (61-80\%)} & M & A & M & E & E \\
+\hline
+\textbf{Posible (41-60\%)} & B & B & M & E & A \\
+\hline
+\textbf{Poco probable (21-40\%)} & B & B & M & M & A \\
+\hline
+\textbf{Casi imposible (1-20\%)} & B & B & M & E & A \\
+\hline
+\end{tabular}
+\caption{Matriz de Evaluación Probabilidad/Impacto}
+\label{tab:matriz-evaluacion-riesgos}
+\end{table}
 
-\subsection{RNF-09: Integridad de Datos}
+\textbf{Leyenda:} E=Evitar, M=Mitigar, B=Monitorear, A=Acción Recomendada
+
+\subsection{Identificación y Evaluación de Riesgos}
+
+\begin{table}[H]
+\centering
+\scriptsize
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{|p{0.6cm}|p{2.8cm}|p{1cm}|p{1cm}|p{1cm}|p{0.6cm}|p{3.5cm}|p{1.8cm}|}
+\hline
+\textbf{ID} & \textbf{Descripción del Riesgo} & \textbf{Cat.} & \textbf{Prob.} & \textbf{Imp.} & \textbf{Est.} & \textbf{Plan de Mitigación Preventiva} & \textbf{Indicador} \\
+\hline
+
+\multicolumn{8}{|c|}{\textbf{RIESGOS TÉCNICOS}} \\
+\hline
+
+R01 & Pérdida del código o archivos del proyecto & Técnico & Posible & Mayor & E & Respaldos automáticos en GitHub diarios, branches protegidas, respaldos locales semanales. & >24h sin commit, fallos Git \\
+\hline
+
+R02 & Errores críticos en OCR con Tesseract & Técnico & Probable & Significativo & M & Validación confianza >80\%, dataset pruebas, preprocesamiento imágenes mejorado. & Precisión <70\%, quejas usuarios \\
+\hline
+
+R03 & Fallas integración Flutter-Python-MySQL & Técnico & Posible & Mayor & M & APIs REST documentadas, pruebas integración automatizadas, mocks desarrollo. & Errores conexión >10\%, timeouts \\
+\hline
+
+R04 & Corrupción/pérdida base datos & Técnico & Poco probable & Severo & E & Respaldos BD diarios, scripts recuperación, transacciones críticas. & Errores integridad, consultas falla >5\% \\
+\hline
+
+\multicolumn{8}{|c|}{\textbf{RIESGOS ORGANIZACIONALES}} \\
+\hline
+
+R05 & Cambios requerimientos en desarrollo & Organ. & Probable & Significativo & M & Documentar requerimientos, control cambios, priorizar funcionalidades core. & Cambios >2 por semana \\
+\hline
+
+R06 & Fallas comunicación equipo & Organ. & Posible & Mayor & M & Reuniones semanales, herramientas seguimiento, canales comunicación claros. & Reuniones perdidas, tareas >3d sin actualizar \\
+\hline
+
+\multicolumn{8}{|c|}{\textbf{RIESGOS PERSONALES}} \\
+\hline
+
+R07 & Abandono integrante equipo & Personal & Poco probable & Severo & E & Documentar código, compartir conocimiento, respaldos actualizados, roles intercambiables. & Ausencias frecuentes, baja participación \\
+\hline
+
+R08 & Retrasos carga académica excesiva & Personal & Probable & Significativo & M & Cronograma con períodos exámenes, priorizar tareas críticas, buffer time. & Retraso milestones >1 semana \\
+\hline
+
+\multicolumn{8}{|c|}{\textbf{RIESGOS DE SEGURIDAD}} \\
+\hline
+
+R09 & Exposición datos sensibles usuarios & Seguridad & Posible & Severo & E & Cifrado SHA-1 contraseñas, validar inputs SQL, HTTPS, datos ficticios demos. & Vulnerabilidades código, datos texto plano \\
+\hline
+
+\multicolumn{8}{|c|}{\textbf{RIESGOS EXTERNOS}} \\
+\hline
+
+R10 & Fallas hardware/energía eléctrica & Externo & Posible & Menor & B & Laptops con batería, autoguardado frecuente, trabajo offline. & Interrupciones energía >2/semana \\
+\hline
+
+R11 & Problemas conectividad demostraciones & Externo & Probable & Significativo & M & Demos offline, datos locales prueba, videos respaldo, hotspot móvil. & Problemas red ubicación demo \\
+\hline
+
+\end{tabular}
+\caption{Matriz Completa de Análisis de Riesgos}
+\label{tab:analisis-riesgos-completo}
+\end{table}
+
+\subsection{Resumen de Estrategias de Mitigación}
+
+\subsubsection{Riesgos Críticos (Evitar)}
 \begin{itemize}
-    \item Todas las transacciones financieras deben ser registradas con marca de tiempo inmutable
-    \item El sistema debe mantener respaldos automáticos diarios de todos los datos
-    \item Debe implementarse un sistema de auditoría que registre todas las modificaciones
+    \item \textbf{R01, R04, R07, R09:} Requieren implementación inmediata de controles preventivos
+    \item \textbf{Monitoreo:} Revisión diaria de indicadores de alerta
+    \item \textbf{Responsable:} Ambos integrantes del equipo
 \end{itemize}
 
-\subsection{RNF-10: Privacidad}
+\subsubsection{Riesgos Altos (Mitigar)}
 \begin{itemize}
-    \item Los datos personales y financieros deben cumplir con regulaciones de protección de datos
-    \item El sistema debe permitir la eliminación completa de datos del usuario bajo solicitud
-    \item Las imágenes de tickets deben ser procesadas localmente cuando sea posible
+    \item \textbf{R02, R03, R05, R06, R08, R11:} Implementar controles preventivos y planes de contingencia
+    \item \textbf{Monitoreo:} Revisión semanal en reuniones de equipo
+    \item \textbf{Responsable:} Distribuir según especialización técnica
 \end{itemize}
+
+\subsubsection{Riesgos Moderados (Acción Recomendada/Monitorear)}
+\begin{itemize}
+    \item \textbf{R10:} Seguimiento mensual, acción si se materializa
+    \item \textbf{Monitoreo:} Revisión durante milestones del proyecto
+\end{itemize}
+
+\section{Matriz de Cumplimiento de Reglas de Negocio}
+
+Las reglas de negocio definen las políticas y restricciones operacionales que el sistema debe implementar. La siguiente matriz presenta las reglas críticas del sistema junto con los escenarios de cumplimiento e incumplimiento para garantizar el correcto funcionamiento del sistema.
+
+\begin{table}[H]
+\centering
+\tiny
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{|p{1.2cm}|p{3.5cm}|p{4cm}|p{4cm}|}
+\hline
+\textbf{Regla} & \textbf{Descripción} & \textbf{Caso de Cumplimiento} & \textbf{Caso de Incumplimiento} \\
+\hline
+\hline
+
+\multicolumn{4}{|c|}{\textbf{GESTIÓN DE USUARIOS Y SEGURIDAD}} \\
+\hline
+
+RN01 & Registro único de usuario: Cada usuario debe tener una cuenta única asociada a un correo electrónico válido & 
+\textbf{Escenario:} Usuario registra con email ``usuario@ejemplo.com''. \newline
+\textbf{Resultado:} Cuenta creada exitosamente, email almacenado como identificador único. &
+\textbf{Escenario:} Segundo usuario intenta registrarse con ``usuario@ejemplo.com''. \newline
+\textbf{Resultado:} Sistema rechaza registro mostrando ``El correo ya está registrado''. \\
+\hline
+
+RN03 & Tiempo de sesión: Las sesiones expiran automáticamente después de 5 minutos de inactividad & 
+\textbf{Escenario:} Usuario permanece inactivo 5 minutos. \newline
+\textbf{Resultado:} Sistema cierra sesión automáticamente y redirige al login. &
+\textbf{Escenario:} Usuario inactivo 6 minutos intenta realizar acción. \newline
+\textbf{Resultado:} Sistema muestra ``Sesión expirada'' y solicita autenticación. \\
+\hline
+
+\hline
+\multicolumn{4}{|c|}{\textbf{PROCESAMIENTO OCR Y TICKETS}} \\
+\hline
+
+RN05 & Límite de tamaño de imagen: Las imágenes no deben superar 10 MB & 
+\textbf{Escenario:} Usuario carga imagen de 8 MB. \newline
+\textbf{Resultado:} Imagen procesada correctamente por OCR. &
+\textbf{Escenario:} Usuario intenta cargar imagen de 12 MB. \newline
+\textbf{Resultado:} Sistema rechaza con mensaje ``Imagen excede 10 MB''. \\
+\hline
+
+RN07 & Idioma OCR: Solo procesa tickets en español & 
+\textbf{Escenario:} Ticket contiene texto ``Total: \$150.00 Fecha: 15/11/2025''. \newline
+\textbf{Resultado:} OCR extrae monto y fecha correctamente. &
+\textbf{Escenario:} Ticket en inglés ``Total: \$150.00 Date: 11/15/2025''. \newline
+\textbf{Resultado:} OCR falla, solicita registro manual. \\
+\hline
+
+RN10 & Validación manual obligatoria: Cuando OCR presenta baja confianza, requiere validación & 
+\textbf{Escenario:} OCR extrae datos con 95\% confianza. \newline
+\textbf{Resultado:} Datos guardados automáticamente sin intervención. &
+\textbf{Escenario:} OCR extrae con 60\% confianza. \newline
+\textbf{Resultado:} Sistema solicita validación manual antes de guardar. \\
+\hline
+
+\hline
+\multicolumn{4}{|c|}{\textbf{CATEGORIZACIÓN Y PRESUPUESTOS}} \\
+\hline
+
+RN11 & Límite categorías: Máximo 10 categorías personalizadas por usuario & 
+\textbf{Escenario:} Usuario crea 8va categoría personalizada ``Entretenimiento''. \newline
+\textbf{Resultado:} Categoría creada y disponible para asignación. &
+\textbf{Escenario:} Usuario intenta crear 11va categoría personalizada. \newline
+\textbf{Resultado:} Sistema bloquea con ``Límite de 10 categorías alcanzado''. \\
+\hline
+
+RN13 & Asignación única: Cada gasto se asigna a una sola categoría & 
+\textbf{Escenario:} Gasto de \$500 asignado a categoría ``Alimentos''. \newline
+\textbf{Resultado:} Gasto registrado completamente en esa categoría. &
+\textbf{Escenario:} Usuario intenta dividir \$500 entre ``Alimentos'' y ``Entretenimiento''. \newline
+\textbf{Resultado:} Sistema requiere selección de una sola categoría. \\
+\hline
+
+RN23 & Alertas presupuesto: Alerta al superar 80\% del presupuesto & 
+\textbf{Escenario:} Presupuesto \$1000, gasto acumulado \$850. \newline
+\textbf{Resultado:} Sistema envía alerta ``85\% del presupuesto utilizado''. &
+\textbf{Escenario:} Presupuesto \$1000, gasto \$750. \newline
+\textbf{Resultado:} No se genera alerta (bajo el umbral del 80\%). \\
+\hline
+
+\hline
+\multicolumn{4}{|c|}{\textbf{GESTIÓN DE DEUDAS Y ALERTAS}} \\
+\hline
+
+RN19 & Límite deudas: Máximo 20 deudas activas simultáneamente & 
+\textbf{Escenario:} Usuario registra su 15va deuda activa. \newline
+\textbf{Resultado:} Deuda almacenada y visible en panel de deudas. &
+\textbf{Escenario:} Usuario intenta registrar 21va deuda activa. \newline
+\textbf{Resultado:} Sistema bloquea con ``Límite de 20 deudas alcanzado''. \\
+\hline
+
+RN21 & Alertas vencimiento: Recordatorios automáticos de pagos & 
+\textbf{Escenario:} Deuda con vencimiento 20/11/2025, hoy 18/11/2025. \newline
+\textbf{Resultado:} Sistema envía notificación ``Pago vence en 2 días''. &
+\textbf{Escenario:} Configuración de alertas deshabilitada por usuario. \newline
+\textbf{Resultado:} No se envían recordatorios aunque la deuda esté próxima a vencer. \\
+\hline
+
+\hline
+\multicolumn{4}{|c|}{\textbf{INTEGRIDAD Y SEGURIDAD DE DATOS}} \\
+\hline
+
+RN27 & Eliminación irreversible: Confirmación explícita requerida & 
+\textbf{Escenario:} Usuario confirma eliminación de transacción en diálogo. \newline
+\textbf{Resultado:} Transacción eliminada permanentemente del sistema. &
+\textbf{Escenario:} Usuario cancela diálogo de confirmación. \newline
+\textbf{Resultado:} Transacción permanece intacta en el sistema. \\
+\hline
+
+RN29 & Validación montos: Valores numéricos positivos con máximo 2 decimales & 
+\textbf{Escenario:} Usuario ingresa monto ``\$125.50''. \newline
+\textbf{Resultado:} Monto validado y almacenado correctamente. &
+\textbf{Escenario:} Usuario ingresa ``\$-50.00'' o ``\$100.255''. \newline
+\textbf{Resultado:} Sistema rechaza con ``Monto debe ser positivo con máximo 2 decimales''. \\
+\hline
+
+\hline
+\multicolumn{4}{|c|}{\textbf{REPORTES Y ANÁLISIS}} \\
+\hline
+
+RN25 & Rango fechas reportes: Solo fechas con transacciones registradas & 
+\textbf{Escenario:} Usuario solicita reporte de noviembre 2025 con 15 transacciones. \newline
+\textbf{Resultado:} Reporte generado con todos los datos del mes. &
+\textbf{Escenario:} Usuario solicita reporte de enero 2025 sin transacciones. \newline
+\textbf{Resultado:} Sistema muestra ``No hay datos para el período seleccionado''. \\
+\hline
+
+RN26 & Formatos exportación: PDF para visualización, Excel para análisis & 
+\textbf{Escenario:} Usuario selecciona ``Exportar a PDF''. \newline
+\textbf{Resultado:} Reporte generado en formato PDF con gráficos y tablas. &
+\textbf{Escenario:} Sistema no puede generar formato por error técnico. \newline
+\textbf{Resultado:} Mensaje ``Error al generar reporte, intente nuevamente''. \\
+\hline
+
+\end{tabular}
+\caption{Matriz de Cumplimiento de Reglas de Negocio}
+\label{tab:matriz-cumplimiento-rn}
+\end{table}

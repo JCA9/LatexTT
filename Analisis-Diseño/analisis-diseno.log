@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.10.29)  19 NOV 2025 16:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.10.29)  20 NOV 2025 16:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -549,14 +549,14 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.23 ...RNF-01: Rendimiento}{10}{subsection.2.5.1}
+l.50 ...}RNF-05: Usabilidad}{18}{subsection.2.5.5}
                                                   % [1
 
-] [2])
+] [2] [3] [4])
 \tf@toc=\write4
 \openout4 = `analisis-diseno.toc'.
 
- [3] [4]
+ [5]
 (analisis-diseno.lot
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
@@ -564,7 +564,7 @@ LaTeX Info: Redefining \% on input line 1.
 \tf@lot=\write5
 \openout5 = `analisis-diseno.lot'.
 
- [5
+ [6
 
 ] (analisis-diseno.lof
 LaTeX Info: Redefining \. on input line 1.
@@ -573,30 +573,403 @@ LaTeX Info: Redefining \% on input line 1.
 \tf@lof=\write6
 \openout6 = `analisis-diseno.lof'.
 
- [6
+ [7
 
 ] (introduccion.tex
 Cap\'{\i }tulo 1.
-[7
+[8
 
-]) (analisis_sistema.tex [8]
+]) (analisis_sistema.tex [9]
 Cap\'{\i }tulo 2.
-[9
+[10
 
-] [10]) (especificacion_casos_uso.tex [11]
+] [11]
+Overfull \hbox (13.92505pt too wide) in paragraph at lines 75--75
+[]\T1/cmr/bx/n/14.4 Requerimientos Com-par-ti-dos (App Mó-vil y Pla-ta-for-ma W
+eb) 
+ []
+
+[12] [13] [14] [15] [16] [17]
+Overfull \hbox (4.43385pt too wide) in paragraph at lines 221--238
+ [][] 
+ []
+
+[18]
+Underfull \hbox (badness 10000) in paragraph at lines 252--252
+[]|\T1/cmr/bx/n/8 Descripción del
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 252--252
+[]|\T1/cmr/bx/n/8 Plan de Mi-ti-ga-ción
+ []
+
+
+Underfull \hbox (badness 1163) in paragraph at lines 258--258
+\T1/cmr/m/n/8 GitHub dia-rios, bran-ches
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 258--259
+[]|\T1/cmr/m/n/8 >24h sin
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 258--259
+\T1/cmr/m/n/8 com-mit, fa-
+ []
+
+
+Underfull \hbox (badness 7433) in paragraph at lines 261--261
+[]|\T1/cmr/m/n/8 Errores crí-ti-cos en
+ []
+
+
+Overfull \hbox (4.71555pt too wide) in paragraph at lines 261--261
+[]|\T1/cmr/m/n/8 Probable| 
+ []
+
+
+Overfull \hbox (16.86952pt too wide) in paragraph at lines 261--261
+[]|\T1/cmr/m/n/8 Significativo| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 261--261
+[]|\T1/cmr/m/n/8 Validación con-fian-za
+ []
+
+
+Underfull \hbox (badness 4108) in paragraph at lines 261--261
+\T1/cmr/m/n/8 >80$ $%, da-ta-set prue-bas,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 261--261
+\T1/cmr/m/n/8 pre-pro-ce-sa-mien-to imá-ge-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 261--262
+[]|\T1/cmr/m/n/8 Precisión
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 261--262
+\T1/cmr/m/n/8 <70$ $%, que-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 264--264
+[]|\T1/cmr/m/n/8 Fallas in-te-gra-ción
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 264--264
+\T1/cmr/m/n/8 Flutter-Python-
+ []
+
+
+Underfull \hbox (badness 3250) in paragraph at lines 264--264
+[]|\T1/cmr/m/n/8 APIs REST do-cu-men-ta-
+ []
+
+
+Underfull \hbox (badness 3803) in paragraph at lines 264--264
+\T1/cmr/m/n/8 das, prue-bas in-te-gra-ción
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 264--265
+\T1/cmr/m/n/8 xión >10$ $%,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 267--267
+[]|\T1/cmr/m/n/8 Corrupción/pérdida
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 267--267
+[]|\T1/cmr/m/n/8 Poco
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 267--267
+\T1/cmr/m/n/8 pro-ba-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 267--267
+[]|\T1/cmr/m/n/8 Respaldos BD dia-rios,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 267--268
+[]|\T1/cmr/m/n/8 Errores in-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 267--268
+\T1/cmr/m/n/8 te-gri-dad,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 267--268
+\T1/cmr/m/n/8 con-sul-tas
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 273--273
+[]|\T1/cmr/m/n/8 Cambios re-que-ri-
+ []
+
+
+Overfull \hbox (4.71555pt too wide) in paragraph at lines 273--273
+[]|\T1/cmr/m/n/8 Probable| 
+ []
+
+
+Overfull \hbox (16.86952pt too wide) in paragraph at lines 273--273
+[]|\T1/cmr/m/n/8 Significativo| 
+ []
+
+
+Underfull \hbox (badness 3323) in paragraph at lines 273--273
+[]|\T1/cmr/m/n/8 Documentar re-que-ri-mien-
+ []
+
+
+Underfull \hbox (badness 6204) in paragraph at lines 273--274
+[]|\T1/cmr/m/n/8 Cambios >2
+ []
+
+
+Underfull \hbox (badness 6236) in paragraph at lines 276--276
+[]|\T1/cmr/m/n/8 Fallas co-mu-ni-ca-ción
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 276--276
+[]|\T1/cmr/m/n/8 Reuniones se-ma-na-les,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 276--277
+[]|\T1/cmr/m/n/8 Reuniones
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 276--277
+\T1/cmr/m/n/8 per-di-das,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 276--277
+\T1/cmr/m/n/8 ta-reas >3d
+ []
+
+
+Overfull \hbox (3.11038pt too wide) in paragraph at lines 282--282
+[]|\T1/cmr/m/n/8 Personal| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 282--282
+[]|\T1/cmr/m/n/8 Poco
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 282--282
+\T1/cmr/m/n/8 pro-ba-
+ []
+
+
+Underfull \hbox (badness 2600) in paragraph at lines 282--282
+\T1/cmr/m/n/8 par-tir co-no-ci-mien-to, res-
+ []
+
+
+Overfull \hbox (3.11038pt too wide) in paragraph at lines 285--285
+[]|\T1/cmr/m/n/8 Personal| 
+ []
+
+
+Overfull \hbox (4.71555pt too wide) in paragraph at lines 285--285
+[]|\T1/cmr/m/n/8 Probable| 
+ []
+
+
+Overfull \hbox (16.86952pt too wide) in paragraph at lines 285--285
+[]|\T1/cmr/m/n/8 Significativo| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 285--286
+[]|\T1/cmr/m/n/8 Retraso mi-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 285--286
+\T1/cmr/m/n/8 les-to-nes >1
+ []
+
+
+Overfull \hbox (8.37854pt too wide) in paragraph at lines 291--291
+[]|\T1/cmr/m/n/8 Seguridad| 
+ []
+
+
+Underfull \hbox (badness 2626) in paragraph at lines 291--291
+[]|\T1/cmr/m/n/8 Cifrado SHA-1 con-tra-se-
+ []
+
+
+Overfull \hbox (10.20468pt too wide) in paragraph at lines 291--292
+[]|\T1/cmr/m/n/8 Vulnerabilidades
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 297--297
+[]|\T1/cmr/m/n/8 Fallas hard-wa-re/e-
+ []
+
+
+Overfull \hbox (1.17474pt too wide) in paragraph at lines 297--297
+[]|\T1/cmr/m/n/8 Externo| 
+ []
+
+
+Overfull \hbox (1.94975pt too wide) in paragraph at lines 297--298
+[]|\T1/cmr/m/n/8 Interrupciones
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 297--298
+\T1/cmr/m/n/8 ener-gía
+ []
+
+
+Overfull \hbox (1.17474pt too wide) in paragraph at lines 300--300
+[]|\T1/cmr/m/n/8 Externo| 
+ []
+
+
+Overfull \hbox (4.71555pt too wide) in paragraph at lines 300--300
+[]|\T1/cmr/m/n/8 Probable| 
+ []
+
+
+Overfull \hbox (16.86952pt too wide) in paragraph at lines 300--300
+[]|\T1/cmr/m/n/8 Significativo| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 300--301
+[]|\T1/cmr/m/n/8 Problemas
+ []
+
+[19] [20]
+Underfull \hbox (badness 3646) in paragraph at lines 347--347
+\T1/cmr/m/n/6 da usua-rio de-be te-ner una
+ []
+
+
+Underfull \hbox (badness 1769) in paragraph at lines 348--349
+[]|\T1/cmr/bx/n/6 Escenario: \T1/cmr/m/n/6 Usua-rio re-gis-tra con
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 350--352
+[]|\T1/cmr/bx/n/6 Escenario: \T1/cmr/m/n/6 Se-gun-do usua-rio
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 350--352
+\T1/cmr/m/n/6 in-ten-ta re-gis-trar-se con ``usua-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 355--356
+[]|\T1/cmr/bx/n/6 Escenario: \T1/cmr/m/n/6 Usua-rio per-ma-ne-ce
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 355--356
+\T1/cmr/m/n/6 au-to-má-ti-ca-men-te y re-di-ri-ge al
+ []
+
+
+Underfull \hbox (badness 1122) in paragraph at lines 368--370
+\T1/cmr/bx/n/6 Resultado: \T1/cmr/m/n/6 Sis-te-ma re-cha-za con
+ []
+
+
+Underfull \hbox (badness 2564) in paragraph at lines 379--379
+\T1/cmr/m/n/6 Cuan-do OCR pre-sen-ta ba-ja
+ []
+
+
+Underfull \hbox (badness 1112) in paragraph at lines 390--390
+\T1/cmr/m/n/6 ca-te-go-rías per-so-na-li-za-das por
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 405--406
+[]|\T1/cmr/bx/n/6 Escenario: \T1/cmr/m/n/6 Pre-su-pues-to $1000,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 407--409
+[]|\T1/cmr/bx/n/6 Escenario: \T1/cmr/m/n/6 Pre-su-pues-to $1000,
+ []
+
+
+Underfull \hbox (badness 1168) in paragraph at lines 407--409
+\T1/cmr/bx/n/6 Resultado: \T1/cmr/m/n/6 No se ge-ne-ra aler-ta
+ []
+
+
+Underfull \hbox (badness 5288) in paragraph at lines 416--417
+[]|\T1/cmr/bx/n/6 Escenario: \T1/cmr/m/n/6 Usua-rio re-gis-tra su
+ []
+
+
+Underfull \hbox (badness 4647) in paragraph at lines 443--445
+[]|\T1/cmr/bx/n/6 Escenario: \T1/cmr/m/n/6 Usua-rio in-gre-sa ``$-
+ []
+
+
+Underfull \hbox (badness 1122) in paragraph at lines 443--445
+\T1/cmr/bx/n/6 Resultado: \T1/cmr/m/n/6 Sis-te-ma re-cha-za con
+ []
+
+
+Underfull \hbox (badness 7649) in paragraph at lines 458--458
+[]|\T1/cmr/m/n/6 Formatos ex-por-ta-ción: PDF
+ []
+
+) (especificacion_casos_uso.tex [21] [22]
 Cap\'{\i }tulo 3.
-[12
 
-] [13] [14] [15] [16] [17] [18] [19] [20] [21] [22] [23] [24] [25] [26]
-[27] [28] [29] [30] [31]) (diseno_sistema.tex [32]
+Overfull \hbox (52.31607pt too wide) in paragraph at lines 15--67
+ [][] 
+ []
+
+[23
+
+] [24] [25] [26] [27] [28] [29] [30] [31] [32] [33] [34] [35] [36] [37]
+[38] [39] [40] [41] [42] [43] [44] [45] [46] [47] [48] [49] [50] [51] [52]
+[53] [54] [55] [56] [57] [58] [59] [60] [61] [62] [63] [64] [65] [66] [67]
+[68] [69] [70] [71] [72]) (diseno_sistema.tex [73]
 Cap\'{\i }tulo 4.
-[33
+[74
 
-] [34] [35]) (conclusiones.tex [36]
+] [75] [76]) (conclusiones.tex [77]
 Cap\'{\i }tulo 5.
-[37
+[78
 
-] [38]) [39] (analisis-diseno.aux
+] [79]) [80] (analisis-diseno.aux
 LaTeX Info: Redefining \. on input line 11.
 LaTeX Info: Redefining \% on input line 11.
 )
@@ -605,32 +978,37 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
 Package rerunfilecheck Info: File `analisis-diseno.out' has not changed.
-(rerunfilecheck)             Checksum: 634ADAAD5250E342FDC3795E2FB83044;12768.
+(rerunfilecheck)             Checksum: 35CDD81F2D9A9538B61D2C717EB7AA2C;19377.
  ) 
 Here is how much of TeX's memory you used:
- 13817 strings out of 474486
- 214567 string characters out of 5743754
- 1936542 words of memory out of 5000000
- 35549 multiletter control sequences out of 15000+600000
- 571417 words of font info for 61 fonts, out of 8000000 for 9000
+ 14232 strings out of 474486
+ 218448 string characters out of 5743754
+ 1957542 words of memory out of 5000000
+ 35601 multiletter control sequences out of 15000+600000
+ 575893 words of font info for 70 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,79p,403b,783s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <C:\Users\aceve\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm
-0600.pk> <C:\Users\aceve\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi60
-0\ecrm0800.pk> <C:\Users\aceve\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec
-/dpi600\ecti1200.pk> <C:\Users\aceve\AppData\Local\MiKTeX\fonts/pk/ljfour/jknap
-pen/ec/dpi600\ecbx1440.pk> <C:\Users\aceve\AppData\Local\MiKTeX\fonts/pk/ljfour
-/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\aceve\AppData\Local\MiKTeX\fonts/pk/
-ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\aceve\AppData\Local\MiKTeX\fon
-ts/pk/ljfour/jknappen/ec/dpi600\ecbx2488.pk> <C:\Users\aceve\AppData\Local\MiKT
-eX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1728.pk> <C:\Users\aceve\AppData\Loca
-l\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm2074.pk> <C:\Users\aceve\AppDat
-a\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm2488.pk> <C:\Users\aceve\
-AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1728.pk> <C:\Users\
-aceve\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx2074.pk>
-Output written on analisis-diseno.pdf (40 pages, 296150 bytes).
+ 75i,12n,79p,473b,783s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ <C:\Users\aceve\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti
+1200.pk> <C:\Users\aceve\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi60
+0\ecrm0600.pk> <C:\Users\aceve\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec
+/dpi600\ecbx0600.pk> <C:\Users\aceve\AppData\Local\MiKTeX\fonts/pk/ljfour/jknap
+pen/ec/dpi600\ecrm0800.pk> <C:\Users\aceve\AppData\Local\MiKTeX\fonts/pk/ljfour
+/jknappen/ec/dpi600\ecbx0800.pk> <C:\Users\aceve\AppData\Local\MiKTeX\fonts/pk/
+ljfour/jknappen/ec/dpi600\ecrm1095.pk> <C:\Users\aceve\AppData\Local\MiKTeX\fon
+ts/pk/ljfour/jknappen/ec/dpi600\ecbx1095.pk> <C:\Users\aceve\AppData\Local\MiKT
+eX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\aceve\AppData\Loca
+l\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\aceve\AppDat
+a\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\aceve\
+AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx2488.pk> <C:\Users\
+aceve\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1728.pk> <C:\
+Users\aceve\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm2074.pk
+> <C:\Users\aceve\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm2
+488.pk> <C:\Users\aceve\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600
+\ecbx1728.pk> <C:\Users\aceve\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/
+dpi600\ecbx2074.pk>
+Output written on analisis-diseno.pdf (81 pages, 526649 bytes).
 PDF statistics:
- 1293 PDF objects out of 1440 (max. 8388607)
- 359 named destinations out of 1000 (max. 500000)
- 585 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2266 PDF objects out of 2487 (max. 8388607)
+ 718 named destinations out of 1000 (max. 500000)
+ 809 words of extra memory for PDF output out of 10000 (max. 10000000)
 

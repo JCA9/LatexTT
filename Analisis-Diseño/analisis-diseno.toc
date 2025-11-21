@@ -1,74 +1,132 @@
 \babel@toc {spanish}{}\relax 
-\contentsline {chapter}{\numberline {1}Introducción}{7}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Propósito del Documento}{7}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Alcance}{7}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Metodología Financiera}{7}{section.1.3}%
-\contentsline {section}{\numberline {1.4}Audiencia}{8}{section.1.4}%
-\contentsline {chapter}{\numberline {2}Análisis del Sistema}{9}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Descripción General}{9}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Objetivos del Sistema}{9}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Objetivo General}{9}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Objetivos Específicos}{9}{subsection.2.2.2}%
-\contentsline {section}{\numberline {2.3}Actores del Sistema}{10}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Administrador Financiero}{10}{subsection.2.3.1}%
-\contentsline {section}{\numberline {2.4}Requisitos Funcionales}{10}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}RF-01: Autenticación de Usuario}{10}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}RF-02: Registro de Transacciones}{10}{subsection.2.4.2}%
-\contentsline {subsection}{\numberline {2.4.3}RF-03: Categorización Automática}{10}{subsection.2.4.3}%
-\contentsline {subsection}{\numberline {2.4.4}RF-04: Gestión de Presupuestos}{10}{subsection.2.4.4}%
-\contentsline {subsection}{\numberline {2.4.5}RF-05: Gestión de Deudas}{11}{subsection.2.4.5}%
-\contentsline {subsection}{\numberline {2.4.6}RF-06: Reportes y Estadísticas}{11}{subsection.2.4.6}%
-\contentsline {subsection}{\numberline {2.4.7}RF-07: Sistema de Alertas}{11}{subsection.2.4.7}%
-\contentsline {section}{\numberline {2.5}Requisitos No Funcionales}{11}{section.2.5}%
-\contentsline {subsection}{\numberline {2.5.1}RNF-01: Rendimiento}{11}{subsection.2.5.1}%
-\contentsline {subsection}{\numberline {2.5.2}RNF-02: Usabilidad}{11}{subsection.2.5.2}%
-\contentsline {subsection}{\numberline {2.5.3}RNF-03: Seguridad}{11}{subsection.2.5.3}%
-\contentsline {subsection}{\numberline {2.5.4}RNF-04: Disponibilidad}{11}{subsection.2.5.4}%
-\contentsline {subsection}{\numberline {2.5.5}RNF-05: Compatibilidad}{11}{subsection.2.5.5}%
-\contentsline {chapter}{\numberline {3}Especificación de Casos de Uso}{12}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Introducción}{12}{section.3.1}%
-\contentsline {section}{\numberline {3.2}CU-01: Iniciar Sesión}{12}{section.3.2}%
-\contentsline {section}{\numberline {3.3}CU-02: Registrar Ingreso}{14}{section.3.3}%
-\contentsline {section}{\numberline {3.4}CU-03: Registrar Egreso}{15}{section.3.4}%
-\contentsline {section}{\numberline {3.5}CU-04: Registrar Egreso Manualmente}{16}{section.3.5}%
-\contentsline {section}{\numberline {3.6}CU-05: Tomar Foto de Ticket}{17}{section.3.6}%
-\contentsline {section}{\numberline {3.7}CU-06: Registrar Ticket Manualmente}{19}{section.3.7}%
-\contentsline {section}{\numberline {3.8}CU-07: Ver Historial de Notificaciones}{21}{section.3.8}%
-\contentsline {section}{\numberline {3.9}CU-08: Visualizar Estadísticas por Categoría}{22}{section.3.9}%
-\contentsline {section}{\numberline {3.10}CU-09: Modificar Categoría de Gastos}{24}{section.3.10}%
-\contentsline {section}{\numberline {3.11}CU-10: Planificar Pago de Deudas}{25}{section.3.11}%
-\contentsline {section}{\numberline {3.12}CU-11: Establecer Alertas de Pago de Deudas}{27}{section.3.12}%
-\contentsline {section}{\numberline {3.13}CU-12: Configurar Deudas}{29}{section.3.13}%
-\contentsline {section}{\numberline {3.14}CU-13: Registrar Deudas}{30}{section.3.14}%
-\contentsline {chapter}{\numberline {4}Diseño del Sistema}{33}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Arquitectura General}{33}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Componentes Principales}{33}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Módulo de Autenticación}{33}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Módulo OCR}{33}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Módulo de Categorización}{33}{subsection.4.2.3}%
-\contentsline {subsection}{\numberline {4.2.4}Módulo de Presupuestación}{34}{subsection.4.2.4}%
-\contentsline {subsection}{\numberline {4.2.5}Módulo de Reportes}{34}{subsection.4.2.5}%
-\contentsline {section}{\numberline {4.3}Base de Datos}{34}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Modelo Entidad-Relación}{34}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Almacenamiento}{34}{subsection.4.3.2}%
-\contentsline {section}{\numberline {4.4}Interfaces de Usuario}{34}{section.4.4}%
-\contentsline {subsection}{\numberline {4.4.1}Principios de Diseño}{34}{subsection.4.4.1}%
-\contentsline {subsection}{\numberline {4.4.2}Pantallas Principales}{35}{subsection.4.4.2}%
-\contentsline {section}{\numberline {4.5}Seguridad}{35}{section.4.5}%
-\contentsline {subsection}{\numberline {4.5.1}Encriptación}{35}{subsection.4.5.1}%
-\contentsline {subsection}{\numberline {4.5.2}Privacidad}{35}{subsection.4.5.2}%
-\contentsline {section}{\numberline {4.6}Integración con Servicios Externos}{35}{section.4.6}%
-\contentsline {subsection}{\numberline {4.6.1}Servicios de Google}{35}{subsection.4.6.1}%
-\contentsline {subsection}{\numberline {4.6.2}APIs Financieras}{36}{subsection.4.6.2}%
-\contentsline {chapter}{\numberline {5}Conclusiones}{37}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Resumen del Análisis}{37}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Principales Hallazgos}{37}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}Fortalezas del Diseño}{37}{subsection.5.2.1}%
-\contentsline {subsection}{\numberline {5.2.2}Consideraciones Técnicas}{37}{subsection.5.2.2}%
-\contentsline {section}{\numberline {5.3}Impacto Esperado}{38}{section.5.3}%
-\contentsline {subsection}{\numberline {5.3.1}Para los Usuarios}{38}{subsection.5.3.1}%
-\contentsline {subsection}{\numberline {5.3.2}Para el Ámbito Académico}{38}{subsection.5.3.2}%
-\contentsline {section}{\numberline {5.4}Trabajo Futuro}{38}{section.5.4}%
-\contentsline {subsection}{\numberline {5.4.1}Mejoras Tecnológicas}{38}{subsection.5.4.1}%
-\contentsline {subsection}{\numberline {5.4.2}Funcionalidades Adicionales}{38}{subsection.5.4.2}%
-\contentsline {section}{\numberline {5.5}Conclusión Final}{39}{section.5.5}%
+\contentsline {chapter}{\numberline {1}Introducción}{8}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Propósito del Documento}{8}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Alcance}{8}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Metodología Financiera}{8}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Audiencia}{9}{section.1.4}%
+\contentsline {chapter}{\numberline {2}Análisis del Sistema}{10}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Descripción General}{10}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Objetivos del Sistema}{10}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Objetivo General}{10}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Objetivos Específicos}{10}{subsection.2.2.2}%
+\contentsline {section}{\numberline {2.3}Actores del Sistema}{11}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Administrador Financiero}{11}{subsection.2.3.1}%
+\contentsline {subsubsection}{Definición}{11}{section*.4}%
+\contentsline {subsubsection}{Características Demográficas}{11}{section*.5}%
+\contentsline {subsubsection}{Objetivos y Motivaciones}{11}{section*.6}%
+\contentsline {subsubsection}{Responsabilidades en el Sistema}{11}{section*.7}%
+\contentsline {subsubsection}{Interacciones con el Sistema}{12}{section*.8}%
+\contentsline {subsubsection}{Justificación del Alcance}{12}{section*.9}%
+\contentsline {section}{\numberline {2.4}Requisitos Funcionales}{12}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Requerimientos Compartidos (App Móvil y Plataforma Web)}{12}{subsection.2.4.1}%
+\contentsline {subsubsection}{Gestión de Usuarios}{12}{section*.10}%
+\contentsline {subsubsection}{Gestión de Transacciones}{13}{section*.11}%
+\contentsline {subsubsection}{Gestión de Presupuestos}{13}{section*.12}%
+\contentsline {subsubsection}{Consultas y Visualización}{13}{section*.13}%
+\contentsline {subsubsection}{Reportes}{14}{section*.14}%
+\contentsline {subsubsection}{Metas de Ahorro}{14}{section*.15}%
+\contentsline {subsection}{\numberline {2.4.2}Requerimientos Exclusivos de la Aplicación Móvil}{14}{subsection.2.4.2}%
+\contentsline {subsubsection}{Personalización de Interfaz}{14}{section*.16}%
+\contentsline {subsubsection}{Procesamiento OCR}{14}{section*.17}%
+\contentsline {subsubsection}{Notificaciones y Alertas}{15}{section*.18}%
+\contentsline {subsubsection}{Análisis y Estadísticas}{15}{section*.19}%
+\contentsline {subsubsection}{Gestión de Categorías}{15}{section*.20}%
+\contentsline {subsubsection}{Gestión de Deudas}{15}{section*.21}%
+\contentsline {subsubsection}{Presupuestos Personalizados}{15}{section*.22}%
+\contentsline {subsubsection}{Gestión de Tickets}{16}{section*.23}%
+\contentsline {subsection}{\numberline {2.4.3}Requerimientos Exclusivos de la Plataforma Web}{16}{subsection.2.4.3}%
+\contentsline {subsubsection}{Consejos Personalizados}{16}{section*.24}%
+\contentsline {subsubsection}{Búsqueda Avanzada}{16}{section*.25}%
+\contentsline {subsubsection}{Reportes Especializados}{16}{section*.26}%
+\contentsline {subsubsection}{Análisis Comparativo}{16}{section*.27}%
+\contentsline {subsubsection}{Estadísticas Avanzadas}{17}{section*.28}%
+\contentsline {subsubsection}{Carga de Documentos}{17}{section*.29}%
+\contentsline {subsubsection}{Gestión Web de Metas}{17}{section*.30}%
+\contentsline {section}{\numberline {2.5}Requisitos No Funcionales}{17}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}RNF-01: Seguridad}{17}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}RNF-02: Mantenibilidad}{17}{subsection.2.5.2}%
+\contentsline {subsection}{\numberline {2.5.3}RNF-03: Portabilidad}{18}{subsection.2.5.3}%
+\contentsline {subsection}{\numberline {2.5.4}RNF-04: Compatibilidad}{18}{subsection.2.5.4}%
+\contentsline {subsection}{\numberline {2.5.5}RNF-05: Usabilidad}{18}{subsection.2.5.5}%
+\contentsline {section}{\numberline {2.6}Análisis de Riesgos}{18}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}Metodología de Evaluación}{18}{subsection.2.6.1}%
+\contentsline {subsection}{\numberline {2.6.2}Matriz de Evaluación de Riesgos}{19}{subsection.2.6.2}%
+\contentsline {subsection}{\numberline {2.6.3}Identificación y Evaluación de Riesgos}{20}{subsection.2.6.3}%
+\contentsline {subsection}{\numberline {2.6.4}Resumen de Estrategias de Mitigación}{20}{subsection.2.6.4}%
+\contentsline {subsubsection}{Riesgos Críticos (Evitar)}{20}{section*.31}%
+\contentsline {subsubsection}{Riesgos Altos (Mitigar)}{21}{section*.32}%
+\contentsline {subsubsection}{Riesgos Moderados (Acción Recomendada/Monitorear)}{21}{section*.33}%
+\contentsline {section}{\numberline {2.7}Matriz de Cumplimiento de Reglas de Negocio}{21}{section.2.7}%
+\contentsline {chapter}{\numberline {3}Especificación de Casos de Uso}{23}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Introducción}{23}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Mapeo de Requerimientos Funcionales a Casos de Uso}{23}{section.3.2}%
+\contentsline {section}{\numberline {3.3}CU-01: Registrar Usuario}{25}{section.3.3}%
+\contentsline {section}{\numberline {3.4}CU-02: Iniciar Sesión}{26}{section.3.4}%
+\contentsline {section}{\numberline {3.5}CU-03: Recuperar Contraseña}{28}{section.3.5}%
+\contentsline {section}{\numberline {3.6}CU-04: Registrar Ingreso}{29}{section.3.6}%
+\contentsline {section}{\numberline {3.7}CU-05: Registrar Egreso}{31}{section.3.7}%
+\contentsline {section}{\numberline {3.8}CU-06: Registrar Egreso Manualmente}{32}{section.3.8}%
+\contentsline {section}{\numberline {3.9}CU-07: Tomar Foto de Ticket}{33}{section.3.9}%
+\contentsline {section}{\numberline {3.10}CU-08: Registrar Ticket Manualmente}{35}{section.3.10}%
+\contentsline {section}{\numberline {3.11}CU-09: Ver Historial de Notificaciones}{37}{section.3.11}%
+\contentsline {section}{\numberline {3.12}CU-10: Visualizar Estadísticas por Categoría}{38}{section.3.12}%
+\contentsline {section}{\numberline {3.13}CU-11: Modificar Categoría de Gastos}{40}{section.3.13}%
+\contentsline {section}{\numberline {3.14}CU-12: Planificar Pago de Deudas}{41}{section.3.14}%
+\contentsline {section}{\numberline {3.15}CU-13: Establecer Alertas de Pago de Deudas}{43}{section.3.15}%
+\contentsline {section}{\numberline {3.16}CU-14: Configurar Deudas}{45}{section.3.16}%
+\contentsline {section}{\numberline {3.17}CU-15: Registrar Deudas}{46}{section.3.17}%
+\contentsline {section}{\numberline {3.18}CU-16: Configurar Presupuestos}{48}{section.3.18}%
+\contentsline {section}{\numberline {3.19}CU-17: Configurar Metas de Ahorro}{50}{section.3.19}%
+\contentsline {section}{\numberline {3.20}CU-18: Consultar Historial de Transacciones}{51}{section.3.20}%
+\contentsline {section}{\numberline {3.21}CU-19: Consultar Tickets}{53}{section.3.21}%
+\contentsline {section}{\numberline {3.22}CU-20: Eliminar Tickets}{55}{section.3.22}%
+\contentsline {section}{\numberline {3.23}CU-21: Editar Perfil}{56}{section.3.23}%
+\contentsline {section}{\numberline {3.24}CU-22: Eliminar Cuenta}{58}{section.3.24}%
+\contentsline {section}{\numberline {3.25}CU-23: Visualizar Gráficas}{59}{section.3.25}%
+\contentsline {section}{\numberline {3.26}CU-24: Generar Reportes PDF}{60}{section.3.26}%
+\contentsline {section}{\numberline {3.27}CU-25: Cambiar Tema Aplicación}{61}{section.3.27}%
+\contentsline {section}{\numberline {3.28}CU-26: Etiquetar Tickets}{61}{section.3.28}%
+\contentsline {section}{\numberline {3.29}CU-27: Corregir Datos Escaneados}{62}{section.3.29}%
+\contentsline {section}{\numberline {3.30}CU-28: Planificar Presupuestos Personales}{63}{section.3.30}%
+\contentsline {section}{\numberline {3.31}CU-29: Visualizar Gastos}{64}{section.3.31}%
+\contentsline {section}{\numberline {3.32}CU-30: Consultar Consejos Personalizados}{65}{section.3.32}%
+\contentsline {section}{\numberline {3.33}CU-31: Buscar y Filtrar Tickets}{66}{section.3.33}%
+\contentsline {section}{\numberline {3.34}CU-32: Generar Reportes Excel}{67}{section.3.34}%
+\contentsline {section}{\numberline {3.35}CU-33: Compartir Reportes por Correo}{68}{section.3.35}%
+\contentsline {section}{\numberline {3.36}CU-34: Comparar Gastos entre Meses}{69}{section.3.36}%
+\contentsline {section}{\numberline {3.37}CU-35: Consultar Balance vs Egresos}{70}{section.3.37}%
+\contentsline {section}{\numberline {3.38}CU-36: Visualizar Estadísticas Avanzadas}{71}{section.3.38}%
+\contentsline {section}{\numberline {3.39}CU-37: Cargar Ticket Digital}{72}{section.3.39}%
+\contentsline {section}{\numberline {3.40}CU-38: Configurar Metas desde Web}{73}{section.3.40}%
+\contentsline {chapter}{\numberline {4}Diseño del Sistema}{74}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Arquitectura General}{74}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Componentes Principales}{74}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Módulo de Autenticación}{74}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Módulo OCR}{74}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Módulo de Categorización}{74}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}Módulo de Presupuestación}{75}{subsection.4.2.4}%
+\contentsline {subsection}{\numberline {4.2.5}Módulo de Reportes}{75}{subsection.4.2.5}%
+\contentsline {section}{\numberline {4.3}Base de Datos}{75}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Modelo Entidad-Relación}{75}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Almacenamiento}{75}{subsection.4.3.2}%
+\contentsline {section}{\numberline {4.4}Interfaces de Usuario}{75}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Principios de Diseño}{75}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Pantallas Principales}{76}{subsection.4.4.2}%
+\contentsline {section}{\numberline {4.5}Seguridad}{76}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Encriptación}{76}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Privacidad}{76}{subsection.4.5.2}%
+\contentsline {section}{\numberline {4.6}Integración con Servicios Externos}{76}{section.4.6}%
+\contentsline {subsection}{\numberline {4.6.1}Servicios de Google}{76}{subsection.4.6.1}%
+\contentsline {subsection}{\numberline {4.6.2}APIs Financieras}{77}{subsection.4.6.2}%
+\contentsline {chapter}{\numberline {5}Conclusiones}{78}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Resumen del Análisis}{78}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Principales Hallazgos}{78}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Fortalezas del Diseño}{78}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Consideraciones Técnicas}{78}{subsection.5.2.2}%
+\contentsline {section}{\numberline {5.3}Impacto Esperado}{79}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Para los Usuarios}{79}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Para el Ámbito Académico}{79}{subsection.5.3.2}%
+\contentsline {section}{\numberline {5.4}Trabajo Futuro}{79}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Mejoras Tecnológicas}{79}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}Funcionalidades Adicionales}{79}{subsection.5.4.2}%
+\contentsline {section}{\numberline {5.5}Conclusión Final}{80}{section.5.5}%
