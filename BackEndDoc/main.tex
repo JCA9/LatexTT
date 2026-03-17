@@ -1,0 +1,82 @@
+% main.tex — Orquestador principal
+% FINARA Backend - Implementación Técnica
+% TT 2026-A062 | IPN - Escuela Superior de Cómputo
+%
+% Compilar en Overleaf:
+%   Compilador: pdfLaTeX
+%   Doble clic en main.tex → Compilar
+%
+% Compilar localmente:
+%   pdflatex main.tex
+%   bibtex main
+%   pdflatex main.tex
+%   pdflatex main.tex
+
+\documentclass[a4paper,12pt]{report}
+
+% ── Configuración global ──────────────────────────────────────
+\input{config}
+
+% ── Metadatos PDF ────────────────────────────────────────────
+\hypersetup{
+  pdftitle={FINARA Backend - Implementación Técnica},
+  pdfauthor={TT 2026-A062 - IPN ESCOM},
+  pdfsubject={API REST Node.js + Express + MySQL},
+  pdfkeywords={Node.js, Express, MySQL, REST API, JWT, OCR, Tesseract},
+}
+
+% ── Bibliografía ─────────────────────────────────────────────
+\usepackage[backend=bibtex,
+            style=ieee,
+            sorting=none]{biblatex}
+\addbibresource{referencias_backend.bib}
+
+% ═════════════════════════════════════════════════════════════
+\begin{document}
+% ═════════════════════════════════════════════════════════════
+
+% ── Portada ──────────────────────────────────────────────────
+\input{portada}
+
+% ── Páginas preliminares (numeración romana) ─────────────────
+\pagenumbering{roman}
+
+% Índice general
+\tableofcontents
+\newpage
+
+% Lista de tablas
+\listoftables
+\addcontentsline{toc}{chapter}{Lista de Tablas}
+\newpage
+
+% Lista de figuras
+\listoffigures
+\addcontentsline{toc}{chapter}{Lista de Figuras}
+\newpage
+
+% Lista de fragmentos de código
+\lstlistoflistings
+\addcontentsline{toc}{chapter}{Lista de Fragmentos de Código}
+\newpage
+
+% ── Cuerpo del documento (numeración arábiga) ────────────────
+\pagenumbering{arabic}
+
+\input{introduccion}
+\input{stack_tecnico}
+\input{arquitectura_backend}
+\input{endpoints_api}
+\input{base_datos}
+\input{autenticacion_seguridad}
+\input{decisiones_diseno}
+\input{integracion_frontend}
+\input{changelog}
+
+% ── Bibliografía ─────────────────────────────────────────────
+\printbibliography[heading=bibintoc,
+                   title={Referencias Bibliográficas}]
+
+% ═════════════════════════════════════════════════════════════
+\end{document}
+% ═════════════════════════════════════════════════════════════

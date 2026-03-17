@@ -1,0 +1,211 @@
+% autenticacion_seguridad.tex — Capítulo 6: Autenticación y Seguridad
+\chapter{Autenticación y Seguridad}
+
+\section{Estrategia de Autenticación}
+
+FINARA implementa autenticación \textbf{stateless} mediante \textbf{JSON Web Tokens (JWT)}, estándar definido en el RFC 7519 \cite{jwt_rfc}. Esta estrategia elimina la necesidad de almacenar sesiones en el servidor, simplificando el escalado horizontal y la comunicación con la app móvil.
+
+\subsection{JSON Web Token (JWT)}
+
+El token generado al hacer login contiene tres secciones codificadas en Base64URL separadas por puntos:
+
+\begin{lstlisting}[style=json, caption={Estructura del JWT generado por FINARA}]
+// Header
+{ "alg": "HS256", "typ": "JWT" }
+
+// Payload (claims)
+{
+  "userId": 1,
+  "email":  "juan@email.com",
+  "iat":    1741000000,   // issued at (Unix timestamp)
+  "exp":    1741604800    // expires at (+7 dias)
+}
+
+// Firma: HMACSHA256(base64(header) + "." + base64(payload), JWT_SECRET)
+\end{lstlisting}
+
+\begin{lstlisting}[style=javascript, caption={Generación del token JWT en authController.js}]
+const jwt = require('jsonwebtoken');
+
+// Al hacer login o register exitoso:
+const token = jwt.sign(
+  { userId: user.id_usuario, email: user.email },
+  process.env.JWT_SECRET,         // Almacenado en .env, nunca en codigo
+  { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
+);
+\end{lstlisting}
+
+\subsection{Hash de Contraseñas con bcrypt}
+
+Las contraseñas se almacenan exclusivamente como hash bcrypt con \textbf{10 rounds de sal} \cite{bcrypt_npm}. El factor de costo 10 implica $2^{10} = 1024$ iteraciones del algoritmo, haciendo impráctico el ataque por fuerza bruta.
+
+\begin{lstlisting}[style=javascript, caption={Hash y verificación de contraseña con bcrypt}]
+const bcrypt = require('bcrypt');
+const SALT_ROUNDS = 10;
+
+// Al registrar usuario:
+const password_hash = await bcrypt.hash(password, SALT_ROUNDS);
+
+// Al hacer login:
+const esValida = await bcrypt.compare(passwordIngresada, user.password_hash);
+if (!esValida) return errorResponse(res, 'Credenciales incorrectas', 401);
+\end{lstlisting}
+
+\section{Middleware de Autenticación}
+
+Todas las rutas protegidas pasan por \texttt{src/middleware/auth.js} antes de llegar al controlador.
+
+\begin{lstlisting}[style=javascript, caption={Middleware de autenticación JWT completo}]
+// src/middleware/auth.js
+const jwt = require('jsonwebtoken');
+
+const authMiddleware = (req, res, next) => {
+  try {
+    const authHeader = req.headers['authorization'];
+
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({
+        success: false,
+        error: 'Token de autenticacion requerido',
+      });
+    }
+
+    const token   = authHeader.split(' ')[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    // Adjunta datos del usuario al objeto request
+    req.user = { userId: decoded.userId, email: decoded.email };
+
+    next();
+  } catch (error) {
+    if (error.name === 'TokenExpiredError') {
+      return res.status(401).json({
+        success: false,
+        error: 'Token expirado, inicia sesion nuevamente',
+      });
+    }
+    return res.status(401).json({ success: false, error: 'Token invalido' });
+  }
+};
+
+module.exports = authMiddleware;
+\end{lstlisting}
+
+\section{Validación de Inputs con express-validator}
+
+Cada endpoint con datos de entrada implementa validación mediante \texttt{express-validator} \cite{express_validator}. Las validaciones se declaran en la definición de rutas y son procesadas por el middleware centralizado \texttt{validator.js}.
+
+\begin{lstlisting}[style=javascript, caption={Validaciones del endpoint de registro}]
+// src/routes/auth.js
+const { body } = require('express-validator');
+
+router.post('/register',
+  [
+    body('nombre')
+      .trim()
+      .notEmpty().withMessage('El nombre es requerido')
+      .isLength({ min: 2 }).withMessage('Minimo 2 caracteres'),
+    body('email')
+      .isEmail().withMessage('Email invalido')
+      .normalizeEmail(),
+    body('password')
+      .isLength({ min: 6 }).withMessage('La contrasena debe tener minimo 6 caracteres'),
+  ],
+  validate,        // middleware centralizado
+  register         // controlador
+);
+\end{lstlisting}
+
+\section{Sanitización de Inputs}
+
+El middleware \texttt{sanitizer.js} escapa caracteres HTML en todos los campos de texto del body antes de que lleguen al controlador, previniendo ataques XSS \cite{owasp_xss}.
+
+\begin{lstlisting}[style=javascript, caption={Middleware sanitizador de inputs}]
+// src/middleware/sanitizer.js
+const sanitizeString = (str) => {
+  if (typeof str !== 'string') return str;
+  return str
+    .replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#x27;')
+    .trim();
+};
+
+const sanitizer = (req, res, next) => {
+  if (req.body && typeof req.body === 'object') {
+    req.body = sanitizeObject(req.body);
+  }
+  next();
+};
+\end{lstlisting}
+
+\section{Rate Limiting}
+
+El middleware \texttt{rateLimiter.js} implementa limitación de tasa de solicitudes para prevenir ataques de fuerza bruta y abuso de la API \cite{owasp_brute_force}. Usa un Map en memoria (adecuado para una sola instancia en desarrollo).
+
+\begin{longtable}{>{\ttfamily}p{3.5cm} >{\centering}p{3cm} >{\centering}p{3cm} p{4.5cm}}
+  \caption{Configuración de rate limiting por contexto}
+  \label{tab:rate-limiting} \\
+  \toprule
+  \textbf{Contexto} & \textbf{Máx. Solicitudes} & \textbf{Ventana} & \textbf{Justificación} \\
+  \midrule
+  \texttt{/api/auth/*}     & 10  & 15 min & Previene fuerza bruta en login \\
+  \texttt{/api/tickets/scan} & 20  & 15 min & OCR es costoso en CPU/tiempo \\
+  \texttt{/api/*} (general) & 200 & 15 min & Uso normal de la API \\
+  \bottomrule
+\end{longtable}
+
+\section{Headers de Seguridad}
+
+En lugar de añadir la dependencia \texttt{helmet}, los headers de seguridad se configuran manualmente en \texttt{app.js} \cite{owasp_headers}:
+
+\begin{lstlisting}[style=javascript, caption={Headers de seguridad HTTP configurados manualmente}]
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  // Previene MIME sniffing
+
+  res.setHeader('X-Frame-Options', 'DENY');
+  // Previene clickjacking (no iframes)
+
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  // Activa filtro XSS del navegador
+
+  res.setHeader('Referrer-Policy', 'no-referrer');
+  // No envia Referer en solicitudes cross-origin
+
+  next();
+});
+\end{lstlisting}
+
+\section{Prevención de Inyección SQL}
+
+El driver \texttt{mysql2} utiliza \textbf{prepared statements} de forma nativa, enviando los parámetros separados de la consulta SQL. Esto hace imposible la inyección SQL independientemente del valor del input \cite{owasp_sqli}.
+
+\begin{lstlisting}[style=javascript, caption={Prepared statement con mysql2}]
+// Correcto: parametro separado de la consulta
+const [rows] = await pool.query(
+  'SELECT * FROM Usuarios WHERE email = ?',
+  [email]   // <- mysql2 envia esto como parametro, nunca interpolado
+);
+
+// Incorrecto (no se hace en FINARA):
+// pool.query(`SELECT * FROM Usuarios WHERE email = '${email}'`)
+\end{lstlisting}
+
+\section{Resumen de Medidas de Seguridad}
+
+\begin{longtable}{p{4.5cm} p{4cm} p{5cm}}
+  \caption{Resumen de medidas de seguridad implementadas}
+  \label{tab:seguridad-resumen} \\
+  \toprule
+  \textbf{Amenaza} & \textbf{Mitigación} & \textbf{Implementación} \\
+  \midrule
+  Acceso no autorizado & JWT + expiración 7d & \texttt{middleware/auth.js} \\
+  Contraseñas robadas  & bcrypt 10 rounds    & \texttt{authController.js} \\
+  Fuerza bruta login   & Rate limit 10/15min & \texttt{middleware/rateLimiter.js} \\
+  XSS en inputs        & Escapado HTML       & \texttt{middleware/sanitizer.js} \\
+  Inyección SQL        & Prepared statements & \texttt{mysql2} driver \\
+  Clickjacking         & X-Frame-Options     & \texttt{app.js} headers \\
+  MIME sniffing        & X-Content-Type      & \texttt{app.js} headers \\
+  Archivos maliciosos  & Multer tipo+tamaño  & \texttt{config/upload.js} \\
+  \bottomrule
+\end{longtable}

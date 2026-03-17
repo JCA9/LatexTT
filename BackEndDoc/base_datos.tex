@@ -1,0 +1,307 @@
+% base_datos.tex — Capítulo 5: Base de Datos
+\chapter{Base de Datos}
+
+\section{Visión General}
+
+La base de datos \textbf{finara\_db} está implementada en MySQL 8.0 con motor InnoDB. Consta de \textbf{10 tablas}, relaciones con integridad referencial mediante claves foráneas, 2 triggers automáticos y zona horaria configurada en la conexión del pool.
+
+\begin{longtable}{>{\ttfamily}p{4.5cm} >{\centering}p{1.5cm} p{8cm}}
+  \caption{Tablas de la base de datos finara\_db}
+  \label{tab:tablas} \\
+  \toprule
+  \textbf{Tabla} & \textbf{Filas aprox.} & \textbf{Propósito} \\
+  \midrule
+  \endfirsthead
+  \toprule
+  \textbf{Tabla} & \textbf{Filas aprox.} & \textbf{Propósito} \\
+  \midrule
+  \endhead
+  Usuarios                   & 1--100    & Cuentas de usuario con flags de onboarding \\
+  Categorias                 & 10--50    & Categorías de gasto predefinidas y personalizadas \\
+  Presupuestos               & 0--20     & Presupuestos mensuales por categoría \\
+  Ingresos                   & 1--500    & Registro de ingresos del usuario \\
+  Gastos                     & 0--5000   & Gastos manuales y generados por OCR \\
+  Tickets                    & 0--1000   & Tickets escaneados con metadatos OCR \\
+  Productos\_Tickets         & 0--10000  & Ítems extraídos de cada ticket \\
+  Deudas                     & 0--20     & Deudas con seguimiento de pagos \\
+  Alertas                    & 0--200    & Notificaciones automáticas del sistema \\
+  Configuracion\_Notif.      & 1         & Preferencias de notificaciones por usuario \\
+  Configuracion\_Inicial     & 1         & Configuración del onboarding inicial \\
+  \bottomrule
+\end{longtable}
+
+\section{Descripción de Tablas}
+
+\subsection{Tabla: Usuarios}
+
+\begin{lstlisting}[style=sql, caption={DDL de la tabla Usuarios}, label={lst:tbl-usuarios}]
+CREATE TABLE Usuarios (
+  id_usuario            INT          PRIMARY KEY AUTO_INCREMENT,
+  nombre                VARCHAR(100) NOT NULL,
+  email                 VARCHAR(100) UNIQUE NOT NULL,
+  password_hash         VARCHAR(255) NOT NULL,
+  onboarding_completado BOOLEAN      DEFAULT FALSE,
+  setup_completado      BOOLEAN      DEFAULT FALSE,
+  fecha_creacion        TIMESTAMP    DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+\end{lstlisting}
+
+\begin{longtable}{>{\ttfamily}p{4cm} >{\ttfamily}p{2.5cm} p{7cm}}
+  \caption{Columnas de la tabla Usuarios}
+  \label{tab:cols-usuarios} \\
+  \toprule
+  \textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+  \midrule
+  id\_usuario            & INT PK AI  & Identificador único autoincrementable \\
+  nombre                 & VARCHAR(100) & Nombre completo del usuario \\
+  email                  & VARCHAR(100) UNIQUE & Email de acceso; índice único \\
+  password\_hash         & VARCHAR(255) & Hash bcrypt de la contraseña (10 rounds) \\
+  onboarding\_completado & BOOLEAN & \texttt{TRUE} cuando el usuario completó el flujo de bienvenida \\
+  setup\_completado      & BOOLEAN & \texttt{TRUE} cuando guardó la configuración inicial \\
+  fecha\_creacion        & TIMESTAMP & Fecha y hora de registro \\
+  \bottomrule
+\end{longtable}
+
+\subsection{Tabla: Categorias}
+
+\begin{lstlisting}[style=sql, caption={DDL de la tabla Categorias}]
+CREATE TABLE Categorias (
+  id_categoria    INT          PRIMARY KEY AUTO_INCREMENT,
+  id_usuario      INT          NOT NULL,
+  nombre_categoria VARCHAR(50) NOT NULL,
+  tipo_categoria   ENUM('predefinida','personalizada') DEFAULT 'personalizada',
+  icono           VARCHAR(50)  DEFAULT 'category',
+  color           VARCHAR(7)   DEFAULT '#6B7280',
+  FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+\end{lstlisting}
+
+Las 10 categorías predefinidas creadas automáticamente al registrar un usuario son: Alimentos, Transporte, Salud, Entretenimiento, Servicios, Ropa, Hogar, Educación, Restaurantes y Otros.
+
+\subsection{Tabla: Presupuestos}
+
+\begin{lstlisting}[style=sql, caption={DDL de la tabla Presupuestos}]
+CREATE TABLE Presupuestos (
+  id_presupuesto  INT           PRIMARY KEY AUTO_INCREMENT,
+  id_usuario      INT           NOT NULL,
+  id_categoria    INT           NOT NULL,
+  monto_asignado  DECIMAL(10,2) NOT NULL,
+  monto_utilizado DECIMAL(10,2) DEFAULT 0.00,
+  periodo         ENUM('mensual','semanal','anual') DEFAULT 'mensual',
+  fecha_inicio    DATE          NOT NULL,
+  fecha_fin       DATE          NOT NULL,
+  activo          BOOLEAN       DEFAULT TRUE,
+  FOREIGN KEY (id_usuario)   REFERENCES Usuarios(id_usuario)   ON DELETE CASCADE,
+  FOREIGN KEY (id_categoria) REFERENCES Categorias(id_categoria)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+\end{lstlisting}
+
+\subsection{Tabla: Ingresos}
+
+\begin{lstlisting}[style=sql, caption={DDL de la tabla Ingresos}]
+CREATE TABLE Ingresos (
+  id_ingreso      INT           PRIMARY KEY AUTO_INCREMENT,
+  id_usuario      INT           NOT NULL,
+  nombre_ingreso  VARCHAR(100)  NOT NULL,
+  monto           DECIMAL(10,2) NOT NULL,
+  es_recurrente   BOOLEAN       DEFAULT FALSE,
+  fecha           DATE          NOT NULL,
+  fecha_creacion  TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+\end{lstlisting}
+
+\subsection{Tabla: Gastos}
+
+\begin{lstlisting}[style=sql, caption={DDL de la tabla Gastos}]
+CREATE TABLE Gastos (
+  id_gasto        INT           PRIMARY KEY AUTO_INCREMENT,
+  id_usuario      INT           NOT NULL,
+  id_ticket       INT           NULL,    -- NULL si es gasto manual
+  id_categoria    INT           NOT NULL,
+  nombre_gasto    VARCHAR(100)  NOT NULL,
+  monto           DECIMAL(10,2) NOT NULL,
+  fecha           DATE          NOT NULL,
+  extraido_por_ocr BOOLEAN      DEFAULT FALSE,
+  notas           TEXT          NULL,
+  fecha_creacion  TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (id_usuario)   REFERENCES Usuarios(id_usuario)  ON DELETE CASCADE,
+  FOREIGN KEY (id_ticket)    REFERENCES Tickets(id_ticket)     ON DELETE SET NULL,
+  FOREIGN KEY (id_categoria) REFERENCES Categorias(id_categoria)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+\end{lstlisting}
+
+\subsection{Tabla: Tickets}
+
+\begin{lstlisting}[style=sql, caption={DDL de la tabla Tickets}]
+CREATE TABLE Tickets (
+  id_ticket       INT           PRIMARY KEY AUTO_INCREMENT,
+  id_usuario      INT           NOT NULL,
+  nombre_tienda   VARCHAR(100)  DEFAULT 'Desconocida',
+  total           DECIMAL(10,2) DEFAULT 0.00,
+  metodo_entrada  ENUM('ocr','manual') DEFAULT 'ocr',
+  confianza_ocr   DECIMAL(4,3)  NULL,    -- 0.000 a 1.000
+  rutas_imagenes  JSON          NULL,    -- arreglo de rutas de archivo
+  fecha_compra    DATE          NOT NULL,
+  fecha_creacion  TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+\end{lstlisting}
+
+\subsection{Tabla: Productos\_Tickets}
+
+\begin{lstlisting}[style=sql, caption={DDL de la tabla Productos\_Tickets}]
+CREATE TABLE Productos_Tickets (
+  id_producto     INT           PRIMARY KEY AUTO_INCREMENT,
+  id_ticket       INT           NOT NULL,
+  id_categoria    INT           NULL,
+  nombre_producto VARCHAR(150)  NOT NULL,
+  precio          DECIMAL(10,2) NOT NULL,
+  FOREIGN KEY (id_ticket)    REFERENCES Tickets(id_ticket)       ON DELETE CASCADE,
+  FOREIGN KEY (id_categoria) REFERENCES Categorias(id_categoria) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+\end{lstlisting}
+
+\subsection{Tabla: Deudas}
+
+\begin{lstlisting}[style=sql, caption={DDL de la tabla Deudas}]
+CREATE TABLE Deudas (
+  id_deuda             INT           PRIMARY KEY AUTO_INCREMENT,
+  id_usuario           INT           NOT NULL,
+  nombre_deuda         VARCHAR(100)  NOT NULL,
+  monto_total          DECIMAL(10,2) NOT NULL,
+  monto_pagado         DECIMAL(10,2) DEFAULT 0.00,
+  pago_mensual         DECIMAL(10,2) NOT NULL,
+  duracion_meses       INT           NOT NULL,
+  fecha_siguiente_pago DATE          NOT NULL,
+  activa               BOOLEAN       DEFAULT TRUE,
+  fecha_creacion       TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+\end{lstlisting}
+
+\subsection{Tabla: Alertas}
+
+\begin{lstlisting}[style=sql, caption={DDL de la tabla Alertas}]
+CREATE TABLE Alertas (
+  id_alerta   INT          PRIMARY KEY AUTO_INCREMENT,
+  id_usuario  INT          NOT NULL,
+  tipo_alerta VARCHAR(50)  NOT NULL,  -- 'presupuesto', 'deuda', 'gestion'
+  titulo      VARCHAR(100) NOT NULL,
+  mensaje     TEXT         NOT NULL,
+  leida       BOOLEAN      DEFAULT FALSE,
+  fecha       TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+\end{lstlisting}
+
+\subsection{Tabla: Configuracion\_Notificaciones}
+
+\begin{lstlisting}[style=sql, caption={DDL de Configuracion\_Notificaciones}]
+CREATE TABLE Configuracion_Notificaciones (
+  id_config            INT     PRIMARY KEY AUTO_INCREMENT,
+  id_usuario           INT     UNIQUE NOT NULL,
+  presupuesto_excedido BOOLEAN DEFAULT TRUE,
+  recordatorio_gestion BOOLEAN DEFAULT TRUE,
+  pago_deuda_proximo   BOOLEAN DEFAULT TRUE,
+  FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+\end{lstlisting}
+
+\subsection{Tabla: Configuracion\_Inicial}
+
+\begin{lstlisting}[style=sql, caption={DDL de Configuracion\_Inicial}]
+CREATE TABLE Configuracion_Inicial (
+  id_config               INT          PRIMARY KEY AUTO_INCREMENT,
+  id_usuario              INT          UNIQUE NOT NULL,
+  modo_administracion     ENUM('unico','multiple') DEFAULT 'unico',
+  distribucion_categorias JSON         NULL,
+  ingreso_mensual_inicial DECIMAL(10,2) NULL,
+  FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+\end{lstlisting}
+
+\section{Triggers Automáticos}
+
+El sistema utiliza dos triggers MySQL que implementan lógica de negocio a nivel de base de datos, garantizando la integridad incluso si se insertan datos por fuera de la API.
+
+\subsection{Trigger: actualizar\_presupuesto\_gasto}
+
+\begin{lstlisting}[style=sql, caption={Trigger de actualización de presupuesto al registrar gasto}, label={lst:trigger1}]
+DELIMITER $$
+CREATE TRIGGER actualizar_presupuesto_gasto
+AFTER INSERT ON Gastos
+FOR EACH ROW
+BEGIN
+  UPDATE Presupuestos
+  SET monto_utilizado = monto_utilizado + NEW.monto
+  WHERE id_usuario   = NEW.id_usuario
+    AND id_categoria = NEW.id_categoria
+    AND activo       = TRUE
+    AND fecha_inicio <= NEW.fecha
+    AND fecha_fin    >= NEW.fecha;
+END$$
+DELIMITER ;
+\end{lstlisting}
+
+\subsection{Trigger: verificar\_presupuesto\_excedido}
+
+\begin{lstlisting}[style=sql, caption={Trigger de alerta cuando el presupuesto alcanza el 90\%}, label={lst:trigger2}]
+DELIMITER $$
+CREATE TRIGGER verificar_presupuesto_excedido
+AFTER UPDATE ON Presupuestos
+FOR EACH ROW
+BEGIN
+  IF NEW.monto_utilizado >= (NEW.monto_asignado * 0.90) THEN
+    INSERT INTO Alertas (id_usuario, tipo_alerta, titulo, mensaje)
+    VALUES (
+      NEW.id_usuario,
+      'presupuesto',
+      'Presupuesto al limite',
+      CONCAT('Tu presupuesto ha alcanzado el ',
+             ROUND((NEW.monto_utilizado/NEW.monto_asignado)*100, 0),
+             '% del limite asignado.')
+    );
+  END IF;
+END$$
+DELIMITER ;
+\end{lstlisting}
+
+\section{Diagrama Entidad-Relación}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+    entity/.style={rectangle, draw, fill=blue!8, rounded corners=2pt,
+                   minimum width=3cm, minimum height=0.8cm, font=\small\bfseries},
+    rel/.style={-Stealth, thick, gray},
+    label/.style={font=\tiny, midway, fill=white, inner sep=1pt}
+  ]
+    \node[entity] (usr)  at (0,0)     {Usuarios};
+    \node[entity] (cat)  at (-4,-2.5) {Categorias};
+    \node[entity] (pre)  at (-2,-5)   {Presupuestos};
+    \node[entity] (ing)  at (0,-2.5)  {Ingresos};
+    \node[entity] (gas)  at (2,-5)    {Gastos};
+    \node[entity] (tkt)  at (6,-2.5)  {Tickets};
+    \node[entity] (pro)  at (6,-5)    {Productos\_Tickets};
+    \node[entity] (deu)  at (4,-2.5)  {Deudas};
+    \node[entity] (ale)  at (-4,0)    {Alertas};
+    \node[entity] (not)  at (4,0)     {Config\_Notif.};
+    \node[entity] (ini)  at (0,2)     {Config\_Inicial};
+
+    \draw[rel] (usr) -- node[label,left]{1:N} (cat);
+    \draw[rel] (usr) -- node[label,right]{1:N} (ing);
+    \draw[rel] (usr) -- node[label]{1:N} (deu);
+    \draw[rel] (usr) -- node[label,left]{1:N} (ale);
+    \draw[rel] (usr) -- node[label,right]{1:1} (not);
+    \draw[rel] (usr) -- node[label,right]{1:1} (ini);
+    \draw[rel] (usr) -- node[label,left]{1:N} (tkt);
+    \draw[rel] (cat) -- node[label]{1:N} (pre);
+    \draw[rel] (cat) -- node[label,right]{1:N} (gas);
+    \draw[rel] (tkt) -- node[label,right]{1:N} (pro);
+    \draw[rel] (tkt) -- node[label]{1:1} (gas);
+    \draw[rel] (cat) -- node[label]{1:N} (pro);
+  \end{tikzpicture}
+  \caption{Diagrama Entidad-Relación simplificado de finara\_db}
+  \label{fig:er-diagram}
+\end{figure}

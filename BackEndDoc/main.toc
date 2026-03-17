@@ -1,0 +1,140 @@
+\babel@toc {spanish}{}\relax 
+\contentsline {chapter}{Lista de Tablas}{\es@scroman {viii}}{chapter*.2}%
+\contentsline {chapter}{Lista de Figuras}{\es@scroman {ix}}{chapter*.3}%
+\contentsline {chapter}{Lista de Fragmentos de Código}{\es@scroman {xi}}{chapter*.4}%
+\contentsline {chapter}{\numberline {1}Introducción}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Propósito del Documento}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Alcance}{1}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Incluido en este Documento}{1}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}Fuera de Alcance}{2}{subsection.1.2.2}%
+\contentsline {section}{\numberline {1.3}Audiencia Objetivo}{2}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Contexto del Proyecto}{2}{section.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}Problemática}{2}{subsection.1.4.1}%
+\contentsline {subsection}{\numberline {1.4.2}Solución Propuesta}{3}{subsection.1.4.2}%
+\contentsline {subsection}{\numberline {1.4.3}Arquitectura General del Sistema}{3}{subsection.1.4.3}%
+\contentsline {section}{\numberline {1.5}Versiones del Sistema}{3}{section.1.5}%
+\contentsline {chapter}{\numberline {2}Stack Tecnológico}{5}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Runtime y Framework Principal}{5}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Node.js}{5}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Express.js}{5}{subsection.2.1.2}%
+\contentsline {section}{\numberline {2.2}Base de Datos}{6}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}MySQL 8.0}{6}{subsection.2.2.1}%
+\contentsline {section}{\numberline {2.3}Dependencias de Producción}{7}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Dependencias de Desarrollo}{7}{section.2.4}%
+\contentsline {section}{\numberline {2.5}package.json Completo}{8}{section.2.5}%
+\contentsline {section}{\numberline {2.6}Stack OCR (Python)}{9}{section.2.6}%
+\contentsline {section}{\numberline {2.7}Herramientas de Desarrollo}{9}{section.2.7}%
+\contentsline {chapter}{\numberline {3}Arquitectura del Backend}{11}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Patrón Arquitectónico}{11}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Estructura de Carpetas Completa}{11}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Descripción de Módulos Principales}{13}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Flujo de una Solicitud HTTP}{16}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Formato Estándar de Respuestas}{17}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Flujo Especial: Escaneo OCR de Ticket}{17}{section.3.6}%
+\contentsline {chapter}{\numberline {4}Documentación de Endpoints}{19}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Autenticación (\texttt {/api/auth})}{20}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}\texttt {POST /api/auth/register}}{20}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}\texttt {POST /api/auth/login}}{22}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}\texttt {POST /api/auth/logout}}{22}{subsection.4.1.3}%
+\contentsline {subsection}{\numberline {4.1.4}\texttt {GET /api/auth/verify}}{23}{subsection.4.1.4}%
+\contentsline {subsection}{\numberline {4.1.5}\texttt {PUT /api/auth/change-password}}{23}{subsection.4.1.5}%
+\contentsline {section}{\numberline {4.2}Usuarios (\texttt {/api/users})}{23}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}\texttt {GET /api/users/me}}{23}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}\texttt {PUT /api/users/me}}{23}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}\texttt {DELETE /api/users/me}}{24}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}\texttt {POST /api/users/initial-config}}{24}{subsection.4.2.4}%
+\contentsline {subsection}{\numberline {4.2.5}\texttt {GET /api/users/initial-config}}{24}{subsection.4.2.5}%
+\contentsline {section}{\numberline {4.3}Categorías (\texttt {/api/categories})}{24}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}\texttt {GET /api/categories}}{24}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}\texttt {GET /api/categories/:id}}{25}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}\texttt {POST /api/categories}}{25}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}\texttt {PUT /api/categories/:id}}{25}{subsection.4.3.4}%
+\contentsline {subsection}{\numberline {4.3.5}\texttt {DELETE /api/categories/:id}}{25}{subsection.4.3.5}%
+\contentsline {section}{\numberline {4.4}Presupuestos (\texttt {/api/budgets})}{25}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}\texttt {GET /api/budgets}}{25}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}\texttt {GET /api/budgets/category/:categoryId}}{25}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}\texttt {POST /api/budgets}}{26}{subsection.4.4.3}%
+\contentsline {subsection}{\numberline {4.4.4}\texttt {PUT /api/budgets/:id}}{26}{subsection.4.4.4}%
+\contentsline {subsection}{\numberline {4.4.5}\texttt {DELETE /api/budgets/:id}}{26}{subsection.4.4.5}%
+\contentsline {section}{\numberline {4.5}Ingresos (\texttt {/api/incomes})}{26}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}\texttt {GET /api/incomes}}{26}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}\texttt {GET /api/incomes/total}}{26}{subsection.4.5.2}%
+\contentsline {subsection}{\numberline {4.5.3}\texttt {POST /api/incomes}}{26}{subsection.4.5.3}%
+\contentsline {subsection}{\numberline {4.5.4}\texttt {PUT /api/incomes/:id} y \texttt {DELETE /api/incomes/:id}}{27}{subsection.4.5.4}%
+\contentsline {section}{\numberline {4.6}Gastos (\texttt {/api/expenses})}{27}{section.4.6}%
+\contentsline {subsection}{\numberline {4.6.1}\texttt {GET /api/expenses}}{27}{subsection.4.6.1}%
+\contentsline {subsection}{\numberline {4.6.2}\texttt {GET /api/expenses/recent}}{27}{subsection.4.6.2}%
+\contentsline {subsection}{\numberline {4.6.3}\texttt {GET /api/expenses/category/:categoryId}}{27}{subsection.4.6.3}%
+\contentsline {subsection}{\numberline {4.6.4}\texttt {POST /api/expenses}}{27}{subsection.4.6.4}%
+\contentsline {subsection}{\numberline {4.6.5}\texttt {DELETE /api/expenses/:id}}{28}{subsection.4.6.5}%
+\contentsline {section}{\numberline {4.7}Tickets OCR (\texttt {/api/tickets})}{28}{section.4.7}%
+\contentsline {subsection}{\numberline {4.7.1}\texttt {POST /api/tickets/scan}}{28}{subsection.4.7.1}%
+\contentsline {subsection}{\numberline {4.7.2}\texttt {GET /api/tickets}}{29}{subsection.4.7.2}%
+\contentsline {subsection}{\numberline {4.7.3}\texttt {GET /api/tickets/:id}}{29}{subsection.4.7.3}%
+\contentsline {subsection}{\numberline {4.7.4}\texttt {GET /api/tickets/:id/products}}{29}{subsection.4.7.4}%
+\contentsline {subsection}{\numberline {4.7.5}\texttt {DELETE /api/tickets/:id}}{29}{subsection.4.7.5}%
+\contentsline {section}{\numberline {4.8}Deudas (\texttt {/api/debts})}{29}{section.4.8}%
+\contentsline {subsection}{\numberline {4.8.1}\texttt {GET /api/debts}}{29}{subsection.4.8.1}%
+\contentsline {subsection}{\numberline {4.8.2}\texttt {POST /api/debts}}{29}{subsection.4.8.2}%
+\contentsline {subsection}{\numberline {4.8.3}\texttt {PUT /api/debts/:id/pay --- Registrar Pago}}{30}{subsection.4.8.3}%
+\contentsline {section}{\numberline {4.9}Alertas (\texttt {/api/alerts})}{30}{section.4.9}%
+\contentsline {subsection}{\numberline {4.9.1}\texttt {GET /api/alerts/unread}}{30}{subsection.4.9.1}%
+\contentsline {subsection}{\numberline {4.9.2}\texttt {PUT /api/alerts/mark-all-read}}{30}{subsection.4.9.2}%
+\contentsline {subsection}{\numberline {4.9.3}\texttt {GET /api/alerts/config} y \texttt {PUT /api/alerts/config}}{30}{subsection.4.9.3}%
+\contentsline {section}{\numberline {4.10}Dashboard (\texttt {/api/dashboard})}{31}{section.4.10}%
+\contentsline {subsection}{\numberline {4.10.1}\texttt {GET /api/dashboard/summary}}{31}{subsection.4.10.1}%
+\contentsline {subsection}{\numberline {4.10.2}\texttt {GET /api/dashboard/charts/expenses}}{31}{subsection.4.10.2}%
+\contentsline {subsection}{\numberline {4.10.3}\texttt {GET /api/dashboard/charts/budgets}}{31}{subsection.4.10.3}%
+\contentsline {chapter}{\numberline {5}Base de Datos}{32}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Visión General}{32}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Descripción de Tablas}{33}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Tabla: Usuarios}{33}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Tabla: Categorias}{33}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}Tabla: Presupuestos}{34}{subsection.5.2.3}%
+\contentsline {subsection}{\numberline {5.2.4}Tabla: Ingresos}{34}{subsection.5.2.4}%
+\contentsline {subsection}{\numberline {5.2.5}Tabla: Gastos}{35}{subsection.5.2.5}%
+\contentsline {subsection}{\numberline {5.2.6}Tabla: Tickets}{35}{subsection.5.2.6}%
+\contentsline {subsection}{\numberline {5.2.7}Tabla: Productos\_Tickets}{35}{subsection.5.2.7}%
+\contentsline {subsection}{\numberline {5.2.8}Tabla: Deudas}{36}{subsection.5.2.8}%
+\contentsline {subsection}{\numberline {5.2.9}Tabla: Alertas}{36}{subsection.5.2.9}%
+\contentsline {subsection}{\numberline {5.2.10}Tabla: Configuracion\_Notificaciones}{37}{subsection.5.2.10}%
+\contentsline {subsection}{\numberline {5.2.11}Tabla: Configuracion\_Inicial}{37}{subsection.5.2.11}%
+\contentsline {section}{\numberline {5.3}Triggers Automáticos}{37}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Trigger: actualizar\_presupuesto\_gasto}{37}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Trigger: verificar\_presupuesto\_excedido}{38}{subsection.5.3.2}%
+\contentsline {section}{\numberline {5.4}Diagrama Entidad-Relación}{39}{section.5.4}%
+\contentsline {chapter}{\numberline {6}Autenticación y Seguridad}{40}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Estrategia de Autenticación}{40}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}JSON Web Token (JWT)}{40}{subsection.6.1.1}%
+\contentsline {subsection}{\numberline {6.1.2}Hash de Contraseñas con bcrypt}{41}{subsection.6.1.2}%
+\contentsline {section}{\numberline {6.2}Middleware de Autenticación}{41}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Validación de Inputs con express-validator}{42}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Sanitización de Inputs}{43}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Rate Limiting}{43}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Headers de Seguridad}{44}{section.6.6}%
+\contentsline {section}{\numberline {6.7}Prevención de Inyección SQL}{44}{section.6.7}%
+\contentsline {section}{\numberline {6.8}Resumen de Medidas de Seguridad}{45}{section.6.8}%
+\contentsline {chapter}{\numberline {7}Decisiones de Diseño Técnico}{46}{chapter.7}%
+\contentsline {section}{\numberline {7.1}¿Por qué Node.js?}{46}{section.7.1}%
+\contentsline {section}{\numberline {7.2}¿Por qué Express.js?}{47}{section.7.2}%
+\contentsline {section}{\numberline {7.3}¿Por qué MySQL?}{47}{section.7.3}%
+\contentsline {section}{\numberline {7.4}¿Por qué bcrypt?}{48}{section.7.4}%
+\contentsline {section}{\numberline {7.5}¿Por qué Arquitectura por Capas y no Clean Architecture?}{48}{section.7.5}%
+\contentsline {section}{\numberline {7.6}Decisión de OCR: Python sobre Node.js}{49}{section.7.6}%
+\contentsline {chapter}{\numberline {8}Integración con Frontend}{50}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Contexto de Integración}{50}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Configuración CORS}{50}{section.8.2}%
+\contentsline {section}{\numberline {8.3}Consumo desde la App Móvil Flutter}{51}{section.8.3}%
+\contentsline {subsection}{\numberline {8.3.1}Autenticación y Almacenamiento del Token}{51}{subsection.8.3.1}%
+\contentsline {subsection}{\numberline {8.3.2}Request Autenticado Estándar}{51}{subsection.8.3.2}%
+\contentsline {subsection}{\numberline {8.3.3}Subida de Imagen para OCR}{52}{subsection.8.3.3}%
+\contentsline {section}{\numberline {8.4}Manejo de Errores desde el Cliente}{53}{section.8.4}%
+\contentsline {section}{\numberline {8.5}Formato de Fechas}{53}{section.8.5}%
+\contentsline {section}{\numberline {8.6}URL Base de la API}{53}{section.8.6}%
+\contentsline {chapter}{\numberline {9}Historial de Versiones}{55}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Versión 4.0.0 (Marzo 2026)}{55}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Versión 3.0.0 (Febrero 2026)}{56}{section.9.2}%
+\contentsline {section}{\numberline {9.3}Versión 2.0.0 (Febrero 2026)}{57}{section.9.3}%
+\contentsline {section}{\numberline {9.4}Versión 1.0.0 (Enero 2026)}{57}{section.9.4}%
+\contentsline {section}{\numberline {9.5}Roadmap Futuro}{58}{section.9.5}%
+\contentsline {chapter}{Referencias Bibliográficas}{59}{chapter*.14}%

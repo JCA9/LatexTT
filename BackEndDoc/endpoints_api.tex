@@ -1,0 +1,444 @@
+% endpoints_api.tex — Capítulo 4: Documentación de Endpoints
+\chapter{Documentación de Endpoints}
+
+La API REST de FINARA expone \textbf{46 endpoints} organizados en 10 módulos funcionales. Todos los endpoints (excepto \texttt{/api/health}, \texttt{/api/auth/register} y \texttt{/api/auth/login}) requieren autenticación mediante token JWT en el header \texttt{Authorization: Bearer <token>}.
+
+\begin{longtable}{>{\centering}p{1.5cm} >{\centering}p{2cm} p{5cm} >{\centering}p{2.5cm} >{\centering\arraybackslash}p{1.5cm}}
+  \caption{Resumen de todos los endpoints del backend FINARA}
+  \label{tab:endpoints-resumen} \\
+  \toprule
+  \textbf{Módulo} & \textbf{Prefijo} & \textbf{Descripción} & \textbf{Auth} & \textbf{Cant.} \\
+  \midrule
+  \endfirsthead
+  \toprule
+  \textbf{Módulo} & \textbf{Prefijo} & \textbf{Descripción} & \textbf{Auth} & \textbf{Cant.} \\
+  \midrule
+  \endhead
+  Health      & \texttt{/api/health}      & Estado del servidor           & No  & 1 \\
+  Auth        & \texttt{/api/auth}        & Autenticación y sesión        & Mixto & 5 \\
+  Users       & \texttt{/api/users}       & Perfil y configuración inicial & Sí & 5 \\
+  Categories  & \texttt{/api/categories}  & Categorías de gastos          & Sí  & 5 \\
+  Budgets     & \texttt{/api/budgets}     & Presupuestos mensuales        & Sí  & 6 \\
+  Incomes     & \texttt{/api/incomes}     & Ingresos del usuario          & Sí  & 6 \\
+  Expenses    & \texttt{/api/expenses}    & Gastos registrados            & Sí  & 7 \\
+  Tickets     & \texttt{/api/tickets}     & Tickets OCR                   & Sí  & 5 \\
+  Debts       & \texttt{/api/debts}       & Deudas y pagos                & Sí  & 6 \\
+  Alerts      & \texttt{/api/alerts}      & Alertas y notificaciones      & Sí  & 7 \\
+  Dashboard   & \texttt{/api/dashboard}   & Resumen financiero            & Sí  & 3 \\
+  \midrule
+  \multicolumn{4}{r}{\textbf{Total}} & \textbf{46} \\
+  \bottomrule
+\end{longtable}
+
+% ─────────────────────────────────────────────────────────────
+\section{Autenticación (\texttt{/api/auth})}
+
+\subsection{\texttt{POST /api/auth/register}}
+
+\begin{epbox}{POST /api/auth/register --- Registrar usuario}
+\textbf{Descripción:} Crea un nuevo usuario en el sistema. Al completarse, genera automáticamente 10 categorías de gasto predefinidas y una configuración de notificaciones para el usuario.
+
+\textbf{Auth requerida:} No
+
+\textbf{Request Body (JSON):}
+\begin{lstlisting}[style=json]
+{
+  "nombre":   "string  (requerido, min 2 chars)",
+  "email":    "string  (requerido, formato email valido)",
+  "password": "string  (requerido, min 6 caracteres)"
+}
+\end{lstlisting}
+
+\textbf{Validaciones:}
+\begin{itemize}
+  \item \texttt{nombre}: no vacío, mínimo 2 caracteres.
+  \item \texttt{email}: formato válido RFC 5322, debe ser único en la BD.
+  \item \texttt{password}: mínimo 6 caracteres; se almacena como hash bcrypt (10 rounds).
+\end{itemize}
+
+\textbf{Response 201 (Created):}
+\begin{lstlisting}[style=json]
+{
+  "success": true,
+  "data": {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "user": {
+      "id":                    1,
+      "nombre":                "Juan Perez",
+      "email":                 "juan@email.com",
+      "onboarding_completado": false,
+      "setup_completado":      false
+    }
+  }
+}
+\end{lstlisting}
+
+\textbf{Responses de Error:}
+\begin{itemize}
+  \item \texttt{400} --- Campos faltantes o inválidos (mensaje de validación).
+  \item \texttt{400} --- El email ya está registrado.
+  \item \texttt{500} --- Error interno del servidor.
+\end{itemize}
+\end{epbox}
+
+\subsection{\texttt{POST /api/auth/login}}
+
+\begin{epbox}{POST /api/auth/login --- Iniciar sesión}
+\textbf{Descripción:} Autentica un usuario existente. Retorna el token JWT y los flags de estado del onboarding para que la app móvil determine a qué pantalla navegar.
+
+\textbf{Request Body:}
+\begin{lstlisting}[style=json]
+{
+  "email":    "string (requerido)",
+  "password": "string (requerido)"
+}
+\end{lstlisting}
+
+\textbf{Response 200:}
+\begin{lstlisting}[style=json]
+{
+  "success": true,
+  "data": {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "user": {
+      "id":                    1,
+      "nombre":                "Juan Perez",
+      "email":                 "juan@email.com",
+      "onboarding_completado": true,
+      "setup_completado":      true
+    }
+  }
+}
+\end{lstlisting}
+
+\textbf{Errors:} \texttt{400} campos faltantes $|$ \texttt{401} credenciales incorrectas.
+\end{epbox}
+
+\subsection{\texttt{POST /api/auth/logout}}
+
+\begin{epbox}{POST /api/auth/logout --- Cerrar sesión}
+Endpoint de confirmación de cierre de sesión. La invalidación real del JWT se maneja del lado del cliente eliminando el token almacenado.
+
+\textbf{Auth:} Sí $|$ \textbf{Response 200:} \texttt{\{"success": true, "data": \{"message": "Sesión cerrada"\}\}}
+\end{epbox}
+
+\subsection{\texttt{GET /api/auth/verify}}
+
+\begin{epbox}{GET /api/auth/verify --- Verificar token}
+Verifica la validez del JWT enviado en el header. Útil para que la app verifique sesión al iniciar.
+
+\textbf{Response 200:} datos del usuario decodificados del token.
+\textbf{Error 401:} token expirado o inválido.
+\end{epbox}
+
+\subsection{\texttt{PUT /api/auth/change-password}}
+
+\begin{epbox}{PUT /api/auth/change-password --- Cambiar contraseña}
+\textbf{Request Body:}
+\begin{lstlisting}[style=json]
+{
+  "currentPassword": "string (requerido)",
+  "newPassword":     "string (min 6 caracteres)"
+}
+\end{lstlisting}
+\textbf{Errors:} \texttt{400} contraseña actual incorrecta $|$ \texttt{400} nueva contraseña inválida.
+\end{epbox}
+
+% ─────────────────────────────────────────────────────────────
+\section{Usuarios (\texttt{/api/users})}
+
+\subsection{\texttt{GET /api/users/me}}
+Retorna el perfil completo del usuario autenticado: id, nombre, email, \texttt{onboarding\_completado}, \texttt{setup\_completado}, \texttt{fecha\_creacion}.
+
+\subsection{\texttt{PUT /api/users/me}}
+Actualiza campos del perfil. Body opcional con cualquier combinación de:
+\begin{lstlisting}[style=json]
+{
+  "nombre":                "string?",
+  "onboarding_completado": "boolean?",
+  "setup_completado":      "boolean?"
+}
+\end{lstlisting}
+
+\subsection{\texttt{DELETE /api/users/me}}
+Elimina la cuenta y todos sus datos en cascada. Acción irreversible.
+
+\subsection{\texttt{POST /api/users/initial-config}}
+Guarda la configuración inicial del onboarding. Marca \texttt{setup\_completado = true} automáticamente. Si se provee \texttt{ingreso\_mensual\_inicial}, crea un ingreso recurrente en la tabla Ingresos.
+\begin{lstlisting}[style=json]
+{
+  "modo_administracion":    "'unico' | 'multiple'",
+  "ingreso_mensual_inicial": 15000.00,
+  "distribucion_categorias": {
+    "Alimentos": 40, "Transporte": 20, "Otros": 40
+  }
+}
+\end{lstlisting}
+
+\subsection{\texttt{GET /api/users/initial-config}}
+Retorna la configuración inicial guardada, con \texttt{distribucion\_categorias} ya parseada como objeto JSON.
+
+% ─────────────────────────────────────────────────────────────
+\section{Categorías (\texttt{/api/categories})}
+
+\subsection{\texttt{GET /api/categories}}
+Lista todas las categorías del usuario (predefinidas + personalizadas), ordenadas por tipo y nombre.
+
+\textbf{Response 200:}
+\begin{lstlisting}[style=json]
+{
+  "success": true,
+  "data": [
+    {
+      "id_categoria":    1,
+      "nombre_categoria":"Alimentos",
+      "tipo_categoria":  "predefinida",
+      "icono":           "restaurant",
+      "color":           "#FF6B6B"
+    }
+  ]
+}
+\end{lstlisting}
+
+\subsection{\texttt{GET /api/categories/:id}} Obtiene una categoría por ID. Retorna \texttt{404} si no pertenece al usuario.
+
+\subsection{\texttt{POST /api/categories}}
+Crea categoría personalizada. \texttt{tipo\_categoria} se establece automáticamente como \texttt{"personalizada"}.
+\begin{lstlisting}[style=json]
+{ "nombre_categoria": "Mascotas", "icono": "pets", "color": "#4CAF50" }
+\end{lstlisting}
+
+\subsection{\texttt{PUT /api/categories/:id}} Actualiza nombre, icono o color. Body parcial aceptado.
+
+\subsection{\texttt{DELETE /api/categories/:id}}
+Elimina categoría. Bloquea con \texttt{400} si:
+\begin{itemize}
+  \item La categoría es de tipo \texttt{"predefinida"}.
+  \item Tiene gastos vinculados (restricción de clave foránea).
+\end{itemize}
+
+% ─────────────────────────────────────────────────────────────
+\section{Presupuestos (\texttt{/api/budgets})}
+
+\subsection{\texttt{GET /api/budgets}}
+Lista todos los presupuestos activos del usuario. Incluye campos calculados: \texttt{porcentaje\_utilizado} y \texttt{monto\_disponible}.
+
+\subsection{\texttt{GET /api/budgets/category/:categoryId}}
+Obtiene el presupuesto activo para una categoría específica. Útil para mostrar el estado del presupuesto al registrar un gasto.
+
+\subsection{\texttt{POST /api/budgets}}
+\begin{lstlisting}[style=json]
+{
+  "id_categoria":   1,
+  "monto_asignado": 3000.00,
+  "periodo":        "mensual",
+  "fecha_inicio":   "2025-03-01",
+  "fecha_fin":      "2025-03-31"
+}
+\end{lstlisting}
+\textbf{Validaciones:} \texttt{monto\_asignado} $>$ 0; \texttt{periodo} en \texttt{[mensual, semanal, anual]}; fechas válidas.
+
+\subsection{\texttt{PUT /api/budgets/:id}} Actualiza cualquier campo. Body parcial aceptado con \texttt{COALESCE}.
+
+\subsection{\texttt{DELETE /api/budgets/:id}} Elimina presupuesto. \texttt{404} si no pertenece al usuario.
+
+% ─────────────────────────────────────────────────────────────
+\section{Ingresos (\texttt{/api/incomes})}
+
+\subsection{\texttt{GET /api/incomes}}
+Lista ingresos con filtro opcional de período:
+\begin{lstlisting}[style=bash]
+GET /api/incomes?month=3&year=2025
+\end{lstlisting}
+
+\subsection{\texttt{GET /api/incomes/total}}
+Retorna la suma de todos los ingresos del mes especificado.
+\begin{lstlisting}[style=json]
+{ "success": true, "data": { "total": 15000.00, "month": 3, "year": 2025 } }
+\end{lstlisting}
+
+\subsection{\texttt{POST /api/incomes}}
+\begin{lstlisting}[style=json]
+{
+  "nombre_ingreso": "Salario mensual",
+  "monto":          15000.00,
+  "es_recurrente":  true,
+  "fecha":          "2025-03-01"
+}
+\end{lstlisting}
+
+\subsection{\texttt{PUT /api/incomes/:id} y \texttt{DELETE /api/incomes/:id}} CRUD estándar. Body parcial en PUT.
+
+% ─────────────────────────────────────────────────────────────
+\section{Gastos (\texttt{/api/expenses})}
+
+\subsection{\texttt{GET /api/expenses}}
+Lista gastos con filtro de mes/año. Incluye nombre de categoría en cada elemento.
+
+\subsection{\texttt{GET /api/expenses/recent}}
+Últimos gastos registrados. Query param \texttt{?limit=10} (default 10, máx 50).
+
+\subsection{\texttt{GET /api/expenses/category/:categoryId}}
+Filtra gastos por categoría del mes actual.
+
+\subsection{\texttt{POST /api/expenses}}
+Crea gasto manual. El trigger MySQL \texttt{actualizar\_presupuesto\_gasto} actualiza automáticamente el \texttt{monto\_utilizado} del presupuesto activo de esa categoría.
+\begin{lstlisting}[style=json]
+{
+  "id_categoria": 1,
+  "nombre_gasto": "Super del mes",
+  "monto":        850.50,
+  "fecha":        "2025-03-15",
+  "notas":        "Compra semanal (opcional)"
+}
+\end{lstlisting}
+
+\subsection{\texttt{DELETE /api/expenses/:id}}
+Elimina el gasto y \textbf{revierte} el \texttt{monto\_utilizado} del presupuesto correspondiente, si existe.
+
+% ─────────────────────────────────────────────────────────────
+\section{Tickets OCR (\texttt{/api/tickets})}
+
+\subsection{\texttt{POST /api/tickets/scan}}
+
+\begin{epbox}{POST /api/tickets/scan --- Escanear ticket con OCR}
+\textbf{Content-Type:} \texttt{multipart/form-data}
+
+\textbf{Campo:} \texttt{images} (File, máximo 5 imágenes, máximo 10MB por archivo)
+
+\textbf{Descripción:} Recibe imágenes de ticket, las procesa con el pipeline OCR Python/Tesseract y guarda atómicamente en la BD: el ticket, sus productos y un gasto vinculado.
+
+\textbf{Response 201:}
+\begin{lstlisting}[style=json]
+{
+  "success": true,
+  "data": {
+    "ticket": {
+      "id":            1,
+      "nombre_tienda": "OXXO",
+      "total":         122.94,
+      "confidence":    0.627,
+      "fecha_compra":  "2025-10-04T00:00:00.000Z"
+    },
+    "productos": [
+      {
+        "name":       "POWERADE",
+        "quantity":   1,
+        "unit_price": 41.00,
+        "total":      41.00,
+        "categoria":  "Alimentos"
+      }
+    ],
+    "gasto": {
+      "id":            1,
+      "monto":         122.94,
+      "categoria":     "Alimentos",
+      "id_categoria":  2
+    }
+  }
+}
+\end{lstlisting}
+
+\textbf{Errors:} \texttt{400} sin imágenes $|$ \texttt{429} límite OCR excedido $|$ \texttt{500} error del script Python.
+\end{epbox}
+
+\subsection{\texttt{GET /api/tickets}}
+Lista todos los tickets del usuario con conteo de productos (\texttt{total\_productos}).
+
+\subsection{\texttt{GET /api/tickets/:id}}
+Ticket individual con rutas de imágenes como arreglo JSON.
+
+\subsection{\texttt{GET /api/tickets/:id/products}}
+Lista los productos extraídos de un ticket con categoría, icono y color.
+
+\subsection{\texttt{DELETE /api/tickets/:id}}
+Elimina el ticket y sus archivos de imagen del disco.
+
+% ─────────────────────────────────────────────────────────────
+\section{Deudas (\texttt{/api/debts})}
+
+\subsection{\texttt{GET /api/debts}}
+Lista deudas ordenadas: activas primero, luego por próxima fecha de pago. Incluye campos calculados: \texttt{porcentaje\_pagado}, \texttt{monto\_pendiente}, \texttt{dias\_para\_pago}.
+
+\subsection{\texttt{POST /api/debts}}
+\begin{lstlisting}[style=json]
+{
+  "nombre_deuda":         "Tarjeta Banamex",
+  "monto_total":          12000.00,
+  "pago_mensual":         1000.00,
+  "duracion_meses":       12,
+  "fecha_siguiente_pago": "2025-04-01"
+}
+\end{lstlisting}
+
+\subsection{\texttt{PUT /api/debts/:id/pay --- Registrar Pago}}
+
+\begin{epbox}{PUT /api/debts/:id/pay --- Registrar pago de deuda}
+Registra un pago mensual. Si no se provee \texttt{monto\_pago}, usa el \texttt{pago\_mensual} configurado. Avanza \texttt{fecha\_siguiente\_pago} un mes. Si \texttt{monto\_pagado $\geq$ monto\_total}, marca \texttt{activa = false}.
+
+\textbf{Request Body:}
+\begin{lstlisting}[style=json]
+{ "monto_pago": 1000.00 }
+\end{lstlisting}
+
+\textbf{Response 200:}
+\begin{lstlisting}[style=json]
+{
+  "success": true,
+  "data": {
+    "deuda": { "id_deuda": 1, "monto_pagado": 2000.00, "porcentaje_pagado": 16.7, "activa": true },
+    "liquidada":    false,
+    "monto_pagado": 1000.00,
+    "message":      "Pago de $1000 registrado correctamente"
+  }
+}
+\end{lstlisting}
+\end{epbox}
+
+% ─────────────────────────────────────────────────────────────
+\section{Alertas (\texttt{/api/alerts})}
+
+\subsection{\texttt{GET /api/alerts/unread}}
+Retorna el conteo y lista de alertas no leídas. Usado por la app para mostrar el badge de notificaciones.
+\begin{lstlisting}[style=json]
+{ "success": true, "data": { "count": 3, "alertas": [...] } }
+\end{lstlisting}
+
+\subsection{\texttt{PUT /api/alerts/mark-all-read}}
+Marca todas las alertas del usuario como leídas en una sola operación.
+
+\subsection{\texttt{GET /api/alerts/config} y \texttt{PUT /api/alerts/config}}
+Obtiene y actualiza la configuración de notificaciones:
+\begin{lstlisting}[style=json]
+{
+  "presupuesto_excedido": true,
+  "recordatorio_gestion": true,
+  "pago_deuda_proximo":   false
+}
+\end{lstlisting}
+
+% ─────────────────────────────────────────────────────────────
+\section{Dashboard (\texttt{/api/dashboard})}
+
+\subsection{\texttt{GET /api/dashboard/summary}}
+Resumen financiero del mes. Query params: \texttt{?month=3\&year=2025}.
+\begin{lstlisting}[style=json]
+{
+  "success": true,
+  "data": {
+    "periodo":    { "month": 3, "year": 2025 },
+    "ingresos":   15000.00,
+    "gastos":     8500.00,
+    "balance":    6500.00,
+    "top_categorias": [
+      { "nombre_categoria": "Alimentos", "total": 3200.00 }
+    ]
+  }
+}
+\end{lstlisting}
+
+\subsection{\texttt{GET /api/dashboard/charts/expenses}}
+Datos para gráfica de pastel de gastos por categoría del mes. Incluye nombre, total y porcentaje de cada categoría.
+
+\subsection{\texttt{GET /api/dashboard/charts/budgets}}
+Estado de todos los presupuestos activos: monto asignado, utilizado, disponible y porcentaje para gráfica de barras de progreso.

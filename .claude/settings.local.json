@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pdflatex -interaction=nonstopmode main.tex)",
+      "Bash(grep -n \"rowcolors\\\\|tablerowalt\\\\|columncolor\\\\|cellcolor\\\\|rowcolor\" \"c:/Users/MAG9/Documents/TT/LatexTT/BackEndDoc/\"*.tex)",
+      "Bash(bibtex main:*)"
+    ]
+  }
+}

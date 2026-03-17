@@ -1,0 +1,294 @@
+\subsection{Stack Tecnologico}
+
+% Ajustes locales para evitar desbordes en tablas y bloques de codigo
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTleft}{0pt}
+\setlength{\LTright}{0pt}
+\lstset{basicstyle=\ttfamily\small, breaklines=true, breakatwhitespace=true, columns=fullflexible, keepspaces=true}
+
+\subsubsection{Framework y Lenguaje}
+
+\subsection{Flutter Framework}
+
+\textbf{Versión:} 3.24.0 (Stable Channel) \cite{flutter_releases}
+
+Flutter es un framework de código abierto desarrollado por Google para crear aplicaciones nativas multiplataforma desde una única base de código \cite{flutter_docs}. 
+
+\subsubsection{Justificación de Selección}
+
+Se seleccionó Flutter por las siguientes razones técnicas y estratégicas:
+
+\begin{enumerate}
+    \item \textbf{Desarrollo multiplataforma:} Permite compilar para Android e iOS desde un solo código base, reduciendo tiempo y costos de desarrollo en aproximadamente 40-50\% \cite{flutter_architecture}.
+    
+    \item \textbf{Hot Reload:} Permite ver cambios en tiempo real sin reiniciar la aplicación, acelerando significativamente el ciclo de desarrollo y debugging \cite{flutter_hot_reload}.
+    
+    \item \textbf{Material Design nativo:} Implementación completa de Material Design 3 sin necesidad de librerías adicionales \cite{material_design}.
+    
+    \item \textbf{Rendimiento nativo:} Compilación a código nativo ARM, logrando 60-120 FPS en animaciones y transiciones \cite{flutter_performance}.
+    
+    \item \textbf{Comunidad activa:} Más de 160,000 paquetes disponibles en pub.dev y documentación exhaustiva \cite{pub_dev}.
+    
+    \item \textbf{Experiencia del equipo:} Conocimiento previo en Java/Kotlin facilitó la transición a Dart.
+\end{enumerate}
+
+\subsubsection{Comparación con Alternativas}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{2.8cm}|>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{2.2cm}|>{\centering\arraybackslash}p{1.8cm}|>{\centering\arraybackslash}p{1.7cm}|}
+\hline
+\textbf{Criterio} & \textbf{Flutter} & \textbf{React Native} & \textbf{Nativo} & \textbf{Xamarin} \\
+\hline
+Rendimiento & Excelente & Bueno & Excelente & Bueno \\
+\hline
+Hot Reload & Sí & Sí & No & Limitado \\
+\hline
+Curva de aprendizaje & Media & Media & Alta & Alta \\
+\hline
+Comunidad & Grande & Grande & Grande & Pequeña \\
+\hline
+UI Consistente & Sí & No & Sí & No \\
+\hline
+Código compartido & 100\% & 80-90\% & 0\% & 90\% \\
+\hline
+\textbf{Seleccion} & Si & --- & --- & --- \\
+\hline
+\end{tabularx}
+\caption{Comparación de frameworks móviles}
+\label{tab:comparacion_frameworks}
+\end{table}
+
+\textbf{Alternativas descartadas:}
+\begin{itemize}
+    \item \textbf{React Native:} Menor rendimiento en animaciones complejas y gráficas
+    \item \textbf{Desarrollo Nativo (Kotlin/Swift):} Requiere duplicar esfuerzo para iOS
+    \item \textbf{Xamarin:} Menor soporte de comunidad y documentación limitada
+\end{itemize}
+
+\subsection{Dart Language}
+
+\textbf{Versión:} 3.5.0 \cite{dart_releases}
+
+Dart es el lenguaje de programación oficial de Flutter, desarrollado por Google. 
+
+\subsubsection{Características Técnicas Relevantes}
+
+\begin{itemize}
+    \item \textbf{Tipado fuerte} con inferencia de tipos automática
+    \item \textbf{Null safety:} Prevención de errores NullPointerException en tiempo de compilación
+    \item \textbf{Programación asíncrona:} Soporte nativo para async/await
+    \item \textbf{Compilación AOT:} (Ahead of Time) para producción, genera código nativo optimizado
+    \item \textbf{Compilación JIT:} (Just in Time) para desarrollo, habilita Hot Reload
+    \item \textbf{Orientado a objetos:} Soporte completo para clases, interfaces y mixins
+\end{itemize}
+
+\section{Configuración del Proyecto}
+
+\subsection{Plataforma Android}
+
+\subsubsection{Versiones de SDK}
+
+\begin{lstlisting}[caption=Configuración en build.gradle]
+android {
+    compileSdkVersion 34
+    
+    defaultConfig {
+        applicationId "com.finara.app"
+        minSdkVersion 21
+        targetSdkVersion 34
+        versionCode 1
+        versionName "0.5.0"
+    }
+}
+\end{lstlisting}
+
+\begin{itemize}
+    \item \textbf{minSdkVersion:} 21 (Android 5.0 Lollipop) \cite{android_versions}
+    \item \textbf{targetSdkVersion:} 34 (Android 14)
+    \item \textbf{compileSdkVersion:} 34 (API Level 34)
+\end{itemize}
+
+\subsubsection{Justificación de minSdkVersion 21}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Razón} & \textbf{Explicación} \\
+\hline
+Cobertura de mercado & Cubre el 99.8\% de dispositivos Android activos según Android Distribution Dashboard \cite{android_distribution} \\
+\hline
+Funcionalidades modernas & Soporte completo para características de Flutter 3.x \\
+\hline
+Material Design & Soporte nativo para componentes de Material Design \\
+\hline
+Balance & Equilibrio óptimo entre compatibilidad y características modernas \\
+\hline
+\end{tabularx}
+\caption{Justificación de minSdkVersion 21}
+\end{table}
+
+\subsubsection{Permisos Requeridos}
+
+\begin{lstlisting}[caption=Permisos en AndroidManifest.xml]
+<manifest>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+                     android:maxSdkVersion="28" />
+</manifest>
+\end{lstlisting}
+
+\begin{description}
+    \item[INTERNET:] Comunicación con backend REST API y servicios OCR externos
+    \item[CAMERA:] Captura de fotografías de tickets mediante cámara del dispositivo
+    \item[READ\_EXTERNAL\_STORAGE:] Acceso a galería para seleccionar imágenes existentes
+    \item[WRITE\_EXTERNAL\_STORAGE:] Almacenamiento de imágenes de tickets (solo hasta Android 9)
+\end{description}
+
+\section{Dependencias Principales}
+
+El proyecto utiliza 8 dependencias externas críticas, todas disponibles en pub.dev \cite{pub_dev}:
+
+\small
+\begin{longtable}{|p{3.9cm}|p{1.7cm}|p{7.3cm}|}
+\caption{Dependencias del Proyecto FINARA} \\
+\hline
+\textbf{Paquete} & \textbf{Versión} & \textbf{Justificación Técnica} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Paquete} & \textbf{Versión} & \textbf{Justificación Técnica} \\
+\hline
+\endhead
+\hline
+\endfoot
+
+\texttt{fl\_chart} & 0.69.0 & Librería especializada para gráficas interactivas (barras, pastel, líneas). Seleccionada por su rendimiento (60 FPS), personalización completa y documentación clara \cite{fl_chart}. Usada en Home y Transactions. \\
+\hline
+
+\texttt{camera} & 0.10.5+9 & Plugin oficial de Flutter para acceso a cámara del dispositivo. Necesario para captura de tickets en el módulo OCR \cite{camera_plugin}. Soporta preview en tiempo real y control de flash. \\
+\hline
+
+\texttt{image\_picker} & 1.0.7 & Permite seleccionar imágenes desde galería del dispositivo. Complementa funcionalidad de cámara, permitiendo subir tickets digitales existentes \cite{image_picker}. \\
+\hline
+
+\texttt{permission\_handler} & 11.2.0 & Gestión unificada de permisos de Android/iOS en runtime. Necesario para solicitar permisos de cámara y almacenamiento de forma programática \cite{permission_handler}. \\
+\hline
+
+\texttt{shared\_preferences} & 2.2.2 & Almacenamiento local clave-valor para datos simples. Usado para autenticación (email, token), configuraciones de usuario y estado de onboarding \cite{shared_preferences}. \\
+\hline
+
+\texttt{path\_provider} & 2.1.2 & Acceso a directorios del sistema de archivos (Documents, Cache, Temp). Usado para almacenar imágenes de tickets de forma persistente \cite{path_provider}. \\
+\hline
+
+\texttt{crypto} & 3.0.3 & Funciones criptográficas (SHA-256, MD5, HMAC). Usado para hashear contraseñas antes de almacenamiento local y transmisión al backend \cite{crypto}. \\
+\hline
+
+\texttt{http} & 1.2.0 & Cliente HTTP oficial de Dart para comunicación con backend REST API. Soporta GET, POST, PUT, DELETE y manejo de headers \cite{http_package}. \\
+\hline
+\end{longtable}
+
+\subsection{Justificación de Shared Preferences}
+
+Se eligió \texttt{shared\_preferences} en lugar de SQLite local por:
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|p{5.2cm}|X|}
+\hline
+\textbf{Ventaja} & \textbf{Aplicación en FINARA} \\
+\hline
+Simplicidad de implementación & Prototipo no requiere base de datos compleja local \\
+\hline
+Velocidad de acceso & Lectura/escritura inmediata para datos de sesión \\
+\hline
+Suficiencia para el alcance & Almacena: email, token JWT, onboarding\_complete, setup\_data \\
+\hline
+Sin overhead & No requiere configuración de esquemas ni migraciones \\
+\hline
+Ideal para prototipos & Permite enfocarse en lógica de negocio \\
+\hline
+\end{tabularx}
+\caption{Ventajas de SharedPreferences para FINARA}
+\end{table}
+
+\textbf{Limitaciones conocidas y planeadas:}
+\begin{itemize}
+    \item No escala para datos estructurados complejos o grandes volúmenes
+    \item Sin soporte para queries relacionales o índices
+    \item \textbf{Migración planeada:} SQLite (\texttt{sqflite}) en versión 2.0 para caché local de transacciones
+\end{itemize}
+
+\section{Archivo pubspec.yaml}
+
+Configuración completa de dependencias:
+
+\begin{lstlisting}[caption=pubspec.yaml del proyecto]
+name: finara
+description: Aplicacion de finanzas personales con OCR
+version: 0.5.0+1
+
+environment:
+  sdk: ">=3.5.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # Graficas
+  fl_chart: ^0.69.0
+  
+  # Camara e imagenes
+  camera: ^0.10.5+9
+  image_picker: ^1.0.7
+  
+  # Permisos
+  permission_handler: ^11.2.0
+  
+  # Almacenamiento
+  shared_preferences: ^2.2.2
+  path_provider: ^2.1.2
+  
+  # Seguridad
+  crypto: ^3.0.3
+  
+  # Networking
+  http: ^1.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+\end{lstlisting}
+
+\section{Herramientas de Desarrollo}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{3.1cm}|>{\centering\arraybackslash}p{2cm}|X|}
+\hline
+\textbf{Herramienta} & \textbf{Versión} & \textbf{Uso} \\
+\hline
+Visual Studio Code & 1.85.0 & Editor principal con extensión Flutter/Dart \\
+\hline
+Android Studio & 2023.1 & Emuladores Android y debugging avanzado \\
+\hline
+Flutter DevTools & 3.24.0 & Profiling, inspector de widgets, network monitor \\
+\hline
+Git & 2.42.0 & Control de versiones \\
+\hline
+Postman & 10.20.0 & Pruebas de endpoints REST API \\
+\hline
+Figma & --- & Diseño de wireframes y mockups \\
+\hline
+\end{tabularx}
+\caption{Herramientas de desarrollo utilizadas}
+\end{table}

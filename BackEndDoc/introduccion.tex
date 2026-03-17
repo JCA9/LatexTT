@@ -1,0 +1,135 @@
+% introduccion.tex — Capítulo 1: Introducción
+\chapter{Introducción}
+
+\section{Propósito del Documento}
+
+El presente documento describe la implementación técnica completa del \textit{backend} del sistema FINARA, una aplicación de administración de finanzas personales con capacidad de escaneo y reconocimiento óptico de caracteres (OCR) aplicado a tickets de compra.
+
+Este documento tiene tres propósitos principales:
+
+\begin{enumerate}[leftmargin=1.5cm]
+  \item \textbf{Referencia de implementación:} Servir como guía técnica detallada para el equipo de desarrollo, describiendo cada módulo, endpoint y decisión de diseño tomada durante la construcción de la API.
+
+  \item \textbf{Evidencia académica:} Constituir la documentación formal de implementación del módulo backend del Trabajo Terminal \textbf{2026-A062} ante la Escuela Superior de Cómputo del Instituto Politécnico Nacional.
+
+  \item \textbf{Guía de integración:} Proporcionar a los desarrolladores del frontend (app móvil Flutter y futura plataforma web React) la especificación técnica necesaria para consumir correctamente los 46 endpoints de la API REST.
+\end{enumerate}
+
+\section{Alcance}
+
+\subsection{Incluido en este Documento}
+
+\begin{itemize}[leftmargin=1.5cm]
+  \item API REST completa: 46 endpoints en 10 módulos funcionales.
+  \item Base de datos MySQL: 10 tablas, relaciones, índices y 2 triggers automáticos.
+  \item Sistema de autenticación con JWT y cifrado de contraseñas con bcrypt.
+  \item Pipeline de procesamiento OCR: integración Node.js $\leftrightarrow$ Python/Tesseract.
+  \item Middleware de seguridad: rate limiting, sanitización de inputs, headers de protección.
+  \item Suite de pruebas unitarias: 5 módulos de tests con base de datos mockeada.
+\end{itemize}
+
+\subsection{Fuera de Alcance}
+
+\begin{itemize}[leftmargin=1.5cm]
+  \item \textbf{App móvil Flutter}: documentada en el documento paralelo \textit{``Implementación Técnica --- App Móvil Flutter''}.
+  \item \textbf{Plataforma web React}: pendiente de implementación (fase futura).
+  \item \textbf{Infraestructura de despliegue}: configuración de servidores de producción.
+\end{itemize}
+
+\section{Audiencia Objetivo}
+
+\begin{longtable}{>{\bfseries}p{3.5cm} p{10cm}}
+  \caption{Audiencias del documento y uso esperado}
+  \label{tab:audiencia} \\
+  \toprule
+  \textbf{Audiencia} & \textbf{Uso del Documento} \\
+  \midrule
+  \endfirsthead
+  \toprule
+  \textbf{Audiencia} & \textbf{Uso del Documento} \\
+  \midrule
+  \endhead
+  Equipo backend     & Referencia de implementación, mantenimiento y extensión de módulos. \\
+  \addlinespace
+  Equipo frontend    & Especificación de endpoints, formatos JSON y códigos de error para integración. \\
+  \addlinespace
+  Profesores TT      & Evaluación del alcance técnico y calidad de la implementación. \\
+  \addlinespace
+  Futuros colaboradores & Incorporación al proyecto con contexto arquitectónico completo. \\
+  \bottomrule
+\end{longtable}
+
+\section{Contexto del Proyecto}
+
+\subsection{Problemática}
+
+La administración de finanzas personales requiere un registro sistemático y constante de ingresos y gastos. Sin embargo, el proceso manual de captura de datos presenta las siguientes limitaciones:
+
+\begin{itemize}[leftmargin=1.5cm]
+  \item \textbf{Fricción de entrada:} registrar cada gasto manualmente consume tiempo y genera abandono del hábito.
+  \item \textbf{Pérdida de información:} los tickets físicos se extravían antes de registrar los datos.
+  \item \textbf{Desorganización categórica:} sin categorización automática, el análisis de hábitos de gasto es impreciso.
+\end{itemize}
+
+\subsection{Solución Propuesta}
+
+FINARA propone un sistema que automatiza la captura de gastos mediante OCR sobre fotografías de tickets, complementado con un módulo de administración de presupuestos, deudas e ingresos. El backend Node.js actúa como el núcleo del sistema, orquestando la lógica de negocio, la persistencia de datos y la comunicación con el motor OCR Python/Tesseract.
+
+\subsection{Arquitectura General del Sistema}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+    node distance=1.5cm,
+    box/.style={rectangle, rounded corners, draw, fill=blue!10,
+                minimum width=3cm, minimum height=1cm,
+                font=\small\bfseries, align=center},
+    server/.style={box, fill=orange!15},
+    db/.style={cylinder, shape border rotate=90, draw, fill=green!10,
+               minimum width=2cm, minimum height=1cm,
+               align=center, font=\small\bfseries},
+    ocr/.style={box, fill=purple!10},
+    arr/.style={-Stealth, thick}
+  ]
+    % Clientes
+    \node[box] (flutter) {App Móvil\\Flutter};
+    \node[box, right=2.5cm of flutter] (react) {Plataforma Web\\React (futuro)};
+
+    % Backend
+    \node[server, below=1.8cm of flutter, xshift=1.8cm] (api) {Backend FINARA\\Node.js + Express\\:3000};
+
+    % BD y OCR
+    \node[db, below left=1.5cm and 0.5cm of api] (mysql) {MySQL\\finara\_db};
+    \node[ocr, below right=1.5cm and 0.5cm of api] (ocr) {OCR Engine\\Python + Tesseract};
+
+    % Flechas
+    \draw[arr] (flutter) -- node[left, font=\tiny]{HTTP/REST} (api);
+    \draw[arr] (react)   -- node[right, font=\tiny]{HTTP/REST} (api);
+    \draw[arr] (api) -- node[left, font=\tiny]{mysql2} (mysql);
+    \draw[arr] (api) -- node[right, font=\tiny]{child\_process} (ocr);
+    \draw[arr, dashed] (mysql) -- (api);
+    \draw[arr, dashed] (ocr)   -- (api);
+  \end{tikzpicture}
+  \caption{Arquitectura general del sistema FINARA}
+  \label{fig:arquitectura-general}
+\end{figure}
+
+\section{Versiones del Sistema}
+
+\begin{longtable}{>{\centering}p{2.5cm} >{\centering}p{3cm} p{8cm}}
+  \caption{Versiones del backend FINARA}
+  \label{tab:versiones-intro} \\
+  \toprule
+  \textbf{Versión} & \textbf{Fecha} & \textbf{Contenido} \\
+  \midrule
+  \endfirsthead
+  \toprule
+  \textbf{Versión} & \textbf{Fecha} & \textbf{Contenido} \\
+  \midrule
+  \endhead
+  1.0.0 & Enero 2026  & Auth, BD, estructura base \\
+  2.0.0 & Febrero 2026 & Módulos financieros (categorías, presupuestos, ingresos, gastos, dashboard) \\
+  3.0.0 & Febrero 2026 & OCR, tickets, deudas, alertas, usuarios \\
+  4.0.0 & Marzo 2026  & Seguridad, testing, optimizaciones, OCR v3 \\
+  \bottomrule
+\end{longtable}

@@ -1,0 +1,88 @@
+% changelog.tex — Capítulo 9: Changelog del Backend
+\chapter{Historial de Versiones}
+
+\section{Versión 4.0.0 (Marzo 2026)}
+
+\subsection*{Optimizaciones y Testing}
+
+\begin{itemize}[leftmargin=1.5cm]
+  \item \textbf{Seguridad:} Implementación de middleware de rate limiting (\texttt{rateLimiter.js}) con límites diferenciados por contexto: 10 req/15min en auth, 20 req/15min en OCR, 200 req/15min en API general.
+  \item \textbf{Seguridad:} Headers HTTP de seguridad sin dependencia de Helmet: \texttt{X-Content-Type-Options}, \texttt{X-Frame-Options}, \texttt{X-XSS-Protection}, \texttt{Referrer-Policy}.
+  \item \textbf{Seguridad:} Middleware sanitizador de inputs (\texttt{sanitizer.js}) aplicado globalmente.
+  \item \textbf{Testing:} Suite de tests unitarios con Jest + Supertest: 5 módulos (auth, debts, alerts, helpers, middleware), 40+ casos, base de datos mockeada con \texttt{jest.fn()}.
+  \item \textbf{OCR:} Script \texttt{LecturaTickets\_v3.py} con pipeline adaptativo según resolución de imagen (1x/2x/3x), filtro bilateral paramétrico, corrección de iluminación y detección de ángulo con HoughLinesP.
+  \item \textbf{BD:} \texttt{enableKeepAlive} en el pool MySQL para reconexión automática.
+  \item \textbf{Logging:} Middleware de log coloreado por status code con tiempo de respuesta.
+  \item \textbf{Documentación:} README completo, \texttt{endpoints.json} con los 46 endpoints, esta documentación LaTeX.
+\end{itemize}
+
+\subsection*{Corregido}
+\begin{itemize}[leftmargin=1.5cm]
+  \item OCR: patrón de total ahora tolera errores de Tesseract (J/T, comas decimales, símbolo §).
+  \item OCR: extracción de JSON de stdout ahora ignora caracteres de ruido antes del \texttt{\{} inicial.
+  \item CORS: configuración por variable de entorno en lugar de \texttt{*} fijo.
+\end{itemize}
+
+\section{Versión 3.0.0 (Febrero 2026)}
+
+\subsection*{Módulos OCR, Deudas, Alertas y Usuarios}
+
+\begin{itemize}[leftmargin=1.5cm]
+  \item \textbf{Tickets (OCR):} Endpoint \texttt{POST /api/tickets/scan} con integración Node.js $\to$ Python mediante \texttt{child\_process.spawn}. Creación atómica de Ticket + Productos\_Tickets + Gasto.
+  \item \textbf{Deudas:} CRUD completo con cálculo de \texttt{porcentaje\_pagado}, \texttt{monto\_pendiente} y \texttt{dias\_para\_pago}. Endpoint \texttt{PUT /api/debts/:id/pay} con avance de fecha y detección de liquidación.
+  \item \textbf{Alertas:} Sistema de alertas con CRUD, marcado individual y masivo, y configuración de notificaciones. Función interna \texttt{createAlert()} disponible para otros controladores.
+  \item \textbf{Usuarios:} Endpoints de perfil (\texttt{/api/users/me}) y configuración inicial de onboarding (\texttt{/api/users/initial-config}) con creación automática de ingreso recurrente.
+  \item \textbf{OCR v2:} Mejoras sobre v1: corrección de stdout contaminado, formato JSON compatible con \texttt{ocrService.js}, extracción de total con validación cruzada por monto en letras, detección de 8 productos en ticket OXXO.
+\end{itemize}
+
+\subsection*{Corregido}
+\begin{itemize}[leftmargin=1.5cm]
+  \item OCR v1: stdout contaminado con texto de debug hacía fallar \texttt{JSON.parse()} en Node.js.
+  \item Categorías: error al eliminar categorías con gastos vinculados (FK violation) ahora retorna \texttt{400} descriptivo.
+\end{itemize}
+
+\section{Versión 2.0.0 (Febrero 2026)}
+
+\subsection*{Módulos Financieros Completos}
+
+\begin{itemize}[leftmargin=1.5cm]
+  \item \textbf{Categorías:} CRUD completo. Bloqueo de eliminación para categorías predefinidas y con gastos.
+  \item \textbf{Presupuestos:} CRUD con cálculo de porcentaje utilizado y consulta por categoría.
+  \item \textbf{Ingresos:} CRUD con filtro mensual y endpoint de total por período.
+  \item \textbf{Gastos:} CRUD con filtros (mes, categoría, recientes), reversión de presupuesto al eliminar.
+  \item \textbf{Dashboard:} Resumen financiero mensual, gráfica de gastos por categoría, estado de presupuestos.
+  \item \textbf{Triggers MySQL:} \texttt{actualizar\_presupuesto\_gasto} y \texttt{verificar\_presupuesto\_excedido}.
+\end{itemize}
+
+\section{Versión 1.0.0 (Enero 2026)}
+
+\subsection*{Infraestructura Base}
+
+\begin{itemize}[leftmargin=1.5cm]
+  \item Servidor Express con estructura MVC por capas.
+  \item Conexión MySQL con pool de conexiones (\texttt{mysql2/promise}).
+  \item Sistema de autenticación JWT completo: register, login, logout, verify, change-password.
+  \item Creación automática de 10 categorías predefinidas al registrar usuario.
+  \item Esquema SQL completo (\texttt{database/schema.sql}) con 10 tablas e integridad referencial.
+  \item Variables de entorno con \texttt{dotenv}, \texttt{.env.example} documentado.
+  \item Middleware de validación centralizado con \texttt{express-validator}.
+  \item Colección Postman con scripts de test automáticos.
+\end{itemize}
+
+\section{Roadmap Futuro}
+
+\begin{longtable}{>{\centering}p{2cm} p{11.5cm}}
+  \caption{Mejoras planificadas para fases futuras}
+  \label{tab:roadmap} \\
+  \toprule
+  \textbf{Versión} & \textbf{Característica Planificada} \\
+  \midrule
+  5.0.0 & Integración con plataforma web React (endpoints ya compatibles) \\
+  5.0.0 & Migración de rate limiting a Redis para soporte multi-instancia \\
+  5.1.0 & Notificaciones push mediante Firebase Cloud Messaging \\
+  5.1.0 & Detección automática de fecha en tickets OCR \\
+  5.2.0 & Exportación de reportes financieros en formato PDF y Excel \\
+  5.2.0 & Soporte de múltiples monedas con tasas de cambio en tiempo real \\
+  6.0.0 & Despliegue en contenedores Docker con docker-compose \\
+  \bottomrule
+\end{longtable}

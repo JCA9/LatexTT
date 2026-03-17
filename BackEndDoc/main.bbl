@@ -1,0 +1,403 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\datalist[entry]{none/global//global/global}
+  \entry{nodejs_docs}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=O}{%
+         family={{OpenJS Foundation}},
+         familyi={O\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{O2}
+    \strng{fullhash}{O2}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{howpublished}{\url{https://nodejs.org/en/docs/}}
+    \field{note}{Consultado: marzo 2026}
+    \field{title}{{Node.js Documentation}}
+    \field{year}{2024}
+  \endentry
+
+  \entry{nodejs_event_loop}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=O}{%
+         family={{OpenJS Foundation}},
+         familyi={O\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{O2}
+    \strng{fullhash}{O2}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+  \field{howpublished}{\url{https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick}}
+    \field{note}{Consultado: marzo 2026}
+    \field{title}{{The Node.js Event Loop, Timers, and process.nextTick()}}
+    \field{year}{2024}
+  \endentry
+
+  \entry{express_docs}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=S}{%
+         family={{StrongLoop, Inc. / OpenJS Foundation}},
+         familyi={S\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{S1}
+    \strng{fullhash}{S1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{howpublished}{\url{https://expressjs.com/en/4x/api.html}}
+    \field{note}{Consultado: marzo 2026}
+    \field{title}{{Express.js 4.x API Reference}}
+    \field{year}{2024}
+  \endentry
+
+  \entry{mysql_docs}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=O}{%
+         family={{Oracle Corporation}},
+         familyi={O\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{O3}
+    \strng{fullhash}{O3}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{howpublished}{\url{https://dev.mysql.com/doc/refman/8.0/en/}}
+    \field{note}{Consultado: marzo 2026}
+    \field{title}{{MySQL 8.0 Reference Manual}}
+    \field{year}{2024}
+  \endentry
+
+  \entry{mysql_innodb}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=O}{%
+         family={{Oracle Corporation}},
+         familyi={O\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{O3}
+    \strng{fullhash}{O3}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+  \field{howpublished}{\url{https://dev.mysql.com/doc/refman/8.0/en/innodb-storage-engine.html}}
+    \field{note}{Consultado: marzo 2026}
+    \field{title}{{MySQL 8.0 Reference Manual: InnoDB Storage Engine}}
+    \field{year}{2024}
+  \endentry
+
+  \entry{mysql2_npm}{misc}{}
+    \name{author}{2}{}{%
+      {{hash=SA}{%
+         family={Sidorenko},
+         familyi={S\bibinitperiod},
+         given={Andrey},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=c}{%
+         family={contributors},
+         familyi={c\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{SAc1}
+    \strng{fullhash}{SAc1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{howpublished}{\url{https://www.npmjs.com/package/mysql2}}
+    \field{note}{npm package v3.9.2. Consultado: marzo 2026}
+    \field{title}{{mysql2: Fast MySQL driver for Node.js}}
+    \field{year}{2024}
+  \endentry
+
+  \entry{bcrypt_npm}{misc}{}
+    \name{author}{2}{}{%
+      {{hash=MN}{%
+         family={Mates},
+         familyi={M\bibinitperiod},
+         given={Nicholas},
+         giveni={N\bibinitperiod},
+      }}%
+      {{hash=c}{%
+         family={contributors},
+         familyi={c\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{MNc1}
+    \strng{fullhash}{MNc1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{howpublished}{\url{https://www.npmjs.com/package/bcrypt}}
+    \field{note}{npm package v5.1.1. Consultado: marzo 2026}
+    \field{title}{{bcrypt: A bcrypt library for NodeJS}}
+    \field{year}{2024}
+  \endentry
+
+  \entry{jwt_rfc}{report}{}
+    \name{author}{3}{}{%
+      {{hash=JM}{%
+         family={Jones},
+         familyi={J\bibinitperiod},
+         given={M.},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=BJ}{%
+         family={Bradley},
+         familyi={B\bibinitperiod},
+         given={J.},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=SN}{%
+         family={Sakimura},
+         familyi={S\bibinitperiod},
+         given={N.},
+         giveni={N\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{JM+1}
+    \strng{fullhash}{JMBJSN1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{howpublished}{\url{https://datatracker.ietf.org/doc/html/rfc7519}}
+    \field{number}{7519}
+    \field{title}{{JSON Web Token (JWT)}}
+    \list{institution}{1}{%
+      {Internet Engineering Task Force (IETF)}%
+    }
+    \field{type}{RFC}
+    \field{month}{05}
+    \field{year}{2015}
+  \endentry
+
+  \entry{dotenv_npm}{misc}{}
+    \name{author}{2}{}{%
+      {{hash=MS}{%
+         family={Mott},
+         familyi={M\bibinitperiod},
+         given={Scott},
+         giveni={S\bibinitperiod},
+      }}%
+      {{hash=c}{%
+         family={contributors},
+         familyi={c\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{MSc1}
+    \strng{fullhash}{MSc1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{howpublished}{\url{https://www.npmjs.com/package/dotenv}}
+    \field{note}{npm package v16.4.5. Consultado: marzo 2026}
+    \field{title}{{dotenv: Loads environment variables from .env file}}
+    \field{year}{2024}
+  \endentry
+
+  \entry{express_validator}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=e}{%
+         family={{express-validator contributors}},
+         familyi={e\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{e1}
+    \strng{fullhash}{e1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{howpublished}{\url{https://express-validator.github.io/docs/}}
+    \field{note}{Consultado: marzo 2026}
+    \field{title}{{express-validator: An express.js middleware for
+  validator.js}}
+    \field{year}{2024}
+  \endentry
+
+  \entry{jest_docs}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=M}{%
+         family={{Meta Platforms, Inc.}},
+         familyi={M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{M1}
+    \strng{fullhash}{M1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{howpublished}{\url{https://jestjs.io/docs/getting-started}}
+    \field{note}{Consultado: marzo 2026}
+    \field{title}{{Jest: Delightful JavaScript Testing Framework}}
+    \field{year}{2024}
+  \endentry
+
+  \entry{supertest_npm}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=v}{%
+         family={{visionmedia and contributors}},
+         familyi={v\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{v1}
+    \strng{fullhash}{v1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{howpublished}{\url{https://www.npmjs.com/package/supertest}}
+    \field{note}{npm package v6.3.4. Consultado: marzo 2026}
+    \field{title}{{SuperTest: HTTP assertions made easy via superagent}}
+    \field{year}{2024}
+  \endentry
+
+  \entry{opencv_docs}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=O}{%
+         family={{OpenCV team}},
+         familyi={O\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{O1}
+    \strng{fullhash}{O1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+  \field{howpublished}{\url{https://docs.opencv.org/4.x/d2/d96/tutorial_py_table_of_contents_imgproc.html}}
+    \field{note}{Consultado: marzo 2026}
+    \field{title}{{OpenCV Documentation: Image Processing in OpenCV}}
+    \field{year}{2024}
+  \endentry
+
+  \entry{tesseract_docs}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=G}{%
+         family={{Google LLC and Tesseract contributors}},
+         familyi={G\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{G1}
+    \strng{fullhash}{G1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{howpublished}{\url{https://tesseract-ocr.github.io/tessdoc/}}
+    \field{note}{Consultado: marzo 2026}
+    \field{title}{{Tesseract OCR Documentation}}
+    \field{year}{2024}
+  \endentry
+
+  \entry{numpy_docs}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=N}{%
+         family={{NumPy contributors}},
+         familyi={N\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{N1}
+    \strng{fullhash}{N1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{howpublished}{\url{https://numpy.org/doc/stable/}}
+    \field{note}{Consultado: marzo 2026}
+    \field{title}{{NumPy Documentation}}
+    \field{year}{2024}
+  \endentry
+
+  \entry{martin_clean_arch}{book}{}
+    \name{author}{1}{}{%
+      {{hash=MRC}{%
+         family={Martin},
+         familyi={M\bibinitperiod},
+         given={Robert\bibnamedelima C.},
+         giveni={R\bibinitperiod\bibinitdelim C\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Prentice Hall}%
+    }
+    \strng{namehash}{MRC1}
+    \strng{fullhash}{MRC1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{isbn}{9780134494166}
+    \field{title}{Clean Architecture: A Craftsman's Guide to Software Structure
+  and Design}
+    \field{year}{2017}
+  \endentry
+
+  \entry{owasp_xss}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=O}{%
+         family={{OWASP Foundation}},
+         familyi={O\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{O4}
+    \strng{fullhash}{O4}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{howpublished}{\url{https://owasp.org/www-community/attacks/xss/}}
+    \field{note}{Consultado: marzo 2026}
+    \field{title}{{Cross Site Scripting (XSS)}}
+    \field{year}{2021}
+  \endentry
+
+  \entry{owasp_brute_force}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=O}{%
+         family={{OWASP Foundation}},
+         familyi={O\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{O4}
+    \strng{fullhash}{O4}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+  \field{howpublished}{\url{https://owasp.org/www-community/controls/Blocking_Brute_Force_Attacks}}
+    \field{note}{Consultado: marzo 2026}
+    \field{title}{{Blocking Brute Force Attacks}}
+    \field{year}{2021}
+  \endentry
+
+  \entry{owasp_headers}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=O}{%
+         family={{OWASP Foundation}},
+         familyi={O\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{O4}
+    \strng{fullhash}{O4}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{howpublished}{\url{https://owasp.org/www-project-secure-headers/}}
+    \field{note}{Consultado: marzo 2026}
+    \field{title}{{OWASP Secure Headers Project}}
+    \field{year}{2023}
+  \endentry
+
+  \entry{owasp_sqli}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=O}{%
+         family={{OWASP Foundation}},
+         familyi={O\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{O4}
+    \strng{fullhash}{O4}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+  \field{howpublished}{\url{https://owasp.org/www-community/attacks/SQL_Injection}}
+    \field{note}{Consultado: marzo 2026}
+    \field{title}{{SQL Injection}}
+    \field{year}{2021}
+  \endentry
+\enddatalist
+\endinput

@@ -1,0 +1,154 @@
+% integracion_frontend.tex — Capítulo 8: Integración con Frontend
+\chapter{Integración con Frontend}
+
+\section{Contexto de Integración}
+
+El backend FINARA es consumido actualmente por la \textbf{app móvil Flutter} desarrollada en paralelo por el equipo TT 2026-A062. La plataforma web React está planificada para una fase futura. Ambos clientes consumen la misma API REST mediante solicitudes HTTP estándar con JSON.
+
+\section{Configuración CORS}
+
+El middleware CORS del backend permite solicitudes desde los orígenes configurados mediante la variable de entorno \texttt{ALLOWED\_ORIGINS}. Durante desarrollo, se acepta cualquier origen (\texttt{*}) para facilitar las pruebas locales.
+
+\begin{lstlisting}[style=javascript, caption={Configuración CORS en app.js}]
+app.use(cors({
+  origin: process.env.ALLOWED_ORIGINS
+    ? process.env.ALLOWED_ORIGINS.split(',')
+    : '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+\end{lstlisting}
+
+\begin{lstlisting}[style=bash, caption={Variable de entorno para producción}]
+# .env (produccion)
+ALLOWED_ORIGINS=https://finara.app,app://finara
+\end{lstlisting}
+
+\section{Consumo desde la App Móvil Flutter}
+
+La app Flutter implementa un servicio \texttt{ApiService} que encapsula todas las llamadas al backend. Los ejemplos siguientes muestran los patrones de integración más representativos.
+
+\subsection{Autenticación y Almacenamiento del Token}
+
+\begin{lstlisting}[style=bash, caption={Login y almacenamiento del JWT en Flutter (Dart)}]
+// En Flutter (Dart) - auth_service.dart
+Future<LoginResponse> login(String email, String password) async {
+  final response = await http.post(
+    Uri.parse('http://192.168.1.x:3000/api/auth/login'),
+    headers: {'Content-Type': 'application/json'},
+    body: jsonEncode({'email': email, 'password': password}),
+  );
+
+  if (response.statusCode == 200) {
+    final data = jsonDecode(response.body);
+    final token = data['data']['token'];
+
+    // Almacenar token de forma segura
+    await FlutterSecureStorage().write(key: 'jwt_token', value: token);
+
+    return LoginResponse.fromJson(data['data']);
+  }
+  throw ApiException(jsonDecode(response.body)['error']);
+}
+\end{lstlisting}
+
+\subsection{Request Autenticado Estándar}
+
+\begin{lstlisting}[style=bash, caption={Patrón de request autenticado en Flutter}]
+// Obtener gastos del mes actual
+Future<List<Expense>> getExpenses({int? month, int? year}) async {
+  final token = await FlutterSecureStorage().read(key: 'jwt_token');
+  final now   = DateTime.now();
+
+  final uri = Uri.parse(
+    'http://192.168.1.x:3000/api/expenses'
+    '?month=${month ?? now.month}&year=${year ?? now.year}'
+  );
+
+  final response = await http.get(uri, headers: {
+    'Authorization': 'Bearer $token',
+    'Content-Type':  'application/json',
+  });
+
+  if (response.statusCode == 200) {
+    final data = jsonDecode(response.body)['data'] as List;
+    return data.map((e) => Expense.fromJson(e)).toList();
+  }
+  throw ApiException(jsonDecode(response.body)['error']);
+}
+\end{lstlisting}
+
+\subsection{Subida de Imagen para OCR}
+
+\begin{lstlisting}[style=bash, caption={Envío de imagen de ticket para escaneo OCR}]
+// ticket_service.dart
+Future<TicketScanResult> scanTicket(File imageFile) async {
+  final token   = await FlutterSecureStorage().read(key: 'jwt_token');
+  final request = http.MultipartRequest(
+    'POST',
+    Uri.parse('http://192.168.1.x:3000/api/tickets/scan'),
+  );
+
+  request.headers['Authorization'] = 'Bearer $token';
+  request.files.add(
+    await http.MultipartFile.fromPath('images', imageFile.path)
+  );
+
+  final streamedResponse = await request.send();
+  final response         = await http.Response.fromStream(streamedResponse);
+
+  if (response.statusCode == 201) {
+    return TicketScanResult.fromJson(
+      jsonDecode(response.body)['data']
+    );
+  }
+  throw ApiException(jsonDecode(response.body)['error']);
+}
+\end{lstlisting}
+
+\section{Manejo de Errores desde el Cliente}
+
+La Tabla \ref{tab:http-errors} describe cómo la app Flutter interpreta cada código de respuesta del backend.
+
+\begin{longtable}{>{\centering}p{1.5cm} p{4cm} p{7cm}}
+  \caption{Códigos HTTP de la API y su interpretación en Flutter}
+  \label{tab:http-errors} \\
+  \toprule
+  \textbf{Código} & \textbf{Significado} & \textbf{Acción recomendada en Flutter} \\
+  \midrule
+  \endfirsthead
+  \toprule
+  \textbf{Código} & \textbf{Significado} & \textbf{Acción recomendada en Flutter} \\
+  \midrule
+  \endhead
+  200 & Éxito                    & Procesar \texttt{data} del JSON \\
+  201 & Recurso creado           & Actualizar lista, navegar a detalle \\
+  400 & Datos inválidos          & Mostrar \texttt{error} del JSON en el formulario \\
+  401 & No autenticado / Token expirado & Borrar token, redirigir a Login \\
+  404 & Recurso no encontrado    & Mostrar mensaje ``No encontrado'' \\
+  429 & Demasiadas solicitudes   & Esperar y reintentar (leer \texttt{Retry-After}) \\
+  500 & Error del servidor       & Mostrar mensaje genérico de error \\
+  \bottomrule
+\end{longtable}
+
+\section{Formato de Fechas}
+
+El backend retorna fechas en formato ISO 8601 (\texttt{YYYY-MM-DDTHH:mm:ss.sssZ}) y acepta fechas en formato \texttt{YYYY-MM-DD} en los request bodies. La app Flutter utiliza el paquete \texttt{intl} para formatear estas fechas según la localidad del usuario (es\_MX).
+
+\section{URL Base de la API}
+
+\begin{longtable}{p{3cm} p{10.5cm}}
+  \caption{URL base según entorno}
+  \label{tab:base-url} \\
+  \toprule
+  \textbf{Entorno} & \textbf{URL Base} \\
+  \midrule
+  Desarrollo local  & \texttt{http://10.0.2.2:3000/api} (emulador Android $\to$ localhost) \\
+  Dispositivo físico & \texttt{http://192.168.x.x:3000/api} (IP local de la PC en la red WiFi) \\
+  Producción        & \texttt{https://api.finara.app/api} (dominio de producción) \\
+  \bottomrule
+\end{longtable}
+
+\begin{notaTecnica}
+  En el emulador Android, \texttt{localhost} del dispositivo es diferente al \texttt{localhost} de la PC anfitriona. Para acceder al backend corriendo en la PC, el emulador usa la IP especial \texttt{10.0.2.2}.
+\end{notaTecnica}

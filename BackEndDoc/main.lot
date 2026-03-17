@@ -1,0 +1,30 @@
+\babel@toc {spanish}{}\relax 
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {1.1}{\ignorespaces Audiencias del documento y uso esperado}}{2}{table.1.1}%
+\contentsline {table}{\numberline {1.2}{\ignorespaces Versiones del backend FINARA}}{4}{table.1.2}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {2.1}{\ignorespaces Middleware Express configurados en app.js}}{5}{table.2.1}%
+\contentsline {table}{\numberline {2.2}{\ignorespaces Dependencias de producción del backend FINARA}}{7}{table.2.2}%
+\contentsline {table}{\numberline {2.3}{\ignorespaces Dependencias de desarrollo del backend FINARA}}{7}{table.2.3}%
+\contentsline {table}{\numberline {2.4}{\ignorespaces Dependencias Python del módulo OCR}}{9}{table.2.4}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {3.1}{\ignorespaces Responsabilidad de cada controlador}}{13}{table.3.1}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {4.1}{\ignorespaces Resumen de todos los endpoints del backend FINARA}}{19}{table.4.1}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {5.1}{\ignorespaces Tablas de la base de datos finara\_db}}{32}{table.5.1}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces Columnas de la tabla Usuarios}}{33}{table.5.2}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {6.1}{\ignorespaces Configuración de rate limiting por contexto}}{43}{table.6.1}%
+\contentsline {table}{\numberline {6.2}{\ignorespaces Resumen de medidas de seguridad implementadas}}{45}{table.6.2}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {7.1}{\ignorespaces Comparativa de tecnologías backend consideradas}}{46}{table.7.1}%
+\contentsline {table}{\numberline {7.2}{\ignorespaces Comparativa de frameworks Node.js}}{47}{table.7.2}%
+\contentsline {table}{\numberline {7.3}{\ignorespaces Comparativa de bases de datos consideradas}}{47}{table.7.3}%
+\contentsline {table}{\numberline {7.4}{\ignorespaces Comparativa de algoritmos de hash de contraseñas}}{48}{table.7.4}%
+\contentsline {table}{\numberline {7.5}{\ignorespaces Justificación de Python para el módulo OCR}}{49}{table.7.5}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {8.1}{\ignorespaces Códigos HTTP de la API y su interpretación en Flutter}}{53}{table.8.1}%
+\contentsline {table}{\numberline {8.2}{\ignorespaces URL base según entorno}}{53}{table.8.2}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {9.1}{\ignorespaces Mejoras planificadas para fases futuras}}{58}{table.9.1}%

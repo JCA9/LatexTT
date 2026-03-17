@@ -1,0 +1,219 @@
+% arquitectura_backend.tex — Capítulo 3: Arquitectura del Backend
+\chapter{Arquitectura del Backend}
+
+\section{Patrón Arquitectónico}
+
+El backend de FINARA implementa una \textbf{Arquitectura por Capas} inspirada en el patrón MVC (Model-View-Controller), adaptada al contexto de una API REST donde no existe una capa de vistas. Las tres capas del sistema son:
+
+\begin{enumerate}[leftmargin=1.5cm]
+  \item \textbf{Capa de Enrutamiento (\texttt{routes/})}: recibe las solicitudes HTTP, aplica middleware de validación y delega al controlador correspondiente. No contiene lógica de negocio.
+  \item \textbf{Capa de Controladores (\texttt{controllers/})}: orquesta la lógica de negocio. Consulta la base de datos, procesa los datos y construye la respuesta JSON.
+  \item \textbf{Capa de Datos (\texttt{config/database.js})}: gestiona el pool de conexiones MySQL. Los controladores interactúan directamente con el pool mediante \textit{prepared statements}.
+\end{enumerate}
+
+Esta estructura fue elegida por su sencillez y adecuación al tamaño del proyecto. La adición de una capa de servicios o repositorios (\textit{Clean Architecture}) añadiría complejidad sin beneficio significativo para un equipo de dos personas \cite{martin_clean_arch}.
+
+\section{Estructura de Carpetas Completa}
+
+\begin{lstlisting}[style=bash, caption={Árbol de directorios del backend FINARA}, label={lst:tree}]
+finara-backend/
+  server.js                       # Entry point: carga .env, verifica BD, levanta Express
+  .env                            # Variables de entorno (no versionado en Git)
+  .env.example                    # Plantilla de variables de entorno
+  package.json                    # Dependencias y scripts npm
+  README.md                       # Guia de setup y ejecucion
+  database/
+    schema.sql                    # DDL completo: 10 tablas + 2 triggers
+  ocr/
+    LecturaTickets_v3.py          # Script OCR: pipeline adaptativo
+    categorias.json               # 9 categorias con 200+ palabras clave
+    tiendas.json                  # 35 cadenas comerciales con variantes OCR
+  src/
+    app.js                        # Configuracion Express: middleware, rutas, errores
+    config/
+      database.js                 # Pool MySQL con keepAlive y reconexion automatica
+      upload.js                   # Configuracion Multer (tipo, tamanio, destino)
+    controllers/
+      authController.js           # Register, login, logout, verify, change-password
+      categoryController.js       # CRUD categorias
+      budgetController.js         # CRUD presupuestos + estado de uso
+      incomeController.js         # CRUD ingresos + total mensual
+      expenseController.js        # CRUD gastos + filtros + reversion en presupuesto
+      ticketController.js         # OCR scan + CRUD tickets + productos
+      debtController.js           # CRUD deudas + registro de pagos
+      alertController.js          # CRUD alertas + config notificaciones
+      dashboardController.js      # Resumen financiero + datos para graficas
+      userController.js           # Perfil usuario + config inicial (onboarding)
+    middleware/
+      auth.js                     # Verificacion JWT en rutas protegidas
+      validator.js                # Centralizacion de errores express-validator
+      rateLimiter.js              # Rate limiting por contexto (auth, ocr, api)
+      logger.js                   # Log coloreado de requests con tiempo de respuesta
+      sanitizer.js                # Escapado HTML en todos los inputs del body
+    routes/
+      auth.js                     # /api/auth/*
+      categories.js               # /api/categories/*
+      budgets.js                  # /api/budgets/*
+      incomes.js                  # /api/incomes/*
+      expenses.js                 # /api/expenses/*
+      tickets.js                  # /api/tickets/*
+      debts.js                    # /api/debts/*
+      alerts.js                   # /api/alerts/*
+      dashboard.js                # /api/dashboard/*
+      users.js                    # /api/users/*
+    services/
+      ocrService.js               # Invocacion del script Python + parse de JSON stdout
+    utils/
+      helpers.js                  # successResponse, errorResponse, suggestCategory, etc.
+  tests/
+    auth.test.js                  # 8 casos: register, login, verify
+    debts.test.js                 # 9 casos: CRUD deudas, pago, liquidacion
+    alerts.test.js                # 10 casos: alertas, config notificaciones
+    helpers.test.js               # 12 casos: funciones utilitarias
+    middleware.test.js            # 9 casos: sanitizer, auth JWT
+  uploads/                        # Imagenes de tickets (creada automaticamente)
+\end{lstlisting}
+
+\section{Descripción de Módulos Principales}
+
+\begin{longtable}{>{\ttfamily}p{4.5cm} p{9cm}}
+  \caption{Responsabilidad de cada controlador}
+  \label{tab:controllers} \\
+  \toprule
+  \textbf{Controlador} & \textbf{Responsabilidad} \\
+  \midrule
+  \endfirsthead
+  \toprule
+  \textbf{Controlador} & \textbf{Responsabilidad} \\
+  \midrule
+  \endhead
+  authController      & Registro con hash bcrypt, login con comparación segura, generación/verificación JWT, cambio de contraseña \\
+  \addlinespace
+  categoryController  & CRUD de categorías predefinidas y personalizadas; bloqueo de eliminación si tienen gastos vinculados \\
+  \addlinespace
+  budgetController    & CRUD de presupuestos con cálculo de porcentaje utilizado; consulta por categoría \\
+  \addlinespace
+  incomeController    & CRUD de ingresos con filtro mensual y cálculo de total por período \\
+  \addlinespace
+  expenseController   & CRUD de gastos con reversión automática de \texttt{monto\_utilizado} al eliminar; filtros por mes, categoría y recientes \\
+  \addlinespace
+  ticketController    & Recibe imágenes multipart, invoca ocrService, crea Ticket + Productos\_Tickets + Gasto de forma atómica \\
+  \addlinespace
+  debtController      & CRUD de deudas con cálculo de \texttt{porcentaje\_pagado}; registro de pagos con avance de fecha y detección de liquidación \\
+  \addlinespace
+  alertController     & CRUD de alertas; marcar como leída (individual y masiva); CRUD de config de notificaciones \\
+  \addlinespace
+  dashboardController & Resumen financiero mensual (ingresos, gastos, balance, top categorías); datos para gráficas de gastos y presupuestos \\
+  \addlinespace
+  userController      & Perfil de usuario; actualización de flags de onboarding; configuración inicial (modo, distribución, ingreso base) \\
+  \bottomrule
+\end{longtable}
+
+\section{Flujo de una Solicitud HTTP}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+    node distance=0.7cm,
+    box/.style={rectangle, rounded corners=3pt, draw=tableheadbg, fill=blue!5,
+                minimum width=3.2cm, minimum height=0.8cm,
+                font=\small, align=center},
+    mid/.style={box, fill=orange!10},
+    db/.style={cylinder, shape border rotate=90, draw=green!50!black, fill=green!5,
+               minimum width=2cm, minimum height=0.7cm, align=center, font=\small},
+    err/.style={box, fill=red!10},
+    arr/.style={-Stealth, thick, tableheadbg}
+  ]
+    \node[box] (req)    {Request HTTP\\(Flutter / Postman)};
+    \node[box, below=of req] (cors)   {CORS + Headers\\de Seguridad};
+    \node[box, below=of cors] (logger) {Logger\\(método, ruta, user)};
+    \node[box, below=of logger] (san)   {Sanitizer\\(escapado HTML)};
+    \node[box, below=of san] (rate)   {Rate Limiter\\(auth / ocr / api)};
+    \node[mid, below=of rate]  (route)  {Router\\(routes/*.js)};
+    \node[mid, below=of route] (auth)   {Auth Middleware\\(JWT verify)};
+    \node[mid, below=of auth]  (val)    {express-validator\\(validación body)};
+    \node[mid, below=of val]   (ctrl)   {Controller\\(lógica de negocio)};
+    \node[db,  below=of ctrl]  (mysql)  {MySQL Pool\\(prepared stmt)};
+    \node[box, below=of mysql] (res)    {JSON Response\\(success/error)};
+
+    \draw[arr] (req)    -- (cors);
+    \draw[arr] (cors)   -- (logger);
+    \draw[arr] (logger) -- (san);
+    \draw[arr] (san)    -- (rate);
+    \draw[arr] (rate)   -- (route);
+    \draw[arr] (route)  -- (auth);
+    \draw[arr] (auth)   -- (val);
+    \draw[arr] (val)    -- (ctrl);
+    \draw[arr] (ctrl)   -- (mysql);
+    \draw[arr] (mysql)  -- (res);
+
+    % Error paths
+    \node[err, right=2cm of auth] (err401) {401\\Unauthorized};
+    \node[err, right=2cm of val]  (err400) {400\\Bad Request};
+    \node[err, right=2cm of rate] (err429) {429\\Too Many Req.};
+
+    \draw[arr, red!70, dashed] (auth) -- (err401);
+    \draw[arr, red!70, dashed] (val)  -- (err400);
+    \draw[arr, red!70, dashed] (rate) -- (err429);
+  \end{tikzpicture}
+  \caption{Flujo de procesamiento de una solicitud HTTP en FINARA Backend}
+  \label{fig:request-flow}
+\end{figure}
+
+\section{Formato Estándar de Respuestas}
+
+Todos los endpoints de la API retornan JSON con la misma estructura, diferenciando entre éxito y error mediante el campo \texttt{success}.
+
+\begin{lstlisting}[style=json, caption={Formatos de respuesta estándar de la API}, label={lst:response-format}]
+// Respuesta exitosa
+{
+  "success": true,
+  "data": { ... }   // objeto o arreglo segun el endpoint
+}
+
+// Respuesta de error
+{
+  "success": false,
+  "error": "Mensaje descriptivo del error"
+}
+
+// Error de validacion (400)
+{
+  "success": false,
+  "error": "El primer mensaje de error",
+  "errors": [
+    { "field": "email", "msg": "Email invalido" },
+    { "field": "password", "msg": "Minimo 6 caracteres" }
+  ]
+}
+\end{lstlisting}
+
+\section{Flujo Especial: Escaneo OCR de Ticket}
+
+El flujo del endpoint \texttt{POST /api/tickets/scan} involucra componentes adicionales:
+
+\begin{lstlisting}[style=javascript, caption={Flujo completo de escaneo de ticket con OCR}, label={lst:ocr-flow}]
+// 1. Multer recibe las imagenes (multipart/form-data)
+//    Valida tipo (image/*) y tamanio (max 10MB)
+//    Guarda en: uploads/<uuid>.jpg
+
+// 2. ticketController.scan() invoca ocrService
+const ocrResult = await processMultipleImages(uploadedPaths);
+
+// 3. ocrService.js lanza el proceso Python
+const proc = spawn('python3', ['ocr/LecturaTickets_v3.py', imagePath]);
+// El script Python imprime JSON puro por stdout
+// Los logs de debug van por stderr (invisibles para Node.js)
+
+// 4. Python retorna JSON estructurado:
+// { success, store_name, total, confidence, products: [...] }
+
+// 5. ticketController inserta atomicamente:
+//    INSERT INTO Tickets (...)
+//    INSERT INTO Productos_Tickets (...)  -- uno por producto
+//    INSERT INTO Gastos (...)             -- gasto automatico vinculado
+
+// 6. Los triggers MySQL se disparan automaticamente:
+//    - actualizar_presupuesto_gasto: actualiza monto_utilizado
+//    - verificar_presupuesto_excedido: crea Alerta si >= 90%
+\end{lstlisting}

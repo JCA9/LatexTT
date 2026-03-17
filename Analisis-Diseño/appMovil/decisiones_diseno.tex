@@ -1,0 +1,104 @@
+\subsection{Decisiones de Diseno Tecnico}
+
+% Ajustes locales para mejorar ajuste de tablas
+\setlength{\tabcolsep}{4pt}
+
+\subsubsection{Por que Flutter}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4.2cm}|X|}
+\hline
+\textbf{Criterio} & \textbf{Justificación} \\
+\hline
+Desarrollo multiplataforma & Un código base para Android e iOS reduce tiempo 40-50\%. Expansión a iOS planeada en v2.0 \\
+\hline
+Hot Reload & Velocidad de desarrollo aumenta significativamente según estudios de Google \cite{flutter_performance} \\
+\hline
+Material Design nativo & No requiere librerías adicionales, garantiza consistencia visual \\
+\hline
+Curva de aprendizaje & Equipo con experiencia en Java/Kotlin, transición a Dart fue fluida \\
+\hline
+Rendimiento & Compilación a código nativo ARM garantiza 60 FPS \\
+\hline
+Comunidad & 160,000+ paquetes en pub.dev \\
+\hline
+\end{tabularx}
+\caption{Justificación de Flutter}
+\end{table}
+
+\textbf{Alternativas descartadas:}
+\begin{itemize}
+    \item \textbf{React Native:} Menor rendimiento en animaciones complejas
+    \item \textbf{Nativo (Kotlin):} Duplicar esfuerzo para iOS
+    \item \textbf{Xamarin:} Menor soporte de comunidad
+\end{itemize}
+
+\subsubsection{Por que Feature-First Architecture}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4.2cm}|X|}
+\hline
+\textbf{Ventaja} & \textbf{Impacto en FINARA} \\
+\hline
+Escalabilidad modular & Nuevos features (ej: Inversiones) se agregan sin tocar código existente \\
+\hline
+Desarrollo paralelo & 2 desarrolladores trabajando sin merge conflicts \\
+\hline
+Mantenibilidad & Bug en Scan no afecta Budgets, aislamiento claro \\
+\hline
+Reusabilidad & Core compartido evita duplicación \\
+\hline
+Testing & Cada feature con tests unitarios aislados \\
+\hline
+\end{tabularx}
+\caption{Beneficios de Feature-First}
+\end{table}
+
+\subsubsection{Por que fl\_chart para graficas}
+
+\begin{table}[H]
+\centering
+\scriptsize
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}p{1.6cm}|>{\centering\arraybackslash}p{1.6cm}|>{\centering\arraybackslash}p{1.6cm}|>{\centering\arraybackslash}p{1.2cm}|}
+\hline
+\textbf{Librería} & \textbf{Rendimiento} & \textbf{Personalización} & \textbf{Docs}\\
+\hline
+fl\_chart & Excelente & Alta & Buena\\
+syncfusion\_charts & Bueno & Media & Excelente\\
+charts\_flutter & Bueno & Baja & Regular\\
+graphic & Excelente & Alta & Escasa\\
+\hline
+\end{tabularx}
+\caption{Comparación de librerías de gráficas}
+\end{table}
+
+\textbf{Razones de selección:}
+\begin{enumerate}
+    \item Rendimiento: 60 FPS en gráficas animadas
+    \item Personalización completa de colores, estilos, tooltips
+    \item Documentación clara con ejemplos
+    \item Comunidad activa (3,000+ likes en pub.dev)
+    \item Soporte para Pie, Bar, Line Charts
+    \item MIT License (libre de costos)
+\end{enumerate}
+
+\subsubsection{Por que SharedPreferences}
+
+\textbf{Ventajas para prototipo:}
+\begin{itemize}
+    \item Simplicidad de implementación
+    \item Suficiencia para datos de sesión (email, token, config)
+    \item Velocidad de acceso
+    \item Sin overhead de configuración
+\end{itemize}
+
+\textbf{Limitaciones reconocidas:}
+\begin{itemize}
+    \item No escala para datos complejos
+    \item Sin queries relacionales
+    \item \textbf{Migración planeada:} SQLite en v2.0 para caché local
+\end{itemize}

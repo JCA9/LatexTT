@@ -1,0 +1,117 @@
+% decisiones_diseno.tex — Capítulo 7: Decisiones de Diseño Técnico
+\chapter{Decisiones de Diseño Técnico}
+
+\section{¿Por qué Node.js?}
+
+\begin{longtable}{p{3cm} >{\centering}p{2cm} >{\centering}p{2.5cm} >{\centering}p{2.5cm} >{\centering\arraybackslash}p{2.5cm}}
+  \caption{Comparativa de tecnologías backend consideradas}
+  \label{tab:nodejs-vs} \\
+  \toprule
+  \textbf{Criterio}       & \textbf{Node.js} & \textbf{Python/Django} & \textbf{Java/Spring} & \textbf{PHP/Laravel} \\
+  \midrule
+  Rendimiento I/O        & Excelente & Bueno     & Bueno     & Medio    \\
+  Modelo concurrente     & Async/Event Loop & WSGI sync & Threads  & Sync     \\
+  Curva aprendizaje      & Media     & Baja      & Alta      & Baja     \\
+  Tiempo de inicio       & Muy rápido & Medio    & Lento     & Rápido   \\
+  Ecosistema npm         & Enorme (2M+) & Grande & Grande   & Grande   \\
+  Mismo lenguaje frontend & Sí (JS)  & No        & No        & No       \\
+  Despliegue             & Simple    & Simple    & Complejo  & Simple   \\
+  Comunidad activa       & Muy alta  & Alta      & Alta      & Alta     \\
+  \bottomrule
+\end{longtable}
+
+\textbf{Justificación:} Node.js fue elegido por tres razones principales:
+
+\begin{enumerate}[leftmargin=1.5cm]
+  \item \textbf{Modelo de I/O no bloqueante:} Una API REST cuya carga de trabajo predominante son operaciones de entrada/salida (consultas a MySQL, llamadas al script Python OCR) se beneficia directamente del event loop de Node.js, que maneja miles de solicitudes concurrentes con un único hilo de ejecución \cite{nodejs_event_loop}.
+  \item \textbf{JavaScript en toda la pila:} El equipo de desarrollo ya tenía experiencia en JavaScript, eliminando la curva de aprendizaje de un lenguaje adicional. El conocimiento de JS/Dart (Flutter) se traslada parcialmente a Node.js.
+  \item \textbf{Velocidad de desarrollo:} La combinación Express.js + npm permite protototipar y desplegar endpoints en minutos, crítico para un proyecto de TT con tiempo limitado.
+\end{enumerate}
+
+\section{¿Por qué Express.js?}
+
+\begin{longtable}{p{3.5cm} >{\centering}p{2.2cm} >{\centering}p{2.2cm} >{\centering}p{2.2cm} >{\centering\arraybackslash}p{2.5cm}}
+  \caption{Comparativa de frameworks Node.js}
+  \label{tab:express-vs} \\
+  \toprule
+  \textbf{Criterio}         & \textbf{Express} & \textbf{Fastify} & \textbf{NestJS} & \textbf{Koa} \\
+  \midrule
+  Rendimiento                & Alto     & Muy alto  & Alto      & Alto    \\
+  Curva aprendizaje          & Baja     & Media     & Alta      & Baja    \\
+  Middleware ecosystem       & Enorme   & Creciente & Grande    & Pequeño \\
+  Estructura impuesta        & Ninguna  & Mínima    & Alta      & Ninguna \\
+  Popularidad / documentación & Máxima  & Alta      & Alta      & Media   \\
+  Madurez                    & 12+ años & 6 años    & 7 años    & 10 años \\
+  \bottomrule
+\end{longtable}
+
+Express fue preferido sobre NestJS por su bajo nivel de abstracción, que permite comprender completamente el flujo de cada solicitud, adecuado para un proyecto académico donde la claridad del código es prioritaria. Fastify ofrece mayor rendimiento, pero su ecosistema de middleware es más reducido.
+
+\section{¿Por qué MySQL?}
+
+\begin{longtable}{p{3.5cm} >{\centering}p{2.2cm} >{\centering}p{2.5cm} >{\centering\arraybackslash}p{3.5cm}}
+  \caption{Comparativa de bases de datos consideradas}
+  \label{tab:mysql-vs} \\
+  \toprule
+  \textbf{Criterio}      & \textbf{MySQL} & \textbf{PostgreSQL} & \textbf{MongoDB} \\
+  \midrule
+  Modelo de datos        & Relacional & Relacional  & Documental       \\
+  Integridad referencial & Sí (InnoDB) & Sí         & No nativa        \\
+  Transacciones ACID     & Sí         & Sí          & Parcial          \\
+  JSON nativo            & Sí (v8.0)  & Sí (jsonb)  & Sí (nativo)      \\
+  Triggers               & Sí         & Sí          & No               \\
+  Curva aprendizaje      & Baja       & Media       & Baja             \\
+  Herramientas GUI       & Workbench  & pgAdmin     & Compass          \\
+  Prevalencia en currícula IPN & Alta & Media      & Media            \\
+  \bottomrule
+\end{longtable}
+
+\textbf{Justificación:} Los datos financieros de FINARA presentan relaciones estructuradas y bien definidas (usuario $\to$ categorías $\to$ presupuestos $\to$ gastos), para las cuales el modelo relacional con integridad referencial garantiza consistencia imposible de lograr de forma nativa con MongoDB. Los triggers automáticos implementados (actualización de presupuesto al insertar un gasto) son una funcionalidad clave que solo está disponible en bases de datos relacionales \cite{mysql_docs}.
+
+\section{¿Por qué bcrypt?}
+
+\begin{longtable}{p{3cm} >{\centering}p{2.5cm} >{\centering}p{2.5cm} >{\centering\arraybackslash}p{4.5cm}}
+  \caption{Comparativa de algoritmos de hash de contraseñas}
+  \label{tab:bcrypt-vs} \\
+  \toprule
+  \textbf{Criterio}    & \textbf{bcrypt} & \textbf{argon2} & \textbf{PBKDF2} \\
+  \midrule
+  Resistencia GPU      & Alta       & Muy alta    & Media           \\
+  Memory-hard          & No         & Sí          & No              \\
+  Madurez              & 25+ años   & 7 años      & 20+ años        \\
+  Soporte npm          & Excelente  & Bueno       & Nativo (crypto) \\
+  Configuración        & Simple     & Compleja    & Simple          \\
+  \bottomrule
+\end{longtable}
+
+bcrypt fue elegido sobre argon2 por su madurez, amplia adopción en producción y el paquete npm \texttt{bcrypt} con bindings nativos bien mantenidos. Argon2 es teóricamente superior (memory-hard), pero su configuración correcta requiere mayor experiencia \cite{bcrypt_npm}.
+
+\section{¿Por qué Arquitectura por Capas y no Clean Architecture?}
+
+El backend sigue una arquitectura por capas (Routes $\to$ Controllers $\to$ Database) en lugar de Clean Architecture (Entities $\to$ Use Cases $\to$ Adapters $\to$ Framework) \cite{martin_clean_arch} por las siguientes razones:
+
+\begin{itemize}[leftmargin=1.5cm]
+  \item \textbf{Tamaño del equipo:} Con 2 desarrolladores, la sobrecarga de abstracciones de Clean Architecture (repositorios, casos de uso, interfaces) superaría su beneficio.
+  \item \textbf{Plazo académico:} El tiempo disponible en TT1 favorece velocidad de implementación sobre elegancia arquitectónica.
+  \item \textbf{Escala esperada:} FINARA no prevé ser ejecutada en múltiples instancias ni con lógica de dominio compleja que justifique el desacoplamiento extremo.
+\end{itemize}
+
+\section{Decisión de OCR: Python sobre Node.js}
+
+El procesamiento OCR se implementó en Python en lugar de buscar una librería equivalente en Node.js por las siguientes razones:
+
+\begin{longtable}{p{4cm} p{5.5cm} p{4.5cm}}
+  \caption{Justificación de Python para el módulo OCR}
+  \label{tab:ocr-decision} \\
+  \toprule
+  \textbf{Aspecto} & \textbf{Python + OpenCV} & \textbf{Node.js (alternativas)} \\
+  \midrule
+  Ecosistema de visión computacional & Maduro: OpenCV, numpy, scikit-image & Limitado: node-canvas, sharp \\
+  Wrapper Tesseract  & pytesseract (oficial) & node-tesseract-ocr (no oficial) \\
+  Mantenimiento      & OpenCV: 20+ años      & Alternativas: 2--4 años \\
+  Documentación      & Extensa y académica   & Escasa, en inglés solo \\
+  Rendimiento        & C++ bajo Python       & JavaScript puro \\
+  \bottomrule
+\end{longtable}
+
+La comunicación entre Node.js y Python se implementó mediante \texttt{child\_process.spawn}, con el script Python leyendo la imagen desde disco y retornando JSON puro por \texttt{stdout}. Los logs de debug se envían por \texttt{stderr} para no contaminar el canal de datos.

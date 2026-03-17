@@ -1,0 +1,234 @@
+\subsection{Arquitectura del Proyecto}
+
+% Ajustes locales para evitar desbordes visuales
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTleft}{0pt}
+\setlength{\LTright}{0pt}
+\lstset{basicstyle=\ttfamily\small, breaklines=true, breakatwhitespace=true, columns=fullflexible, keepspaces=true}
+
+\section{Patrón Arquitectónico: Feature-First}
+
+El proyecto implementa una arquitectura \textbf{Feature-First} (también conocida como arquitectura por módulos funcionales) \cite{feature_first_architecture}.
+
+\subsection{Definición}
+
+En una arquitectura Feature-First, el código se organiza por funcionalidades del negocio en lugar de por capas técnicas (MVC, MVVM) \cite{clean_architecture}. Cada feature contiene todas las capas necesarias (UI, lógica, datos) en un módulo autocontenido.
+
+\subsection{Justificación}
+
+\begin{enumerate}
+    \item \textbf{Escalabilidad modular:} Nuevos features se agregan sin modificar código existente
+    \item \textbf{Mantenibilidad:} Cambios en un feature no afectan otros (bajo acoplamiento)
+    \item \textbf{Claridad:} Fácil localizar funcionalidades específicas
+    \item \textbf{Desarrollo paralelo:} 2 desarrolladores pueden trabajar en features diferentes sin conflictos de merge
+    \item \textbf{Testing aislado:} Cada feature puede tener sus propios tests unitarios
+\end{enumerate}
+
+\section{Estructura de Carpetas Completa}
+
+\begin{lstlisting}[caption={Arbol del proyecto}]
+lib/
+|-- main.dart
+|-- core/
+|   |-- constants/
+|   |   `-- app_colors.dart
+|   `-- models/
+|       `-- finance_models.dart
+`-- features/                          # 11 modulos funcionales
+    |-- auth/
+    |   |-- screens/
+    |   |   |-- login_screen.dart
+    |   |   `-- register_screen.dart
+    |   `-- services/
+    |       `-- auth_service.dart
+    |-- onboarding/                    # Bienvenida
+    |   `-- screens/
+    |       |-- onboarding_screen.dart
+    |       |-- initial_setup_1_screen.dart
+    |       |-- initial_setup_2_screen.dart
+    |       `-- initial_setup_3_screen.dart
+    |-- home/                          # Dashboard
+    |   `-- screens/
+    |       |-- main_screen.dart
+    |       `-- home_screen.dart
+    |-- scan/                          # OCR
+    |   `-- screens/
+    |       |-- scan_ticket_screen.dart
+    |       |-- scan_preview_screen.dart
+    |       |-- scan_processing_screen.dart
+    |       |-- scan_result_screen.dart
+    |       `-- view_ticket_screen.dart
+    |-- transactions/                  # Transacciones
+    |   `-- screens/
+    |       |-- transactions_screen.dart
+    |       |-- add_transaction_screen.dart
+    |       |-- register_expense_screen.dart
+    |       `-- register_income_screen.dart
+    |-- budgets/                       # Presupuestos
+    |   `-- screens/
+    |       |-- budgets_screen.dart
+    |       |-- new_budget_screen.dart
+    |       |-- edit_budget_screen.dart
+    |       `-- edit_incomes_screen.dart
+    |-- debts/                         # Deudas
+    |   `-- screens/
+    |       |-- debts_screen.dart
+    |       |-- new_debt_screen.dart
+    |       `-- edit_debt_screen.dart
+    |-- categories/                    # Categorias
+    |   `-- screens/
+    |       `-- new_category_screen.dart
+    |-- notifications/                 # Notificaciones
+    |   `-- screens/
+    |       `-- notifications_screen.dart
+    |-- profile/                       # Perfil
+    |   `-- screens/
+    |       |-- profile_screen.dart
+    |       `-- profile_settings_screen.dart
+    `-- explore/                       # Explorar
+        `-- screens/
+            `-- explore_screen.dart   # Placeholder
+\end{lstlisting}
+
+\section{Descripción de Módulos}
+
+\subsection{Core (Compartido)}
+
+\begin{description}
+    \item[app\_colors.dart:] Paleta de colores Material Design 3 (Primary, Secondary, Error, etc.)
+    \item[finance\_models.dart:] Modelos de datos: \texttt{User}, \texttt{Transaction}, \texttt{Budget}, \texttt{Debt}, \texttt{Income}
+\end{description}
+
+\subsection{Features (11 Módulos Funcionales)}
+
+\begin{longtable}{|p{2.8cm}|p{1.8cm}|p{7.6cm}|}
+\caption{Features implementados} \\
+\hline
+\textbf{Feature} & \textbf{Pantallas} & \textbf{Responsabilidad} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Feature} & \textbf{Pantallas} & \textbf{Responsabilidad} \\
+\hline
+\endhead
+
+Auth & 2 & Login, registro, logout, gestión de sesión con JWT \\
+\hline
+Onboarding & 4 & Tutorial inicial (5 slides) + 3 setups de configuración \\
+\hline
+Home & 2 & Dashboard principal con gráficas de pastel, Bottom Navigation \\
+\hline
+Scan (OCR) & 5 & \textbf{Feature estrella:} Captura, procesamiento OCR, extracción de datos \\
+\hline
+Transactions & 4 & Historial con gráficas de barras, registro manual de ingresos/gastos \\
+\hline
+Budgets & 4 & CRUD de presupuestos, edición de ingresos, metodología Dave Ramsey \\
+\hline
+Debts & 3 & CRUD de deudas, planificación de pagos, alertas de vencimiento \\
+\hline
+Categories & 1 & Creación de categorías personalizadas (máx. 10) \\
+\hline
+Notifications & 1 & Historial de notificaciones, configuración de alertas \\
+\hline
+Profile & 2 & Visualización y edición de perfil (nombre, email, password) \\
+\hline
+Explore & 1 & Placeholder para futuras funcionalidades \\
+\hline
+\end{longtable}
+
+\section{Navegación y Rutas}
+
+\subsection{Configuración de Named Routes}
+
+El proyecto utiliza \textbf{Named Routes} de Flutter \cite{flutter_navigation} para navegación estructurada.
+
+\begin{lstlisting}[caption=Configuración en main.dart]
+MaterialApp(
+  title: 'FINARA',
+  theme: ThemeData(useMaterial3: true),
+  initialRoute: '/login',
+  routes: {
+    '/login': (context) => const LoginScreen(),
+    '/register': (context) => const RegisterScreen(),
+    '/onboarding': (context) => const OnboardingScreen(),
+    '/initial-setup-1': (context) => const InitialSetup1Screen(),
+    '/initial-setup-2': (context) => const InitialSetup2Screen(),
+    '/initial-setup-3': (context) => const InitialSetup3Screen(),
+    '/main': (context) => const MainScreen(),
+    '/register-expense': (context) => const RegisterExpenseScreen(),
+    '/register-income': (context) => const RegisterIncomeScreen(),
+    '/edit-incomes': (context) => const EditIncomesScreen(),
+    '/new-budget': (context) => const NewBudgetScreen(),
+    '/new-debt': (context) => const NewDebtScreen(),
+    '/new-category': (context) => const NewCategoryScreen(),
+    '/notifications': (context) => const NotificationsScreen(),
+    '/profile-settings': (context) => const ProfileSettingsScreen(),
+    '/scan-ticket': (context) => const ScanTicketScreen(),
+    '/scan-preview': (context) => const ScanPreviewScreen(),
+    '/scan-processing': (context) => const ScanProcessingScreen(),
+    '/scan-result': (context) => const ScanResultScreen(),
+    '/edit-debt': (context) => const EditDebtScreen(),
+    '/edit-budget': (context) => const EditBudgetScreen(),
+    '/view-ticket': (context) => const ViewTicketScreen(),
+  },
+)
+\end{lstlisting}
+
+\textbf{Total de rutas configuradas:} 23
+
+\subsection{Flujo Principal de Navegación}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Paso} & \textbf{Descripcion} \\
+\hline
+1 & Login o Register \\
+\hline
+2 & Onboarding para usuario nuevo \\
+\hline
+3 & Setup 1 \\
+\hline
+4 & Setup 2 \\
+\hline
+5 & Setup 3 \\
+\hline
+6 & Main Screen \\
+\hline
+\end{tabularx}
+\caption{Flujo de navegación principal (nuevo usuario)}
+\label{fig:flujo_navegacion}
+\end{table}
+
+\subsection{Bottom Navigation (Main Screen)}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}p{2.4cm}|X|}
+\hline
+\textbf{Tab} & \textbf{Pantalla} \\
+\hline
+Home & \texttt{home\_screen.dart} \\
+\hline
+Transactions & \texttt{transactions\_screen.dart} \\
+\hline
+Budgets & \texttt{budgets\_screen.dart} \\
+\hline
+Debts & \texttt{debts\_screen.dart} \\
+\hline
+Explore & \texttt{explore\_screen.dart} \\
+\hline
+\end{tabularx}
+\caption{Configuración de Bottom Navigation}
+\end{table}
+
+\section{Patrones de Diseño Implementados}
+
+\begin{description}
+    \item[StatefulWidget:] Usado en todas las pantallas con estado mutable (formularios, listas dinámicas)
+    \item[Singleton:] \texttt{AuthService} implementa singleton para gestión única de sesión
+    \item[Factory Pattern:] Modelos con constructores factory para deserialización JSON
+    \item[Builder Pattern:] ListView.builder para listas eficientes con lazy loading
+    \item[Observer:] setState() para notificar cambios de estado a la UI
+\end{description}
