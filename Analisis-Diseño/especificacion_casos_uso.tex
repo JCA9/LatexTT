@@ -83,7 +83,6 @@ RF40 & Metas de ahorro desde web & CU-38: Configurar Metas desde Web \\
 \noindent\textbf{Postcondiciones:}
 \begin{itemize}
     \item Se crea una nueva cuenta de usuario en el sistema
-    \item Se envía un correo de confirmación al usuario
     \item El usuario puede iniciar sesión con sus credenciales
 \end{itemize}
 
@@ -98,12 +97,10 @@ RF40 & Metas de ahorro desde web & CU-38: Configurar Metas desde Web \\
         \item Contraseña
         \item Confirmación de contraseña
     \end{itemize}
-    \item El usuario acepta los términos y condiciones
     \item El usuario presiona el botón ``Registrarse''
     \item El sistema valida los datos ingresados
     \item El sistema verifica que el correo no esté registrado
     \item El sistema crea la cuenta del usuario
-    \item El sistema envía correo de confirmación
     \item El sistema muestra mensaje de registro exitoso
     \item El usuario es redirigido a la pantalla de inicio de sesión
 \end{enumerate}
@@ -138,13 +135,12 @@ RF40 & Metas de ahorro desde web & CU-38: Configurar Metas desde Web \\
 
 \noindent\textbf{Actor:} Administrador Financiero
 
-\noindent\textbf{Descripción:} El administrador financiero accede al sistema utilizando sus credenciales de autenticación (correo/contraseña o cuenta de Google).
+\noindent\textbf{Descripción:} El administrador financiero accede al sistema utilizando sus credenciales de autenticación (correo/contraseña).
 
 \noindent\textbf{Precondiciones:}
 \begin{itemize}
     \item El sistema debe estar disponible
     \item El usuario debe tener una cuenta registrada en el sistema
-    \item Para autenticación con Google, el usuario debe tener una cuenta de Google válida
 \end{itemize}
 
 \noindent\textbf{Postcondiciones:}
@@ -160,7 +156,6 @@ RF40 & Metas de ahorro desde web & CU-38: Configurar Metas desde Web \\
     \item El sistema presenta las opciones de autenticación:
     \begin{itemize}
         \item Correo electrónico y contraseña
-        \item Iniciar sesión con Google
     \end{itemize}
     \item El usuario selecciona el método de autenticación deseado
     \item Si selecciona correo/contraseña:
@@ -168,12 +163,6 @@ RF40 & Metas de ahorro desde web & CU-38: Configurar Metas desde Web \\
         \item Ingresa su correo electrónico
         \item Ingresa su contraseña
         \item Presiona el botón ``Iniciar Sesión''
-    \end{enumerate}
-    \item Si selecciona Google:
-    \begin{enumerate}
-        \item Presiona el botón ``Iniciar con Google''
-        \item Es redirigido a la página de autenticación de Google
-        \item Autoriza el acceso a la aplicación
     \end{enumerate}
     \item El sistema valida las credenciales
     \item El sistema establece la sesión del usuario
@@ -1897,11 +1886,9 @@ RF40 & Metas de ahorro desde web & CU-38: Configurar Metas desde Web \\
     \item El usuario accede a ``Estadísticas Avanzadas'' en la web
     \item El sistema presenta dashboard con:
     \begin{itemize}
-        \item Análisis de tendencias temporales
-        \item Promedios móviles de gastos
+        \item Análisis de tus gastos 
         \item Desviaciones estándar por categoría
         \item Análisis de correlaciones
-        \item Predicciones basadas en patrones históricos
     \end{itemize}
     \item El usuario puede personalizar el análisis:
     \begin{itemize}
@@ -1909,7 +1896,6 @@ RF40 & Metas de ahorro desde web & CU-38: Configurar Metas desde Web \\
         \item Ajustar períodos de análisis
         \item Filtrar por categorías
     \end{itemize}
-    \item El sistema genera insights automatizados
     \item El usuario puede exportar análisis completos
 \end{enumerate}
 
@@ -1938,9 +1924,8 @@ RF40 & Metas de ahorro desde web & CU-38: Configurar Metas desde Web \\
     \item El usuario accede a ``Cargar Ticket Digital'' en la web
     \item El usuario selecciona archivos para cargar:
     \begin{itemize}
-        \item Imágenes (JPG, PNG, GIF)
+        \item Imágenes (JPG, PNG)
         \item Documentos PDF
-        \item Múltiples archivos simultáneamente
     \end{itemize}
     \item El sistema valida los archivos cargados
     \item El sistema procesa cada archivo con OCR

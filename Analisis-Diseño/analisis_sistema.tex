@@ -371,13 +371,13 @@ RN05 & Límite de tamaño de imagen: Las imágenes no deben superar 10 MB &
 
 RN07 & Idioma OCR: Solo procesa tickets en español & 
 \textbf{Escenario:} Ticket contiene texto ``Total: \$150.00 Fecha: 15/11/2025''. \newline
-\textbf{Resultado:} OCR extrae monto y fecha correctamente. &
+\textbf{Resultado:} OCR extrae monto. &
 \textbf{Escenario:} Ticket en inglés ``Total: \$150.00 Date: 11/15/2025''. \newline
 \textbf{Resultado:} OCR falla, solicita registro manual. \\
 \hline
 
 RN10 & Validación manual obligatoria: Cuando OCR presenta baja confianza, requiere validación & 
-\textbf{Escenario:} OCR extrae datos con 95\% confianza. \newline
+\textbf{Escenario:} OCR extrae datos con 75\% confianza. \newline
 \textbf{Resultado:} Datos guardados automáticamente sin intervención. &
 \textbf{Escenario:} OCR extrae con 60\% confianza. \newline
 \textbf{Resultado:} Sistema solicita validación manual antes de guardar. \\
