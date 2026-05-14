@@ -1,12 +1,31 @@
 \chapter{Conclusiones}
 
-A lo largo de este primer Trabajo Terminal, nos dimos cuenta de que el proyecto es más ambicioso de lo inicialmente previsto. 
-El escaneo de tickets, en particular, es una tarea compleja que requiere la búsqueda de tecnologías y algoritmos más eficientes para facilitar la obtención y 
-categorización de los datos de manera precisa.
+El desarrollo de FINARA como Trabajo Terminal representó un ejercicio integral de ingeniería de software en el que convergieron tres plataformas tecnológicas —una aplicación móvil, una plataforma web y un servidor backend— bajo una arquitectura cliente-servidor de tres capas. A lo largo del proceso se tomaron decisiones de diseño que privilegiaron la modularidad, la seguridad y la experiencia del usuario, y se enfrentaron retos técnicos que enriquecieron la formación del equipo de desarrollo.
 
-Por otra parte, observamos que los tiempos no nos favorecieron para este Trabajo Terminal 1. Por ello, hemos ajustado los cronogramas, extendiendo el tiempo de desarrollo 
-para las siguientes fases, las cuales serán implementadas en el próximo Trabajo Terminal, tal como se detalla en el capítulo anterior titulado "Trabajo a Futuro". 
-Este ajuste tiene como objetivo asegurar la entrega de un sistema funcional y adecuado.
+\bigskip
 
-En resumen, aunque hemos logrado avances importantes en el diseño y planificación del sistema, es necesario continuar con su implementación y 
-pruebas exhaustivas para garantizar que cumpla con los objetivos establecidos y satisfaga las necesidades de los usuarios finales.
+El componente de \textbf{reconocimiento óptico de caracteres} fue, sin duda, el más complejo del sistema. La variabilidad en la calidad de las imágenes de tickets de punto de venta —distintas fuentes tipográficas, contrastes deficientes, deformaciones ópticas y orientaciones arbitrarias— exigió el diseño de un pipeline de seis etapas que combina preprocesamiento con OpenCV, extracción con Tesseract y un mecanismo de escalado a servicios externos de visión artificial cuando la confianza del resultado local es insuficiente. Este enfoque híbrido permitió equilibrar el costo operativo y la precisión: la mayoría de los tickets se procesan localmente sin consumo de API externas, y solo los casos de mayor dificultad se delegan a Google Cloud Vision y Claude Haiku. La implementación del criterio de confianza ponderada —que considera la presencia del total, los productos detectados, el nombre de la tienda y la fecha— proporcionó una métrica objetiva para tomar esta decisión de escalado de forma automatizada.
+
+\bigskip
+
+La integración de un \textbf{modelo de lenguaje de gran escala} para la estructuración del texto extraído y para la generación de recomendaciones financieras personalizadas representa una aportación diferenciadora respecto a las soluciones comparables analizadas en el estado del arte. El uso de Claude Haiku como modelo de estructuración resultó adecuado por su velocidad de inferencia y por la naturaleza acotada de la tarea: transformar texto en bruto en un esquema JSON definido no requiere de las capacidades de razonamiento complejo de modelos mayores. El sistema de caché de quince días implementado para las recomendaciones reduce el número de llamadas a la API y garantiza tiempos de respuesta consistentes para el usuario.
+
+\bigskip
+
+En el \textbf{backend}, la arquitectura de capas adoptada —rutas, controladores, servicios y acceso a datos— facilitó el desarrollo paralelo entre los integrantes del equipo y simplificó la incorporación de nuevas funcionalidades sin afectar módulos preexistentes. La estrategia de autenticación basada en JWT sin estado resultó apropiada para el esquema de clientes múltiples (móvil y web), ya que no requiere sesiones en servidor y escala horizontalmente. El modelo de aislamiento por \campo{userId} en todas las consultas garantiza que ningún usuario pueda acceder a datos de otro, lo que satisface el requisito no funcional de seguridad sin necesidad de un sistema de roles complejo.
+
+\bigskip
+
+La \textbf{aplicación móvil}, desarrollada en Flutter con una arquitectura feature-first, demostró ser un enfoque eficaz para organizar un proyecto de mediana escala con múltiples módulos funcionales independientes. La gestión de estado mediante \texttt{StatefulWidget} y \texttt{setState}, si bien sencilla, resultó suficiente para los flujos de interacción implementados, postergando la adopción de soluciones más complejas como Riverpod o Bloc para versiones futuras donde la complejidad del estado lo justifique.
+
+\bigskip
+
+La \textbf{plataforma web}, construida con Next.js y TypeScript, aportó capacidades que complementan a la aplicación móvil: visualizaciones analíticas de mayor resolución, generación local de reportes en PDF y Excel, y un módulo de recomendaciones con filtros por período. La decisión de generar los documentos exportables íntegramente en el cliente —sin procesamiento en servidor— simplificó la arquitectura y eliminó la necesidad de almacenamiento temporal de archivos en el backend.
+
+\bigskip
+
+En términos de trabajo en equipo y proceso de desarrollo, la adopción de la metodología \textbf{XP combinada con Kanban} permitió mantener entregas incrementales funcionales y adaptarse a los cambios de alcance identificados durante el desarrollo. La modularidad del sistema facilitó la distribución del trabajo entre los integrantes, aunque la integración entre módulos —en particular la sincronización entre el pipeline OCR, el backend y los clientes— requirió comunicación constante y sesiones de integración dedicadas.
+
+\bigskip
+
+Finalmente, el presente trabajo terminal reafirma la viabilidad técnica y la pertinencia social de una herramienta de gestión financiera personal accesible, que combina automatización mediante OCR e inteligencia artificial con una experiencia de usuario cuidada. Los objetivos planteados al inicio del proyecto fueron alcanzados en su totalidad, y las funcionalidades identificadas como trabajo futuro —planes compartidos, historial anual, integración con Google Identity y publicación en tiendas de aplicaciones— constituyen extensiones naturales de una base sólida y extensible.

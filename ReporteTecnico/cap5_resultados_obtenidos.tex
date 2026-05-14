@@ -1,22 +1,195 @@
 \chapter{Resultados Obtenidos}
 
-En este Trabajo Terminal 1 concluimos con éxito el análisis y la planificación del proyecto, en donde definimos los requerimientos del sistema tanto para la 
-aplicación móvil como para la plataforma web. Durante esta fase, establecimos las prioridades del proyecto y definimos los requisitos específicos para cada plataforma.
+En este Trabajo Terminal se concluyó el desarrollo e integración del sistema FINARA en su totalidad. A diferencia de la etapa anterior, en la que los resultados correspondían al análisis, diseño y planificación, los resultados del presente trabajo son los artefactos funcionales del sistema: la aplicación móvil, la plataforma web y el servidor backend, integrados y operativos como un sistema unificado de gestión financiera personal.
 
-En cuanto al levantamiento y análisis de requerimientos, realizamos la identificación de los casos de uso principales, 
-además de la elaboración de diagramas UML que sirvieron para documentar los flujos de trabajo y las interacciones dentro del sistema. 
-Completamos también la redacción de la documentación que describe los requerimientos funcionales y no funcionales del sistema.
+% ──────────────────────────────────────────────────────────────
+\section{Sistema integrado y funcional}
+% ──────────────────────────────────────────────────────────────
 
-En la fase de planeación técnica y diseño preliminar, trabajamos en la creación de los esquemas iniciales de las funcionalidades del sistema. 
-Asimismo, definimos el estilo visual inicial del sistema, lo que nos permitió establecer una identidad visual coherente y atractiva para los usuarios finales.
+El principal resultado del presente trabajo es un sistema completo y funcional compuesto por tres componentes que operan de manera coordinada:
 
-En cuanto al prototipado y diseño de la experiencia de usuario, creamos prototipos navegables de la interfaz móvil mediante Balsamiq, lo que nos permitió tener una 
-representación visual interactiva del sistema desde las primeras etapas de desarrollo. Este diseño también nos permitió y permitirá detectar posibles mejoras en la navegación y la 
-disposición de los elementos.
+\begin{itemize}
+  \item \textbf{Aplicación móvil} desarrollada en Flutter, orientada al
+    registro ágil de gastos e ingresos, escaneo de tickets físicos
+    mediante la cámara del dispositivo y seguimiento de presupuestos y
+    deudas desde cualquier lugar.
 
-Configuramos el entorno de desarrollo y comenzamos con la implementación del FrontEnd de la página web, donde logramos avances en la construcción de la estructura básica 
-y los componentes visuales que permiten una interacción fluida y eficiente.
+  \item \textbf{Plataforma web} desarrollada en Next.js y React,
+    orientada al análisis financiero detallado, la visualización de
+    gráficas comparativas, la generación de reportes exportables y la
+    consulta de recomendaciones personalizadas por período.
 
-Finalmente, desarrollamos la versión inicial del módulo principal del proyecto, el escaneo de tickets. 
-En esta etapa, se realizaron pruebas preliminares que han permitido categorizar productos a partir de una biblioteca definida para cada categoría, 
-sentando las bases para las funcionalidades avanzadas que se implementarán en el próximo trabajo terminal.
+  \item \textbf{Backend REST} desarrollado en Node.js y Express,
+    encargado de centralizar la lógica de negocio, gestionar la
+    persistencia en MySQL, orquestar el pipeline de OCR y proveer
+    recomendaciones mediante inteligencia artificial.
+\end{itemize}
+
+Los tres componentes se comunican a través de una API REST autenticada
+con JSON Web Tokens, lo que garantiza el aislamiento entre cuentas de
+usuario y la coherencia de los datos entre plataformas.
+
+% ──────────────────────────────────────────────────────────────
+\section{Módulos implementados}
+% ──────────────────────────────────────────────────────────────
+
+\subsection{Aplicación móvil}
+
+Se implementaron nueve módulos funcionales en la aplicación móvil:
+
+\begin{longtable}{>{\bfseries\small}p{4cm} p{9.5cm}}
+  \caption{Módulos implementados en la aplicación móvil FINARA}
+  \label{tab:modulos-movil} \\
+  \toprule
+  Módulo & Resultado \\
+  \midrule
+  \endfirsthead
+  \toprule
+  Módulo & Resultado \\
+  \midrule
+  \endhead
+  Autenticación & Flujo completo de registro, inicio de sesión y
+    cierre de sesión con persistencia local del token JWT mediante
+    \texttt{SharedPreferences}. \\[4pt]
+  Onboarding & Configuración inicial guiada para capturar el modo de
+    administración financiera e ingreso mensual del usuario. \\[4pt]
+  Escaneo OCR & Captura de uno o varios tickets físicos mediante la
+    cámara, procesamiento mediante el pipeline OCR y confirmación de
+    datos antes del guardado. Es el módulo diferenciador del sistema. \\[4pt]
+  Categorías & Gestión completa de categorías predefinidas y
+    personalizadas, con icono y color asignados por el usuario. \\[4pt]
+  Ingresos y gastos & Registro manual de movimientos financieros con
+    asignación de categoría, fecha y notas opcionales. \\[4pt]
+  Presupuestos & Definición de límites mensuales por categoría con
+    indicadores visuales de progreso (seguro, advertencia, peligro,
+    excedido). \\[4pt]
+  Deudas & Registro de deudas con cálculo automático de cuota mensual
+    por amortización francesa, soporte para pagos ordinarios y abonos
+    extraordinarios a capital. \\[4pt]
+  Alertas & Centro de notificaciones con alertas automáticas por
+    superación de presupuesto, vencimiento de deuda próximo y
+    recordatorios diarios de gestión. \\[4pt]
+  Perfil & Consulta y edición de datos del usuario, incluyendo la
+    actualización del ingreso mensual registrado. \\
+  \bottomrule
+\end{longtable}
+
+\subsection{Plataforma web}
+
+Se implementaron seis módulos funcionales en la plataforma web:
+
+\begin{longtable}{>{\bfseries\small}p{4cm} p{9.5cm}}
+  \caption{Módulos implementados en la plataforma web FINARA}
+  \label{tab:modulos-web} \\
+  \toprule
+  Módulo & Resultado \\
+  \midrule
+  \endfirsthead
+  \toprule
+  Módulo & Resultado \\
+  \midrule
+  \endhead
+  Autenticación & Flujo de registro e inicio de sesión integrado con
+    \texttt{next-auth}, con persistencia de sesión en cookies seguras. \\[4pt]
+  Dashboard & Vista principal con resumen financiero del período
+    (ingresos, gastos, balance, presupuestos y deudas), gráficas
+    interactivas de barras y pastel, y filtros por mes y año. \\[4pt]
+  Tickets digitales & Carga de imágenes y PDFs para procesamiento OCR
+    desde el navegador, con previsualización y confirmación de
+    productos antes del guardado. \\[4pt]
+  Reportes & Generación local de reportes ejecutivos en formato PDF
+    (jsPDF) y Excel (xlsx), que incluyen el resumen del período y las
+    recomendaciones financieras del sistema. \\[4pt]
+  Recomendaciones & Módulo dedicado a la visualización de
+    recomendaciones financieras personalizadas generadas por IA,
+    con filtros por período y desglose en riesgos, recomendaciones
+    y acciones sugeridas priorizadas. \\[4pt]
+  Gestión de datos & Módulos de administración de ingresos, gastos,
+    categorías, presupuestos y deudas con operaciones CRUD completas. \\
+  \bottomrule
+\end{longtable}
+
+\subsection{Backend y API REST}
+
+Se implementaron once módulos en el servidor backend, exponiendo más
+de sesenta endpoints documentados:
+
+\begin{itemize}
+  \item Módulos de autenticación, usuarios, categorías, ingresos,
+    gastos, presupuestos, deudas, alertas, tickets y dashboard.
+  \item Módulo de recomendaciones con integración a Claude Haiku y
+    sistema de caché de quince días.
+  \item Sistema de tareas programadas (cron jobs) para recordatorios
+    diarios y rollover mensual automático de presupuestos e ingresos
+    recurrentes.
+  \item Base de datos MySQL con doce tablas normalizadas a 3FN y
+    relaciones de integridad referencial con eliminación en cascada.
+\end{itemize}
+
+% ──────────────────────────────────────────────────────────────
+\section{Pipeline de OCR}
+% ──────────────────────────────────────────────────────────────
+
+El módulo de reconocimiento óptico de caracteres es el componente
+técnicamente más elaborado del sistema. Se implementó un pipeline
+de seis etapas que combina procesamiento local y servicios externos:
+
+\begin{enumerate}
+  \item \textbf{Preprocesamiento:} Corrección de iluminación,
+    reescalado, corrección de perspectiva (deskew) y binarización
+    adaptativa mediante OpenCV.
+  \item \textbf{Extracción con Tesseract:} OCR con modo LSTM en
+    modo de bloque de texto (PSM 6), con soporte para los idiomas
+    español e inglés.
+  \item \textbf{Evaluación de confianza:} Cálculo de una métrica
+    ponderada que combina la confianza reportada por Tesseract con la
+    presencia detectada de campos clave (total, productos, tienda, fecha).
+  \item \textbf{Compuertas de activación:} Si la confianza es inferior
+    a 0.72 o el número de palabras reconocidas es menor a 15
+    (compuerta técnica), o si no se detectaron ni total ni productos
+    (compuerta estructural), el flujo escala al servicio externo.
+  \item \textbf{Respaldo externo:} Google Cloud Vision extrae el texto
+    completo del documento; Claude Haiku lo estructura en JSON con los
+    campos requeridos.
+  \item \textbf{Categorización automática:} Los productos detectados
+    reciben una categoría sugerida mediante un clasificador por palabras
+    clave y por similitud con el historial de compras previas del usuario.
+\end{enumerate}
+
+Este diseño híbrido permite procesar la mayoría de los tickets
+localmente —sin costo de API externa— y escalar únicamente los casos
+de mayor dificultad a servicios de visión artificial en la nube.
+
+% ──────────────────────────────────────────────────────────────
+\section{Recomendaciones financieras con inteligencia artificial}
+% ──────────────────────────────────────────────────────────────
+
+Se implementó un módulo de recomendaciones financieras personalizadas
+que utiliza Claude Haiku como modelo de análisis. Para cada período
+consultado, el sistema recopila el contexto financiero del usuario
+(ingresos, distribución de gastos, estado de presupuestos y deudas) y
+genera un análisis estructurado con cuatro secciones: resumen textual,
+riesgos identificados, recomendaciones accionables y acciones sugeridas
+priorizadas.
+
+Un sistema de caché con vigencia de quince días evita llamadas
+redundantes a la API del modelo para el mismo período, reduciendo el
+costo operativo y garantizando tiempos de respuesta consistentes. Ante
+una falla del servicio externo, el sistema retorna automáticamente un
+conjunto de recomendaciones generadas por reglas locales, asegurando
+la disponibilidad del módulo en todo momento.
+
+% ──────────────────────────────────────────────────────────────
+\section{Cumplimiento de requerimientos}
+% ──────────────────────────────────────────────────────────────
+
+De los cuarenta requerimientos funcionales definidos en la etapa de
+análisis, todos fueron implementados en el presente trabajo terminal.
+Los cinco requerimientos no funcionales —seguridad, mantenibilidad,
+portabilidad, compatibilidad y usabilidad— fueron satisfechos mediante
+las siguientes decisiones de implementación: cifrado de contraseñas con
+bcrypt (factor 12) y autenticación JWT para seguridad; arquitectura
+modular y repositorio en GitHub para mantenibilidad; soporte para
+Android 10 o superior para portabilidad; validación en Chrome, Edge y
+Firefox actualizados para compatibilidad; y adhesión a Material Design
+y las guías de accesibilidad de React para usabilidad.

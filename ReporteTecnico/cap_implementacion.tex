@@ -1298,14 +1298,696 @@ PDF/Excel (resumen, riesgos y sugerencias).
 \section{Backend}
 % ══════════════════════════════════════════════════════════════
 
-% Pendiente: integrar documentación del backend (Node.js + Express + MySQL).
-% Incluir: stack técnico, arquitectura de la API REST, endpoints, base de
-% datos, autenticación JWT, pipeline OCR y decisiones de diseño.
+El backend de FINARA constituye el núcleo lógico del sistema. Es el
+responsable de gestionar la autenticación de usuarios, la persistencia
+de datos financieros, la orquestación del pipeline de reconocimiento
+óptico de caracteres, la generación de recomendaciones mediante
+inteligencia artificial y el envío de alertas automatizadas. Está
+implementado como una API REST sobre \textbf{Node.js} con el framework
+\textbf{Express.js}, y hace uso de \textbf{MySQL} como motor de base de
+datos relacional.
 
-\begin{notabox}[Sección pendiente — Backend]
-  Esta sección se encuentra pendiente de integración. La documentación
-  técnica completa del backend de FINARA (Node.js + Express + MySQL) se
-  encuentra en el documento paralelo \textit{``FINARA Backend ---
-  Implementación Técnica''} y será incorporada en esta sección al
-  consolidar el reporte final del Trabajo Terminal.
+% ──────────────────────────────────────────────────────────────
+\subsection{Arquitectura general del backend}
+% ──────────────────────────────────────────────────────────────
+
+\subsubsection{Stack tecnológico}
+
+\begin{longtable}{>{\bfseries\small}p{3.8cm} p{9.7cm}}
+  \caption{Stack tecnológico del backend FINARA}
+  \label{tab:stack-backend} \\
+  \toprule
+  Componente & Descripción \\
+  \midrule
+  \endfirsthead
+  \toprule
+  Componente & Descripción \\
+  \midrule
+  \endhead
+  Node.js 18+ & Entorno de ejecución JavaScript del lado del servidor.
+    Proporciona el bucle de eventos asíncrono que permite atender múltiples
+    conexiones simultáneas. \\[4pt]
+  Express.js 5 & Framework minimalista para la construcción de la API REST.
+    Gestiona el enrutamiento, el encadenamiento de middleware y el manejo
+    de errores globales. \\[4pt]
+  MySQL 8 + mysql2 & Base de datos relacional. Se accede mediante el
+    driver \archivo{mysql2/promise} con un pool de conexiones
+    configurado con límite de diez conexiones concurrentes. \\[4pt]
+  JSON Web Tokens & Mecanismo de autenticación sin estado. Cada token
+    firmado con \texttt{HS256} tiene una vigencia de siete días. \\[4pt]
+  bcrypt & Librería de hashing de contraseñas con un factor de costo
+    de doce rondas, resistente a ataques de fuerza bruta. \\[4pt]
+  express-validator & Validación declarativa de los cuerpos y parámetros
+    de cada solicitud antes de que lleguen al controlador. \\[4pt]
+  multer & Middleware para la recepción de archivos multimedia en
+    formularios \texttt{multipart/form-data} (imágenes y PDF de
+    tickets). \\[4pt]
+  node-cron & Planificador de tareas con sintaxis cron estándar para
+    ejecutar recordatorios diarios y el rollover mensual de presupuestos. \\[4pt]
+  nodemailer & Librería para el envío de correos electrónicos a través
+    de SMTP (actualmente Gmail). \\[4pt]
+  express-rate-limit & Limitación de tasas de petición por dirección IP
+    para mitigar ataques automatizados. \\[4pt]
+  dotenv & Carga de variables de entorno desde el archivo \archivo{.env}
+    al proceso de Node.js. \\[4pt]
+  uuid & Generación de identificadores únicos universales (v4) para
+    llaves de idempotencia de solicitudes de escaneo OCR. \\
+  \bottomrule
+\end{longtable}
+
+\subsubsection{Estructura del proyecto}
+
+El proyecto sigue una separación de responsabilidades por capa
+funcional. Cada directorio de \archivo{src/} agrupa archivos con un
+rol específico dentro del sistema.
+
+\begin{lstlisting}[style=codigobase, language={},
+    caption={Estructura de directorios del backend FINARA}]
+finara-backend/
+|-- server.js              (punto de entrada; inicia Express y cron jobs)
+|-- src/
+|   |-- app.js             (configuracion de Express y registro de rutas)
+|   |-- config/
+|   |   |-- database.js    (pool de conexiones MySQL)
+|   |   `-- upload.js      (configuracion de Multer)
+|   |-- controllers/       (logica de negocio por modulo)
+|   |-- routes/            (definicion de rutas y validadores)
+|   |-- middleware/
+|   |   |-- auth.js        (verificacion de JWT)
+|   |   `-- validator.js   (manejo de errores de validacion)
+|   |-- services/
+|   |   |-- ocrService.js          (pipeline OCR local con Python)
+|   |   |-- ocrWebService.js       (OCR via Vision + Claude Haiku)
+|   |   |-- recommendationsService.js (recomendaciones con IA)
+|   |   |-- budgetRolloverService.js  (rollover de presupuestos)
+|   |   `-- incomeRolloverService.js  (rollover de ingresos recurrentes)
+|   |-- jobs/
+|   |   |-- dailyReminders.js      (recordatorios diarios a las 12:00)
+|   |   `-- monthlyBudgetRollover.js (rollover el dia 1 de cada mes)
+|   `-- utils/
+|       |-- helpers.js             (respuestas estandar y funciones aux.)
+|       `-- alertHelpers.js        (generacion de alertas automaticas)
+|-- sql/                   (scripts DDL y datos de prueba)
+|-- ocr/                   (script Python del pipeline OCR)
+`-- uploads/               (imagenes de tickets organizadas por usuario)
+\end{lstlisting}
+
+\subsubsection{Arquitectura en capas}
+
+El backend implementa una arquitectura de \textbf{tres capas} con una
+capa adicional de servicios especializados:
+
+\begin{enumerate}
+  \item \textbf{Capa de presentación (Routes):} Los doce routers
+    registrados en \archivo{app.js} reciben las solicitudes HTTP,
+    aplican middleware de autenticación y de validación, y delegan al
+    controlador correspondiente.
+
+  \item \textbf{Capa de aplicación (Controllers):} Cada controlador
+    contiene la lógica de negocio de su módulo. Consulta o modifica la
+    base de datos mediante el pool de conexiones y devuelve respuestas
+    estandarizadas.
+
+  \item \textbf{Capa de servicios especializados (Services):} Para
+    operaciones complejas —procesamiento OCR, generación de
+    recomendaciones con IA o rollover de datos periódicos— los
+    controladores delegan en servicios dedicados que encapsulan dicha
+    lógica.
+
+  \item \textbf{Capa de datos (Database):} Un pool de conexiones
+    centralizado en \archivo{config/database.js} gestiona el acceso a
+    MySQL. Todas las consultas usan sentencias preparadas con
+    parámetros para prevenir inyección SQL.
+\end{enumerate}
+
+% ──────────────────────────────────────────────────────────────
+\subsection{Configuración del servidor}
+% ──────────────────────────────────────────────────────────────
+
+\subsubsection{Punto de entrada y arranque}
+
+El archivo \archivo{server.js} es el punto de entrada de la
+aplicación. Carga las variables de entorno desde \archivo{.env},
+importa la aplicación Express configurada en \archivo{src/app.js},
+inicia los trabajos programados y pone a escuchar el servidor en
+el puerto definido por la variable de entorno \campo{PORT}.
+
+\subsubsection{Configuración de Express y cadena de middleware}
+
+En \archivo{src/app.js} se registra la siguiente cadena de middleware
+en orden de ejecución:
+
+\begin{enumerate}
+  \item \campo{cors()} — Habilita CORS para todas las rutas, permitiendo
+    solicitudes desde los clientes web y móvil.
+  \item \campo{express.json(\{limit: '10mb'\})} — Parsea el cuerpo de
+    las solicitudes JSON con un límite de 10 MB para soportar
+    representaciones de imágenes en base64 en flujos alternativos.
+  \item \campo{express.urlencoded()} — Parsea cuerpos de formularios
+    URL-encoded.
+  \item \campo{express.static('/uploads')} — Sirve los archivos de
+    imágenes de tickets como recursos estáticos bajo la ruta
+    \endpoint{/uploads}.
+  \item \textbf{Logger personalizado} — Registra en consola el método
+    HTTP, la URL y el código de estado de cada respuesta.
+  \item \textbf{Routers} — Cada módulo registra su router bajo su
+    prefijo correspondiente (por ejemplo, \endpoint{/api/auth},
+    \endpoint{/api/expenses}).
+  \item \textbf{Manejador de errores global} — Captura errores no
+    controlados, incluyendo los de Multer para archivos demasiado
+    grandes o en exceso de cantidad, y devuelve respuestas de error
+    con el formato estándar.
+\end{enumerate}
+
+\subsubsection{Variables de entorno}
+
+\begin{longtable}{>{\ttfamily\small}p{4.2cm} p{9.3cm}}
+  \caption{Variables de entorno del backend FINARA}
+  \label{tab:env-backend} \\
+  \toprule
+  \normalfont\textbf{Variable} & \textbf{Propósito} \\
+  \midrule
+  \endfirsthead
+  \toprule
+  \normalfont\textbf{Variable} & \textbf{Propósito} \\
+  \midrule
+  \endhead
+  PORT & Puerto de escucha del servidor (por defecto 3000). \\[3pt]
+  NODE\_ENV & Entorno de ejecución (\texttt{development} /
+    \texttt{production}). En producción los mensajes de error
+    internos no se exponen al cliente. \\[3pt]
+  DB\_HOST, DB\_PORT, DB\_USER, DB\_PASSWORD, DB\_NAME
+    & Parámetros de conexión a la base de datos MySQL. \\[3pt]
+  JWT\_SECRET & Clave secreta para firmar y verificar tokens JWT. \\[3pt]
+  JWT\_EXPIRES\_IN & Tiempo de vigencia del token (por defecto \texttt{7d}). \\[3pt]
+  UPLOAD\_PATH & Directorio raíz para almacenar imágenes de tickets. \\[3pt]
+  MAX\_FILE\_SIZE & Tamaño máximo por archivo en bytes (10 MB). \\[3pt]
+  OCR\_SCRIPT\_PATH & Ruta al script Python del pipeline OCR local. \\[3pt]
+  PYTHON\_CMD & Comando para invocar Python (\texttt{python} o
+    \texttt{python3}). \\[3pt]
+  OCR\_TIMEOUT & Tiempo máximo de espera para el proceso OCR en
+    milisegundos. \\[3pt]
+  SMTP\_HOST, SMTP\_PORT, SMTP\_USER, SMTP\_PASS, SMTP\_FROM
+    & Credenciales y configuración del servidor de correo saliente. \\
+  \bottomrule
+\end{longtable}
+
+% ──────────────────────────────────────────────────────────────
+\subsection{Modelo de datos}
+% ──────────────────────────────────────────────────────────────
+
+\subsubsection{Tablas principales}
+
+La base de datos \texttt{finara} contiene doce tablas principales
+normalizadas hasta la Tercera Forma Normal (3FN). Todas las claves
+foráneas hacia \texttt{Usuarios} están configuradas con
+\texttt{ON DELETE CASCADE}, de modo que al eliminar un usuario se
+eliminan en cascada todos sus datos financieros.
+
+\begin{longtable}{>{\bfseries\small}p{4.5cm} p{9cm}}
+  \caption{Tablas de la base de datos FINARA}
+  \label{tab:tablas-bd} \\
+  \toprule
+  Tabla & Descripción y campos clave \\
+  \midrule
+  \endfirsthead
+  \toprule
+  Tabla & Descripción y campos clave \\
+  \midrule
+  \endhead
+  Usuarios & Almacena credenciales y estado de configuración. Campos:
+    \campo{id\_usuario} (PK), \campo{nombre}, \campo{email} (UNIQUE),
+    \campo{password\_hash}, \campo{onboarding\_completado},
+    \campo{setup\_completado}. \\[4pt]
+  Categorias & Categorías de gasto del usuario, predefinidas o
+    personalizadas. Campos: \campo{id\_categoria}, \campo{id\_usuario}
+    (FK), \campo{nombre\_categoria}, \campo{tipo\_categoria},
+    \campo{icono}, \campo{color}. \\[4pt]
+  Ingresos & Registros de ingresos, únicos o recurrentes. Campos:
+    \campo{id\_ingreso}, \campo{id\_usuario} (FK), \campo{nombre\_ingreso},
+    \campo{monto}, \campo{es\_recurrente}, \campo{fecha}. \\[4pt]
+  Gastos & Egresos del usuario, opcionalmente vinculados a un ticket.
+    Campos: \campo{id\_gasto}, \campo{id\_usuario} (FK),
+    \campo{id\_categoria} (FK), \campo{monto}, \campo{fecha},
+    \campo{id\_ticket} (FK nullable), \campo{extraido\_por\_ocr}. \\[4pt]
+  Tickets & Encabezado de tickets escaneados o registrados manualmente.
+    Campos: \campo{id\_ticket}, \campo{id\_usuario} (FK),
+    \campo{nombre\_tienda}, \campo{total}, \campo{fecha\_compra},
+    \campo{rutas\_imagenes} (JSON). \\[4pt]
+  Productos\_Tickets & Líneas de producto de cada ticket. Campos:
+    \campo{id\_producto}, \campo{id\_ticket} (FK), \campo{id\_categoria}
+    (FK nullable), \campo{nombre\_producto}, \campo{precio}. \\[4pt]
+  Presupuestos & Límites mensuales por categoría. Campos:
+    \campo{id\_presupuesto}, \campo{id\_usuario} (FK),
+    \campo{id\_categoria} (FK), \campo{monto\_asignado},
+    \campo{monto\_utilizado}, \campo{fecha\_inicio}, \campo{fecha\_fin},
+    \campo{activo}. \\[4pt]
+  Deudas & Deudas con amortización francesa. Campos:
+    \campo{id\_deuda}, \campo{id\_usuario} (FK),
+    \campo{capital\_inicial}, \campo{tasa\_anual}, \campo{tasa\_mensual},
+    \campo{saldo\_insoluto}, \campo{pago\_mensual},
+    \campo{duracion\_meses}, \campo{fecha\_siguiente\_pago},
+    \campo{activa}. \\[4pt]
+  Alertas & Notificaciones generadas automáticamente o por cron.
+    Campos: \campo{id\_alerta}, \campo{id\_usuario} (FK),
+    \campo{tipo\_alerta}, \campo{titulo}, \campo{mensaje},
+    \campo{leida}. \\[4pt]
+  Configuracion\_Notificaciones & Preferencias de alertas por usuario.
+    Un registro único por usuario con flags booleanos:
+    \campo{presupuesto\_excedido}, \campo{recordatorio\_gestion},
+    \campo{pago\_deuda\_proximo}. \\[4pt]
+  Configuracion\_Inicial & Modo de administración e ingreso mensual
+    inicial capturados en el flujo de onboarding.
+    Campos: \campo{modo\_administracion},
+    \campo{distribucion\_categorias} (JSON),
+    \campo{ingreso\_mensual\_inicial}. \\[4pt]
+  Recomendaciones\_Cache & Caché de respuestas de la IA para evitar
+    llamadas repetidas. Campos: \campo{id\_usuario} (FK),
+    \campo{month}, \campo{year}, \campo{payload\_json} (LONGTEXT),
+    \campo{source} (\texttt{ai}/\texttt{fallback}), \campo{expires\_at}.
+    Índice único sobre \texttt{(id\_usuario, month, year)}. \\
+  \bottomrule
+\end{longtable}
+
+\subsubsection{Pool de conexiones}
+
+El módulo \archivo{config/database.js} crea un pool de conexiones
+MySQL con las siguientes configuraciones relevantes:
+
+\begin{itemize}
+  \item \campo{connectionLimit: 10} — Máximo de diez conexiones abiertas
+    simultáneamente, suficiente para el volumen de carga esperado.
+  \item \campo{waitForConnections: true} — Las solicitudes que no
+    obtengan una conexión disponible de inmediato son encoladas en lugar
+    de rechazadas.
+  \item \campo{timezone: 'Z'} — Todas las fechas se almacenan y
+    recuperan en UTC para garantizar consistencia entre zonas horarias.
+\end{itemize}
+
+Todas las consultas se ejecutan con sentencias preparadas del tipo
+\lstinline[style=codigobase]{pool.query('SELECT ... WHERE id = ?', [id])}
+para prevenir inyección SQL.
+
+% ──────────────────────────────────────────────────────────────
+\subsection{Autenticación y seguridad}
+% ──────────────────────────────────────────────────────────────
+
+\subsubsection{Estrategia JWT}
+
+La autenticación se basa en \textbf{JSON Web Tokens} sin estado del
+lado del servidor. Al iniciar sesión exitosamente, el backend firma un
+token con el algoritmo \texttt{HS256} que contiene el
+\campo{userId} y el \campo{email} del usuario. El token es
+enviado al cliente, quien lo incluye en cada solicitud
+subsiguiente mediante el encabezado:
+
+\begin{lstlisting}[style=codigobase, language={}]
+Authorization: Bearer <token>
+\end{lstlisting}
+
+El tiempo de vigencia predeterminado es de siete días
+(\campo{JWT\_EXPIRES\_IN=7d}). Una vez expirado, el cliente debe
+autenticarse de nuevo.
+
+\subsubsection{Middleware de autenticación}
+
+El middleware en \archivo{middleware/auth.js} protege todos los
+endpoints excepto los de autenticación. Su lógica es la siguiente:
+
+\begin{enumerate}
+  \item Extrae el token del encabezado \campo{Authorization}.
+  \item Si no existe o no comienza con \texttt{Bearer}, responde con
+    \texttt{401 Unauthorized}.
+  \item Verifica la firma con \campo{JWT\_SECRET} usando
+    \campo{jwt.verify()}.
+  \item Ante \campo{TokenExpiredError} responde con el mensaje
+    ``Token expirado''; ante cualquier otro error, ``Token inválido''.
+  \item Si la verificación es exitosa, adjunta el objeto
+    \lstinline[style=codigobase]{req.user = { userId, email }} y
+    llama a \campo{next()}.
+\end{enumerate}
+
+Gracias a este modelo, \textbf{todos los endpoints de datos filtran
+automáticamente por} \campo{req.user.userId}, garantizando el
+aislamiento completo entre cuentas de usuario sin necesidad de un
+sistema de roles.
+
+\subsubsection{Seguridad adicional}
+
+\begin{itemize}
+  \item \textbf{Hashing de contraseñas:} Se utiliza \texttt{bcrypt} con
+    factor de costo 12. El hash resultante se almacena en la columna
+    \campo{password\_hash} y nunca se expone en ningún endpoint.
+  \item \textbf{Limitación de tasas:} \texttt{express-rate-limit}
+    restringe el número de peticiones por dirección IP, mitigando
+    ataques de denegación de servicio y de fuerza bruta contra el
+    endpoint de login.
+  \item \textbf{Validación de entrada:} Todos los endpoints definen
+    un arreglo de validadores de \texttt{express-validator} que se
+    ejecutan antes del controlador. Si alguna validación falla, el
+    middleware \archivo{middleware/validator.js} interrumpe la cadena
+    y responde con \texttt{400 Bad Request} y el mensaje de error
+    específico.
+  \item \textbf{Mensajes de error en producción:} El manejador de
+    errores global comprueba \campo{NODE\_ENV}; si es
+    \texttt{production}, el mensaje de excepción interno no se incluye
+    en la respuesta al cliente.
+\end{itemize}
+
+% ──────────────────────────────────────────────────────────────
+\subsection{Módulos de la API REST}
+% ──────────────────────────────────────────────────────────────
+
+\subsubsection{Convenciones de respuesta}
+
+El backend establece un formato de respuesta uniforme en el módulo
+\archivo{utils/helpers.js}. Las respuestas exitosas adoptan la
+estructura:
+
+\begin{lstlisting}[style=codigobase, language={}]
+{ "success": true, "data": { ... } }
+\end{lstlisting}
+
+y las respuestas de error:
+
+\begin{lstlisting}[style=codigobase, language={}]
+{ "success": false, "error": "Descripcion del error" }
+\end{lstlisting}
+
+Los códigos HTTP utilizados son los estándares: \texttt{200 OK},
+\texttt{201 Created}, \texttt{400 Bad Request}, \texttt{401
+Unauthorized}, \texttt{404 Not Found}, \texttt{409 Conflict} y
+\texttt{410 Gone} para funcionalidades eliminadas.
+
+\subsubsection{Módulo de autenticación (\texttt{/api/auth})}
+
+Gestiona el registro, inicio y cierre de sesión, verificación de token
+y cambio de contraseña. Al registrarse un nuevo usuario, se invocan
+automáticamente dos operaciones en la misma transacción: la creación del
+registro en \texttt{Usuarios} y la creación de las cinco categorías de
+gasto predefinidas (Alimentos, Entretenimiento, Transporte, Ahorro,
+Otros) mediante la función auxiliar \campo{crearCategoriasDefault()}.
+
+\begin{table}[H]
+  \centering
+  \caption{Endpoints del módulo de autenticación}
+  \label{tab:endpoints-auth}
+  \begin{tabular}{p{1.2cm} p{4.5cm} p{7.8cm}}
+    \toprule
+    \textbf{Método} & \textbf{Ruta} & \textbf{Descripción} \\
+    \midrule
+    POST & \endpoint{/register} & Crea cuenta; devuelve token y datos del usuario. \\
+    POST & \endpoint{/login} & Verifica credenciales; devuelve token y flags de onboarding. \\
+    POST & \endpoint{/logout} & Confirma cierre de sesión (token gestionado en cliente). \\
+    GET  & \endpoint{/verify} & Valida que el token actual sea vigente. \\
+    PUT  & \endpoint{/change-password} & Actualiza contraseña previa verificación de la actual. \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsubsection{Módulo de categorías (\texttt{/api/categories})}
+
+Permite al usuario gestionar sus categorías de gasto. Soporta las
+operaciones CRUD completas. El endpoint \endpoint{GET /} retorna tanto
+las categorías predefinidas como las personalizadas del usuario,
+incluyendo el icono y el color asociados para su representación visual
+en los clientes.
+
+\subsubsection{Módulo de ingresos (\texttt{/api/incomes})}
+
+Administra los registros de ingreso del usuario. Los ingresos pueden
+ser de tipo único o recurrente. El endpoint
+\endpoint{POST /recurrent-upsert} implementa la semántica de
+``crear o actualizar'': si ya existe un ingreso recurrente con el
+mismo nombre para el usuario, actualiza su monto; en caso contrario,
+crea uno nuevo. El endpoint \endpoint{GET /total} acepta los
+parámetros de consulta \campo{month} y \campo{year} para retornar
+el acumulado de ingresos del período especificado.
+
+\subsubsection{Módulo de gastos (\texttt{/api/expenses})}
+
+Registra los egresos del usuario. Soporta la creación de un gasto
+simple con \endpoint{POST /} o de un gasto con múltiples productos
+asociados con \endpoint{POST /with-products}, operación que inserta
+el gasto y sus productos en una sola transacción. El endpoint
+\endpoint{GET /recent} retorna los últimos gastos del usuario
+incluyendo siempre el nombre de la categoría mediante un
+\texttt{JOIN} con \texttt{Categorias}. Las consultas de listado
+aceptan filtros opcionales por mes y año.
+
+\subsubsection{Módulo de presupuestos (\texttt{/api/budgets})}
+
+Gestiona los presupuestos mensuales por categoría. Al crear un
+presupuesto con \endpoint{POST /}, el controlador calcula
+automáticamente las fechas de inicio y fin del mes especificado
+y verifica que no exista ya un presupuesto activo para la misma
+categoría en ese período. El campo \campo{monto\_utilizado} se
+actualiza dinámicamente cada vez que se registra o modifica un gasto
+asociado a dicha categoría.
+
+El endpoint \endpoint{POST /rollover} permite copiar los
+presupuestos de un mes origen a un mes destino sin duplicar registros
+existentes, funcionalidad que también se invoca automáticamente por el
+servicio de rollover mensual.
+
+\subsubsection{Módulo de tickets y OCR (\texttt{/api/tickets})}
+
+Este es el módulo de mayor complejidad del backend. Expone tres
+variantes de escaneo OCR y la gestión completa del ciclo de vida de
+un ticket.
+
+\begin{table}[H]
+  \centering
+  \caption{Endpoints de escaneo del módulo de tickets}
+  \label{tab:endpoints-tickets-ocr}
+  \begin{tabular}{p{1.2cm} p{4.2cm} p{8.1cm}}
+    \toprule
+    \textbf{Método} & \textbf{Ruta} & \textbf{Descripción} \\
+    \midrule
+    POST & \endpoint{/scan} & Recibe hasta cinco imágenes por
+      \texttt{multipart/form-data}. Invoca el pipeline OCR local
+      (Python + Tesseract) y, si la confianza es insuficiente,
+      escala al servicio web (Vision + Claude). \\
+    POST & \endpoint{/scan-web} & Variante para la plataforma web:
+      acepta una imagen o PDF y la procesa directamente mediante
+      el servicio de visión artificial externo. \\
+    POST & \endpoint{/scan-web-text} & Recibe texto plano previamente
+      extraído y lo estructura en JSON de productos mediante
+      Claude Haiku. \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Para garantizar la idempotencia de las solicitudes de escaneo —y
+evitar la creación de tickets duplicados ante reintentos de red— el
+módulo implementa dos mecanismos complementarios:
+
+\begin{itemize}
+  \item \textbf{Hash de archivo:} Se calcula el hash SHA-256 de cada
+    imagen. Si ya existe un ticket con ese hash en la base de datos,
+    se retorna el ticket existente con el campo
+    \campo{duplicate: true} en lugar de crear uno nuevo.
+  \item \textbf{Llave de idempotencia:} El cliente puede enviar el
+    encabezado \campo{x-idempotency-key} con un UUID generado por él.
+    El backend almacena la llave en las notas del ticket y la
+    comprueba antes de procesar.
+\end{itemize}
+
+El módulo también implementa un algoritmo de \textbf{sugerencia de
+categorías} basado en similitud léxica. La función
+\campo{scoreNameSimilarity()} tokeniza el nombre del producto y
+lo compara con el historial de compras previas del usuario,
+asignando pesos a coincidencias de prefijo y parciales. Si el
+puntaje supera el umbral de 0.40, se asigna la categoría con
+mayor frecuencia histórica; en caso contrario, se aplica un
+clasificador por palabras clave definido en
+\archivo{categorias.json}.
+
+\subsubsection{Módulo de deudas (\texttt{/api/debts})}
+
+Administra el ciclo de vida de las deudas del usuario con soporte
+para \textbf{amortización francesa} (cuota fija mensual). Al crear
+una deuda, el controlador calcula el pago mensual mediante la fórmula:
+
+\begin{equation}
+  M = C \cdot \frac{r}{1 - (1 + r)^{-n}}
+  \label{eq:amort-francesa}
+\end{equation}
+
+donde $C$ es el capital inicial, $r$ es la tasa mensual y $n$ es la
+duración en meses. Si la tasa es cero, la cuota se calcula como
+$M = C / n$.
+
+El endpoint \endpoint{GET /:id/amortization} genera el cronograma
+completo de pagos, calculando para cada período el desglose entre
+intereses y abono a capital con base en el saldo insoluto vigente.
+Adicionalmente, el endpoint \endpoint{POST /:id/capital-payment}
+permite registrar abonos extraordinarios que reducen el saldo insoluto
+y recalculan el número de pagos restantes.
+
+\subsubsection{Módulo de dashboard (\texttt{/api/dashboard})}
+
+Provee los datos consolidados para la vista de resumen financiero. El
+endpoint \endpoint{GET /summary} acepta los parámetros \campo{month}
+y \campo{year} y retorna en una sola respuesta: totales de ingresos
+y gastos, balance, estado de presupuestos (total asignado, total
+utilizado, cantidad en alerta) y estado de deudas (deuda pendiente
+total, pago mensual acumulado). Tras construir el resumen, el
+controlador invoca \campo{checkBudgetAlerts()} y
+\campo{checkDebtAlerts()} para generar de forma proactiva cualquier
+alerta que aplique al período consultado.
+
+\subsubsection{Módulo de alertas (\texttt{/api/alerts})}
+
+Gestiona el centro de notificaciones del usuario. Las alertas son
+generadas automáticamente por tres fuentes distintas:
+
+\begin{enumerate}
+  \item \textbf{Superación de presupuesto:} \campo{checkBudgetAlerts()}
+    crea una alerta cuando el gasto de una categoría alcanza el 90\%
+    del presupuesto asignado.
+  \item \textbf{Vencimiento de deuda:} \campo{checkDebtAlerts()} crea
+    una alerta cuando la siguiente fecha de pago de una deuda activa
+    está a tres días o menos.
+  \item \textbf{Recordatorio diario:} El cron job de recordatorios
+    crea una alerta de gestión cada día a las 12:00 para usuarios que
+    tengan activada esta preferencia.
+\end{enumerate}
+
+El endpoint \endpoint{PUT /mark-all-read} marca todas las alertas
+no leídas del usuario como leídas en una sola operación.
+
+\subsubsection{Módulo de recomendaciones (\texttt{/api/recommendations})}
+
+Retorna recomendaciones financieras personalizadas para el período
+indicado. La respuesta contiene cuatro secciones: un resumen textual,
+una lista de riesgos identificados, recomendaciones accionables y
+acciones sugeridas priorizadas. La generación sigue el pipeline
+descrito en la sección \ref{sec:srv-recomendaciones}.
+
+% ──────────────────────────────────────────────────────────────
+\subsection{Servicios especializados}
+% ──────────────────────────────────────────────────────────────
+
+\subsubsection{Servicio OCR local (\texttt{ocrService.js})}
+
+Este servicio actúa como puente entre el controlador de tickets y el
+script Python \archivo{ocr/LecturaTickets\_v2.py}. Recibe la ruta de
+la imagen en disco y ejecuta el script como subproceso mediante
+\campo{child\_process.spawn()}, pasando la ruta y el identificador
+del usuario como argumentos. El proceso tiene un timeout configurable
+(variable \campo{OCR\_TIMEOUT}) para evitar bloqueos ante imágenes
+problemáticas.
+
+El script Python implementa el mismo pipeline de seis etapas descrito
+en la sección de la aplicación móvil: preprocesamiento con OpenCV,
+extracción con Tesseract, evaluación de confianza y, si las dos
+compuertas de calidad no se superan, señalización al servicio web
+como respaldo.
+
+\subsubsection{Servicio OCR web (\texttt{ocrWebService.js})}
+
+\label{sec:srv-ocr-web}
+
+Este servicio maneja los casos en que el OCR local no es suficiente o
+cuando el cliente web envía directamente una imagen o PDF. Su flujo es:
+
+\begin{enumerate}
+  \item Codifica la imagen en base64 y la envía a la API de
+    \textbf{Google Cloud Vision} para obtener el texto completo del
+    documento.
+  \item El texto extraído se envía a \textbf{Claude Haiku}
+    (\campo{claude-haiku-4-5-20251001}) con un prompt estructurado que
+    solicita la conversión del texto en bruto a un JSON con los campos:
+    \campo{nombre\_tienda}, \campo{fecha}, \campo{total} y
+    \campo{productos[]}.
+  \item El JSON retornado por el modelo se valida, se persiste en la
+    base de datos y se retorna al cliente con el mismo formato que el
+    OCR local.
+\end{enumerate}
+
+\begin{notabox}[Modelo de lenguaje utilizado]
+  El servicio utiliza \textbf{Claude Haiku} como modelo de
+  estructuración, elegido por su velocidad de respuesta (~2 s) y
+  costo reducido respecto a modelos mayores, dado que la tarea
+  se limita a transformación de texto a JSON sin razonamiento
+  complejo.
 \end{notabox}
+
+\subsubsection{Servicio de recomendaciones (\texttt{recommendationsService.js})}
+
+\label{sec:srv-recomendaciones}
+
+Para generar recomendaciones financieras personalizadas se sigue un
+pipeline con caché de quince días:
+
+\begin{enumerate}
+  \item \textbf{Consulta de caché:} Se verifica si existe un registro
+    vigente en \texttt{Recomendaciones\_Cache} para el usuario y
+    período solicitados.
+  \item \textbf{Recopilación de contexto:} Si no hay caché, el servicio
+    consulta en paralelo: ingresos, gastos por categoría, estado de
+    presupuestos y deudas activas del período.
+  \item \textbf{Llamada a la IA:} Con el contexto financiero
+    recopilado, construye un prompt y llama a Claude Haiku
+    solicitando la estructura de respuesta con riesgos,
+    recomendaciones y acciones priorizadas.
+  \item \textbf{Almacenamiento en caché:} La respuesta del modelo se
+    serializa como JSON y se guarda en \texttt{Recomendaciones\_Cache}
+    con una fecha de expiración de quince días. Las llamadas
+    subsiguientes al mismo período retornan el resultado cacheado
+    instantáneamente.
+  \item \textbf{Fallback automático:} Si la llamada a la IA falla por
+    cualquier motivo (tiempo de espera agotado, error de API, cuota
+    excedida), el servicio retorna un conjunto de recomendaciones
+    predeterminadas basadas en reglas simples calculadas localmente.
+\end{enumerate}
+
+\subsubsection{Servicio de rollover (\texttt{budgetRolloverService.js},
+  \texttt{incomeRolloverService.js})}
+
+Estos servicios implementan la lógica de \textbf{traspaso automático}
+de presupuestos e ingresos recurrentes de un mes al siguiente. El
+servicio de presupuestos copia los registros activos del mes origen al
+mes destino, omitiendo aquellos para los que ya exista un presupuesto
+en el mes destino. El servicio de ingresos hace lo propio con los
+ingresos marcados como recurrentes, creando nuevas entradas en el
+período destino con los mismos montos.
+
+Ambos servicios exponen tanto una función para un usuario individual
+—utilizada cuando el propio usuario solicita un rollover manual— como
+una función que itera sobre todos los usuarios del sistema —invocada
+por el cron job mensual.
+
+% ──────────────────────────────────────────────────────────────
+\subsection{Tareas programadas}
+% ──────────────────────────────────────────────────────────────
+
+El backend ejecuta dos trabajos programados registrados en
+\archivo{server.js} al arrancar la aplicación:
+
+\begin{table}[H]
+  \centering
+  \caption{Tareas programadas del backend FINARA}
+  \label{tab:cron-jobs}
+  \begin{tabular}{p{4.5cm} p{2.8cm} p{6.2cm}}
+    \toprule
+    \textbf{Job} & \textbf{Expresión cron} & \textbf{Acción} \\
+    \midrule
+    Recordatorios diarios & \texttt{0 12 * * *} & Crea una alerta de tipo
+      ``Recordatorio de Gestión'' para cada usuario que tenga activada
+      esta preferencia, a las 12:00 UTC. Se crea máximo una alerta por
+      usuario por día. \\[6pt]
+    Rollover mensual & \texttt{10 0 1 * *} & El primer día de cada mes a
+      las 00:10 UTC, copia los presupuestos e ingresos recurrentes del
+      mes anterior a todos los usuarios del sistema. \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{infobox}[Zona horaria de los cron jobs]
+  Los trabajos programados se ejecutan en la zona horaria del proceso
+  Node.js. Dado que el pool de MySQL usa \texttt{timezone: 'Z'} (UTC),
+  las fechas almacenadas son consistentes independientemente del
+  huso horario del servidor de despliegue.
+\end{infobox}
