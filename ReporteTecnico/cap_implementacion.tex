@@ -3,10 +3,8 @@
 %
 % Contiene la documentación técnica de la aplicación móvil Flutter.
 % Fuente: documentacion_modulos.tex (módulos principales de la app).
-% Excluidos: Introducción General y Conclusiones del documento original.
 %
 % Pendiente integrar:
-%   - Documentación de la aplicación web (React / Next.js)
 %   - Documentación del backend (Node.js + Express + MySQL)
 
 \chapter{Desarrollo e implementación}
@@ -934,16 +932,366 @@ del período, lo que disminuye las mensualidades restantes.
 \section{Aplicación web}
 % ══════════════════════════════════════════════════════════════
 
-% Pendiente: agregar documentación de la aplicación web (React / Next.js).
-% Incluir: arquitectura de componentes, rutas, integración con la API REST,
-% flujo de autenticación, vistas principales y decisiones de diseño.
 
-\begin{notabox}[Sección pendiente — Aplicación web]
-  Esta sección se encuentra pendiente de desarrollo. Aquí se integrará la
-  documentación técnica de la plataforma web construida con React /
-  Next.js, incluyendo arquitectura de componentes, rutas, consumo de la
-  API REST de FINARA y decisiones de diseño de interfaz.
+\subsection{Arquitectura general de la aplicación web}
+
+\subsubsection{Stack tecnológico}
+
+\begin{longtable}{>{\bfseries\small}p{3.5cm} p{10cm}}
+  \caption{Stack tecnológico de la aplicación web FINARA}
+  \label{tab:stack-web} \\
+  \toprule
+  Componente & Descripción \\
+  \midrule
+  \endfirsthead
+  \toprule
+  Componente & Descripción \\
+  \midrule
+  \endhead
+  Next.js + React & Framework principal del frontend web (App Router), con render híbrido y estructura modular por rutas en \archivo{src/app}. \\[4pt]
+  TypeScript & Tipado estático para componentes, servicios y modelos de datos de la capa web. \\[4pt]
+  Tailwind CSS & Sistema de utilidades para estilos y layout responsivo en paneles, tarjetas, tablas y modales. \\[4pt]
+  next-auth & Manejo de sesión/autenticación en frontend mediante \campo{SessionProvider} y \campo{useSession}. \\[4pt]
+  jsPDF + autotable & Generación local de reportes ejecutivos en PDF desde la vista de dashboard. \\[4pt]
+  xlsx & Generación local de reportes en Excel (.xlsx) con hojas de resumen y detalle. \\[4pt]
+  Node.js + Express + MySQL & Backend REST consumido por la web para operaciones transaccionales, recomendaciones y persistencia. \\[4pt]
+  OCR backend (Python/Tesseract + Vision/Claude) & Pipeline de extracción consumido por endpoints de tickets; la web integra el flujo de escaneo mediante API REST. \\[4pt]
+  Cliente HTTP centralizado & \archivo{src/lib/backendApi.ts}: inyección de token, envelope \campo{\{success, data\}}, control de errores y redirección por sesión expirada. \\
+  \bottomrule
+\end{longtable}
+
+\subsubsection{Estructura del proyecto web}
+
+La aplicación web se organiza por rutas y módulos de dominio dentro de
+\archivo{src/app/}, con componentes reutilizables y servicios desacoplados en
+\archivo{src/lib/}.
+
+\begin{lstlisting}[style=codigobase, language={},
+    caption={Estructura de directorios relevante en la aplicación web}]
+src/
+|-- app/
+|   |-- dashboard/
+|   |   |-- page.tsx                  (dashboard de analisis)
+|   |   |-- recomendaciones/page.tsx  (modulo recomendaciones)
+|   |   |-- reportes/page.tsx         (historial de reportes)
+|   |   `-- transacciones/page.tsx    (registro/consulta de movimientos)
+|   |-- api/
+|   |   `-- scan-ticket/route.ts      (endpoint OCR interno en Next)
+|   `-- components/
+|       |-- FloatingActionButton.tsx  (alta de ticket/ingresos)
+|       |-- TicketPreview.tsx         (revision de OCR)
+|       `-- ToastStack.tsx            (feedback de eventos)
+`-- lib/
+    |-- backendApi.ts                 (cliente HTTP centralizado)
+    |-- scanTicketService.ts          (servicio escaneo ticket web)
+    `-- reports/
+        |-- reportApi.ts              (API historial reportes)
+        |-- generators/pdfGenerator.ts
+        |-- generators/excelGenerator.ts
+        `-- utils/analysisUtils.ts
+\end{lstlisting}
+
+\subsubsection{Comunicación con el backend}
+
+Toda la integración de la web con backend se realiza vía \textbf{REST API}.
+El helper \campo{backendRequest()} concentra comportamiento común:
+
+\begin{itemize}
+  \item Inyección automática de \campo{Authorization: Bearer <token>}.
+  \item Parseo de envelopes en formato \campo{\{success, data, error\}}.
+  \item Manejo de errores HTTP y errores de negocio.
+  \item Redirección automática a login ante expiración de sesión.
+  \item Normalización de URL base con \campo{getBackendBaseUrl()}.
+\end{itemize}
+
+\subsubsection{Manejo de estado}
+
+La web utiliza estado local con React:
+\begin{itemize}
+  \item \campo{useState}, \campo{useEffect}, \campo{useMemo} para estado de pantalla y derivados.
+  \item Estados de carga/error por módulo (dashboard, recomendaciones, reportes, escaneo).
+  \item Estado de sesión con \campo{next-auth} y proveedor \campo{SessionWrapper}.
+\end{itemize}
+
+No se usa una librería global dedicada; el estado se modela
+por módulo y servicios.
+
+
+% ──────────────────────────────────────────────────────────────
+\subsection{Módulo de registro de tickets digitales (flujo web)}
+% ──────────────────────────────────────────────────────────────
+
+\subsubsection{Descripción general}
+
+Este módulo permite registrar tickets desde la web subiendo un archivo
+\textbf{PDF o imagen} (JPG/JPEG/PNG), procesarlo mediante backend OCR,
+revisar los datos detectados y confirmar el guardado final del ticket.
+
+\begin{notabox}
+  A diferencia del flujo móvil, en la web no existe etapa de captura con
+  cámara nativa El flujo inicia con selección de
+  archivo desde el sistema operativo.
 \end{notabox}
+
+\subsubsection*{Flujo completo de operación (web)}
+
+\begin{enumerate}
+  \item \textbf{Selección de archivo} (FAB): el usuario elige PDF/JPG/PNG.
+  \item \textbf{Escaneo OCR}: frontend envía \campo{FormData} al endpoint
+        \endpoint{/tickets/scan-web} usando \campo{scanTicketByWebFile()}.
+  \item \textbf{Previsualización}: \campo{TicketPreview} muestra imagen/PDF,
+        establecimiento, fecha, total, ítems, confianza OCR y método de extracción.
+  \item \textbf{Confirmación y guardado}: se envía payload final al endpoint
+        de persistencia (por metadata de escaneo o \endpoint{/tickets/manual}).
+\end{enumerate}
+
+\subsubsection{Validaciones implementadas}
+
+\begin{itemize}
+  \item Tipos permitidos: \campo{application/pdf}, \campo{image/jpeg},
+        \campo{image/jpg}, \campo{image/png}.
+  \item Sesión/token obligatorios para escanear y guardar.
+  \item Verificación de categorías disponibles antes de confirmar el ticket.
+  \item Validación de productos con categoría válida al guardar.
+\end{itemize}
+
+\subsubsection{Componentes y servicios principales}
+
+\begin{table}[H]
+  \centering
+  \caption{Elementos principales del módulo de ticket digital web}
+  \label{tab:modulo-ticket-web}
+  \begin{tabular}{lp{8.5cm}}
+    \toprule
+    \textbf{Componente/Servicio} & \textbf{Responsabilidad} \\
+    \midrule
+    \archivo{FloatingActionButton.tsx} &
+      Orquesta selección de archivo, invoca escaneo, gestiona edición/confirmación y ejecuta guardado final. \\
+    \archivo{TicketPreview.tsx} &
+      Renderiza previsualización del ticket (iframe para PDF o imagen), estado OCR y detalle de productos detectados. \\
+    \archivo{scanTicketService.ts} &
+      Implementa \campo{scanTicketByWebFile()} y normaliza payload OCR del backend. \\
+    \archivo{backendApi.ts} &
+      Cliente HTTP para operaciones autenticadas y manejo de errores comunes. \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsubsection{Persistencia y payload de guardado}
+
+Cuando el ticket proviene de escaneo, el frontend construye payload con:
+\begin{itemize}
+  \item datos del ticket (tienda, fecha, total),
+  \item productos editables (nombre, precio, categoría),
+  \item metadatos OCR (\campo{confianza\_ocr}, \campo{request\_id}),
+  \item imagen del ticket en base64 y MIME cuando está disponible.
+\end{itemize}
+
+\begin{lstlisting}[style=codigobase,
+    caption={Guardado final de ticket escaneado (flujo web)}]
+const payloadBody = {
+  nombre_tienda: establecimiento,
+  total: Number(calcularTotal()) || 0,
+  fecha_compra: apiDate,
+  id_categoria: items[0]?.id_categoria,
+  productos: items.map(item => ({
+    nombre_producto: item.nombre_producto,
+    precio: item.precio,
+    id_categoria: item.id_categoria,
+  })),
+  request_id: requestId || undefined,
+  confianza_ocr: scanConfidenceOcr ?? undefined,
+  imagen_ticket_base64: extractedImage.base64 || undefined,
+  imagen_ticket_mime: extractedImage.mime || undefined,
+};
+\end{lstlisting}
+
+\
+% ──────────────────────────────────────────────────────────────
+\subsection{Módulo dashboard inicial (análisis y gráficas)}
+% ──────────────────────────────────────────────────────────────
+
+\subsubsection{Descripción general}
+
+El dashboard web es una vista de análisis financiero para comprensión rápida
+por período. Integra KPIs, tendencias y distribución por categoría
+para apoyar lectura analítica (más orientado a análisis).
+
+\subsubsection{Objetivo}
+
+Concentrar indicadores financieros del usuario en una sola vista para detectar
+comportamientos de gasto/ingreso, balance y uso de presupuesto.
+
+\subsubsection{Carga de datos y agregaciones}
+
+La función \campo{loadDashboardData()} consume en paralelo:
+\begin{itemize}
+  \item \endpoint{/dashboard/summary}
+  \item \endpoint{/incomes}
+  \item \endpoint{/expenses}
+  \item \endpoint{/debts}
+  \item \endpoint{/budgets}
+  \item \endpoint{/categories}
+\end{itemize}
+
+Con esos datos se calculan:
+\begin{itemize}
+  \item ingresos y gastos del período,
+  \item deuda activa y deuda global,
+  \item porcentaje de presupuesto utilizado,
+  \item series semanales (mes) y mensuales (año),
+  \item agregación de gastos por categoría.
+\end{itemize}
+
+\subsubsection{Gráficas implementadas}
+
+\begin{table}[H]
+  \centering
+  \caption{Gráficas del dashboard web y su propósito analítico}
+  \label{tab:graf-dashboard-web}
+  \begin{tabular}{lp{8.5cm}}
+    \toprule
+    \textbf{Gráfica} & \textbf{Uso analítico} \\
+    \midrule
+    \campo{BarChart Ingresos vs Gastos} &
+      Comparar comportamiento financiero por semana (modo mes) o por mes (modo año). \\
+    \campo{Flujo de ingresos} &
+      Visualizar el flujo del dinero del usuario mes con mes. \\
+    \campo{BarChart Gastos por categoría} &
+      Identificar categorías con mayor concentración de egresos. \\
+    \campo{PieChart de distribución} &
+      Leer balance general y estado de presupuesto de forma rápida. \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsubsection{Interacción funcional}
+
+\begin{enumerate}
+  \item El usuario selecciona mes y año.
+  \item Aplica filtros y recarga la data del período.
+  \item Puede cambiar entre vista mensual y anual.
+  \item Puede disparar generación de PDF/Excel con el período activo.
+\end{enumerate}
+
+\subsubsection{Consideraciones técnicas}
+
+\begin{itemize}
+  \item Uso de \campo{Promise.all} para mejorar tiempo de carga inicial.
+  \item Uso de \campo{useMemo} para derivados de series y categoría.
+  \item Manejo explícito de estados \campo{loadingData} y \campo{loadError}.
+  \item Revalidación por eventos de actualización de ingresos
+        (\campo{finara:income-updated}).
+\end{itemize}
+
+
+% ──────────────────────────────────────────────────────────────
+\subsection{Módulo de generación de reportes}
+% ──────────────────────────────────────────────────────────────
+
+\subsubsection{Descripción general}
+
+La aplicación web se manejan reportes:
+  \textbf{Generación local} desde dashboard (descarga inmediata PDF/Excel).
+  
+
+
+\subsubsection{Generación de PDF y Excel desde dashboard}
+
+Desde \archivo{src/app/dashboard/page.tsx}:
+\begin{itemize}
+  \item \campo{handleDownloadPDF()} invoca
+        \campo{generateExecutiveSummaryPDF(...)}.
+  \item \campo{handleDownloadExcel()} invoca
+        \campo{generateExecutiveSummaryExcel(...)}.
+\end{itemize}
+
+Ambos incluyen contexto del período filtrado y recomendaciones del endpoint
+\endpoint{/recommendations} para enriquecer resumen ejecutivo.
+
+
+
+
+\subsubsection{Consideraciones técnicas}
+
+\begin{itemize}
+  \item En dashboard se valida que existan movimientos en el período antes de generar archivo.
+
+\end{itemize}
+
+
+% ──────────────────────────────────────────────────────────────
+\subsection{Módulo de recomendaciones}
+% ──────────────────────────────────────────────────────────────
+
+\subsubsection{Descripción general}
+
+Este módulo muestra recomendaciones financieras del backend para un período
+(mes/año), integrando riesgos, recomendaciones y acciones sugeridas.
+
+\subsubsection{Objetivo}
+
+Traducir el comportamiento financiero del usuario en recomendaciones accionables
+para mejor control de gastos y balance mensual.
+
+\subsubsection{Pantalla principal y flujo}
+
+Implementado en \archivo{src/app/dashboard/recomendaciones/page.tsx}:
+
+\begin{enumerate}
+  \item El sistema toma el periodo actual.
+  \item La pantalla consulta en paralelo \endpoint{/recommendations},
+        \endpoint{/incomes} y \endpoint{/expenses}.
+  \item Se calculan métricas del período (ingresos fijos, ingresos únicos,
+        ingresos totales, gastos y balance).
+  \item Se renderizan tarjetas de resumen, riesgos y acciones priorizadas.
+\end{enumerate}
+
+\subsubsection{Estructura de datos mostrada}
+
+\begin{itemize}
+  \item \campo{resumen}
+  \item \campo{riesgos[]}
+  \item \campo{recomendaciones[]}
+  \item \campo{acciones\_sugeridas[]}
+  \item \campo{nota}
+\end{itemize}
+
+\subsubsection{Integración con otros módulos}
+
+El módulo de recomendaciones no solo se consulta en su pantalla propia;
+también se reutiliza en el dashboard para enriquecer contenido de reportes
+PDF/Excel (resumen, riesgos y sugerencias).
+
+\subsubsection{Consideraciones técnicas}
+
+\begin{itemize}
+  \item Normalización defensiva del payload para soportar variantes
+        \campo{\{data: ...\}} o payload directo.
+  \item Redirección a login ante errores de autenticación (401/JWT).
+  \item Estados diferenciados de \campo{loading}, \campo{refreshing} y \campo{error}.
+\end{itemize}
+
+
+% ──────────────────────────────────────────────────────────────
+\subsection{Diferencias clave respecto a la aplicación móvil}
+% ──────────────────────────────────────────────────────────────
+
+\begin{table}[H]
+  \centering
+  \caption{Comparativa funcional breve: móvil vs web (módulos clave)}
+  \label{tab:comparativa-web-movil}
+  \begin{tabular}{p{3.2cm}p{4.8cm}p{4.8cm}}
+    \toprule
+    \textbf{Módulo} & \textbf{Móvil} & \textbf{Web} \\
+    \midrule
+    Escaneo ticket & Flujo centrado en cámara y múltiples capturas. & Flujo centrado en subida de archivo (PDF/imagen) + revisión en preview. \\
+    Dashboard & Consulta rapida . & Énfasis en análisis visual y comprensión por período con gráficas más amplias. \\
+    Reportes & ---. & Generación local PDF/Excel + gestión de historial con descarga y correo. \\
+    Recomendaciones & ---. & Módulo dedicado con filtros mes/año y métricas calculadas por período. \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 
 % ══════════════════════════════════════════════════════════════
