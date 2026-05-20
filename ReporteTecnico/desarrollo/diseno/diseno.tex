@@ -29,17 +29,17 @@ Esta arquitectura sirve como guía para el desarrollo, mantenimiento y evolució
     \item \textbf{Capa de presentación}
     La capa de presentación (app móvil y web) se encarga de la interacción con el usuario y de enviar/recibir solicitudes al backend mediante HTTP/HTTPS. 
     En una arquitectura n-tier, esta capa debe permanecer delgada, delegando la lógica de negocio a capas inferiores; es el enfoque recomendado para aplicaciones 
-    empresariales y está alineado con las guías de N-tier de Azure y con la organización en capas para aplicaciones empresariales descrita por Fowler. \cite{ArquitecturaPresenctacion}
+    empresariales y está alineado con las guías de N-tier de Azure y con la organización en capas para aplicaciones empresariales descrita por Fowler \cite{ArquitecturaPresenctacion}.
 
     \item \textbf{Capa de aplicación o control}
     La capa de aplicación expone una API (REST) que coordina flujos entre la interfaz y los módulos de negocio (procesamiento de tickets, categorización, reportes), 
     maneja sesiones/autenticación y orquesta transacciones. El estilo REST promueve interfaces uniformes, desacoplamiento cliente-servidor y escalabilidad del sistema, 
-    según la tesis de Roy T. Fielding; en seguridad de endpoints y sesiones, se siguen lineamientos de OWASP ASVS. \cite{Arquitectura}
+    según la tesis de Roy T. Fielding; en seguridad de endpoints y sesiones, se siguen lineamientos de OWASP ASVS \cite{Arquitectura}.
 
     \item \textbf{Capa de lógica de negocio}
     Aquí residen los casos de uso y las reglas del dominio: validación de datos extraídos del ticket, normalización, categorización basada en reglas (regex/diccionarios) y 
     generación de reportes. Los patrones de enterprise application recomiendan encapsular la lógica de dominio en esta capa para aislarla de presentación y datos, facilitando 
-    pruebas, evolución y reuso. \cite{ArquitecturaNegocio}
+    pruebas, evolución y reuso \cite{ArquitecturaNegocio}.
 
     \item \textbf{Capa de datos}
     La capa de datos se encarga del almacenamiento, recuperación y actualización de la información del sistema.
@@ -113,7 +113,7 @@ lectura y filtrado, especialmente en la generación de reportes y estadísticas 
     
 El diseño de la base de datos se normalizó hasta la Tercera Forma Normal (3FN), garantizando que cada tabla contenga datos atómicos, dependientes únicamente de la clave 
 primaria, y que no existan dependencias transitivas.
-De acuerdo con Silberschatz et al. \cite{Normalización}, la normalización “reduce la redundancia y evita anomalías en las operaciones de inserción, actualización y eliminación de datos”.
+De acuerdo con Silberschatz et al \cite{Normalización}., la normalización “reduce la redundancia y evita anomalías en las operaciones de inserción, actualización y eliminación de datos”.
 
 En el sistema desarrollado:
 
@@ -147,7 +147,7 @@ Este proceso asegura una estructura coherente, favorece la integridad referencia
     \item \textbf{Diagramas de secuencia}
     
     Un diagrama de secuencia muestra cómo los objetos interactúan en un escenario particular de un caso de uso,
-    detallando el orden de los mensajes intercambiados entre ellos a lo largo del tiempo. \cite{DIagramaSecuencia}
+    detallando el orden de los mensajes intercambiados entre ellos a lo largo del tiempo \cite{DIagramaSecuencia}.
     
     \begin{figure}[H]
     \centering
