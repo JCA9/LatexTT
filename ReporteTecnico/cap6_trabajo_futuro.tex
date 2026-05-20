@@ -1,56 +1,26 @@
 \chapter{Trabajo Futuro}
+El sistema de gestión financiera personal desarrollado en el presente trabajo terminal fue concluido satisfactoriamente, cumpliendo con los objetivos planteados en la primera etapa del proyecto. La plataforma web, la aplicación móvil y el backend se encuentran funcionales e integrados, contando además con un módulo de reconocimiento óptico de caracteres que combina procesamiento local con servicios de visión artificial externos para garantizar una extracción de datos confiable incluso en condiciones adversas de captura.
 
-Debido a que ya se ha completado la fase de diseño del sistema, el frontend de la plataforma WEB y
-con las primeras pruebas del OCR, el siguiente paso es avanzar hacia la implementación completa del 
-backend junto con el desarrollo de la app móvil y la integración de ambos componentes. Además, 
-se busca optimizar el rendimiento del sistema y mejorar la experiencia del usuario mediante pruebas y 
-retroalimentación continua.
+\bigskip
 
-Por otra parte, buscaremos mejorar la precisión del reconocimiento de texto en los tickets, explorando
-nuevas técnicas de procesamiento de imágenes y algoritmos. Asimismo, se planea implementar funcionalidades 
-como la generación de reportes financieros personalizados y la integración con servicios gratuitos
-externos para ampliar las capacidades del sistema.
+No obstante, durante el desarrollo se identificaron funcionalidades que, por restricciones de tiempo propias del alcance del trabajo terminal, no pudieron ser incorporadas en esta versión, pero que representan oportunidades de mejora relevantes para iteraciones futuras del sistema.
 
-Nos enfocaremos en la incorporación de estos componentes para lograr un sistema robusto y eficiente que 
-cumpla con los objetivos planteados. Además, se considerará la escalabilidad del sistema para futuras
-actualizaciones y mejoras, asegurando que la plataforma pueda adaptarse a las necesidades cambiantes 
-de los usuarios.
+\bigskip
 
-Planeamos tener el sistema listo a mas tardar a principios de junio, para buscar retroalimentación antes
-de la entrega final del proyecto en Julio de 2026.
+En primer lugar, se contempla la implementación de \textbf{planes financieros compartidos}, que permitan a parejas o grupos de convivencia gestionar sus finanzas de manera conjunta dentro de la misma plataforma, con vistas diferenciadas por usuario y consolidadas por grupo. Esta funcionalidad ampliaría considerablemente el alcance de la aplicación hacia nuevos perfiles de usuario.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\linewidth]{./images/CronogramaArmando1.JPG}
-    \caption{Cronograma Pt.1 Acevedo Martinez Armando - Trabajo Futuro}
-\end{figure}
+\bigskip
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\linewidth]{./images/CronogramaArmando2.JPG}
-    \caption{Cronograma Pt.2 Acevedo Martinez Armando - Trabajo Futuro}
-\end{figure}
+En segundo lugar, se propone el desarrollo de un \textbf{módulo de historial y reportes anuales} accesible desde la plataforma web, que ofrezca al usuario una visión longitudinal de su comportamiento financiero, con comparativas entre periodos y exportación de reportes en formatos estándar. Si bien la aplicación actual permite visualizar datos por mes, semana y año, un historial persistente y descargable elevaría el valor del seguimiento financiero a largo plazo.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\linewidth]{./images/CronogramaArmando3.JPG}
-    \caption{Cronograma Pt.3 Acevedo Martinez Armando - Trabajo Futuro}
-\end{figure}
+\bigskip
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\linewidth]{./images/CronogramaJesus1.JPG}
-    \caption{Cronograma Pt.1 Cadenas Acevedo Jesus Alejandro - Trabajo Futuro}
-\end{figure}
+Asimismo, se considera la \textbf{integración con Google Identity} para el inicio de sesión y la validación de cuentas de usuario. Esta integración reduciría la fricción en el proceso de registro, mejoraría la seguridad mediante autenticación delegada y es coherente con las tecnologías ya empleadas en el stack actual, particularmente en el frontend desarrollado con React y en la aplicación móvil construida con Flutter.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\linewidth]{./images/CronogramaJesus2.JPG}
-    \caption{Cronograma Pt.2 Cadenas Acevedo Jesus Alejandro - Trabajo Futuro}
-\end{figure}
+\bigskip
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\linewidth]{./images/CronogramaJesus3.JPG}
-    \caption{Cronograma Pt.3 Cadenas Acevedo Jesus Alejandro - Trabajo Futuro}
-\end{figure}
+Por otro lado, se plantea la \textbf{publicación de la aplicación móvil en la Google Play Store y la App Store}, lo cual requeriría atravesar los procesos de revisión y certificación correspondientes, así como ajustes en materia de políticas de privacidad y manejo de datos financieros del usuario. Este paso convertiría al sistema en un producto accesible al público general y no únicamente a usuarios de entornos de prueba.
+
+\bigskip
+
+Finalmente, dado que el módulo de OCR demostró métricas satisfactorias de precisión pero delega a servicios externos los casos de mayor dificultad, se contempla como trabajo futuro la \textbf{exploración de modelos de reconocimiento especializados en documentos fiscales mexicanos}, tales como tickets de punto de venta y facturas electrónicas, con el objetivo de reducir la dependencia de servicios de terceros y optimizar los tiempos de procesamiento en escenarios de alto volumen.
