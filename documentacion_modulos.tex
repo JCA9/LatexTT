@@ -1,0 +1,1173 @@
+% ============================================================
+%  FINARA — Documentación Técnica de Módulos Principales
+%  Trabajo Terminal — Ingeniería en Sistemas Computacionales
+%  IPN UPIICSA
+%  Fecha: Mayo 2026
+%
+%  Compilar con:
+%    pdflatex documentacion_modulos.tex
+%    pdflatex documentacion_modulos.tex   (segunda pasada para índice)
+% ============================================================
+
+\documentclass[12pt, letterpaper]{article}
+
+% ── Codificación y lenguaje ──────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish, mexico]{babel}
+
+% ── Geometría ────────────────────────────────────────────────
+\usepackage{geometry}
+\geometry{top=2.5cm, bottom=2.5cm, left=3cm, right=2.5cm}
+
+% ── Tipografía y estilo ──────────────────────────────────────
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{parskip}         % Espacio entre párrafos sin sangría
+\setlength{\parindent}{0pt}
+
+% ── Colores ───────────────────────────────────────────────────
+\usepackage{xcolor}
+\definecolor{azulipn}{RGB}{0, 66, 124}
+\definecolor{verdefinara}{RGB}{19, 133, 61}
+\definecolor{gristexto}{RGB}{60, 60, 60}
+\definecolor{grisclaro}{RGB}{245, 247, 250}
+\definecolor{bordesutil}{RGB}{200, 210, 220}
+\definecolor{rojofinara}{RGB}{181, 24, 24}
+\definecolor{codebg}{RGB}{248, 249, 250}
+\definecolor{codeframe}{RGB}{210, 215, 220}
+\definecolor{commentcolor}{RGB}{80, 120, 80}
+\definecolor{keywordcolor}{RGB}{0, 80, 160}
+\definecolor{stringcolor}{RGB}{140, 40, 120}
+
+% ── Código fuente ─────────────────────────────────────────────
+\usepackage{listings}
+\lstdefinelanguage{Dart}{
+  keywords={import, class, extends, implements, override, final, const,
+            var, void, int, double, bool, String, List, Map, Future,
+            async, await, return, if, else, for, while, null, true,
+            false, new, this, super, get, set, required, late, static},
+  keywordstyle=\color{keywordcolor}\bfseries,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{commentcolor}\itshape,
+  stringstyle=\color{stringcolor},
+  morestring=[b]',
+  morestring=[b]",
+  sensitive=true,
+}
+\lstdefinestyle{codestyle}{
+  backgroundcolor=\color{codebg},
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  breakatwhitespace=false,
+  keepspaces=true,
+  frame=single,
+  rulecolor=\color{codeframe},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  numbersep=6pt,
+  xleftmargin=1.2em,
+  xrightmargin=0.5em,
+  aboveskip=0.7em,
+  belowskip=0.7em,
+  showstringspaces=false,
+  tabsize=2,
+}
+\lstset{style=codestyle, language=Dart}
+
+% ── Tablas ────────────────────────────────────────────────────
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{tabularx}
+
+% ── Gráficos y cajas ──────────────────────────────────────────
+\usepackage{graphicx}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% Caja informativa (azul)
+\newtcolorbox{infobox}[1][]{
+  colback=azulipn!5, colframe=azulipn!50,
+  fonttitle=\bfseries\small, title=#1,
+  left=6pt, right=6pt, top=4pt, bottom=4pt,
+  breakable,
+}
+
+% Caja de nota técnica (verde)
+\newtcolorbox{notabox}[1][Nota técnica]{
+  colback=verdefinara!5, colframe=verdefinara!50,
+  fonttitle=\bfseries\small, title=#1,
+  left=6pt, right=6pt, top=4pt, bottom=4pt,
+  breakable,
+}
+
+% ── Listas ────────────────────────────────────────────────────
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=1.5em, topsep=3pt, itemsep=2pt}
+\setlist[enumerate]{leftmargin=1.8em, topsep=3pt, itemsep=2pt}
+
+% ── Encabezados y secciones ───────────────────────────────────
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+
+\titleformat{\section}
+  {\Large\bfseries\color{azulipn}}{\thesection.}{0.6em}{}
+  [\vspace{-0.3em}\textcolor{azulipn}{\rule{\textwidth}{0.5pt}}\vspace{0.2em}]
+
+\titleformat{\subsection}
+  {\normalsize\bfseries\color{gristexto}}{\thesubsection}{0.5em}{}
+
+\titleformat{\subsubsection}
+  {\small\bfseries\itshape\color{gristexto}}{}{0em}{}
+
+\titlespacing*{\section}{0pt}{1.4em}{0.6em}
+\titlespacing*{\subsection}{0pt}{1em}{0.4em}
+\titlespacing*{\subsubsection}{0pt}{0.8em}{0.3em}
+
+% ── Encabezado / pie ──────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{azulipn}{\textbf{FINARA}} — Documentación Técnica}
+\fancyhead[R]{\small\textcolor{gray}{IPN UPIICSA · 2026}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Hipervínculos ─────────────────────────────────────────────
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=azulipn,
+  urlcolor=azulipn,
+  pdftitle={FINARA - Documentación Técnica},
+  pdfauthor={Jesús Cadenas},
+}
+
+% ── Macros ────────────────────────────────────────────────────
+\newcommand{\archivo}[1]{\texttt{\small\color{gristexto}#1}}
+\newcommand{\endpoint}[1]{\texttt{\small\color{azulipn}#1}}
+\newcommand{\campo}[1]{\texttt{#1}}
+
+
+% ============================================================
+\begin{document}
+
+% ── PORTADA ──────────────────────────────────────────────────
+\begin{titlepage}
+  \centering
+  \vspace*{1.5cm}
+
+  % Logo institucional
+  {\Large\bfseries\color{azulipn}
+    INSTITUTO POLITÉCNICO NACIONAL\\[0.3em]
+    \normalsize Unidad Profesional Interdisciplinaria de\\
+    Ingeniería y Ciencias Sociales y Administrativas\\[0.2em]
+    UPIICSA
+  }\par
+  \vspace{0.5cm}
+  \textcolor{azulipn}{\rule{0.7\textwidth}{0.8pt}}\par
+  \vspace{0.4cm}
+  {\small Ingeniería en Sistemas Computacionales — Trabajo Terminal}\par
+
+  \vspace{1.6cm}
+  {\Huge\bfseries\color{verdefinara} FINARA}\par
+  \vspace{0.3cm}
+  {\large\color{gristexto} Aplicación Móvil de Finanzas Personales}\par
+  \vspace{1.2cm}
+  \textcolor{bordesutil}{\rule{0.5\textwidth}{0.4pt}}\par
+  \vspace{0.8cm}
+
+  {\LARGE\bfseries Documentación Técnica\\[0.2em]
+   \large\normalfont Módulos Principales de la Aplicación Móvil}\par
+
+  \vspace{1.4cm}
+  \begin{tabular}{rl}
+    \textbf{Integrante:}   & Jesús Cadenas \\[4pt]
+    \textbf{Director:}     & Trabajo Terminal \\[4pt]
+    \textbf{Framework:}    & Flutter SDK \textasciicircum 3.6.0 / Dart \\[4pt]
+    \textbf{Backend:}      & Node.js + Express + MySQL \\[4pt]
+    \textbf{OCR:}          & Tesseract + Google Cloud Vision + Claude \\[4pt]
+    \textbf{Fecha:}        & Mayo 2026 \\
+  \end{tabular}
+
+  \vfill
+  \textcolor{gray}{\footnotesize
+    Este documento cubre únicamente los módulos más representativos
+    de la aplicación. El sistema completo incluye módulos adicionales
+    de autenticación, transacciones, notificaciones, perfil y onboarding.
+  }
+\end{titlepage}
+
+% ── ÍNDICE ───────────────────────────────────────────────────
+\tableofcontents
+\newpage
+
+
+% ============================================================
+\section{Introducción General}
+% ============================================================
+
+\subsection{Objetivo de la aplicación}
+
+FINARA es una aplicación móvil de finanzas personales desarrollada como
+Trabajo Terminal en la carrera de Ingeniería en Sistemas Computacionales del
+IPN UPIICSA. Su objetivo principal es proporcionar a los usuarios mexicanos
+una herramienta digital integral para el registro, análisis y control de sus
+finanzas personales, con énfasis en la automatización y la inteligencia
+aplicada al gasto cotidiano.
+
+\subsection{Problemática que resuelve}
+
+La ausencia de hábitos financieros saludables en la población mexicana es
+una problemática documentada: la mayoría de las personas no lleva un registro
+de sus gastos, no establece presupuestos mensuales y desconoce con precisión
+el estado de sus deudas. FINARA ataca este problema ofreciendo:
+
+\begin{itemize}
+  \item Registro automatizado de gastos mediante lectura OCR de tickets de compra.
+  \item Control de presupuestos por categoría con alertas de exceso.
+  \item Gestión financiera de deudas con cálculo de amortización francesa.
+  \item Categorización inteligente de productos usando historial del usuario.
+  \item Panel de inicio con resumen financiero visual del mes en curso.
+\end{itemize}
+
+\subsection{Enfoque y alcance del sistema}
+
+La aplicación está orientada a usuarios con teléfonos Android que realizan
+compras cotidianas en establecimientos que emiten tickets físicos. El flujo
+principal consiste en:
+
+\begin{enumerate}
+  \item El usuario fotografía uno o varios tickets de compra.
+  \item El sistema extrae texto mediante OCR con Tesseract y, como respaldo,
+        Google Cloud Vision junto con Claude.
+  \item Los productos detectados se categorizan automáticamente.
+  \item El gasto queda registrado asociado a una categoría y fecha.
+  \item Los presupuestos y alertas se actualizan en tiempo real.
+\end{enumerate}
+
+\begin{infobox}[Alcance de este documento]
+  La aplicación FINARA cuenta con más módulos y funcionalidades, incluyendo
+  autenticación, transacciones manuales, notificaciones push, perfil de
+  usuario y proceso de onboarding. \textbf{Sin embargo, este documento
+  documenta únicamente los cuatro módulos más relevantes y representativos
+  del funcionamiento principal del sistema}: escaneo de tickets, categorías,
+  presupuestos y deudas. Esto se realiza para mantener una documentación
+  clara, resumida y enfocada en los componentes críticos de la aplicación.
+\end{infobox}
+
+
+% ============================================================
+\section{Arquitectura General de la Aplicación}
+% ============================================================
+
+\subsection{Stack tecnológico}
+
+\begin{longtable}{>{\bfseries\small}p{3.5cm} p{9.5cm}}
+  \toprule
+  Componente & Descripción \\
+  \midrule
+  \endhead
+  Flutter SDK & Framework principal para la aplicación móvil multiplataforma.
+    Versión \textasciicircum 3.6.0. Target: Android. \\[4pt]
+  Dart & Lenguaje de programación tipado para el frontend móvil. \\[4pt]
+  Node.js + Express & Backend REST API. Maneja autenticación JWT, lógica de
+    negocio, invocación del pipeline OCR y persistencia. \\[4pt]
+  MySQL & Base de datos relacional con tablas para usuarios, categorías,
+    tickets, productos, presupuestos, deudas y alertas. \\[4pt]
+  Python 3 (Tesseract) & Script \archivo{LecturaTickets\_v2.py} invocado
+    como subproceso por Node.js. Ejecuta el pipeline OCR completo. \\[4pt]
+  Google Cloud Vision & API de visión por computadora usada como respaldo
+    cuando la confianza de Tesseract es insuficiente. \\[4pt]
+  Claude Haiku & Modelo de lenguaje usado para estructurar el texto extraído
+    por Vision en JSON de productos. \\[4pt]
+  Firebase Crashlytics & Monitoreo de errores y excepciones en producción. \\[4pt]
+  SharedPreferences & Almacenamiento local del token JWT y estado de sesión. \\
+  \bottomrule
+\end{longtable}
+
+\subsection{Estructura del proyecto Flutter}
+
+El proyecto sigue una arquitectura \textbf{feature-first}: cada módulo
+funcional reside en su propio directorio dentro de \archivo{lib/features/},
+con sus propias pantallas, servicios y widgets. El núcleo compartido se
+ubica en \archivo{lib/core/}.
+
+\begin{lstlisting}[language={}, numbers=none, frame=none, backgroundcolor=\color{white}]
+lib/
+├── core/
+│   ├── constants/
+│   │   ├── app_colors.dart       (paleta global de colores)
+│   │   └── api_constants.dart    (URLs de endpoints)
+│   ├── models/
+│   │   └── finance_models.dart   (modelos: Budget, Debt, Category…)
+│   └── services/
+│       └── api_service.dart      (cliente HTTP centralizado)
+└── features/
+    ├── scan/          (escaneo OCR de tickets)
+    ├── categories/    (gestión de categorías)
+    ├── budgets/       (presupuestos mensuales)
+    ├── debts/         (deudas e intereses)
+    ├── transactions/  (gastos e ingresos)
+    ├── home/          (pantalla principal)
+    ├── auth/          (login, registro)
+    ├── notifications/ (alertas y configuración)
+    └── profile/       (perfil de usuario)
+\end{lstlisting}
+
+\subsection{Comunicación con el backend}
+
+Toda la comunicación entre la aplicación móvil y el backend se realiza
+mediante \textbf{API REST} sobre HTTPS. El cliente HTTP centralizado
+\campo{ApiService} (singleton) gestiona:
+
+\begin{itemize}
+  \item Inyección automática del token JWT en el header \campo{Authorization}.
+  \item Decodificación de respuestas en formato \campo{\{success, data\}}.
+  \item Timeouts configurables: 30 segundos para peticiones normales,
+        60 segundos para el endpoint OCR.
+  \item Manejo de errores HTTP (400, 401, 403, 404, 409, 500).
+  \item Subida de imágenes mediante \campo{multipart/form-data}.
+\end{itemize}
+
+La URL base del backend es: \endpoint{https://documents.digitaltax-analytics.com/finara/api}
+
+\subsection{Manejo de estado}
+
+La aplicación utiliza el patrón \textbf{StatefulWidget + setState} de Flutter
+sin gestores de estado globales. Cada pantalla administra su propio estado
+local. La capa de servicios (\campo{*Service}) actúa como intermediaria entre
+la UI y el backend, abstrayendo la lógica HTTP.
+
+\begin{notabox}
+  No se utilizan paquetes como Provider, Riverpod o Bloc. El estado es local
+  a cada widget. La comunicación entre pantallas se realiza mediante valores
+  de retorno en \campo{Navigator.push} (\campo{result == true}) que disparan
+  recargas en la pantalla padre.
+\end{notabox}
+
+\subsection{Paleta de colores del sistema}
+
+\begin{tabular}{lll}
+  \toprule
+  \textbf{Nombre} & \textbf{Hex} & \textbf{Uso} \\
+  \midrule
+  \campo{prussianBlue} & \#0f172a & Color primario, textos, AppBar \\
+  \campo{seaGreen}     & \#13853d & Ingresos, éxito, indicadores positivos \\
+  \campo{mahoganyRed}  & \#b51818 & Gastos, errores, alertas críticas \\
+  \campo{platinum}     & \#f1f5f9 & Fondo de pantallas \\
+  \campo{white}        & \#ffffff & Superficies de tarjetas \\
+  \bottomrule
+\end{tabular}
+
+
+% ============================================================
+\section{Módulo de Escaneo de Tickets (OCR)}
+% ============================================================
+
+\subsection{Descripción general}
+
+El módulo de escaneo es el componente más diferenciador de FINARA. Permite
+al usuario fotografiar uno o varios tickets de compra y extraer automáticamente
+los productos, precios, tienda y total mediante un pipeline de OCR de múltiples
+etapas. El resultado alimenta directamente el registro de gastos y el control
+de presupuestos.
+
+\subsubsection{Flujo completo de operación}
+
+\begin{enumerate}
+  \item \textbf{Captura} (\campo{ScanTicketScreen}): El usuario activa la
+    cámara trasera y captura entre 1 y 5 fotografías del ticket.
+  \item \textbf{Previsualización} (\campo{ScanPreviewScreen}): Carrusel de
+    imágenes con opción de eliminar, añadir más fotos o confirmar.
+  \item \textbf{Procesamiento} (\campo{ScanProcessingScreen}): Las imágenes
+    se suben al backend vía \campo{multipart/form-data}. El backend invoca el
+    script Python OCR y devuelve el JSON estructurado.
+  \item \textbf{Resultado} (\campo{ScanResultScreen}): El usuario revisa,
+    edita o elimina los productos detectados antes de guardar el gasto.
+\end{enumerate}
+
+\subsection{Pantallas del módulo}
+
+\subsubsection{ScanTicketScreen — Captura de imágenes}
+
+Utiliza el plugin \campo{camera} para inicializar la cámara trasera con
+resolución máxima (\campo{ResolutionPreset.max}) en formato JPEG.
+
+\begin{lstlisting}
+// Inicialización de cámara con permiso y resolución
+Future<void> _initializeCamera() async {
+  final cameras = await availableCameras();
+  _controller = CameraController(
+    cameras.first,
+    ResolutionPreset.max,
+    imageFormatGroup: ImageFormatGroup.jpeg,
+  );
+  await _controller.initialize();
+}
+\end{lstlisting}
+
+Características relevantes:
+\begin{itemize}
+  \item Máximo de 5 imágenes por ticket para controlar el tamaño del payload.
+  \item Visualización en tiempo real del encuadre con guía superpuesta
+        (CustomPainter).
+  \item Botón de flash (\campo{FlashMode.torch}) para ambientes oscuros.
+  \item Galería inferior deslizable con las fotos capturadas y botón de
+        eliminación individual.
+\end{itemize}
+
+\subsubsection{ScanPreviewScreen — Revisión previa}
+
+Muestra las imágenes capturadas en un \campo{PageView} con navegación
+manual. El usuario puede:
+
+\begin{itemize}
+  \item Eliminar la imagen actual con confirmación.
+  \item Regresar a la cámara para añadir más fotos (respeta el límite de 5).
+  \item Confirmar el lote de imágenes y pasar al procesamiento.
+\end{itemize}
+
+\subsubsection{ScanProcessingScreen — Ejecución OCR}
+
+Es la pantalla de espera durante el procesamiento. Muestra 6 pasos animados
+que orientan al usuario sobre el progreso:
+
+\begin{enumerate}[label=\arabic*.]
+  \item Preparando imágenes
+  \item Subiendo al servidor
+  \item Ejecutando OCR
+  \item Extrayendo texto
+  \item Identificando productos
+  \item Calculando totales
+\end{enumerate}
+
+La petición al backend se realiza mediante \campo{TicketsService.scanTicket()}:
+
+\begin{lstlisting}
+// Subida multipart al endpoint POST /api/tickets/scan
+Future<Map<String, dynamic>> scanTicket(List<String> imagePaths) async {
+  return await _apiService.postMultipart(
+    ApiConstants.ticketsScan,
+    imagePaths,
+  );
+}
+\end{lstlisting}
+
+Si el OCR falla, la pantalla presenta un estado de error con botones para
+reintentar o cancelar (regresa al inicio sin persistir nada).
+
+\subsubsection{ScanResultScreen — Revisión y guardado}
+
+Muestra los productos extraídos en una lista editable. El usuario puede:
+
+\begin{itemize}
+  \item Editar nombre, precio y categoría de cada producto.
+  \item Eliminar productos no deseados.
+  \item Añadir productos manualmente que no fueron detectados.
+  \item Cambiar la fecha de la compra con un \campo{DatePicker}.
+  \item Ver la confianza OCR del escaneo (indicador verde/naranja).
+  \item Guardar el gasto completo.
+\end{itemize}
+
+\begin{lstlisting}
+// Guardado del gasto con productos extraídos
+Future<void> _saveExpense() async {
+  await _expensesService.createWithProducts(
+    idTicket:    _ticketId,
+    nombreGasto: _expenseNameController.text,
+    fecha:       _selectedDate,
+    productos:   _extractedItems.map((item) => {
+      'nombre_producto': item['name'],
+      'precio':          item['price'],
+      'id_categoria':    item['id_categoria'],
+    }).toList(),
+  );
+}
+\end{lstlisting}
+
+\subsection{Pipeline OCR en el backend}
+
+El script \archivo{ocr/LecturaTickets\_v2.py} implementa un pipeline de
+6 etapas ejecutado como subproceso de Node.js:
+
+\begin{enumerate}
+  \item \textbf{Preprocesamiento} (OpenCV): upscaling a mínimo 1200 px,
+        corrección de iluminación, deskew, binarización adaptativa gaussiana,
+        denoising y sharpening.
+  \item \textbf{OCR con Tesseract}: modo LSTM (\campo{oem 3}), bloque de
+        texto (\campo{psm 6}), idiomas \campo{spa+eng}. Retorna texto y
+        confianza promedio por palabra.
+  \item \textbf{Evaluación de calidad}: dos compuertas independientes.
+  \item \textbf{Respaldo Vision + Claude} (si aplica).
+  \item \textbf{Parsing por regex}: extracción de productos, total y fecha.
+  \item \textbf{Categorización}: pipeline de 3 pasos por producto.
+\end{enumerate}
+
+\subsubsection{Compuertas de calidad para activar el respaldo}
+
+\begin{tabular}{llp{6cm}}
+  \toprule
+  \textbf{Compuerta} & \textbf{Condición} & \textbf{Descripción} \\
+  \midrule
+  1 — Técnica &
+    \campo{conf < 0.72} O \campo{palabras < 15} &
+    Baja confianza por palabra O texto escaso. Se activa antes del parsing. \\[4pt]
+  2 — Estructural &
+    Sin total Y sin productos &
+    Tesseract pasó la Compuerta 1 pero el parsing no encontró datos útiles.
+    Se activa después del parsing. \\
+  \bottomrule
+\end{tabular}
+
+\subsubsection{Respaldo con Google Cloud Vision + Claude}
+
+Cuando se activa cualquier compuerta, la función \campo{\_enhance\_extraction()}:
+
+\begin{enumerate}
+  \item Codifica la imagen en base64 y la envía a la API de Google Cloud Vision
+        (\campo{DOCUMENT\_TEXT\_DETECTION}) con hint de idioma \campo{es+en}.
+  \item Si se obtiene texto, lo envía a Claude Haiku con un prompt que
+        estructura el ticket en JSON (\campo{store\_name, date, total, products}).
+  \item El JSON enriquecido se deserializa al formato interno del pipeline.
+  \item La confianza se establece en 0.95 si Vision fue exitoso.
+\end{enumerate}
+
+Si las claves API no están disponibles o cualquier paso falla, la función
+retorna el texto original de Tesseract sin lanzar excepción.
+
+\subsubsection{Categorización automática de productos}
+
+Cada producto detectado pasa por un pipeline de 3 pasos:
+
+\begin{enumerate}
+  \item \textbf{categorias.json}: comparación del nombre del producto contra
+        palabras clave organizadas por categoría. Match por substring exacto
+        o similitud \campo{SequenceMatcher} $\geq 0.75$.
+  \item \textbf{Historial del usuario}: si el Paso 1 no encontró categoría,
+        se consultan los productos previos del mismo usuario en
+        \campo{Productos\_Tickets} (filtrado por \campo{id\_usuario} vía join
+        con \campo{Tickets} y validado en \campo{Categorias}). Match por
+        substring o similitud $\geq 0.70$.
+  \item \textbf{Fallback}: si ninguno encontró coincidencia, el producto se
+        asigna a la categoría ``Otros'' del usuario con \campo{id\_categoria = null}.
+\end{enumerate}
+
+\begin{lstlisting}
+# Pipeline de categorización — Paso 1 (categorias.json)
+def _classify_by_json(name, categories):
+    name_up = name.upper()
+    for cat, keywords in categories.items():
+        if cat == "OTROS": continue
+        for kw in keywords:
+            if kw.upper() in name_up:
+                return cat          # Coincidencia exacta por substring
+            if SequenceMatcher(None, name_up, kw.upper()).ratio() >= 0.75:
+                return cat          # Coincidencia fuzzy
+    return None                     # Sin coincidencia
+\end{lstlisting}
+
+\subsubsection{Métrica de confianza del ticket}
+
+La función \campo{calculate\_confidence()} combina la confianza técnica
+de Tesseract con señales estructurales del parsing:
+
+\begin{longtable}{lrp{6.5cm}}
+  \toprule
+  \textbf{Componente} & \textbf{Peso} & \textbf{Justificación} \\
+  \midrule
+  \endhead
+  \campo{ocr\_conf × 0.30}  & 30\% &
+    Confianza promedio por palabra de Tesseract (normalizada a 0--1). \\[3pt]
+  \campo{total\_found}       & +25\% / $-$15\% &
+    El total es el campo crítico de todo ticket. \\[3pt]
+  \campo{n\_products > 0}    & +20\% / $-$15\% &
+    Los productos son el contenido principal. \\[3pt]
+  \campo{store\_found}       & +10\% &
+    Contextual; confirma que el documento es un ticket. \\[3pt]
+  \campo{date\_found}        & +10\% / $-$5\% &
+    Permite clasificación temporal del gasto. \\[3pt]
+  \campo{word\_count < 10}   & $-$10\% &
+    Imagen casi ilegible aunque las pocas palabras sean nítidas. \\[3pt]
+  \campo{word\_count < 25}   & $-$5\% &
+    Imagen con texto escaso (posible ticket parcial). \\
+  \bottomrule
+\end{longtable}
+
+El valor final se normaliza al rango $[0.0, 1.0]$ con \campo{max(0, min(score, 1))}.
+
+\subsection{Servicio de tickets}
+
+\begin{tabular}{lp{8cm}}
+  \toprule
+  \textbf{Método} & \textbf{Descripción} \\
+  \midrule
+  \campo{scanTicket(imagePaths)} &
+    POST multipart a \endpoint{/tickets/scan}. Timeout 60 s. \\
+  \campo{getAll()} &
+    GET \endpoint{/tickets}. Lista de tickets del usuario. \\
+  \campo{getById(id)} &
+    GET \endpoint{/tickets/:id}. Ticket con imagen en base64. \\
+  \campo{getProducts(ticketId)} &
+    GET \endpoint{/tickets/:id/products}. Productos con categoría. \\
+  \campo{delete(id)} &
+    DELETE \endpoint{/tickets/:id}. Elimina ticket y productos. \\
+  \bottomrule
+\end{tabular}
+
+\subsection{Consideraciones técnicas}
+
+\begin{itemize}
+  \item \textbf{Idempotencia}: el backend genera un hash SHA-256 de las
+        imágenes para evitar procesar el mismo ticket dos veces (error 409
+        en duplicados).
+  \item \textbf{Limpieza}: los archivos temporales de imagen se eliminan del
+        servidor tras procesar el ticket.
+  \item \textbf{Transacciones DB}: el ticket y sus productos se insertan en
+        una transacción con \campo{rollback} ante cualquier falla.
+  \item \textbf{Manejo de errores en Flutter}: si el OCR lanza excepción,
+        la pantalla de procesamiento permite reintentar sin necesidad de
+        fotografiar nuevamente el ticket.
+\end{itemize}
+
+
+% ============================================================
+\section{Módulo de Categorías}
+% ============================================================
+
+\subsection{Descripción general}
+
+El módulo de categorías provee la estructura de clasificación que sustenta
+todos los demás módulos. Cada gasto, producto de ticket, presupuesto e ingreso
+queda asociado a una categoría del usuario. El sistema distingue dos tipos:
+\textbf{predefinidas} (creadas durante el onboarding) y \textbf{personalizadas}
+(creadas libremente por el usuario).
+
+Las categorías predefinidas por defecto son: Alimentos, Entretenimiento,
+Transporte, Ahorro y Ropa.
+
+\subsection{Modelo de datos}
+
+\begin{lstlisting}
+class Category {
+  final int    id;
+  final int    idUsuario;
+  final String nombreCategoria;
+  final String tipoCategoria;  // 'predefinida' | 'personalizada'
+  final String? icono;         // Nombre del icono (ej. 'restaurant')
+  final String? color;         // Color hex (ej. '#13853d')
+
+  IconData getIconData();      // Mapea icono a FlutterIcon
+  Color    getColor();         // Parsea hex a Color de Flutter
+}
+\end{lstlisting}
+
+El método \campo{getColor()} parsea cadenas hexadecimales en formato
+\campo{\#RRGGBB} o \campo{0xFFRRGGBB}. Si el formato no es reconocido,
+retorna un color neutro por defecto (\campo{Colors.blueGrey}).
+
+\subsection{Pantallas}
+
+\subsubsection{CategoriesScreen — Listado}
+
+Muestra las categorías en dos secciones diferenciadas:
+
+\begin{itemize}
+  \item \textbf{Predefinidas}: grid de 3 columnas con icono y nombre.
+        No son editables ni eliminables.
+  \item \textbf{Personalizadas}: lista con icono, nombre y botón de edición.
+        El usuario puede crear, editar y eliminar las suyas.
+\end{itemize}
+
+\subsubsection{NewCategoryScreen — Creación}
+
+Formulario con tres campos:
+
+\begin{enumerate}
+  \item Nombre de la categoría (obligatorio, máx. 50 caracteres).
+  \item Icono: selector de cuadrícula con 20+ opciones predefinidas.
+  \item Color: selector de cuadrícula con 12 colores disponibles.
+\end{enumerate}
+
+\subsubsection{EditCategoryScreen — Edición}
+
+Igual que la creación, pero precarga los valores actuales de la categoría
+recibida como argumento de navegación.
+
+\subsection{Servicio de categorías}
+
+\begin{tabular}{lp{8.5cm}}
+  \toprule
+  \textbf{Método} & \textbf{Descripción} \\
+  \midrule
+  \campo{getAll()} &
+    GET \endpoint{/categories}. Todas las categorías del usuario. \\
+  \campo{getById(id)} &
+    GET \endpoint{/categories/:id}. \\
+  \campo{create(\{nombre, icono, color\})} &
+    POST \endpoint{/categories}. Crea categoría personalizada. \\
+  \campo{update(\{id, nombre, icono, color\})} &
+    PUT \endpoint{/categories/:id}. \\
+  \campo{delete(id)} &
+    DELETE \endpoint{/categories/:id}. \\
+  \campo{getPredefined()} &
+    Filtra localmente \campo{tipoCategoria == 'predefinida'}. \\
+  \campo{getCustom()} &
+    Filtra localmente \campo{tipoCategoria == 'personalizada'}. \\
+  \bottomrule
+\end{tabular}
+
+\subsection{Flujo funcional}
+
+\begin{enumerate}
+  \item El usuario navega a la pantalla de Categorías desde el módulo de
+        Presupuestos o desde el menú de configuración.
+  \item Ve el listado separado en dos secciones.
+  \item Para crear: presiona el botón ``+'' y completa el formulario.
+  \item El servicio llama al endpoint POST y recarga la lista en caso de éxito.
+  \item La nueva categoría queda disponible inmediatamente para asignar en
+        presupuestos, gastos y productos de tickets.
+\end{enumerate}
+
+\subsection{Consideraciones técnicas}
+
+\begin{itemize}
+  \item Las categorías predefinidas no pueden eliminarse desde el frontend
+        (el botón de edición no aparece en la sección predefinidas).
+  \item En caso de error al cargar, se muestra un estado de error con botón
+        de reintentar en lugar de pantalla vacía.
+  \item El servicio retorna lista vacía (no lanza excepción) ante cualquier
+        error HTTP, para no bloquear formularios que dependan de las categorías.
+\end{itemize}
+
+
+% ============================================================
+\section{Módulo de Presupuestos}
+% ============================================================
+
+\subsection{Descripción general}
+
+El módulo de presupuestos permite al usuario asignar un límite de gasto
+mensual por categoría. El sistema calcula automáticamente cuánto se ha
+gastado en cada categoría durante el mes en curso y emite alertas cuando
+el presupuesto está cerca de agotarse o ha sido superado.
+
+Cada presupuesto cubre el rango de fechas del mes calendario actual
+(del día 1 al último día del mes), calculado automáticamente tanto en el
+frontend como en el backend.
+
+\subsection{Modelo de datos}
+
+\begin{lstlisting}
+class Budget {
+  final int      id;
+  final int      idCategoria;
+  final double   montoAsignado;
+  final double   montoUtilizado;   // Actualizado por el backend
+  final String   periodo;          // 'mensual' (fijo)
+  final DateTime fechaInicio;
+  final DateTime fechaFin;
+  final bool     activo;
+
+  // Propiedades calculadas
+  double get porcentajeUtilizado =>
+      (montoUtilizado / montoAsignado * 100).clamp(0, double.infinity);
+
+  double get montoDisponible =>
+      (montoAsignado - montoUtilizado).clamp(0, double.infinity);
+}
+\end{lstlisting}
+
+\subsection{Pantallas}
+
+\subsubsection{BudgetsScreen — Panel de presupuestos}
+
+La pantalla principal del módulo presenta:
+
+\begin{itemize}
+  \item \textbf{Tarjeta resumen global}: presupuesto total asignado,
+        total gastado y porcentaje de uso del mes.
+  \item \textbf{Barra de progreso global}: cambia a rojo cuando el uso
+        supera el 90\%.
+  \item \textbf{Tarjetas por presupuesto}: icono de categoría, nombre,
+        barra de progreso individual, monto gastado vs. asignado,
+        porcentaje y botón de edición.
+  \item \textbf{Estado vacío}: con ícono y llamada a la acción para crear
+        el primer presupuesto.
+\end{itemize}
+
+\begin{lstlisting}
+// Cálculo de totales en la pantalla
+double get _totalBudget =>
+    _budgets.fold(0, (s, b) => s + b.montoAsignado);
+
+double get _totalSpent =>
+    _budgets.fold(0, (s, b) => s + b.montoUtilizado);
+
+double get _percentageUsed =>
+    _totalBudget > 0 ? (_totalSpent / _totalBudget * 100) : 0;
+\end{lstlisting}
+
+\subsubsection{NewBudgetScreen — Creación de presupuesto}
+
+El formulario presenta un grid de categorías disponibles para seleccionar
+(2 columnas, con resaltado visual de la seleccionada) y un campo de monto.
+
+Validaciones implementadas:
+\begin{enumerate}
+  \item Monto requerido y mayor a cero.
+  \item Categoría seleccionada obligatoria.
+  \item Verificación de presupuesto duplicado: si la categoría ya tiene
+        un presupuesto activo, se muestra un aviso y no se crea uno nuevo.
+\end{enumerate}
+
+\begin{lstlisting}
+// Verificación de presupuesto duplicado antes de crear
+final existingBudget = await _budgetsService.getByCategory(
+    _selectedCategoryId!);
+if (existingBudget != null) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(content: Text(
+        'Esta categoría ya tiene un presupuesto asignado')));
+  return;
+}
+\end{lstlisting}
+
+\subsubsection{EditBudgetScreen — Edición}
+
+Permite modificar el monto asignado, la categoría y el estado activo/inactivo
+de un presupuesto existente. Recibe el \campo{budgetId} como argumento de
+navegación y carga los datos actuales del presupuesto.
+
+\subsection{Servicio de presupuestos}
+
+\begin{tabular}{lp{8cm}}
+  \toprule
+  \textbf{Método} & \textbf{Descripción} \\
+  \midrule
+  \campo{getAll()} &
+    GET \endpoint{/budgets}. Incluye \campo{porcentaje\_usado} precalculado. \\
+  \campo{getByCategory(categoryId)} &
+    GET \endpoint{/budgets/category/:id}. Para validar duplicados. \\
+  \campo{create(data)} &
+    POST \endpoint{/budgets}. Fechas auto-calculadas por backend. \\
+  \campo{update(id, data)} &
+    PUT \endpoint{/budgets/:id}. \\
+  \campo{delete(id)} &
+    DELETE \endpoint{/budgets/:id}. \\
+  \campo{getActiveBudgets()} &
+    Filtra localmente \campo{activo == true}. \\
+  \campo{getBudgetProgress(budget)} &
+    Calcula estado: safe / warning / danger / exceeded. \\
+  \bottomrule
+\end{tabular}
+
+\subsection{Estados de progreso de presupuesto}
+
+\begin{tabular}{llp{6cm}}
+  \toprule
+  \textbf{Estado} & \textbf{Umbral} & \textbf{Indicación visual} \\
+  \midrule
+  \campo{safe}     & $< 50\%$  & Barra azul \\
+  \campo{warning}  & 50--80\%  & Barra naranja \\
+  \campo{danger}   & 80--100\% & Barra roja \\
+  \campo{exceeded} & $> 100\%$ & Barra roja + alerta \\
+  \bottomrule
+\end{tabular}
+
+\subsection{Flujo funcional}
+
+\begin{enumerate}
+  \item El usuario accede al módulo de Presupuestos desde el
+        \campo{BottomAppBar} en la pantalla principal.
+  \item La pantalla carga todos los presupuestos activos del mes.
+  \item El usuario puede ver el progreso individual de cada categoría.
+  \item Si desea crear uno nuevo, selecciona la categoría y el monto límite.
+  \item El backend auto-asigna las fechas del mes actual.
+  \item Cuando un gasto nuevo se registra (OCR o manual), el backend
+        actualiza el campo \campo{monto\_utilizado} del presupuesto
+        correspondiente.
+  \item Al rebasar el 80\% o el 100\%, el sistema de alertas genera una
+        notificación para el usuario.
+\end{enumerate}
+
+\subsection{Consideraciones técnicas}
+
+\begin{itemize}
+  \item El campo \campo{montoUtilizado} es calculado y actualizado por el
+        backend; el frontend solo lo lee.
+  \item El mapa \campo{Map<int, Category>} en la pantalla permite búsquedas
+        en O(1) sin recorrer la lista completa de categorías en cada render.
+  \item Al regresar de la creación/edición con \campo{result == true},
+        la pantalla recarga automáticamente la lista completa.
+  \item El módulo llama a \campo{NotificationTriggers().checkAlertsOnce()}
+        al cargar para verificar si hay alertas pendientes de presupuesto.
+\end{itemize}
+
+
+% ============================================================
+\section{Módulo de Deudas}
+% ============================================================
+
+\subsection{Descripción general}
+
+El módulo de deudas gestiona créditos e instrumentos de deuda con soporte
+para la \textbf{fórmula de amortización francesa}. Permite registrar el
+capital inicial, la tasa de interés anual, el plazo en meses y la fecha
+del próximo pago. El backend calcula el pago mensual, la tasa mensual
+equivalente y el saldo insoluto tras cada abono. El usuario puede realizar
+pagos ordinarios y abonos extraordinarios a capital.
+
+\subsection{Modelo de datos}
+
+\begin{lstlisting}
+class Debt {
+  final int      id;
+  final String   nombreDeuda;
+  final double   capitalInicial;
+  final double   tasaAnual;
+  final double   tasaMensual;      // tasaAnual / 12
+  final double   saldoInsoluto;    // Saldo pendiente post-pagos
+  final double   pagoMensual;      // Calculado por backend
+  final double   montoPagado;      // Acumulado de pagos
+  final int      duracionMeses;
+  final DateTime fechaSiguientePago;
+  final bool     activa;
+
+  // Propiedades calculadas en cliente
+  double get porcentajePagado  => montoPagado / capitalInicial * 100;
+  double get montoPendiente    => (capitalInicial - montoPagado)
+                                    .clamp(0, double.infinity);
+  double get interesTotal      => (pagoMensual * duracionMeses)
+                                    - capitalInicial;
+  bool   get tieneInteres      => tasaAnual > 0;
+  int    get diasHastaPago     => fechaSiguientePago
+                                    .difference(DateTime.now()).inDays;
+}
+\end{lstlisting}
+
+\subsection{Fórmula de amortización francesa}
+
+El pago mensual se calcula usando la fórmula estándar de cuota fija:
+
+\[
+  M = C \cdot \frac{r}{1 - (1 + r)^{-n}}
+\]
+
+donde $C$ es el capital inicial, $r$ es la tasa mensual ($r = \text{tasa\_anual} / 1200$)
+y $n$ es el número de mensualidades. El frontend calcula esta fórmula en
+tiempo real para mostrar una vista previa antes de guardar la deuda:
+
+\begin{lstlisting}
+// Cálculo del pago mensual con amortización francesa
+double get _tasaMensual => _tasaAnual / 1200;
+
+double get _pagoMensual {
+  if (_capital <= 0 || _meses <= 0) return 0;
+  if (_tasaMensual == 0) return _capital / _meses;
+  final r = _tasaMensual;
+  final n = _meses;
+  return _capital * r / (1 - pow(1 + r, -n));
+}
+\end{lstlisting}
+
+Para deudas sin interés (\campo{tasaAnual == 0}), el cálculo simplifica a
+la división directa del capital entre el número de meses.
+
+\subsection{Pantallas}
+
+\subsubsection{DebtsScreen — Panel de deudas}
+
+Muestra el estado consolidado de todas las deudas del usuario:
+
+\begin{itemize}
+  \item Tarjeta resumen: deuda total (naranja), total pagado (verde) y
+        porcentaje pagado global.
+  \item Por cada deuda: nombre, barra de progreso (rojo $<$ 50\%,
+        naranja $\geq$ 50\%), monto pagado vs.\ total, días al próximo pago
+        y botones de pago y edición.
+  \item El botón de pago abre un diálogo modal donde el usuario ingresa
+        el monto a pagar.
+\end{itemize}
+
+\subsubsection{NewDebtScreen — Creación}
+
+El formulario captura los datos de la deuda y actualiza en tiempo real
+una tarjeta de resumen financiero:
+
+\begin{itemize}
+  \item Nombre de la deuda.
+  \item Capital inicial (monto del crédito).
+  \item Plazo en meses (campo de texto libre, por defecto 12).
+  \item Tasa de interés anual en porcentaje (por defecto 0\%).
+  \item Fecha del próximo pago (DatePicker, por defecto +30 días).
+\end{itemize}
+
+La tarjeta de resumen en tiempo real muestra: tasa mensual equivalente,
+pago mensual calculado e interés total del crédito.
+
+\subsubsection{EditDebtScreen — Edición y abono a capital}
+
+Además de editar los campos del formulario, incluye un botón exclusivo para
+registrar \textbf{pagos anticipados a capital}. Este tipo de pago reduce el
+saldo insoluto directamente sin afectar la cuota de intereses del período,
+lo que disminuye las mensualidades restantes.
+
+\subsection{Servicio de deudas}
+
+\begin{tabular}{lp{8.5cm}}
+  \toprule
+  \textbf{Método} & \textbf{Descripción} \\
+  \midrule
+  \campo{getAll()} &
+    GET \endpoint{/debts}. Todas las deudas del usuario. \\
+  \campo{create(data)} &
+    POST \endpoint{/debts}. El backend calcula \campo{pago\_mensual} y
+    \campo{tasa\_mensual}. \\
+  \campo{update(id, data)} &
+    PUT \endpoint{/debts/:id}. \\
+  \campo{registerPayment(id, monto)} &
+    POST \endpoint{/debts/:id/pay}. Registra abono ordinario.
+    Retorna deuda con \campo{saldo\_insoluto} actualizado. \\
+  \campo{registerCapitalPayment(id, monto)} &
+    POST \endpoint{/debts/:id/capital-payment}. Abono extraordinario
+    a capital. \\
+  \campo{delete(id)} &
+    DELETE \endpoint{/debts/:id}. \\
+  \campo{getActiveDebts()} &
+    Filtra localmente \campo{activa == true}. \\
+  \campo{getUpcomingPayments(\{days\})} &
+    Filtra deudas con \campo{diasHastaPago $\leq$ days}. \\
+  \campo{getDebtProgress(debt)} &
+    Retorna estado: critical / warning / progress / almost / paid. \\
+  \bottomrule
+\end{tabular}
+
+\subsection{Estados de progreso de deuda}
+
+\begin{tabular}{llp{6cm}}
+  \toprule
+  \textbf{Estado} & \textbf{Umbral} & \textbf{Indicación visual} \\
+  \midrule
+  \campo{critical} & $< 25\%$ pagado    & Rojo \\
+  \campo{warning}  & 25--50\% pagado    & Naranja \\
+  \campo{progress} & 50--75\% pagado    & Amarillo \\
+  \campo{almost}   & 75--100\% pagado   & Verde claro \\
+  \campo{paid}     & $= 100\%$          & Verde \\
+  \bottomrule
+\end{tabular}
+
+\subsection{Flujo funcional}
+
+\begin{enumerate}
+  \item El usuario accede al módulo de Deudas desde el \campo{BottomAppBar}.
+  \item El panel carga y muestra todas las deudas activas con su estado.
+  \item Para registrar un pago: botón verde en la tarjeta de deuda $\to$
+        diálogo modal con campo de monto $\to$ llamada al endpoint
+        \endpoint{/debts/:id/pay} $\to$ recarga de la lista.
+  \item Para abono a capital: editar deuda $\to$ botón de abono a capital
+        $\to$ diálogo con monto $\to$ llamada a
+        \endpoint{/debts/:id/capital-payment}.
+  \item El módulo verifica alertas de pagos próximos al cargar
+        (\campo{NotificationTriggers}).
+\end{enumerate}
+
+\subsection{Consideraciones técnicas}
+
+\begin{itemize}
+  \item \textbf{Cálculo en frontend vs.\ backend}: la fórmula de amortización
+        se ejecuta en tiempo real en el cliente para la vista previa, pero el
+        backend recalcula y persiste los valores canónicos al guardar.
+  \item \textbf{Validaciones}: el monto de pago debe ser mayor que cero y
+        no puede exceder el saldo pendiente (\campo{montoPendiente}).
+  \item \textbf{Deuda sin interés}: la fórmula degenera a división simple;
+        la UI oculta la línea de ``Interés total'' cuando la tasa es cero.
+  \item \textbf{Plazo variable}: el campo de plazo es un \campo{TextField}
+        libre (no stepper) para facilitar el ingreso de valores grandes.
+  \item Los días hasta el próximo pago se calculan en el cliente con
+        \campo{DateTime.difference} para evitar tráfico innecesario.
+\end{itemize}
+
+
+% ============================================================
+\section{Conclusiones}
+% ============================================================
+
+\subsection{Beneficios de la aplicación}
+
+FINARA resuelve la necesidad de registro financiero cotidiano con una
+propuesta que reduce la fricción del usuario al mínimo: fotografiar un
+ticket es más rápido y menos propenso a errores que ingresar cada compra
+manualmente. La combinación de OCR con Tesseract y el respaldo inteligente
+con Google Cloud Vision y Claude garantiza una extracción de datos robusta
+incluso en condiciones de imagen difíciles.
+
+La categorización automática, reforzada con el historial de compras del
+propio usuario, mejora con el uso: cuantos más tickets se escanean, más
+precisa se vuelve la asignación de categorías para ese usuario.
+
+\subsection{Automatización financiera}
+
+Los tres pilares de automatización del sistema son:
+
+\begin{enumerate}
+  \item \textbf{Extracción OCR}: conversión automática de texto físico de
+        un ticket en registros digitales estructurados.
+  \item \textbf{Rollover mensual}: los presupuestos e ingresos recurrentes
+        se renuevan automáticamente al inicio de cada mes sin intervención
+        del usuario (job cron en el backend).
+  \item \textbf{Alertas inteligentes}: el sistema monitorea en segundo plano
+        el uso de presupuestos y la proximidad de pagos de deudas, enviando
+        notificaciones proactivas.
+\end{enumerate}
+
+\subsection{Arquitectura modular y escalabilidad}
+
+El sistema está diseñado bajo una \textbf{arquitectura modular}: cada módulo
+funcional (escaneo, categorías, presupuestos, deudas) opera de forma
+independiente con su propio conjunto de pantallas, servicios y endpoints.
+Esto permite:
+
+\begin{itemize}
+  \item Agregar nuevos módulos (ej.\ inversiones, metas de ahorro) sin
+        modificar el código existente.
+  \item Reemplazar el motor OCR (Tesseract, Vision, otro) editando
+        únicamente el script Python sin tocar el frontend.
+  \item Migrar el estado local a un gestor global (Riverpod, Bloc) en el
+        futuro sin reescribir la lógica de negocio.
+  \item Escalar el backend de forma horizontal dado que cada request es
+        stateless (autenticación por JWT).
+\end{itemize}
+
+\subsection{Posibles mejoras futuras}
+
+\begin{itemize}
+  \item \textbf{Soporte iOS}: el stack Flutter permite compilar para iOS con
+        ajustes mínimos en los plugins de cámara y permisos.
+  \item \textbf{Modo offline}: cachear presupuestos y gastos localmente con
+        SQLite para operar sin conexión y sincronizar al reconectar.
+  \item \textbf{Análisis predictivo}: usar el historial de gastos para
+        proyectar el gasto del mes e identificar patrones de consumo.
+  \item \textbf{Exportación de datos}: generación de reportes PDF/Excel
+        con el resumen financiero mensual o anual.
+  \item \textbf{Multi-moneda}: soporte para usuarios que manejan cuentas
+        en diferentes divisas.
+  \item \textbf{Mejora del OCR}: fine-tuning del modelo Tesseract con
+        datasets de tickets mexicanos para aumentar la precisión de la
+        confianza por palabra.
+  \item \textbf{Integración bancaria}: conexión con APIs de open banking
+        para importar movimientos automáticamente y reducir el registro
+        manual.
+\end{itemize}
+
+\vspace{1.2cm}
+\begin{center}
+  \textcolor{bordesutil}{\rule{0.5\textwidth}{0.4pt}}\\[0.5em]
+  {\small\color{gray}
+    Documentación generada — Mayo 2026 \\
+    FINARA · IPN UPIICSA · Trabajo Terminal
+  }
+\end{center}
+
+\end{document}
