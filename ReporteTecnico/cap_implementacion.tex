@@ -1623,7 +1623,7 @@ endpoints excepto los de autenticación. Su lógica es la siguiente:
   \item Ante \campo{TokenExpiredError} responde con el mensaje
     ``Token expirado''; ante cualquier otro error, ``Token inválido''.
   \item Si la verificación es exitosa, adjunta el objeto
-    \lstinline[style=codigobase]{req.user = { userId, email }} y
+    \lstinline[style=codigobase]|req.user = { userId, email }| y
     llama a \campo{next()}.
 \end{enumerate}
 
