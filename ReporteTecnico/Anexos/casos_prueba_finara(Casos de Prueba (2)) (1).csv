@@ -1,0 +1,618 @@
+ID del Caso;Nombre del Caso;Módulo/Pantalla;Propiedad de Software;Tipo de Prueba;Precondiciones;Datos de Entrada;Pasos de Ejecución;Resultado Esperado;Resultado Obtenido;Estado;Observaciones;RF Asociado;CU Asociado;Evidencia;Resultado Obtenido (Web);Estado (Web);Observaciones (Web)
+CP-001;Registrar usuario nuevo;Auth / RegisterScreen;Funcionalidad;Caja Negra;App instalada, backend activo, sin sesión iniciada;"1. Datos válidos: email=nuevo@test.com, nombre=Usuario Prueba, password=Test123!
+2. Datos faltantes: email=(vacío), nombre=Usuario, password=Test123!
+3. Tipo incorrecto: email=notanemail, password=123
+4. Fuera de rango: password=ab
+5. Email duplicado: email=nuevo@test.com";"1. Abrir app
+2. Navegar a pantalla de Registro
+3. Ingresar nombre completo
+4. Ingresar email
+5. Ingresar contraseña
+6. Confirmar contraseña
+7. Presionar botón ""Registrar""
+8. Observar respuesta";"1. Datos válidos: Registro exitoso, porfavor Inicia Sesión
+2. Datos faltantes: Mensaje ""Por favor ingresa tu email""
+3. Tipo incorrecto: Mensaje ""Ingresar datos validos""
+4. Fuera de rango: Mensaje ""Minimo de caracteres""
+5. Email duplicado: Error ""El email ya está registrado""";"1. Datos válidos: CORRECTO
+2. Datos faltantes: CORRECTO
+3. Tipo incorrecto: CORRECTO
+4. Fuera de rango: CORRECTO
+5. Email duplicado: CORRECTO";PASÓ;Ya muestra el error en formato correcto;RF-01;CU-01;;"1. Datos válidos: CORRECTO
+2. Datos faltantes: CORRECTO
+3. Tipo incorrecto: CORRECTO
+4. Fuera de rango: CORRECTO
+5. Email duplicado: CORRECTO";PASÓ;
+CP-002;Iniciar sesión con credenciales válidas;Auth / LoginScreen;Funcionalidad;Caja Negra;Usuario registrado (email: nuevo@test.com, password: Test123!), backend activo;"1. Datos válidos: email=nuevo@test.com, password=Test123!
+2. Datos faltantes: email=(vacío), password=Test123!
+3. Tipo incorrecto: email=notanemail, password=123
+4. Fuera de rango: password=ab
+5. Credenciales incorrectas: email=nuevo@test.com, password=WrongPass123!";"1. Abrir app
+2. En pantalla Login, ingresar email
+3. Ingresar contraseña
+4. Presionar ""Iniciar Sesión""
+5. Observar respuesta";"1. Datos válidos: Login exitoso, redirección a HomeScreen
+2. Datos faltantes: El recuadro del Email se pinta de Rojo
+3. Tipo incorrecto: Error ""Formato de email inválido""
+4. Fuera de rango: Error ""La contraseña debe tener al menos 6 caracteres""
+5. Credenciales incorrectas: Error ""Email o contraseña incorrectos""";"1. Datos válidos: CORRECTO
+2. Datos faltantes: CORRECTO
+3. Tipo incorrecto: CORRECTO
+4. Fuera de rango: CORRECTO
+5. Credenciales incorrectas: CORRECTO";PASÓ;;RF-02;CU-02;;"1. Datos válidos: CORRECTO
+2. Datos faltantes: CORRECTO
+3. Tipo incorrecto: CORRECTO
+4. Fuera de rango: CORRECTO
+5. Credenciales incorrectas: CORRECTO";PASÓ;
+CP-003;Registrar ingreso;Transactions / AddIncomeScreen;Funcionalidad;Caja Negra;Usuario con sesión activa, categorías configuradas;"1. Datos válidos: monto=5000, tipo=Sueldo, Nombre=Venta Ropa, fecha=hoy
+2. Datos faltantes: monto=(vacío), tipo=Sueldo
+3. Tipo incorrecto: monto=abc (texto), Nombre=123
+4. Fuera de rango: monto=-500 (negativo), monto=0
+5. Casos límite: monto=0.01, monto=999999999";"1. Selecciona el Boton de ""+"" en la parte inferior derecha
+2. Presionar botón ""Registrar Ingreso""
+3. Ingresar monto
+4. Ingresar tipo de Ingreso
+5. Colocar Nombre
+6. Seleccionar fecha
+7. Presionar ""Guardar""
+8. Verificar ingreso en historial";"1. Datos válidos: Ingreso registrado exitosamente, visible en historial
+2. Datos faltantes: Error ""Ingresa un monto""
+3. Tipo incorrecto: Error ""Formato de monto inválido""
+4. Fuera de rango: Error ""Monto Invalido""
+5. Casos límite: Monto 0.01 aceptado, monto máximo aceptado";"1. Datos válidos: CORRECTO
+2. Datos faltantes: CORRECTO
+3. Tipo incorrecto: CORRECTO
+4. Fuera de rango: CORRECTO
+5. Casos límite: CORRECTO";PASÓ;Ya muestra el error en formato correcto;RF-06;CU-04;;"1. Datos válidos: CORRECTO
+2. Datos faltantes: CORRECTO
+3. Tipo incorrecto: CORRECTO
+4. Fuera de rango: CORRECTO
+5. Casos límite: CORRECTO";PASÓ;
+CP-004;Registrar egreso con OCR;Transactions / AddExpenseScreen;Funcionalidad;Caja Negra;Usuario con sesión activa, cámara disponible, ticket físico disponible;"1. Datos válidos: Foto de ticket legible, OCR detecta productos y monto total correctamente
+2. Foto borrosa: Imagen con poca resolución
+3. Ticket ilegible: Texto muy pequeño o dañado
+4. Sin ticket: Foto de objeto no relacionado
+5. Ticket complejo: Múltiples productos, descuentos, IVA";"1. Selecciona el Boton de ""+"" en la parte inferior derecha, presionar 'Escanear Ticket'
+2. Permitir acceso a cámara
+3. Tomar foto del ticket
+4. Esperar procesamiento OCR
+5. Revisar datos detectados
+6. Confirmar o corregir datos
+7. Presionar ""Guardar""
+8. Verificar egreso en historial";"1. Datos válidos: OCR detecta productos, total coincide, egreso registrado
+2. Foto borrosa: OCR falla, opción de reintentar o registrar manualmente
+3. Ticket ilegible: OCR detecta parcialmente, permite corrección manual
+4. Sin ticket: OCR no detecta datos, mensaje ""No se detectó un ticket""
+5. Ticket complejo: OCR detecta productos principales, permite corrección";"1. Datos válidos: FALLÓ
+2. Foto borrosa: CORRECTO
+3. Ticket ilegible: CORRECTO
+4. Sin ticket: CORRECTO
+5. Ticket complejo: CORRECTO";FALLÓ;Siguen errores en categorizacion, ahora categoriza todos en otros;RF-07;CU-05;;NA;NA;
+CP-005;Registrar egreso manualmente (sin ticket);Transactions / AddExpenseScreen;Funcionalidad;Caja Negra;Usuario con sesión activa, categorías configuradas;"1. Datos válidos: Producto= Coca, Monto = 15, Categoría=Alimento, Nombre=Tiendita
+2. Datos faltantes: monto=(vacío), Producto=Comida
+3. Tipo incorrecto: monto=abc, Producto=123
+4. Fuera de rango: monto=-50, monto=0
+5. Casos límite: monto=0.01, Producto de muchos caracteres";"1. Selecciona el Boton de ""+"" en la parte inferior derecha, presionar 'Registrar Gasto Manual'
+2. Ingresar Nombre
+3. Ingresar Fecha
+4. Seleccionar boton de 'Agregar'
+5. Agrega Nombre del Producto, Monto y Categoria
+7. Presionar ""Guardar""
+8. Verificar en historial";"1. Datos válidos: Egreso registrado exitosamente
+2. Datos faltantes: Error ""El monto es obligatorio""
+3. Tipo incorrecto: Error ""Formato de monto inválido""
+4. Fuera de rango: Error ""El monto debe ser mayor a 0""
+5. Casos límite: Valores extremos aceptados correctamente";"1. Datos válidos: CORRECTO
+2. Datos faltantes: CORRECTO
+3. Tipo incorrecto: CORRECTO
+4. Fuera de rango: CORRECTO
+5. Casos límite: FALLÓ";FALLÓ;Manda Error al intentar colocar valores extremos en los gastos;RF-08;CU-06;;"1. Datos válidos: CORRECTO
+2. Datos faltantes: CORRECTO
+3. Tipo incorrecto: CORRECTO
+4. Fuera de rango: CORRECTO
+5. Casos límite: CORRECTO";PASÓ;
+CP-006;Tomar foto de ticket (OCR);Scan / CameraScreen;Funcionalidad;Caja Negra;Usuario con sesión activa, permisos de cámara otorgados, ticket físico disponible;"1. Foto correcta: Ticket centrado, bien iluminado, texto legible
+2. Foto oscura: Ticket con poca luz
+3. Foto desenfocada: Movimiento al tomar foto
+4. Ticket parcial: Solo se captura mitad del ticket
+5. Sin permisos: Permisos de cámara denegados";"1. Desde Scan, presionar ""Escanear Ticket""
+2. Permitir acceso a cámara si se solicita
+3. Posicionar ticket en el área marcada
+4. Presionar botón captura
+5. Esperar procesamiento
+6. Revisar preview de foto
+7. Confirmar o reintentar";"1. Foto correcta: Procesamiento OCR exitoso, datos extraídos
+2. Foto oscura: Advertencia de calidad baja, opción de reintentar
+3. Foto desenfocada: OCR falla parcialmente, permite corrección
+4. Ticket parcial: Advertencia ""Ticket incompleto""
+5. Sin permisos: Error ""Permita acceso a la cámara""";"1. Foto correcta: CORRECTO
+2. Foto oscura: CORRECTO
+3. Foto desenfocada:  CORRECTO
+4. Ticket parcial: ADVERTENCIA
+5. Sin permisos: CORRECTA";PASÓ CON OBSERVACIONES;"La advertancia de ""Ticket Incompleto"" se cambio a % de OCR obtenido";RF-16;CU-07;;NA;NA;
+CP-007;Corregir datos escaneados por OCR;Scan / ReviewDataScreen;Funcionalidad;Caja Negra;Ticket escaneado con datos OCR detectados (pueden tener errores);"1. Corrección monto: OCR detectó 15O (letra O) ? corregir a 150
+2. Corrección producto: ""Cebollla"" ? ""Cebolla""
+3. Agregar producto: OCR omitió un producto
+4. Eliminar producto: OCR detectó elemento no válido
+5. Cambiar categoría: Reclasificar de ""Otros"" a ""Alimentos""";"1. Desde ReviewDataScreen (post-OCR)
+2. Revisar lista de productos detectados
+3. Click en producto a editar
+4. Modificar nombre, precio o cantidad
+5. Agregar productos faltantes con botón ""+""
+6. Eliminar productos erróneos con swipe o botón ""-""
+7. Ajustar categoría si es necesario
+8. Presionar ""Confirmar y Guardar""";"1. Corrección monto: Valor actualizado correctamente
+2. Corrección producto: Nombre corregido
+3. Agregar producto: Producto añadido a la lista
+4. Eliminar producto: Producto eliminado de la lista
+5. Cambiar categoría: Categoría actualizada, egreso guardado correctamente";"1. Corrección monto: CORRECTO
+2. Corrección producto: CORRECTO
+3. Agregar producto: CORRECTO
+4. Eliminar producto: CORRECTO
+5. Cambiar categoría: CORRECTO";PASÓ;;RF-20;CU-27;;NA;NA;
+CP-008;Configurar presupuesto por categoría;Budgets / NewBudgetScreen;Funcionalidad;Caja Negra;Usuario con sesión activa, categorías creadas;"1. Datos válidos: categoría=Alimentos, monto=3000, Periodo=mensual
+2. Datos faltantes: categoría=(vacía), monto=3000
+3. Tipo incorrecto: monto=abc (texto)
+4. Fuera de rango: monto=-1000, monto=0
+5. Presupuesto duplicado: categoría ya tiene presupuesto este mes";"1. Desde Presupuestos, presionar ""Nuevo Presupuesto""
+2. Seleccionar categoría
+3. Ingresar monto asignado
+4. Seleccionar Periodo                                                                   5. Presionar ""Crear Presupuesto""
+6. Verificar en lista de presupuestos";"1. Datos válidos: Presupuesto creado, visible en lista con barra de progreso
+2. Datos faltantes: Error ""Selecciona una categoría""
+3. Tipo incorrecto: No permite colocar letras
+4. Fuera de rango: Error ""El monto debe ser mayor a 0""
+5. Duplicado: Error ""Ya existe presupuesto para esta categoría""";"1. Datos válidos: CORRECTO
+2. Datos faltantes: CORRECTO
+3. Tipo incorrecto: CORRECTO
+4. Fuera de rango: CORRECTO
+5. Presupuesto duplicado: CORRECTO";PASÓ;;RF-10;CU-16;;"1. Datos válidos: CORRECTO
+2. Datos faltantes: CORRECTO
+3. Tipo incorrecto: CORRECTO
+4. Fuera de rango: CORRECTO
+5. Presupuesto duplicado: CORRECTO";PASÓ;
+CP-009;Registrar nueva deuda;Debts / NewDebtScreen;Funcionalidad;Caja Negra;Usuario con sesión activa;"1. Datos válidos: nombre=Tarjeta Visa, meses = 10,  monto_pago=1500, fecha_pago= 21 Mayo
+2. Datos faltantes: nombre=(vacío)
+3. Tipo incorrecto: monto_total=abc
+4. Fuera de rango: monto_total=-5000, monto_pago=0
+5. Pago mayor: monto_pago=2000000";"1. Desde Deudas, presionar ""Nueva Deuda""
+2. Ingresar nombre de la deuda
+3. Ingresar tiempo en meses
+4. Ingresar fecha del proximo pago
+5. Ingresar monto de pago mensual                                          6. Presionar ""Crear Deuda""";"1. Datos válidos: Deuda creada, visible en lista con días hasta pago
+2. Datos faltantes: Error ""El nombre es obligatorio""
+3. Tipo incorrecto: No permite colocar letras
+4. Fuera de rango: Error ""El monto debe ser mayor a 0""
+5. Pago > : Deuda Creada";"1. Datos válidos: CORRECTO
+2. Datos faltantes: CORRECTO                            3. Tipo incorrecto:  CORRECTO
+4. Fuera de rango: CORRECTO
+5. Pago mayor: CORRECTO";PASÓ;;RF-26;CU-15;;"1. Datos válidos: CORRECTO
+2. Datos faltantes: CORRECTO                            3. Tipo incorrecto:  CORRECTO
+4. Fuera de rango: CORRECTO
+5. Pago mayor: CORRECTO";PASÓ;
+CP-010;Planificar pago de deuda;Debts / EditDebtScreen;Funcionalidad;Caja Negra;Deuda existente con monto pendiente > 0;"1. Pago completo: monto=monto_pago_programado (ej: 1500)
+2. Pago parcial: monto=500 (menor al programado)
+3. Pago mayor: monto=2000 (mayor al programado)
+4. Pago total restante: monto=liquida deuda
+5. Pago > pendiente: monto mayor al pendiente";"1. Desde Deudas, seleccionar una deuda
+2. Presionar ""Registrar Pago""
+3. Ingresar monto del pago
+4. Presionar ""Pagar""
+6. Verificar actualización de monto pendiente
+7. Verificar cálculo de próxima fecha de pago";"1. Pago completo: Monto pendiente reducido, fecha siguiente pago actualizada
+2. Pago parcial: Monto pendiente reducido proporcionalmente
+3. Pago mayor: Monto pendiente reducido más de lo programado
+4. Pago total: Deuda marcada como pagada 
+5. Pago > pendiente: Error ""El pago no puede ser mayor al pendiente""";"1. Pago completo: CORRECTO
+2. Pago parcial: CORRECTO
+3. Pago mayor: CORRECTO
+4. Pago total restante: ADVERTENCIA
+5. Pago > pendiente: INCORRECTO";FALLÓ;Al liquidar la deuda no marca como Deuda Pagada, solo es el porcentaje.           No manda el mensaje correcto cuando quiero pagar mas de la deuda, manda error del BackEnd;RF-27;CU-12;;"1. Pago completo: CORRECTO
+2. Pago parcial: CORRECTO
+3. Pago mayor: CORRECTO
+4. Pago total restante: ADVERTENCIA
+5. Pago > pendiente: CORRECTO";PASÓ;
+CP-011;Consultar historial de transacciones;Transactions / HistorialScreen;Funcionalidad;Caja Negra;Usuario con sesión activa, al menos 5 transacciones registradas;"1. Vista completa: Sin filtros aplicados
+2. Filtro por fecha: Últimos 7 días, último mes, rango personalizado
+3. Filtro por categoría: Solo ""Alimentos""
+4. Filtro por tipo: Solo egresos
+5. Búsqueda por texto: ""Metro"", ""Oxxo""";"1. Navegar a Transacciones
+3. Observar lista de transacciones
+4. Aplicar filtros según el caso
+5. Buscar por texto si aplica
+6. Verificar resultados mostrados
+7. Click en transacción para ver detalle";"1. Vista completa: Todas las transacciones visibles, ordenadas por fecha
+2. Filtro fecha: Solo transacciones en rango seleccionado
+3. Filtro categoría: Solo transacciones de categoría seleccionada
+4. Filtro tipo: Solo egresos o ingresos según selección
+5. Búsqueda: Resultados que contienen el texto buscado";"1. Vista completa: CORRECTO
+2. Filtro fecha: CORRECTO
+3. Filtro categoría: INCORRECTO
+4. Filtro tipo: INCORRECTO
+5. Búsqueda: INCORRECTO";FALLÓ;Solo se aplicaron los filtros de Fecha mediante botones, no filtros complejos;RF-11;CU-18;;"1. Vista completa: CORRECTO
+2. Filtro fecha: CORRECTO
+3. Filtro categoría: CORRECTO
+4. Filtro tipo: CORRECTO
+5. Búsqueda: CORRECTO";PASÓ;
+CP-012;Visualizar estadísticas por categoría;Home / StatsScreen;Funcionalidad;Caja Negra;Usuario con sesión activa, transacciones en múltiples categorías;;;;;FALLÓ;NO SE IMPLEMENTO ESTA PANTALLA;RF-22;CU-10;;NA;NA;
+CP-013;Visualizar gráficas de gastos;Home / ChartsScreen;Funcionalidad;Caja Negra;Usuario con sesión activa, datos de gastos en varios días/meses;"1. Gráfica barras: Comparación mes a mes
+2. Gráfica líneas: Evolución de gastos en el tiempo
+";"1. Navega a Transacciones
+2. Observar renderizado de gráfica
+3. Interactuar con gráfica (tocar segmentos)
+4. Verificar leyenda y etiquetas";"1. Gráfica barras: Compara meses con alturas proporcionales
+2. Gráfica líneas: Muestra tendencia temporal correcta";"1. Gráfica barras: CORRECTA 
+2. Gráfica líneas: CORRECTA";PASÓ;;RF-12;CU-23;;NA;NA;
+CP-014;Establecer alertas de pago de deudas;Notifications / ConfigScreen;Funcionalidad;Caja Negra;Usuario con sesión activa, deudas registradas;"1. Activar alerta: Switch ON para alertas de deudas
+2. Desactivar alerta: Switch OFF
+3. Configuración persistente: Reabrir app y verificar estado";"1. Ir a Notificaciones
+2. Localizar switch ""Pago de deuda próximo""
+3. Activar/desactivar según caso
+4. Guardar configuración
+5. Verificar alerta en NotificationsScreen";"1. Activar: Switch ON, alertas habilitadas
+2. Desactivar: Switch OFF, no se generan alertas
+3. Persistente: Configuración se mantiene al reabrir";"1. Activar: CORRECTA
+2. Desactivar: CORRECTA 
+3. Persistente: CORRECTA";PASÓ;;RF-24;CU-13;;"1. Activar: CORRECTA
+2. Desactivar: CORRECTA 
+3. Persistente: CORRECTA";PASÓ;
+CP-015;Ver historial de notificaciones;Notifications / NotificationsScreen;Funcionalidad;Caja Negra;Usuario con sesión activa, al menos 3 alertas generadas;"1. Vista completa: Todas las alertas (leídas y no leídas)
+2. Marcar como leída: Click en alerta no leída
+3. Marcar todas: Botón ""Marcar todas como leídas""
+4. Eliminar alerta: Swipe to delete en alerta";"1. Ir a Notificaciones
+2. Observar lista de alertas
+3. Verificar badge ""Nueva"" en no leídas
+4. Click en alerta para marcar como leída
+5. Usar botón ""Marcar todas""
+6. Swipe left para eliminar alerta
+7. Confirmar eliminación";"1. Vista completa: Todas las alertas visibles ordenadas por fecha
+2. Marcar leída: Alerta cambia a estado leído, badge desaparece
+3. Marcar todas: Todas las alertas marcadas como leídas
+4. Eliminar: Alerta eliminada de la lista tras confirmación";"1. Vista completa: CORRECTA
+2. Marcar leída: CORRECTA
+3. Marcar todas:  CORRECTA
+4. Eliminar: CORRECTA";PASÓ;;RF-21;CU-09;;"1. Vista completa: CORRECTA
+2. Marcar leída: CORRECTA
+3. Marcar todas:  CORRECTA
+4. Eliminar: CORRECTA";PASÓ;
+CP-016;Modificar categoría de gastos;Categories / EditCategoryScreen;Funcionalidad;Caja Negra;Usuario con sesión activa, categoría personalizada existente;"1. Cambiar nombre: ""Transporte"" ? ""Movilidad""
+2. Cambiar color: Azul ? Verde
+3. Cambiar icono: directions_car ? directions_bus
+4. Nombre duplicado: Cambiar a nombre que ya existe
+5. Eliminar categoría: Con gastos asociados / sin gastos";"1. Desde Presupuestos, seleccionar categorías
+2. Presionar botón ""Editar"" en categorías ya creadas
+3. Modificar nombre/color/icono según caso
+4. Presionar ""Guardar Cambios""
+5. Si es eliminar, presionar ""Eliminar Categoría""
+6. Confirmar eliminación si aplica
+7. Verificar cambios en lista";"1. Cambiar nombre: Nombre actualizado correctamente
+2. Cambiar color: Color actualizado en toda la app
+3. Cambiar icono: Icono actualizado en todas las vistas
+4. Duplicado: Error ""Ya existe una categoría con ese nombre""
+5. Eliminar con gastos: Error / Eliminar sin gastos: Éxito";"1. Cambiar nombre: CORRECTO
+2. Cambiar color: CORRECTO
+3. Cambiar icono:  FALLO
+4. Duplicado: FALLO
+5. Eliminar con gastos: ADVERTENCIA";FALLÓ;El icono no cambia.                                      Si permite categorias con el mismo nombre.                                                       Solo manda error al querrer eliminar la categoria, no dice el por que.;RF-23;CU-11;;"1. Cambiar nombre: CORRECTO
+2. Cambiar color: CORRECTO
+3. Cambiar icono:  CORRECTO
+4. Duplicado: FALLO
+5. Eliminar con gastos: CORRECTO";FALLÓ;Permite duplicados .
+CP-017;Consultar tickets escaneados;Scan / TicketsScreen;Funcionalidad;Caja Negra;Usuario con sesión activa, al menos 3 tickets escaneados;"1. Vista completa: Todos los tickets
+2. Ver detalle: Click en ticket para ver productos";"1. Ir a Transacciones
+2. Observar lista de tickets escaneados
+3. Click en ticket para ver detalle
+4. Verificar productos, monto total, fecha
+5. Verificar foto del ticket original";"1. Vista completa: Todos los tickets visibles con miniatura
+2. Ver detalle: Muestra productos, total, foto original";"1. Vista completa: CORRECTA
+2. Ver detalle: CORRECTA";PASÓ;;RF-29;CU-19;;NA;NA;
+CP-018;Verificar cifrado de contraseñas (hash);Backend / Database;Seguridad;Caja Negra;Acceso a base de datos MySQL, usuario registrado;"1. Verificar tabla usuarios
+2. Buscar campo password
+3. Confirmar que NO está en texto plano
+4. Confirmar formato de hash (bcrypt/argon2)
+5. Intentar login con hash directo (debe fallar)";"1. Conectarse a base de datos MySQL
+2. Ejecutar: SELECT email, password FROM Usuarios LIMIT 5
+3. Observar valores en columna password
+4. Verificar que son hashes (no texto legible)
+5. Verificar longitud consistente (60+ caracteres)
+6. Intentar login usando hash como password
+7. Debe rechazar";"1. Contraseñas NO están en texto plano
+2. Valores son hashes (strings largos aleatorios)
+3. Longitud consistente (~60 caracteres bcrypt)
+4. Login con hash falla (validación correcta)
+5. Confirmación de algoritmo seguro";1. CORRECTO                                                2. CORRECTO                                               3. CORRECTO                                                 4. CORRECTO                                               5. CORRECTO;PASÓ;;N/A;RNF-01;;"1. CORRECTO                                               
+2. CORRECTO                                               
+3. CORRECTO                                                 
+4. CORRECTO                                               
+5. CORRECTO";PASÓ;
+CP-019;Validar tokens JWT en autenticación;Auth / Backend;Seguridad;Caja Negra;Usuario con sesión activa, herramientas de red (Postman/Charles);"1. Token válido: Request con token correcto
+2. Token expirado: Request con token antiguo (>24hrs)
+3. Token manipulado: Modificar payload del token
+4. Sin token: Request sin header Authorization
+5. Token de otro usuario: Usar token válido de usuario diferente";"1. Login en la app, capturar token JWT
+2. Usar herramienta para hacer request a /api/transactions
+3. Casos:
+   - Incluir token válido en header
+   - Usar token antiguo
+   - Modificar parte del token
+   - Omitir header Authorization
+   - Usar token de otro usuario
+4. Observar respuesta del servidor";"1. Token válido: Respuesta 200, datos correctos
+2. Token expirado: Error 401 ""Token expirado""
+3. Token manipulado: Error 401 ""Token inválido""
+4. Sin token: Error 401 ""No autorizado""
+5. Token otro usuario: Recibe datos del usuario del token (seguro)";1. CORRECTO                                                2. CORRECTO                                               3. CORRECTO                                                 4. CORRECTO                                               5. CORRECTO;PASÓ;;N/A;RNF-01;;"1. CORRECTO
+2. CORRECTO
+3. CORRECTO
+4. CORRECTO 
+5. CORRECTO";PASÓ;
+CP-020;Prevenir inyección SQL en formularios;Auth / Transactions;Seguridad;Caja Negra;App instalada, backend activo;"1. Login: email=admin' OR '1'='1, password=cualquiera
+2. Registro: nombre='; DROP TABLE Usuarios; --
+3. Buscar: texto=' UNION SELECT * FROM Usuarios --
+4. Agregar gasto: descripción='); DELETE FROM Gastos; --
+5. Caracteres especiales: ', "", --, /*, ;";"1. Intentar login con email SQL injection
+2. Intentar registro con SQL injection en nombre
+3. Buscar transacciones con SQL injection
+4. Agregar gasto con SQL injection en descripción
+5. Observar respuestas del sistema
+6. Verificar que base de datos no fue afectada";"1. Login injection: Rechazado, error de credenciales inválidas
+2. Registro injection: Caracteres escapados o rechazados
+3. Búsqueda injection: Sin resultados o error seguro
+4. Gasto injection: Descripción guardada como texto plano escapado
+5. Base de datos intacta, sin ejecución de comandos SQL";1. CORRECTO                                                2. CORRECTO                                               3. CORRECTO                                                 4. CORRECTO                                               5. CORRECTO;PASÓ;;N/A;RNF-01;;"1. CORRECTO
+2. CORRECTO
+3. CORRECTO
+4. CORRECTO 
+5. CORRECTO";PASÓ;
+CP-021;Validar navegación intuitiva entre pantallas;App completa;Usabilidad;Caja Negra;Usuario sin experiencia previa con la app;"1. Navegación bottom nav: Probar 5 tabs del bottom navigation
+2. Navegación back: Botón back lleva a pantalla anterior
+3. Navegación lógica: Flujo Auth ? Setup ? Home ? Features
+4. Breadcrumbs: Usuario sabe dónde está en todo momento
+5. Accesos directos: FAB y shortcuts funcionan";"1. Entregar app a usuario nuevo
+2. Pedirle realizar tareas:
+   - Ver gastos del mes
+   - Agregar un gasto
+   - Ver notificaciones
+   - Configurar presupuesto
+3. Observar:
+   - Puede completar sin ayuda
+   - No se pierde en navegación
+   - Encuentra botones intuitivamente
+4. Tiempo promedio por tarea < 30 segundos";"1. Usuario completa todas las tareas sin ayuda
+2. No se confunde con navegación
+3. Botón back funciona correctamente
+4. Bottom navigation es claro
+5. Iconos y labels son comprensibles
+6. Tiempo por tarea < 30 segundos";1. ADVERTENCIA                                                2. ADVERTENCIA                                               3. CORRECTO                                                 4. CORRECTO                                               5. CORRECTO                                              6. CORRECTO;PASÓ CON OBSERVACIONES;No hay un flujo correcto para que el usuario sepa correctamente por que ventana navegar;N/A;RNF-05;;"1. CORRECTO
+2. CORRECTO
+3. CORRECTO
+4. CORRECTO 
+5. CORRECTO
+6.CORRECTO";PASÓ CON OBSERVACIONES;Lenguaje poco comprensible para publico en general, funciones dificiles de entender.
+CP-022;Verificar ortografía correcta en textos;App completa;Usabilidad;Caja Negra;App instalada;"Revisar TODAS las pantallas en busca de:
+1. Errores ortográficos
+2. Tildes faltantes
+3. Mayúsculas incorrectas
+4. Puntuación incorrecta
+5. Textos en inglés (debe ser español)";"1. Navegar por todas las 34+ pantallas
+2. Leer títulos, labels, botones, mensajes
+3. Documentar errores encontrados:
+   - Pantalla
+   - Ubicación
+   - Error
+   - Corrección sugerida
+4. Verificar mensajes de error
+5. Verificar tooltips y hints";"1. Todos los textos en español correcto
+2. Sin errores ortográficos
+3. Tildes correctas en todas las palabras
+4. Mayúsculas al inicio de oraciones
+5. Puntuación correcta
+6. Consistencia en terminología";1. ADVERTENCIA                                                2. ADVERTENCIA                                               3. CORRECTO                                                 4. CORRECTO                                               5. CORRECTO                                              6. CORRECTO;PASÓ;;N/A;RNF-05;;"1. CORRECTO
+2. CORRECTO
+3. CORRECTO
+4. CORRECTO 
+5. CORRECTO
+6.CORRECTO";PASÓ;
+CP-023;Comprobar diseño Material Design;App completa;Usabilidad;Caja Negra;App instalada, conocimiento de guías Material Design;"Verificar cumplimiento de Material Design:
+1. Colores: Paleta consistente, contraste adecuado
+2. Botones: FAB, raised, flat usados correctamente
+3. Espaciado: Padding/margins consistentes (8dp múltiplos)
+4. Tipografía: Tamaños jerárquicos correctos
+5. Iconos: Material Icons, tamaño adecuado (24dp)";"1. Revisar todas las pantallas principales
+2. Verificar paleta de colores primarios/secundarios
+3. Medir espaciados (usar herramientas dev)
+4. Verificar jerarquía tipográfica
+5. Comparar con guías oficiales Material Design
+6. Documentar desviaciones encontradas";"1. Paleta de colores consistente en toda la app
+2. Botones siguen patrones Material (elevación, ripple)
+3. Espaciados múltiplos de 8dp
+4. Tipografía: Headlines, Body, Caption correctos
+5. Iconos Material Icons 24dp
+6. Cards con elevación correcta
+7. Sin desviaciones significativas de MD";;FALLÓ;Falta verificar los diseños del Material Design;N/A;RNF-05;;;FALLÓ;Falta verificar los diseños del Material Design
+CP-024;"Validar adaptación responsive (5""-6.7"")";App completa;Usabilidad;Caja Negra;"Dispositivos/emuladores con pantallas 5"", 5.5"", 6"", 6.5"", 6.7""";"Probar en diferentes tamaños:
+1. Pantalla pequeña: 5"" (ej: Samsung Galaxy A10)
+2. Pantalla media: 5.5"" (ej: Pixel 4a)
+3. Pantalla grande: 6.5"" (ej: Samsung S21)
+4. Pantalla muy grande: 6.7"" (ej: iPhone 13 Pro Max)
+5. Orientación: Portrait y landscape";"1. Cargar app en cada tamaño de pantalla
+2. Navegar por todas las pantallas principales
+3. Verificar:
+   - Textos legibles (no cortados)
+   - Botones accesibles
+   - Imágenes escaladas correctamente
+   - No overflow de contenido
+   - Espaciados proporcionales
+4. Rotar a landscape, verificar adaptación";"1. Pantalla 5"": Todo visible, sin scroll horizontal forzado
+2. Pantalla 5.5"": Elementos bien distribuidos
+3. Pantalla 6.5"": Aprovecha espacio sin verse vacío
+4. Pantalla 6.7"": Contenido escalado proporcionalmente
+5. Landscape: Layout se adapta correctamente
+6. Sin botones fuera de alcance
+7. Sin textos cortados o overlapping";1. CORRECTO                                                2. CORRECTO                                               3. CORRECTO                                                 4. CORRECTO                                               5. CORRECTO                                              6. CORRECTO;PASÓ;;N/A;RNF-05;;NA;NA;
+CP-025;Verificar funcionamiento en Android 10 con 3GB RAM;App completa;Portabilidad;Caja Negra;Dispositivo físico o emulador: Android 10, 3GB RAM (especificaciones mínimas);"1. Instalación: APK instala correctamente
+2. Inicio: App abre sin crashes
+3. Rendimiento: Navegación fluida (no lag)
+4. Memoria: Uso < 200MB RAM
+5. Funcionalidades críticas: Login, OCR, gráficas funcionan";"1. Instalar APK en dispositivo Android 10 con 3GB RAM
+2. Abrir app y hacer login
+3. Probar funcionalidades principales:
+   - Registrar gasto
+   - Escanear ticket (OCR)
+   - Ver gráficas
+   - Configurar presupuesto
+4. Monitorear uso de RAM con Android Profiler
+5. Verificar tiempos de respuesta";"1. Instalación exitosa sin errores
+2. App inicia correctamente
+3. Navegación fluida, sin lag perceptible
+4. Uso de RAM < 200MB en idle, < 400MB en uso
+5. OCR funciona correctamente
+6. Gráficas renderizan sin problemas
+7. Sin crashes ni ANR (Application Not Responding)";1. CORRECTO                                                2. CORRECTO                                              3. CORRECTO                                                 4. CORRECTO                                               5. CORRECTO                                              6. CORRECTO                                              7. CORRECTO;PASÓ;;N/A;RNF-03;;NA;NA;
+CP-026;"Validar adaptación a pantallas 5"" - 6.7""";App completa;Portabilidad;Caja Negra;"Dispositivos con diferentes tamaños de pantalla en rango 5-6.7""";"Probar rangos extremos:
+1. Límite inferior: 5"" exacto
+2. Punto medio: 5.8""
+3. Límite superior: 6.7"" exacto
+4. Diferentes densidades: hdpi, xhdpi, xxhdpi
+5. Diferentes resoluciones: 720p, 1080p, 1440p";"1. Probar app en:
+   - 5"": 720x1280 (hdpi)
+   - 5.8"": 1080x2340 (xhdpi)
+   - 6.7"": 1440x3200 (xxhdpi)
+2. Verificar en cada uno:
+   - Layout correcto
+   - Textos legibles (tamaño ? 12sp)
+   - Botones ? 48dp touch target
+   - Imágenes no pixeladas
+3. Capturar pantallas de referencia";"1. 5"": Contenido visible sin scroll excesivo
+2. 5.8"": Layout óptimo, bien balanceado
+3. 6.7"": Aprovecha espacio sin verse vacío
+4. Todas las resoluciones: Imágenes sharp, sin pixelar
+5. Textos legibles en todos los tamaños
+6. Botones accesibles (?48dp)
+7. Sin elementos cortados o fuera de pantalla";1. CORRECTO                                                2. CORRECTO                                              3. CORRECTO                                                 4. CORRECTO                                               5. CORRECTO                                              6. CORRECTO                                              7. CORRECTO;PASÓ;;N/A;RNF-03;;NA;NA;
+CP-027;Verificar compatibilidad Android 10-14;App completa;Compatibilidad;Caja Negra;Dispositivos o emuladores con Android 10, 11, 12, 13, 14;"Probar en cada versión de Android:
+1. Android 10 (API 29)
+2. Android 11 (API 30)
+3. Android 12 (API 31)
+4. Android 13 (API 33)
+5. Android 14 (API 34)";"Para cada versión:
+1. Instalar APK
+2. Verificar permisos (cámara, almacenamiento)
+3. Probar funcionalidades principales:
+   - Login/Registro
+   - Escaneo OCR
+   - Notificaciones locales
+   - Almacenamiento local
+4. Verificar compatibilidad de librerías
+5. Probar dark mode (Android 10+)
+6. Documentar diferencias de comportamiento";"1. App funciona en todas las versiones 10-14
+2. Permisos se solicitan correctamente según versión
+3. Notificaciones funcionan en todas
+4. OCR funciona en todas (cámara compatible)
+5. Sin crashes específicos de versión
+6. Dark mode funciona en 10+ si está implementado
+7. Rendimiento similar en todas las versiones";1. CORRECTO                                                2. CORRECTO                                              3. CORRECTO                                                 4. CORRECTO                                               5. CORRECTO                                              6. CORRECTO                                              7. CORRECTO;PASÓ;;N/A;RNF-04;;NA;NA;
+CP-028;Validar organización modular del código;Código fuente;Mantenibilidad;Caja Negra;Acceso al repositorio de código;"Revisar estructura del proyecto:
+1. Separación por features (Auth, Transactions, Scan, etc.)
+2. Modelos en core/models
+3. Servicios en features/*/services
+4. Pantallas en features/*/screens
+5. Sin código duplicado > 10 líneas";"1. Abrir proyecto en IDE (VS Code/Android Studio)
+2. Revisar estructura de carpetas lib/
+3. Verificar separación:
+   - lib/core/ (modelos, servicios compartidos)
+   - lib/features/ (módulos independientes)
+4. Buscar duplicación de código (herramienta)
+5. Verificar imports (no cruzados entre features)
+6. Revisar comentarios y documentación";"1. Código organizado por features (14 módulos)
+2. Cada feature tiene screens/ y services/
+3. Modelos compartidos en core/models
+4. Sin imports cruzados entre features hermanos
+5. Duplicación < 5% del código total
+6. Comentarios en funciones complejas
+7. Nombres de archivos y variables descriptivos";;FALLÓ;Falta estructuración en el codigo. ;N/A;RNF-02;;;;
+CP-029;Generar reporte en PDF/Excel;Dashboard / Reportes;Funcionalidad;Caja Negra;Usuario con sesión activa,;Datos validos: Mes, Año y transacciones registradas en el periodo;"1. Navegar a la sección ""Reportes""      
+2. Presionar ""Generar Reporte""  
+3. Esperar procesamiento  
+4. Verificar descarga del archivo  
+5. Abrir archivo y verificar contenido (ingresos, gastos, balance, categorías)";"1. PDF descargado con resumen financiero (ingresos, gastos, balance, gráficas por categoría, recomendaciones)  
+2. Excel descargado con hoja de transacciones y resumen  
+3. Mensaje ""No hay datos para el período seleccionado""  ";1. CORRECTO                                                2. CORRECTO                                              3. CORRECTO;PASÓ;;"RF13
+RF34 ";;;;;
+CP-030;Visualizar recomendaciones financieras personalizadas;Recommendations / RecommendScreen;Funcionalidad;Caja Negra;Usuario con sesión activa;"1. Período con datos: mes=Enero, año=2025  
+2. Período sin datos: mes=Enero, año=2020  
+3. Período con un solo gasto: mes=actual, año=actual  
+4. Usuario nuevo sin transacciones";"1. Navegar a la sección ""Recomendaciones""  
+2. Esperar procesamiento  
+5. Leer sugerencias mostradas  
+6. Verificar que las sugerencias son coherentes con el historial  ";"1. Se muestran al menos 3 recomendaciones personalizadas (ahorro, categorías con gasto alto, comportamiento)  
+2. Mensaje ""No hay suficientes datos para generar recomendaciones""  
+3. Recomendaciones básicas con datos limitados  
+4. Mensaje ""Registra transacciones para recibir recomendaciones""";"1. CORRECTO 
+2. CORRECTO  
+3. CORRECTO
+4.INCORRECTO";PASÓ;;RF32 ;;;;;
+CP-031;Cargar ticket por archivo (upload web);Scan / UploadTicketScreen;Funcionalidad;Caja Negra;Usuario con sesión activa, navegador web con acceso al explorador de archivos, imágenes de tickets disponibles;"1. Archivo válido: imagen JPG , PDF, PNG, JPEG de ticket legible, <10MB  
+2. Archivo PNG: ticket  
+3. Archivo grande: imagen >10MB  
+4. Formato inválido: archivo  .docx  
+5. Imagen sin ticket: foto de objeto no relacionado  
+6. Sin archivo: intentar procesar sin subir nada";"1. Navegar a ""Registrar Gasto"" ? ""Subir Ticket""  
+2. Presionar botón ""Seleccionar Archivo""  
+3. Elegir archivo desde el explorador del sistema  
+4. Esperar carga y procesamiento OCR  
+5. Revisar datos extraídos (fecha, monto, comercio, productos)  
+6. Corregir datos si es necesario  
+7. Presionar ""Guardar""  
+8. Verificar en historial";"1. OCR extrae datos del ticket, muestra preview para confirmar  
+2. PNG procesado correctamente igual que JPG, JPEG, PDF  
+3. Error ""El archivo no debe superar 10MB""  
+4. Error ""Formato no soportado.""  
+5. OCR no detecta datos, opción de ingresar manualmente  
+6. Error ""Selecciona un archivo antes de continuar""";"1. CORRECTO 
+2. CORRECTO  
+3. CORRECTO
+4.CORRECTO
+5. CORRECTO
+6.CORRECTO";PASÓ;;RF39 ;;;;;
+CP-032;Validar responsive y compatibilidad multinavegador;Web completa;Usabilidad;Caja Negra;"Plataforma web disponible, acceso a navegadores Chrome, Firefox, Safari, Edge; dispositivos con diferentes resoluciones";"1. Desktop 1920x1080: Brave
+2. Desktop 1366x768: Firefox más reciente  
+3. Tablet 768x1024: Chrome  
+4. Móvil 390x844: Chrome móvil (iPhone 13)  
+5. Móvil 360x800: Chrome Android (Samsung A56)";"1. Abrir plataforma web en cada navegador/resolución  
+2. Navegar por pantallas principales: Login, Dashboard, Transacciones, Presupuestos, Deudas, Reportes, Recomendaciones  
+3. Verificar en cada caso:  - Menú/navbar visible y funcional  - Tablas y tarjetas no desbordan  - Formularios accesibles  - Botones con tamaño adecuado  - Textos legibles  
+4. Documentar diferencias visuales entre navegadores";"1. 1920x1080: Layout de escritorio completo, sidebar visible  
+2. 1366x768: Layout correcto sin scroll horizontal  
+3. Tablet 768px: Menú adaptado (hamburguesa o colapsado)  
+4. Móvil 390px: Vista responsive, menú hamburguesa  
+5. Móvil 360px: Todo accesible sin zoom forzado  
+6. Sin diferencias funcionales entre navegadores  
+7. Sin elementos rotos o fuera de lugar";"1. CORRECTO 
+2. CORRECTO  
+3. CORRECTO
+4. CORRECTO
+5. CORRECTO
+6. CORRECTO
+7. CORRECTO";PASÓ;;;"RNF04 
+RNF05 ";;;;
+CP-033;Dashboard analítico con filtros por período;Dashboard / HomeScreen Web;Funcionalidad;Caja Negra;Usuario con sesión activa, transacciones registradas en al menos 3 meses distintos, navegador web compatible;"1. Filtro válido: mes=Enero, año=2025  
+2. Cambio de filtro: mes=Febrero, año=2025  
+3. Período sin datos: mes=Enero, año=2020  
+4. Datos faltantes: solo mes sin año  
+5. Interacción con gráficas: clic en categoría del gráfico circular";"1. Iniciar sesión y navegar al Dashboard  
+2. Observar métricas iniciales (balance, ingresos, gastos del mes actual)  
+3. Aplicar filtro de mes y año  
+4. Verificar que gráficas, tarjetas y métricas se actualizan  
+5. Cambiar a otro período y verificar nueva actualización  
+6. Probar clic en segmento de gráfica para ver detalle de categoría  
+7. Verificar consistencia de datos con el historial de transacciones";"1. Dashboard carga con datos del período seleccionado: balance, ingresos totales, gastos totales, gráfica por categoría  
+2. Al cambiar filtro, todos los widgets se actualizan sin recargar la página  
+3. Mensaje ""Sin datos para el período seleccionado""  
+4. Error o validación ""Selecciona mes y año""  ";"1. CORRECTO 
+2. CORRECTO  
+3. CORRECTO
+4. CORRECTO
+";PASÓ;No muestra mensaje cuando no hay datos.;"RF12 
+RF37 
+RF38 ";;;;;
