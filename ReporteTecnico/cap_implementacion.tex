@@ -130,6 +130,69 @@ intermediaria entre la UI y el backend, abstrayendo la lógica HTTP.
 
 
 % ──────────────────────────────────────────────────────────────
+\subsection{Módulo de autenticación}
+% ──────────────────────────────────────────────────────────────
+
+El módulo de autenticación cubre el registro de nuevos usuarios y el inicio
+de sesión. Tras autenticarse, el backend emite un JWT que el cliente almacena
+de forma segura y adjunta en cada petición posterior.
+
+\IfFileExists{../ManualUsuarioApp/images/RegistrarCuenta.png}{%
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.45\textwidth]{../ManualUsuarioApp/images/RegistrarCuenta.png}
+  \hfill
+  \includegraphics[width=0.45\textwidth]{../ManualUsuarioApp/images/AlIniciarSesion.png}
+  \caption{Izq.: formulario de registro de cuenta. Der.: pantalla de inicio de sesión.}
+  \label{fig:auth-registro-login}
+\end{figure}
+}{}
+
+
+% ──────────────────────────────────────────────────────────────
+\subsection{Pantalla principal y navegación}
+% ──────────────────────────────────────────────────────────────
+
+La pantalla principal (\campo{HomeScreen}) centraliza el resumen financiero
+del usuario y sirve como punto de entrada a todos los módulos. La barra de
+navegación inferior (\campo{BottomAppBar}) proporciona acceso directo a
+Presupuestos, Deudas y el botón de escaneo OCR.
+
+\IfFileExists{../ManualUsuarioApp/images/PantallaPrincipal.png}{%
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.45\textwidth]{../ManualUsuarioApp/images/PantallaPrincipal.png}
+  \hfill
+  \includegraphics[width=0.45\textwidth]{../ManualUsuarioApp/images/navbar.png}
+  \caption{Izq.: pantalla principal con resumen financiero. Der.: barra de navegación inferior.}
+  \label{fig:home-principal-navbar}
+\end{figure}
+}{}
+
+\IfFileExists{../ManualUsuarioApp/images/IngresosPrincipales.png}{%
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.45\textwidth]{../ManualUsuarioApp/images/IngresosPrincipales.png}
+  \hfill
+  \includegraphics[width=0.45\textwidth]{../ManualUsuarioApp/images/DistribucionPresupuestos.png}
+  \caption{Izq.: resumen de ingresos del período. Der.: distribución visual de presupuestos.}
+  \label{fig:home-ingresos-distribucion}
+\end{figure}
+}{}
+
+\IfFileExists{../ManualUsuarioApp/images/TransaccionesRecientes.png}{%
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.45\textwidth]{../ManualUsuarioApp/images/TransaccionesRecientes.png}
+  \hfill
+  \includegraphics[width=0.45\textwidth]{../ManualUsuarioApp/images/BotonEscaneo.png}
+  \caption{Izq.: listado de transacciones recientes en el home. Der.: botón de escaneo de tickets.}
+  \label{fig:home-transacciones-escaneo}
+\end{figure}
+}{}
+
+
+% ──────────────────────────────────────────────────────────────
 \subsection{Módulo de escaneo de tickets (OCR)}
 % ──────────────────────────────────────────────────────────────
 
@@ -242,6 +305,28 @@ Muestra los productos extraídos en una lista editable. El usuario puede:
   \item Ver la confianza OCR del escaneo (indicador verde/naranja).
   \item Guardar el gasto completo.
 \end{itemize}
+
+\IfFileExists{../ManualUsuarioApp/images/PantallaFoto.png}{%
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.45\textwidth]{../ManualUsuarioApp/images/PantallaFoto.png}
+  \hfill
+  \includegraphics[width=0.45\textwidth]{../ManualUsuarioApp/images/CarruselFotos.png}
+  \caption{Izq.: captura de ticket con cámara. Der.: carrusel de revisión previa.}
+  \label{fig:ocr-captura-carrusel}
+\end{figure}
+}{}
+
+\IfFileExists{../ManualUsuarioApp/images/ProgresoFoto.png}{%
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.45\textwidth]{../ManualUsuarioApp/images/ProgresoFoto.png}
+  \hfill
+  \includegraphics[width=0.45\textwidth]{../ManualUsuarioApp/images/ResultadoFoto.png}
+  \caption{Izq.: pantalla de procesamiento OCR con pasos animados. Der.: resultado con productos extraídos.}
+  \label{fig:ocr-proceso-resultado}
+\end{figure}
+}{}
 
 \begin{lstlisting}[style=dart,
     caption={Guardado del gasto con productos extraídos por OCR}]
@@ -489,6 +574,17 @@ Formulario con tres campos:
 Igual que la creación, pero precarga los valores actuales de la
 categoría recibida como argumento de navegación.
 
+\IfFileExists{../ManualUsuarioApp/images/Categorias.png}{%
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.45\textwidth]{../ManualUsuarioApp/images/Categorias.png}
+  \hfill
+  \includegraphics[width=0.45\textwidth]{../ManualUsuarioApp/images/FormularioCategorias.png}
+  \caption{Izq.: listado de categorías predefinidas y personalizadas. Der.: formulario de nueva categoría.}
+  \label{fig:categorias-listado-form}
+\end{figure}
+}{}
+
 \subsubsection{Servicio de categorías}
 
 \begin{table}[H]
@@ -646,6 +742,17 @@ if (existingBudget != null) {
 Permite modificar el monto asignado, la categoría y el estado
 activo/inactivo de un presupuesto existente. Recibe el \campo{budgetId}
 como argumento de navegación y carga los datos actuales del presupuesto.
+
+\IfFileExists{../ManualUsuarioApp/images/PanelPresupuesto.png}{%
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.45\textwidth]{../ManualUsuarioApp/images/PanelPresupuesto.png}
+  \hfill
+  \includegraphics[width=0.45\textwidth]{../ManualUsuarioApp/images/CrearNuevoPresupuesto.png}
+  \caption{Izq.: panel de presupuestos por categoría. Der.: formulario de nuevo presupuesto.}
+  \label{fig:presupuestos-panel-nuevo}
+\end{figure}
+}{}
 
 \subsubsection{Servicio de presupuestos}
 
@@ -838,6 +945,17 @@ para registrar \textbf{pagos anticipados a capital}. Este tipo de pago
 reduce el saldo insoluto directamente sin afectar la cuota de intereses
 del período, lo que disminuye las mensualidades restantes.
 
+\IfFileExists{../ManualUsuarioApp/images/PanelDeudas.png}{%
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.45\textwidth]{../ManualUsuarioApp/images/PanelDeudas.png}
+  \hfill
+  \includegraphics[width=0.45\textwidth]{../ManualUsuarioApp/images/NuevaDeuda.png}
+  \caption{Izq.: panel de deudas activas. Der.: formulario de nueva deuda.}
+  \label{fig:deudas-panel-nueva}
+\end{figure}
+}{}
+
 \subsubsection{Servicio de deudas}
 
 \begin{table}[H]
@@ -926,6 +1044,73 @@ del período, lo que disminuye las mensualidades restantes.
   \item Los días hasta el próximo pago se calculan en el cliente con
         \campo{DateTime.difference} para evitar tráfico innecesario.
 \end{itemize}
+
+
+% ──────────────────────────────────────────────────────────────
+\subsection{Módulo de transacciones}
+% ──────────────────────────────────────────────────────────────
+
+El módulo de transacciones agrupa el registro manual de gastos e ingresos.
+Desde la pantalla principal el usuario accede al historial unificado y puede
+crear nuevos movimientos sin necesidad de fotografiar un ticket.
+
+\subsubsection{Pantallas}
+
+\IfFileExists{../ManualUsuarioApp/images/VentanaTransacciones.png}{%
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.45\textwidth]{../ManualUsuarioApp/images/VentanaTransacciones.png}
+  \hfill
+  \includegraphics[width=0.45\textwidth]{../ManualUsuarioApp/images/NuevoGasto.png}
+  \caption{Izq.: historial de transacciones. Der.: formulario de nuevo gasto.}
+  \label{fig:transacciones-historial-gasto}
+\end{figure}
+}{}
+
+\IfFileExists{../ManualUsuarioApp/images/NuevoIngreso.png}{%
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.45\textwidth]{../ManualUsuarioApp/images/NuevoIngreso.png}
+  \caption{Formulario de registro de ingreso.}
+  \label{fig:transacciones-ingreso}
+\end{figure}
+}{}
+
+
+% ──────────────────────────────────────────────────────────────
+\subsection{Módulo de notificaciones}
+% ──────────────────────────────────────────────────────────────
+
+El módulo de notificaciones muestra alertas de presupuesto (uso $>$ 80\,\% y
+superación del límite) y recordatorios de pagos de deudas próximos. Las
+alertas se generan en el backend y se leen desde la pantalla dedicada.
+
+\IfFileExists{../ManualUsuarioApp/images/Notificaciones.png}{%
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.45\textwidth]{../ManualUsuarioApp/images/Notificaciones.png}
+  \caption{Pantalla de notificaciones y alertas del sistema.}
+  \label{fig:notificaciones}
+\end{figure}
+}{}
+
+
+% ──────────────────────────────────────────────────────────────
+\subsection{Perfil de usuario}
+% ──────────────────────────────────────────────────────────────
+
+La pantalla de perfil permite al usuario consultar su información registrada
+y cerrar sesión. El cierre de sesión elimina el token JWT almacenado y
+redirige al flujo de autenticación.
+
+\IfFileExists{../ManualUsuarioApp/images/Perfil.png}{%
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.45\textwidth]{../ManualUsuarioApp/images/Perfil.png}
+  \caption{Pantalla de perfil de usuario.}
+  \label{fig:perfil}
+\end{figure}
+}{}
 
 
 % ══════════════════════════════════════════════════════════════

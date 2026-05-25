@@ -5,7 +5,8 @@
       "Bash(grep -n \"rowcolors\\\\|tablerowalt\\\\|columncolor\\\\|cellcolor\\\\|rowcolor\" \"c:/Users/MAG9/Documents/TT/LatexTT/BackEndDoc/\"*.tex)",
       "Bash(bibtex main:*)",
       "Bash(grep -rn \"\\\\\\\\\\\\\\\\caption\" C:/Users/MAG9/Documents/TT/LatexTT/ReporteTecnico/desarrollo/ --include=\"*.tex\")",
-      "Bash(grep *)"
+      "Bash(grep *)",
+      "Bash(python *)"
     ]
   }
 }
