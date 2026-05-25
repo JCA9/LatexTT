@@ -1,0 +1,51 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{float}
+
+\geometry{margin=2.5cm}
+
+\title{Requerimientos Funcionales Seleccionados}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Requerimientos Funcionales Seleccionados}
+
+La siguiente tabla presenta los requerimientos funcionales RF06, RF07, RF13, RF16 y RF39, organizados con el formato estándar utilizado en el proyecto.
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{@{} l l X @{}}
+\toprule
+\textbf{Código} & \textbf{Nombre} & \textbf{Descripción} \\
+\midrule
+
+RF06 & Registro de ingresos &
+El usuario podrá registrar manualmente sus ingresos indicando el monto, la fecha y una descripción opcional, tanto desde la aplicación móvil como desde la plataforma web. \\
+
+RF07 & Registro de egresos &
+El usuario podrá registrar egresos de forma manual o automática, especificando monto, fecha, categoría y descripción. \\
+
+RF13 & Generación de reportes en PDF &
+La plataforma web y la aplicación móvil deberán permitir la generación de reportes financieros en formato PDF, con opción de descarga o visualización en pantalla. \\
+
+RF16 & Captura de foto del ticket &
+La aplicación móvil debe permitir al usuario tomar una fotografía del ticket de compra utilizando la cámara del dispositivo para su posterior procesamiento. \\
+
+RF39 & Carga de ticket digital &
+El sistema debe permitir la carga de tickets en formato digital (PDF o imagen) desde el explorador web, procesándolos automáticamente con el módulo OCR. \\
+
+\bottomrule
+\end{tabularx}
+\caption{Requerimientos Funcionales Seleccionados (RF06, RF07, RF13, RF16, RF39)}
+\end{table}
+
+\end{document}

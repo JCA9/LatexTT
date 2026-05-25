@@ -929,16 +929,16 @@ del período, lo que disminuye las mensualidades restantes.
 
 
 % ══════════════════════════════════════════════════════════════
-\section{Aplicación web}
+\section{Plataforma web}
 % ══════════════════════════════════════════════════════════════
 
 
-\subsection{Arquitectura general de la aplicación web}
+\subsection{Arquitectura general de la plataforma web}
 
 \subsubsection{Stack tecnológico}
 
 \begin{longtable}{>{\bfseries\small}p{3.5cm} p{10cm}}
-  \caption{Stack tecnológico de la aplicación web FINARA}
+  \caption{Stack tecnológico de la plataforma web FINARA}
   \label{tab:stack-web} \\
   \toprule
   Componente & Descripción \\
@@ -962,12 +962,12 @@ del período, lo que disminuye las mensualidades restantes.
 
 \subsubsection{Estructura del proyecto web}
 
-La aplicación web se organiza por rutas y módulos de dominio dentro de
+La plataforma web se organiza por rutas y módulos de dominio dentro de
 \archivo{src/app/}, con componentes reutilizables y servicios desacoplados en
 \archivo{src/lib/}.
 
 \begin{lstlisting}[style=codigobase, language={},
-    caption={Estructura de directorios relevante en la aplicación web}]
+    caption={Estructura de directorios relevante en la plataforma web}]
 src/
 |-- app/
 |   |-- dashboard/
@@ -1045,6 +1045,13 @@ revisar los datos detectados y confirmar el guardado final del ticket.
         de persistencia (por metadata de escaneo o \endpoint{/tickets/manual}).
 \end{enumerate}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\linewidth]{./images/implementacion/screenshoot_cargar_ticketdigital.png}
+  \caption{Carga de ticket digital desde la plataforma web: selección de archivo y previsualización.}
+  \label{fig:impl-upload-ticket}
+\end{figure}
+
 \subsubsection{Validaciones implementadas}
 
 \begin{itemize}
@@ -1054,6 +1061,13 @@ revisar los datos detectados y confirmar el guardado final del ticket.
   \item Verificación de categorías disponibles antes de confirmar el ticket.
   \item Validación de productos con categoría válida al guardar.
 \end{itemize}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\linewidth]{./images/implementacion/screenshoot_revisionticket.png}
+  \caption{Revisión y corrección de datos extraídos por OCR antes del guardado del ticket.}
+  \label{fig:impl-review-ocr}
+\end{figure}
 
 \subsubsection{Componentes y servicios principales}
 
@@ -1184,6 +1198,12 @@ Con esos datos se calculan:
         (\campo{finara:income-updated}).
 \end{itemize}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\linewidth]{./images/implementacion/screenshoot_dashboard_web.png}
+  \caption{Dashboard web: resumen financiero, gráficas por período e indicadores de presupuesto.}
+  \label{fig:impl-dashboard}
+\end{figure}
 
 % ──────────────────────────────────────────────────────────────
 \subsection{Módulo de generación de reportes}
@@ -1191,7 +1211,7 @@ Con esos datos se calculan:
 
 \subsubsection{Descripción general}
 
-La aplicación web se manejan reportes:
+La plataforma web se manejan reportes:
   \textbf{Generación local} desde dashboard (descarga inmediata PDF/Excel).
   
 
@@ -1209,8 +1229,12 @@ Desde \archivo{src/app/dashboard/page.tsx}:
 Ambos incluyen contexto del período filtrado y recomendaciones del endpoint
 \endpoint{/recommendations} para enriquecer resumen ejecutivo.
 
-
-
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\linewidth]{./images/implementacion/screenshoot_generar_reporte.png}
+  \caption{Generación de reportes en PDF y Excel desde el dashboard.}
+  \label{fig:impl-report}
+\end{figure}
 
 \subsubsection{Consideraciones técnicas}
 
@@ -1228,6 +1252,13 @@ Ambos incluyen contexto del período filtrado y recomendaciones del endpoint
 
 Este módulo muestra recomendaciones financieras del backend para un período
 (mes/año), integrando riesgos, recomendaciones y acciones sugeridas.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\linewidth]{./images/implementacion/screenshoot_recomendaciones.png}
+  \caption{Módulo de recomendaciones: análisis financiero personalizado con acciones sugeridas.}
+  \label{fig:impl-recommendations}
+\end{figure}
 
 \subsubsection{Objetivo}
 

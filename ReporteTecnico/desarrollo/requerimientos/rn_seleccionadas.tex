@@ -1,0 +1,48 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{float}
+
+\geometry{margin=2.5cm}
+
+\title{Reglas de Negocio Seleccionadas}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Reglas de Negocio Seleccionadas}
+
+Las siguientes reglas de negocio son directrices específicas que definen o restringen ciertos aspectos del funcionamiento del sistema, organizadas según las reglas RN07, RN08, RN10 y RN14.
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{@{} l l X @{}}
+\toprule
+\textbf{Código} & \textbf{Nombre} & \textbf{Descripción} \\
+\midrule
+
+RN07 & Idioma de procesamiento OCR &
+El sistema de OCR únicamente procesa tickets en idioma español. Tickets en otros idiomas requieren registro manual. \\
+
+RN08 & Antigüedad recomendada de tickets &
+Se recomienda fotografiar tickets al momento de la compra. Tickets con más de 30 días de antigüedad pueden tener menor calidad de escaneo. \\
+
+RN10 & Validación manual obligatoria &
+Cuando el OCR presenta discrepancias o baja confianza en la extracción, se solicita validación manual obligatoria del usuario. \\
+
+RN14 & Categorización automática &
+Los gastos se clasifican automáticamente según palabras clave y patrones de coincidencia con categorías predefinidas. \\
+
+\bottomrule
+\end{tabularx}
+\caption{Reglas de Negocio Seleccionadas (RN07, RN08, RN10, RN14)}
+\end{table}
+
+\end{document}

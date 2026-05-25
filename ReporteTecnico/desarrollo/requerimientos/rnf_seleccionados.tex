@@ -1,0 +1,51 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{float}
+
+\geometry{margin=2.5cm}
+
+\title{Requerimientos No Funcionales}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Requerimientos No Funcionales}
+
+Los requisitos no funcionales definen las características y restricciones del sistema que no están directamente relacionadas con las funcionalidades específicas, pero que son esenciales para garantizar su calidad, rendimiento, seguridad y usabilidad.
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{l l X}
+\toprule
+\textbf{Código} & \textbf{Nombre} & \textbf{Descripción} \\
+\midrule
+
+RNF01 & Seguridad &
+Las contraseñas y datos personales deben almacenarse cifrados utilizando un algoritmo seguro (bcrypt) y no se guardará texto plano. \\
+
+RNF02 & Mantenibilidad &
+El código debe estar modularizado, documentado y versionado con control GitHub para facilitar actualizaciones. Cada módulo podrá ser actualizado sin afectar la funcionalidad global. \\
+
+RNF03 & Portabilidad &
+La aplicación móvil debe funcionar correctamente en dispositivos Android 10 o superior, manteniendo su funcionalidad y diseño sin errores en diferentes tipos de pantallas. \\
+
+RNF04 & Compatibilidad &
+La plataforma web debe ser compatible con navegadores modernos como Chrome (v135), Edge (v135) y Firefox (v140). \\
+
+RNF05 & Usabilidad &
+La interfaz de usuario de la aplicación móvil será desarrollada conforme a las Flutter Usability Guidelines y Material Design, asegurando botones, menús y elementos interactivos claros, consistentes y accesibles. La versión web seguirá las React Accessibility Guidelines, priorizando navegación intuitiva y tiempos de respuesta óptimos. El sistema deberá permitir su uso sin capacitación previa. \\
+
+\bottomrule
+\end{tabularx}
+\caption{Requisitos No Funcionales (RNF01–RNF05)}
+\end{table}
+
+\end{document}

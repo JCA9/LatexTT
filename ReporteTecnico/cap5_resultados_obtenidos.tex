@@ -193,3 +193,37 @@ modular y repositorio en GitHub para mantenibilidad; soporte para
 Android 10 o superior para portabilidad; validación en Chrome, Edge y
 Firefox actualizados para compatibilidad; y adhesión a Material Design
 y las guías de accesibilidad de React para usabilidad.
+
+\subsection{Análisis de pruebas y observaciones}
+
+Se ejecutaron pruebas funcionales y de usabilidad sobre la aplicación móvil, la plataforma web y el backend. A continuación se presentan los hallazgos técnicos más relevantes, la trazabilidad a los requerimientos y las acciones planificadas para corrección.
+
+\paragraph{Resumen ejecutivo}
+- Las funciones críticas del sistema (registro de usuario, inicio de sesión, registro manual de ingresos y egresos, generación de reportes y captura de tickets en condiciones óptimas) operan conforme a lo especificado.
+- Se identificaron áreas con fallos que requieren corrección prioritaria debido a su impacto en la integridad de los datos y en la experiencia del usuario.
+
+\paragraph{Hallazgos relevantes y plan de corrección}
+\begin{itemize}
+  \item Categorización automática (Relacionado: RF-07). Descripción: el sistema está asignando de forma incorrecta la categoría de un número significativo de productos detectados, produciendo una concentración anómala en la categoría Alimentos. Impacto: sesgo en métricas por categoría y en las recomendaciones generadas. Acciones: mejorar el motor de categorización incorporando reglas léxicas adicionales, entrenar y validar un modelo complementario con datos históricos, y realizar pruebas con un conjunto etiquetado.
+
+  \item Validación de montos en registro manual (Relacionado: RF-08). Descripción: el backend reporta errores al procesar valores en los límites extremos o formatos decimales no normalizados. Impacto: imposibilidad de registrar movimientos en determinados escenarios y riesgo de rechazo de entradas válidas. Acciones: normalizar formatos numéricos en el frontend y backend, reforzar validaciones server-side y añadir pruebas unitarias que cubran rangos y precisión decimal.
+
+  \item Lógica de estado de deudas (Relacionado: RF-27). Descripción: la transición de una deuda a estado "pagada" no se aplica de forma consistente; el sistema también muestra mensajes de validación inconsistentes cuando se ingresan pagos superiores al saldo pendiente. Impacto: inconsistencias en balances y reportes asociados a deudas. Acciones: revisar y corregir la lógica de negocio en el backend, actualizar las condiciones de validación y agregar pruebas de integración para abonos parciales y pagos totales.
+
+  \item Filtrado y búsqueda en historial de transacciones (Relacionado: RF-11). Descripción: los filtros por categoría, tipo y búsqueda por texto no se aplican de manera fiable en todas las combinaciones; los filtros básicos por fecha funcionan correctamente. Impacto: reducción de la capacidad de análisis por parte del usuario. Acciones: depurar los parámetros de la API de filtrado, estandarizar la serialización de criterios y añadir pruebas end-to-end que cubran combinaciones de filtros.
+
+  \item Gestión de categorías (Relacionado: RF-23). Descripción: se permite la creación de categorías con nombres duplicados y existen rutas de la interfaz donde la actualización de propiedades (icono/color) no refleja el cambio de forma inmediata. Impacto: inconsistencias en la interfaz y conflictos lógicos en la gestión de datos. Acciones: imponer unicidad a nivel de API/BD, corregir el flujo de actualización y asegurar el refresco de caché/local state en los clientes.
+\end{itemize}
+
+\paragraph{Resultados conformes}
+Las pruebas asociadas a registro de usuario (RF-01), inicio de sesión (RF-02), registro de ingresos (RF-06), captura y revisión de datos OCR en condiciones óptimas (RF-16 y RF-20), configuración de presupuestos (RF-10), registro básico de deudas y pagos (RF-26), generación de gráficas y reportes (RF-12 y RF-13), y alertas/ notificaciones (RF-24, RF-21) han mostrado conformidad con los requisitos; se registraron observaciones menores que no impiden la funcionalidad principal.
+
+\paragraph{Plan de trabajo y próximos pasos}
+\begin{itemize}
+  \item Priorizar y corregir los puntos identificados (categorización, validación numérica y lógica de deuda) según el impacto en la integridad de los datos y la trazabilidad a los requerimientos.
+  \item Desplegar correcciones en un entorno de staging y volver a ejecutar las pruebas afectadas para confirmar la mitigación de los defectos.
+  \item Incorporar pruebas automatizadas (unitarias e integración) para los flujos corregidos y añadir pruebas end-to-end para los escenarios de filtrado y actualización de categorías.
+  \item Documentar las limitaciones técnicas conocidas (tickets en idiomas distintos al español, imágenes de baja calidad, etc.) y las recomendaciones de uso en la documentación técnica del proyecto.
+\end{itemize}
+
+
