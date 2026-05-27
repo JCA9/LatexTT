@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Conclusiones y Resultados — FINARA</title>
+  <style>
+    body { font-family: Calibri, Arial, sans-serif; margin: 40px; font-size: 14px; color: #1a1a1a; }
+    h1 { font-size: 22px; color: #1f3864; border-bottom: 2px solid #1f3864; padding-bottom: 6px; margin-top: 40px; }
+    h2 { font-size: 17px; color: #2e5fa3; margin-top: 28px; }
+    h3 { font-size: 15px; color: #555; margin-top: 20px; }
+    table { border-collapse: collapse; width: 100%; margin: 14px 0 20px 0; }
+    th { background-color: #1f3864; color: white; padding: 8px 12px; text-align: left; font-size: 13px; }
+    td { border: 1px solid #ccc; padding: 7px 12px; font-size: 13px; }
+    tr:nth-child(even) td { background-color: #f2f5fb; }
+    .pass   { color: #2e7d32; font-weight: bold; }
+    .obs    { color: #e65100; font-weight: bold; }
+    .fail   { color: #c62828; font-weight: bold; }
+    .box { border: 1px solid #ccc; border-radius: 6px; padding: 14px 20px; margin: 10px 0; background: #f7f9ff; }
+    .green-box  { border-left: 5px solid #2e7d32; background: #f1f8f1; }
+    .red-box    { border-left: 5px solid #c62828; background: #fff5f5; }
+    .blue-box   { border-left: 5px solid #1565c0; background: #e8f0fb; }
+    .orange-box { border-left: 5px solid #e65100; background: #fff8f0; }
+    .slide { border: 2px solid #2e5fa3; border-radius: 8px; padding: 20px 28px; margin-bottom: 36px; }
+    .slide-title { font-size: 18px; font-weight: bold; color: #1f3864; margin-bottom: 16px; }
+    p { margin: 6px 0 10px 0; line-height: 1.6; }
+    ul, ol { margin: 6px 0 10px 24px; line-height: 1.8; }
+    .highlight { background-color: #fff9c4; font-weight: bold; }
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 16px 0;
+    }
+    .metric-card {
+      border: 2px solid #2e5fa3;
+      border-radius: 8px;
+      padding: 14px;
+      text-align: center;
+      background: #f0f4ff;
+    }
+    .metric-value { font-size: 32px; font-weight: bold; color: #1f3864; }
+    .metric-value.green { color: #2e7d32; }
+    .metric-value.orange { color: #e65100; }
+    .metric-value.red { color: #c62828; }
+    .metric-label { font-size: 12px; color: #555; margin-top: 4px; }
+    .nps { font-size: 48px; font-weight: bold; color: #1f3864; text-align: center; margin: 10px 0; }
+    .nps-label { text-align: center; color: #555; font-size: 13px; }
+    .footnote { font-size: 11px; color: #777; margin-top: 4px; }
+    .badge { display: inline-block; border-radius: 4px; padding: 2px 8px; font-size: 12px; font-weight: bold; color: white; }
+    .badge-green  { background: #2e7d32; }
+    .badge-orange { background: #e65100; }
+    .badge-red    { background: #c62828; }
+  </style>
+</head>
+<body>
+
+<h1>Conclusiones y Resultados de Pruebas — FINARA</h1>
+<p>Documento de apoyo para presentación · Trabajo Terminal · Mayo 2026</p>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="slide-title">Diapositiva 1 — Resultados clave en números</div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-value orange">66.7 %</div>
+      <div class="metric-label">Tasa de aprobación global<br>33 casos de prueba</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value green">100 %</div>
+      <div class="metric-label">Seguridad y compatibilidad<br>cifrado, JWT, SQL, navegadores</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value green">8.2 / 10</div>
+      <div class="metric-label">NPS promedio<br>6 usuarios reales</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value orange">62.0 %</div>
+      <div class="metric-label">Exactitud del categorizador OCR<br>150 productos evaluados</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value green">86.3 %</div>
+      <div class="metric-label">Detección del total del ticket<br>promedio general OCR</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value red">15</div>
+      <div class="metric-label">Defectos catalogados<br>3 corregidos · 9 pendientes TT</div>
+    </div>
+  </div>
+
+  <table>
+    <tr>
+      <th>Categoría de prueba</th><th>Total</th>
+      <th>Pasó</th><th>Pasó*</th><th>Falló</th><th>% Aprob.</th>
+    </tr>
+    <tr><td>Funcionalidad</td><td>21</td><td class="pass">11</td><td class="obs">2</td><td class="fail">8</td><td>61.9 %</td></tr>
+    <tr><td>Seguridad</td><td>3</td><td class="pass">3</td><td>0</td><td>0</td><td class="pass">100.0 %</td></tr>
+    <tr><td>Usabilidad</td><td>4</td><td class="pass">2</td><td class="obs">1</td><td class="fail">1</td><td>75.0 %</td></tr>
+    <tr><td>Portabilidad</td><td>3</td><td class="pass">2</td><td>0</td><td class="fail">1</td><td>66.7 %</td></tr>
+    <tr><td>Compatibilidad</td><td>1</td><td class="pass">1</td><td>0</td><td>0</td><td class="pass">100.0 %</td></tr>
+    <tr><td>Mantenibilidad</td><td>1</td><td>0</td><td>0</td><td class="fail">1</td><td class="fail">0.0 %</td></tr>
+    <tr class="highlight">
+      <td><strong>Total</strong></td><td><strong>33</strong></td>
+      <td class="pass"><strong>19</strong></td><td class="obs"><strong>3</strong></td>
+      <td class="fail"><strong>11</strong></td><td><strong>66.7 %</strong></td>
+    </tr>
+  </table>
+  <p class="footnote">* Pasó con observaciones menores.</p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="slide-title">Diapositiva 2 — Lo que funcionó bien</div>
+
+  <div class="box green-box">
+    <strong>Seguridad — 100 % de aprobación</strong>
+    <ul>
+      <li>Autenticación JWT con aislamiento por <code>userId</code> en todas las consultas</li>
+      <li>Cifrado de contraseñas con <strong>bcrypt (factor 12)</strong></li>
+      <li>Resistencia demostrada a inyecciones SQL en formularios</li>
+    </ul>
+  </div>
+
+  <div class="box green-box">
+    <strong>Portabilidad y compatibilidad</strong>
+    <ul>
+      <li>Funciona correctamente en <strong>Android 10 – 14</strong> (API 29 – 34)</li>
+      <li>Adaptación correcta a pantallas de <strong>5'' a 6.7''</strong> en resoluciones 720p – 1440p</li>
+      <li>Verificado en Chrome, Edge y Firefox actualizados</li>
+      <li>Probado en <strong>9 dispositivos físicos</strong> de distintas gamas</li>
+    </ul>
+  </div>
+
+  <div class="box green-box">
+    <strong>Experiencia de usuario — NPS 8.2 / 10</strong>
+    <ul>
+      <li><strong>100 %</strong> de usuarios encontró la navegación fácil o muy fácil</li>
+      <li><strong>100 %</strong> calificó positivamente el diseño visual (67 % "me encantó")</li>
+      <li><strong>100 %</strong> consideró útil o muy útil la función de presupuestos por categoría</li>
+      <li><strong>83.3 %</strong> encontró la sección de deudas clara</li>
+      <li>Registro manual de gastos: <strong>67 %</strong> lo completó en menos de 30 segundos</li>
+    </ul>
+  </div>
+
+  <div class="box green-box">
+    <strong>Módulos con aprobación completa</strong>
+    <ul>
+      <li>Autenticación (registro, login, JWT)</li>
+      <li>OCR — extracción de texto con Google Cloud Vision (detección 93.5 % en total del ticket)</li>
+      <li>Presupuestos con indicadores visuales de alerta</li>
+      <li>Generación de reportes PDF / Excel</li>
+      <li>Recomendaciones financieras personalizadas con IA (Claude Haiku)</li>
+      <li>Sistema de alertas automáticas</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="slide-title">Diapositiva 3 — Áreas de mejora y defectos críticos</div>
+
+  <div class="box red-box">
+    <strong>Categorización OCR — prioridad técnica #1</strong>
+    <p>El clasificador automático asignó categorías incorrectas al 38 % de los productos (150 evaluados). El sesgo hacia la categoría "Alimentos" absorbió productos de Entretenimiento, Transporte y Otros.</p>
+    <ul>
+      <li>F1 macro promedio: <strong>57.7 %</strong> — línea base para la siguiente iteración</li>
+      <li><strong>66.7 %</strong> de los usuarios reportó que el OCR "reconoció muy poco"</li>
+      <li>Solo <strong>1 de 6</strong> usuarios (16.7 %) reportó que funcionó perfectamente</li>
+    </ul>
+  </div>
+
+  <h2>Defectos de severidad alta (pendientes)</h2>
+  <table>
+    <tr><th>ID</th><th>Descripción</th><th>Estado</th></tr>
+    <tr>
+      <td>DEF-003</td>
+      <td>Categorizador OCR con sesgo hacia "Alimentos" u "Otros"</td>
+      <td><span class="badge badge-red">Pendiente</span></td>
+    </tr>
+    <tr>
+      <td>DEF-004</td>
+      <td>El pago total de una deuda no actualiza el estado a "liquidada"</td>
+      <td><span class="badge badge-red">Pendiente</span></td>
+    </tr>
+    <tr>
+      <td>DEF-007</td>
+      <td>Pantalla de estadísticas por categoría no implementada</td>
+      <td><span class="badge badge-red">Pendiente</span></td>
+    </tr>
+  </table>
+
+  <h2>Resumen del estado de correcciones (15 defectos totales)</h2>
+  <table>
+    <tr><th>Estado</th><th>Cantidad</th><th>Defectos</th></tr>
+    <tr>
+      <td><span class="badge badge-green">Corregidos</span></td>
+      <td>3</td>
+      <td>DEF-001 (mensaje email duplicado), DEF-010 (mensaje al eliminar categoría), DEF-014 (responsive web)</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-orange">Parciales</span></td>
+      <td>3</td>
+      <td>DEF-002 (validación montos extremos), DEF-006 (filtros historial), DEF-015 (mensaje sin datos en dashboard)</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-red">Pendientes</span></td>
+      <td>9</td>
+      <td>DEF-003, 004, 005, 007, 008, 009, 011, 012, 013 → agenda del siguiente TT</td>
+    </tr>
+  </table>
+
+  <div class="box orange-box">
+    <strong>Usabilidad y mantenibilidad:</strong>
+    <ul>
+      <li>El flujo de navegación no orienta suficientemente al <strong>usuario nuevo</strong> (DEF-011) → se planifica un onboarding guiado</li>
+      <li>La arquitectura del código móvil no cumple la separación <strong>feature-first</strong> planificada (DEF-013) → requiere refactorización con gestión de estado reactiva</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="slide-title">Diapositiva 4 — Conclusiones</div>
+
+  <div class="box blue-box">
+    <strong>Conclusión general:</strong> El sistema FINARA demostró ser técnicamente viable y funcionalmente competitivo en sus módulos centrales. La base del sistema es sólida: seguridad y portabilidad al 100 %, NPS de 8.2/10, y 40 requerimientos funcionales implementados.
+  </div>
+
+  <h2>Por componente</h2>
+  <table>
+    <tr><th>Componente</th><th>Conclusión</th><th>Estado</th></tr>
+    <tr>
+      <td>Seguridad</td>
+      <td>JWT + bcrypt (factor 12) + resistencia SQL. Base adecuada para datos financieros sensibles.</td>
+      <td class="pass">Sólido</td>
+    </tr>
+    <tr>
+      <td>Portabilidad</td>
+      <td>Android 10–14, pantallas 5''–6.7'', 9 dispositivos físicos probados.</td>
+      <td class="pass">Sólido</td>
+    </tr>
+    <tr>
+      <td>OCR — extracción</td>
+      <td>Pipeline híbrido Tesseract + Cloud Vision funciona. Cloud Vision supera en ~35 pp.</td>
+      <td class="obs">Funcional</td>
+    </tr>
+    <tr>
+      <td>OCR — categorización</td>
+      <td>F1 macro 57.7 %. Sesgo hacia "Alimentos". Requiere mejora urgente.</td>
+      <td class="fail">Mejorar</td>
+    </tr>
+    <tr>
+      <td>Funcionalidad general</td>
+      <td>61.9 % de aprobación. 7 defectos en 5 módulos. Ciclo de vida de deudas incompleto.</td>
+      <td class="obs">En progreso</td>
+    </tr>
+    <tr>
+      <td>Experiencia de usuario</td>
+      <td>NPS 8.2/10. Diseño visual y navegación valorados positivamente. OCR es el punto débil.</td>
+      <td class="pass">Positivo</td>
+    </tr>
+    <tr>
+      <td>Mantenibilidad</td>
+      <td>Estructura feature-first no implementada. Requiere refactorización con gestión reactiva.</td>
+      <td class="fail">Pendiente</td>
+    </tr>
+  </table>
+
+  <h2>Agenda prioritaria para el siguiente Trabajo Terminal</h2>
+  <ol>
+    <li><strong>Mejora del clasificador OCR</strong> — reglas léxicas adicionales y datos de entrenamiento (DEF-003)</li>
+    <li><strong>Ciclo de vida de deudas</strong> — lógica de liquidación automática en backend (DEF-004)</li>
+    <li><strong>Pantalla de estadísticas por categoría</strong> — módulo no implementado (DEF-007)</li>
+    <li><strong>Filtros avanzados en historial</strong> — búsqueda por texto, categoría y tipo (DEF-006)</li>
+    <li><strong>Onboarding guiado</strong> — flujo de orientación para usuario nuevo (DEF-011)</li>
+    <li><strong>Refactorización feature-first</strong> — arquitectura con gestión de estado reactiva (DEF-013)</li>
+  </ol>
+
+  <div class="box green-box">
+    <strong>Síntesis final:</strong> Los resultados cuantitativos confirman que la base es sólida.
+    Los <strong>9 defectos pendientes</strong> son correcciones bien delimitadas, no rediseños del sistema.
+    La percepción positiva de los usuarios (NPS 8.2/10) valida la dirección del producto.
+    El trabajo del siguiente TT tiene una agenda clara con prioridades definidas.
+  </div>
+</div>
+
+</body>
+</html>
