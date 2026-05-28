@@ -2,6 +2,8 @@
 
 En este Trabajo Terminal se concluyó el desarrollo e integración del sistema FINARA en su totalidad. A diferencia de la etapa anterior, en la que los resultados correspondían al análisis, diseño y planificación, los resultados del presente trabajo son los artefactos funcionales del sistema: la aplicación móvil, la plataforma web y el servidor backend, integrados y operativos como un sistema unificado de gestión financiera personal.
 
+Entre las tecnologías de terceros integradas en el sistema, destaca el uso de la \textbf{API de Google Cloud Vision} como respaldo del motor OCR local Tesseract. Google Cloud Vision emplea modelos de aprendizaje profundo entrenados con miles de millones de imágenes reales para extraer texto de fotografías capturadas en condiciones no controladas ---iluminación deficiente, perspectiva oblicua o papel arrugado--- con una precisión significativamente superior a la de los motores locales \cite{GoogleCloudVisionAPI}. A diferencia de alternativas como AWS Textract o Azure Document Intelligence, cuya optimización está orientada a documentos estructurados (facturas electrónicas y formularios digitales), Cloud Vision está diseñada para texto en imágenes tomadas con cámara en entornos del mundo real, que es precisamente el caso de los tickets físicos de compra registrados por los usuarios de FINARA. Adicionalmente, su modelo como servicio en la nube elimina la necesidad de mantener infraestructura GPU local en el servidor, reduciendo la complejidad de despliegue sin sacrificar precisión en la extracción.
+
 % ──────────────────────────────────────────────────────────────
 \section{Sistema integrado y funcional}
 % ──────────────────────────────────────────────────────────────
@@ -69,8 +71,7 @@ Se implementaron nueve módulos funcionales en la aplicación móvil:
   Alertas & Centro de notificaciones con alertas automáticas por
     superación de presupuesto, vencimiento de deuda próximo y
     recordatorios diarios de gestión. \\[4pt]
-  Perfil & Consulta y edición de datos del usuario, incluyendo la
-    actualización del ingreso mensual registrado. \\
+  Perfil & Consulta y edición de datos del usuario. \\
   \bottomrule
 \end{longtable}
 
@@ -161,6 +162,150 @@ localmente —sin costo de API externa— y escalar únicamente los casos
 de mayor dificultad a servicios de visión artificial en la nube.
 
 % ──────────────────────────────────────────────────────────────
+\section{Evaluación del módulo OCR}
+% ──────────────────────────────────────────────────────────────
+
+Para cuantificar el desempeño del módulo de reconocimiento óptico de caracteres se realizaron dos evaluaciones independientes: la primera mide la capacidad de extracción de texto bajo distintas condiciones de calidad de imagen; la segunda evalúa la precisión del clasificador automático de categorías.
+
+\subsection{Métricas de extracción de texto}
+
+Se escanearon \textbf{30 tickets físicos} provenientes de establecimientos como Walmart, Soriana y Farmacias del Ahorro, clasificados en tres niveles de calidad según iluminación, enfoque y estado del comprobante. La Tabla~\ref{tab:ocr-extraccion} muestra la distribución de tickets procesados por Tesseract y por Google Cloud Vision, junto con las tasas de detección de los campos clave.
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{Métricas de extracción OCR por condición de calidad de imagen (30 tickets)}
+  \label{tab:ocr-extraccion}
+  \begin{tabular}{l c c c c c c}
+    \toprule
+    \textbf{Condición} & \textbf{Tickets} &
+    \textbf{Tesseract} & \textbf{Cloud Vision} &
+    \textbf{Conf. prom.} &
+    \textbf{Total det.} & \textbf{Prod. det.} \\
+    \midrule
+    Alta calidad  & 12 &  7 (58.3\,\%) &  5 (41.7\,\%)  & 0.78 & 95.8\,\% & 92.4\,\% \\
+    Calidad media & 10 &  2 (20.0\,\%) &  8 (80.0\,\%)  & 0.52 & 87.0\,\% & 81.6\,\% \\
+    Baja calidad  &  8 &  0  (0.0\,\%) &  8 (100.0\,\%) & 0.29 & 73.0\,\% & 63.8\,\% \\
+    \midrule
+    \textbf{Total} & \textbf{30} & \textbf{9 (30.0\,\%)} & \textbf{21 (70.0\,\%)} & \textbf{0.57} & \textbf{86.3\,\%} & \textbf{80.6\,\%} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Para evidenciar la diferencia de desempeño entre ambos motores, la Tabla~\ref{tab:ocr-comparativa} compara las tasas de detección de campos clave obtenidas exclusivamente con Tesseract frente a las obtenidas con Google Cloud Vision.
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{Comparativa de detección de campos clave: Tesseract vs.\ Google Cloud Vision}
+  \label{tab:ocr-comparativa}
+  \begin{tabular}{l c c}
+    \toprule
+    \textbf{Campo clave} & \textbf{Tesseract (9 tickets)} & \textbf{Cloud Vision (21 tickets)} \\
+    \midrule
+    Total del ticket & 65.2\,\% & 93.5\,\% \\
+    Productos        & 58.8\,\% & 88.7\,\% \\
+    Nombre de tienda & 52.4\,\% & 87.3\,\% \\
+    Fecha            & 44.4\,\% & 82.9\,\% \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Google Cloud Vision supera a Tesseract en todos los campos clave con una ventaja promedio de aproximadamente 35 puntos porcentuales. Este resultado justifica el diseño híbrido del pipeline: Tesseract cubre los tickets de alta calidad sin costo de API, mientras que Cloud Vision garantiza la extracción en los casos de mayor dificultad.
+
+\subsection{Pruebas de validación de categorización}
+
+Para evaluar el clasificador automático se probaron \textbf{20 productos representativos} extraídos de tickets de Walmart, Soriana y Farmacias del Ahorro, comparando la categoría asignada por el sistema contra la categoría correcta determinada manualmente. Las cuatro categorías evaluadas son: Alimentos, Entretenimiento, Transporte y Otros.
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{Validación de categorización automática (muestra de 20 productos)}
+  \label{tab:validacion-categorias}
+  \begin{tabular}{l l l c}
+    \toprule
+    \textbf{Producto} & \textbf{Categoría real} & \textbf{Categoría asignada} & \textbf{Correcto} \\
+    \midrule
+    Leche Lala 1\,L          & Alimentos       & Alimentos       & \textcolor{OliveGreen}{\textbf{Sí}} \\
+    Tortillas Maseca 1\,kg   & Alimentos       & Alimentos       & \textcolor{OliveGreen}{\textbf{Sí}} \\
+    Pan Bimbo integral       & Alimentos       & Alimentos       & \textcolor{OliveGreen}{\textbf{Sí}} \\
+    Coca Cola 2\,L           & Alimentos       & Alimentos       & \textcolor{OliveGreen}{\textbf{Sí}} \\
+    Atún Herdez 140\,g       & Alimentos       & Alimentos       & \textcolor{OliveGreen}{\textbf{Sí}} \\
+    Boleto Cinépolis         & Entretenimiento & Entretenimiento & \textcolor{OliveGreen}{\textbf{Sí}} \\
+    Tarjeta Netflix 1 mes    & Entretenimiento & Otros           & \textcolor{BrickRed}{\textbf{No}}   \\
+    Tarjeta Xbox \$300       & Entretenimiento & Otros           & \textcolor{BrickRed}{\textbf{No}}   \\
+    Control PS5 DualSense    & Entretenimiento & Alimentos       & \textcolor{BrickRed}{\textbf{No}}   \\
+    Gasolina Magna 20\,L     & Transporte      & Transporte      & \textcolor{OliveGreen}{\textbf{Sí}} \\
+    Aceite Motor 5W-30       & Transporte      & Otros           & \textcolor{BrickRed}{\textbf{No}}   \\
+    Líquido limpiaparabrisas & Transporte      & Alimentos       & \textcolor{BrickRed}{\textbf{No}}   \\
+    Filtro de aceite         & Transporte      & Otros           & \textcolor{BrickRed}{\textbf{No}}   \\
+    Paracetamol 500\,mg      & Otros           & Alimentos       & \textcolor{BrickRed}{\textbf{No}}   \\
+    Omeprazol 20\,mg         & Otros           & Alimentos       & \textcolor{BrickRed}{\textbf{No}}   \\
+    Shampoo Pantene 400\,ml  & Otros           & Otros           & \textcolor{OliveGreen}{\textbf{Sí}} \\
+    Detergente Ariel 1\,kg   & Otros           & Otros           & \textcolor{OliveGreen}{\textbf{Sí}} \\
+    Alcohol 96° 1\,L         & Otros           & Alimentos       & \textcolor{BrickRed}{\textbf{No}}   \\
+    Jabón Dove 90\,g         & Otros           & Otros           & \textcolor{OliveGreen}{\textbf{Sí}} \\
+    Cubrebocas caja 50\,pz   & Otros           & Otros           & \textcolor{OliveGreen}{\textbf{Sí}} \\
+    \midrule
+    \multicolumn{3}{l}{\textbf{Exactitud en muestra}} & \textbf{11\,/\,20 = 55.0\,\%} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Los cinco productos de la categoría \textit{Alimentos} fueron clasificados correctamente en su totalidad. Las categorías \textit{Entretenimiento} y \textit{Transporte} presentan los errores más frecuentes, con el clasificador asignando gran parte de sus productos a \textit{Alimentos} u \textit{Otros}, confirmando el sesgo identificado en CP-004 (DEF-003).
+
+\subsection{Matriz de confusión del categorizador}
+
+Para obtener una evaluación estadística completa, la prueba se extendió a \textbf{150 productos} distribuidos en las cuatro categorías del sistema. Las filas corresponden a la categoría real y las columnas a la categoría predicha; los valores en \textbf{negrita} son las clasificaciones correctas (diagonal principal).
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{Matriz de confusión del categorizador automático (150 productos)}
+  \label{tab:matriz-confusion}
+  \begin{tabular}{l c c c c c}
+    \toprule
+    \textbf{Real $\backslash$ Predicho} &
+    \textbf{Alim.} & \textbf{Entret.} & \textbf{Transp.} & \textbf{Otros} & \textbf{Total} \\
+    \midrule
+    Alimentos       & \textbf{50} &  0 &  4 &  6 &  60 \\
+    Entretenimiento &           4 &  \textbf{8} &  0 &  8 &  20 \\
+    Transporte      &           8 &  0 & \textbf{14} &  3 &  25 \\
+    Otros           &          14 &  7 &  3 & \textbf{21} &  45 \\
+    \midrule
+    \textbf{Total pred.} & 76 & 15 & 21 & 38 & 150 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\noindent\textbf{Exactitud global:} $(50+8+14+21)/150 = 93/150 = 62.0\%$
+
+\bigskip
+
+La Tabla~\ref{tab:metricas-clase} detalla las métricas por categoría derivadas de la matriz de confusión.
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{Métricas por categoría del categorizador automático}
+  \label{tab:metricas-clase}
+  \begin{tabular}{l c c c}
+    \toprule
+    \textbf{Categoría} & \textbf{Precisión} & \textbf{Exhaustividad} & \textbf{Puntuación F1} \\
+    \midrule
+    Alimentos       & 65.8\,\% & 83.3\,\% & 73.5\,\% \\
+    Entretenimiento & 53.3\,\% & 40.0\,\% & 45.7\,\% \\
+    Transporte      & 66.7\,\% & 56.0\,\% & 60.9\,\% \\
+    Otros           & 55.3\,\% & 46.7\,\% & 50.6\,\% \\
+    \midrule
+    \textbf{Macro promedio} & \textbf{60.3\,\%} & \textbf{56.5\,\%} & \textbf{57.7\,\%} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Los resultados confirman el comportamiento descrito en DEF-003: \textit{Alimentos} concentra la mayoría de las predicciones con una exhaustividad del 83.3\,\% pero una precisión del 65.8\,\%, absorbiendo productos de otras categorías. \textit{Entretenimiento} es la categoría más afectada, con una puntuación F1 de apenas 45.7\,\%. La puntuación F1 macro promedio de 57.7\,\% establece la línea base para medir la mejora del clasificador en iteraciones futuras.
+
+% ──────────────────────────────────────────────────────────────
 \section{Recomendaciones financieras con inteligencia artificial}
 % ──────────────────────────────────────────────────────────────
 
@@ -194,36 +339,253 @@ Android 10 o superior para portabilidad; validación en Chrome, Edge y
 Firefox actualizados para compatibilidad; y adhesión a Material Design
 y las guías de accesibilidad de React para usabilidad.
 
-\subsection{Análisis de pruebas y observaciones}
+% ──────────────────────────────────────────────────────────────
+\section{Validación mediante casos de prueba}
+% ──────────────────────────────────────────────────────────────
 
-Se ejecutaron pruebas funcionales y de usabilidad sobre la aplicación móvil, la plataforma web y el backend. A continuación se presentan los hallazgos técnicos más relevantes, la trazabilidad a los requerimientos y las acciones planificadas para corrección.
+\subsection{Metodología y alcance}
 
-\paragraph{Resumen}
-- Las funciones críticas del sistema (registro de usuario, inicio de sesión, registro manual de ingresos y egresos, generación de reportes y captura de tickets en condiciones óptimas) operan conforme a lo especificado.
-- Se identificaron áreas con fallos que requieren corrección prioritaria debido a su impacto en la integridad de los datos y en la experiencia del usuario.
+Para evaluar el grado de cumplimiento de los requerimientos funcionales y no funcionales se diseñaron y ejecutaron \textbf{33 casos de prueba de caja negra} agrupados en seis categorías: funcionalidad (21 casos), seguridad (3), usabilidad (4), portabilidad (3), compatibilidad (1) y mantenibilidad (1). Cada caso especifica precondiciones, datos de entrada, pasos de ejecución, resultado esperado y resultado obtenido, con un estado final clasificado en tres niveles: \textbf{Pasó}, \textbf{Pasó con observaciones} o \textbf{Falló}. La batería se ejecutó en \textbf{dos rondas}: la primera el \textbf{24 de mayo de 2026}, que generó el catálogo inicial de defectos; y la segunda tras aplicar correcciones a los defectos de menor complejidad, verificando cuáles quedaron resueltos y cuáles permanecen pendientes.
 
-\paragraph{Hallazgos relevantes y plan de corrección}
-\begin{itemize}
-  \item Categorización automática (Relacionado: RF-07). Descripción: el sistema está asignando de forma incorrecta la categoría de un número significativo de productos detectados, produciendo una concentración anómala en la categoría Alimentos. Impacto: sesgo en métricas por categoría y en las recomendaciones generadas. Acciones: mejorar el motor de categorización incorporando reglas léxicas adicionales, entrenar y validar un modelo complementario con datos históricos, y realizar pruebas con un conjunto etiquetado.
+\subsection{Dispositivos de prueba}
 
-  \item Validación de montos en registro manual (Relacionado: RF-08). Descripción: el backend reporta errores al procesar valores en los límites extremos o formatos decimales no normalizados. Impacto: imposibilidad de registrar movimientos en determinados escenarios y riesgo de rechazo de entradas válidas. Acciones: normalizar formatos numéricos en el frontend y backend, reforzar validaciones server-side y añadir pruebas unitarias que cubran rangos y precisión decimal.
+Las pruebas se ejecutaron sobre \textbf{9 dispositivos físicos Android} de distintas gamas para garantizar cobertura representativa de las condiciones reales de uso de los usuarios objetivo.
 
-  \item Lógica de estado de deudas (Relacionado: RF-27). Descripción: la transición de una deuda a estado "pagada" no se aplica de forma consistente; el sistema también muestra mensajes de validación inconsistentes cuando se ingresan pagos superiores al saldo pendiente. Impacto: inconsistencias en balances y reportes asociados a deudas. Acciones: revisar y corregir la lógica de negocio en el backend, actualizar las condiciones de validación y agregar pruebas de integración para abonos parciales y pagos totales.
+\begin{table}[H]
+  \centering
+  \small
+  \caption{Dispositivos Android utilizados en las pruebas}
+  \label{tab:dispositivos-prueba}
+  \begin{tabular}{c l l}
+    \toprule
+    \textbf{\#} & \textbf{Dispositivo}         & \textbf{Gama}      \\
+    \midrule
+    1           & Xiaomi 14 Pro                & Alta               \\
+    2           & Samsung Galaxy S21 FE        & Media-alta         \\
+    3           & Honor 50                     & Media-alta         \\
+    4           & Xiaomi Redmi Note 9          & Media              \\
+    5           & Samsung Galaxy A24           & Media              \\
+    6           & Motorola Moto G05            & Baja               \\
+    7           & Tecno Pop 5                  & Baja               \\
+    8           & Xiaomi Redmi                 & Baja               \\
+    9           & Xiaomi Redmi (2)             & Baja               \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
-  \item Filtrado y búsqueda en historial de transacciones (Relacionado: RF-11). Descripción: los filtros por categoría, tipo y búsqueda por texto no se aplican de manera fiable en todas las combinaciones; los filtros básicos por fecha funcionan correctamente. Impacto: reducción de la capacidad de análisis por parte del usuario. Acciones: depurar los parámetros de la API de filtrado, estandarizar la serialización de criterios y añadir pruebas end-to-end que cubran combinaciones de filtros.
+\subsection{Resultados globales}
 
-  \item Gestión de categorías (Relacionado: RF-23). Descripción: se permite la creación de categorías con nombres duplicados y existen rutas de la interfaz donde la actualización de propiedades (icono/color) no refleja el cambio de forma inmediata. Impacto: inconsistencias en la interfaz y conflictos lógicos en la gestión de datos. Acciones: imponer unicidad a nivel de API/BD, corregir el flujo de actualización y asegurar el refresco de caché/local state en los clientes.
-\end{itemize}
+De los 33 casos ejecutados, \textbf{19 pasaron sin observaciones} (57.6\,\%), \textbf{3 pasaron con observaciones menores} (9.1\,\%) y \textbf{11 fallaron} (33.3\,\%), lo que sitúa la \textbf{tasa de aprobación global en 66.7\,\%} considerando como aprobados los casos superados con y sin observaciones.
 
-\paragraph{Resultados conformes}
-Las pruebas asociadas a registro de usuario (RF-01), inicio de sesión (RF-02), registro de ingresos (RF-06), captura y revisión de datos OCR en condiciones óptimas (RF-16 y RF-20), configuración de presupuestos (RF-10), registro básico de deudas y pagos (RF-26), generación de gráficas y reportes (RF-12 y RF-13), y alertas/ notificaciones (RF-24, RF-21) han mostrado conformidad con los requisitos; se registraron observaciones menores que no impiden la funcionalidad principal.
+\begin{table}[H]
+  \centering
+  \small
+  \caption{Resultados de pruebas por categoría}
+  \label{tab:resumen-categorias}
+  \begin{tabular}{l c c c c r}
+    \toprule
+    \textbf{Categoría} & \textbf{Total} &
+    \textcolor{OliveGreen}{\textbf{Pasó}} &
+    \textcolor{BurntOrange}{\textbf{Pasó*}} &
+    \textcolor{BrickRed}{\textbf{Falló}} &
+    \textbf{\% Aprob.} \\
+    \midrule
+    Funcionalidad  & 21 & 11 & 2 & 8 & 61.9\,\% \\
+    Seguridad      &  3 &  3 & 0 & 0 & 100.0\,\% \\
+    Usabilidad     &  4 &  2 & 1 & 1 & 75.0\,\% \\
+    Portabilidad   &  3 &  2 & 0 & 1 & 66.7\,\% \\
+    Compatibilidad &  1 &  1 & 0 & 0 & 100.0\,\% \\
+    Mantenibilidad &  1 &  0 & 0 & 1 &   0.0\,\% \\
+    \midrule
+    \textbf{Total} & \textbf{33} & \textbf{19} & \textbf{3} & \textbf{11} & \textbf{66.7\,\%} \\
+    \bottomrule
+  \end{tabular}\\[4pt]
+  \footnotesize\textit{* Pasó con observaciones menores.}
+\end{table}
 
-\paragraph{Plan de trabajo y próximos pasos}
-\begin{itemize}
-  \item Priorizar y corregir los puntos identificados (categorización, validación numérica y lógica de deuda) según el impacto en la integridad de los datos y la trazabilidad a los requerimientos.
-  \item Desplegar correcciones en un entorno de staging y volver a ejecutar las pruebas afectadas para confirmar la mitigación de los defectos.
-  \item Incorporar pruebas automatizadas (unitarias e integración) para los flujos corregidos y añadir pruebas end-to-end para los escenarios de filtrado y actualización de categorías.
-  \item Documentar las limitaciones técnicas conocidas (tickets en idiomas distintos al español, imágenes de baja calidad, etc.) y las recomendaciones de uso en la documentación técnica del proyecto.
-\end{itemize}
+\subsection{Tabla de casos de prueba}
 
+La Tabla~\ref{tab:casos-prueba} lista los 33 casos ejecutados con su estado final. Los casos marcados con \textbf{Pasó*} presentan observaciones menores que no impiden la funcionalidad; los marcados con \textbf{Falló} originaron defectos que se detallan en la sección~\ref{subsec:defectos}.
 
+\begin{longtable}{>{\small}p{1.3cm} >{\small}p{6.5cm} >{\small}p{3.2cm} >{\small}p{3.2cm}}
+  \caption{Casos de prueba ejecutados}
+  \label{tab:casos-prueba} \\
+  \toprule
+  \textbf{ID} & \textbf{Nombre del caso} & \textbf{Categoría} & \textbf{Estado} \\
+  \midrule
+  \endfirsthead
+  \toprule
+  \textbf{ID} & \textbf{Nombre del caso} & \textbf{Categoría} & \textbf{Estado} \\
+  \midrule
+  \endhead
+  \midrule
+  \multicolumn{4}{r}{\footnotesize\textit{(Continúa en la siguiente página)}} \\
+  \endfoot
+  \bottomrule
+  \endlastfoot
+  CP-001 & Registrar usuario nuevo                     & Funcionalidad  & \textcolor{BurntOrange}{\textbf{Pasó*}} \\[3pt]
+  CP-002 & Iniciar sesión con credenciales válidas      & Funcionalidad  & \textcolor{OliveGreen}{\textbf{Pasó}}   \\[3pt]
+  CP-003 & Registrar ingreso                            & Funcionalidad  & \textcolor{BrickRed}{\textbf{Falló}}    \\[3pt]
+  CP-004 & Registrar egreso con OCR                     & Funcionalidad  & \textcolor{BrickRed}{\textbf{Falló}}    \\[3pt]
+  CP-005 & Registrar egreso manualmente (sin ticket)    & Funcionalidad  & \textcolor{BrickRed}{\textbf{Falló}}    \\[3pt]
+  CP-006 & Tomar foto de ticket (OCR)                   & Funcionalidad  & \textcolor{BurntOrange}{\textbf{Pasó*}} \\[3pt]
+  CP-007 & Corregir datos escaneados por OCR            & Funcionalidad  & \textcolor{OliveGreen}{\textbf{Pasó}}   \\[3pt]
+  CP-008 & Configurar presupuesto por categoría         & Funcionalidad  & \textcolor{OliveGreen}{\textbf{Pasó}}   \\[3pt]
+  CP-009 & Registrar nueva deuda                        & Funcionalidad  & \textcolor{OliveGreen}{\textbf{Pasó}}   \\[3pt]
+  CP-010 & Planificar pago de deuda                     & Funcionalidad  & \textcolor{BrickRed}{\textbf{Falló}}    \\[3pt]
+  CP-011 & Consultar historial de transacciones         & Funcionalidad  & \textcolor{BrickRed}{\textbf{Falló}}    \\[3pt]
+  CP-012 & Visualizar estadísticas por categoría        & Funcionalidad  & \textcolor{BrickRed}{\textbf{Falló}}    \\[3pt]
+  CP-013 & Visualizar gráficas de gastos                & Funcionalidad  & \textcolor{OliveGreen}{\textbf{Pasó}}   \\[3pt]
+  CP-014 & Establecer alertas de pago de deudas         & Funcionalidad  & \textcolor{OliveGreen}{\textbf{Pasó}}   \\[3pt]
+  CP-015 & Ver historial de notificaciones              & Funcionalidad  & \textcolor{OliveGreen}{\textbf{Pasó}}   \\[3pt]
+  CP-016 & Modificar categoría de gastos                & Funcionalidad  & \textcolor{BrickRed}{\textbf{Falló}}    \\[3pt]
+  CP-017 & Consultar tickets escaneados                 & Funcionalidad  & \textcolor{OliveGreen}{\textbf{Pasó}}   \\[3pt]
+  CP-018 & Verificar cifrado de contraseñas (hash)      & Seguridad      & \textcolor{OliveGreen}{\textbf{Pasó}}   \\[3pt]
+  CP-019 & Validar tokens JWT en autenticación          & Seguridad      & \textcolor{OliveGreen}{\textbf{Pasó}}   \\[3pt]
+  CP-020 & Prevenir inyección SQL en formularios        & Seguridad      & \textcolor{OliveGreen}{\textbf{Pasó}}   \\[3pt]
+  CP-021 & Validar navegación intuitiva entre pantallas & Usabilidad     & \textcolor{BurntOrange}{\textbf{Pasó*}} \\[3pt]
+  CP-022 & Verificar ortografía correcta en textos      & Usabilidad     & \textcolor{OliveGreen}{\textbf{Pasó}}   \\[3pt]
+  CP-023 & Comprobar diseño Material Design             & Usabilidad     & \textcolor{BrickRed}{\textbf{Falló}}    \\[3pt]
+  CP-024 & Validar adaptación responsive (5''--6.7'')   & Usabilidad     & \textcolor{OliveGreen}{\textbf{Pasó}}   \\[3pt]
+  CP-025 & Funcionamiento en Android 10 con 3\,GB RAM  & Portabilidad   & \textcolor{OliveGreen}{\textbf{Pasó}}   \\[3pt]
+  CP-026 & Validar adaptación a pantallas 5''--6.7''    & Portabilidad   & \textcolor{OliveGreen}{\textbf{Pasó}}   \\[3pt]
+  CP-027 & Verificar compatibilidad Android 10--14      & Compatibilidad & \textcolor{OliveGreen}{\textbf{Pasó}}   \\[3pt]
+  CP-028 & Validar organización modular del código      & Mantenibilidad & \textcolor{BrickRed}{\textbf{Falló}}    \\[3pt]
+  CP-029 & Generar reporte en PDF/Excel                 & Funcionalidad  & \textcolor{OliveGreen}{\textbf{Pasó}}   \\[3pt]
+  CP-030 & Visualizar recomendaciones financieras personalizadas & Funcionalidad & \textcolor{OliveGreen}{\textbf{Pasó}}  \\[3pt]
+  CP-031 & Cargar ticket por archivo (web)              & Funcionalidad  & \textcolor{OliveGreen}{\textbf{Pasó}}   \\[3pt]
+  CP-032 & Validar responsive y compatib.\ multinavegador & Portabilidad & \textcolor{BrickRed}{\textbf{Falló}}    \\[3pt]
+  CP-033 & Dashboard analítico con filtros por período  & Funcionalidad  & \textcolor{BrickRed}{\textbf{Falló}}    \\
+\end{longtable}
+
+\subsection{Defectos identificados}
+\label{subsec:defectos}
+
+A partir de los 11 casos fallidos y las observaciones de los 3 casos con resultado parcial, se catalogaron \textbf{15 defectos} clasificados por tipo (funcional, visual, UX o técnico) y severidad (alta, media o baja). Los defectos de severidad \textbf{alta} afectan flujos primarios del usuario; los de severidad \textbf{media} afectan funcionalidades secundarias o tienen alternativa manual; los de severidad \textbf{baja} son cosméticos o de impacto mínimo.
+
+\begin{longtable}{>{\small}p{1.3cm} >{\small}p{1.9cm} >{\small}p{6.6cm} >{\small}p{1.5cm} >{\small}p{2.4cm}}
+  \caption{Catálogo de defectos identificados}
+  \label{tab:defectos} \\
+  \toprule
+  \textbf{ID} & \textbf{Tipo} & \textbf{Descripción} & \textbf{CP} & \textbf{Severidad} \\
+  \midrule
+  \endfirsthead
+  \toprule
+  \textbf{ID} & \textbf{Tipo} & \textbf{Descripción} & \textbf{CP} & \textbf{Severidad} \\
+  \midrule
+  \endhead
+  \midrule
+  \multicolumn{5}{r}{\footnotesize\textit{(Continúa en la siguiente página)}} \\
+  \endfoot
+  \bottomrule
+  \endlastfoot
+  DEF-001 & Funcional & Error de email duplicado devuelve respuesta JSON sin procesar al usuario        & CP-001          & \textcolor{OliveGreen}{\textbf{Baja}}   \\[4pt]
+  DEF-002 & Funcional & Backend rechaza valores monetarios extremos en registros de ingresos y egresos  & CP-003, CP-005  & \textcolor{BurntOrange}{\textbf{Media}} \\[4pt]
+  DEF-003 & Funcional & Categorizador OCR asigna categorías incorrectas: en la primera ronda asignó ``Alimentos'' a la mayoría de productos; tras ajustes, en la segunda ronda asignó ``Otros'' a la totalidad & CP-004 & \textcolor{BrickRed}{\textbf{Alta}}     \\[4pt]
+  DEF-004 & Funcional & El pago total de una deuda no actualiza el estado a liquidada                   & CP-010          & \textcolor{BrickRed}{\textbf{Alta}}     \\[4pt]
+  DEF-005 & Funcional & Mensaje de error incorrecto al intentar pagar más del saldo pendiente          & CP-010          & \textcolor{BurntOrange}{\textbf{Media}} \\[4pt]
+  DEF-006 & Funcional & Historial de transacciones sin filtros por categoría, tipo ni búsqueda por texto & CP-011         & \textcolor{BurntOrange}{\textbf{Media}} \\[4pt]
+  DEF-007 & Funcional & Pantalla de estadísticas por categoría no implementada en esta versión         & CP-012          & \textcolor{BrickRed}{\textbf{Alta}}     \\[4pt]
+  DEF-008 & Visual    & El ícono de una categoría no se actualiza visualmente al ser editado           & CP-016          & \textcolor{OliveGreen}{\textbf{Baja}}   \\[4pt]
+  DEF-009 & Funcional & El sistema permite crear categorías con nombre duplicado                       & CP-016          & \textcolor{BurntOrange}{\textbf{Media}} \\[4pt]
+  DEF-010 & Funcional & Al eliminar una categoría el mensaje de error no indica el motivo              & CP-016          & \textcolor{OliveGreen}{\textbf{Baja}}   \\[4pt]
+  DEF-011 & UX        & El flujo de navegación no orienta suficientemente al usuario nuevo             & CP-021          & \textcolor{BurntOrange}{\textbf{Media}} \\[4pt]
+  DEF-012 & Visual    & Verificación de cumplimiento de Material Design no concluida                   & CP-023          & \textcolor{BurntOrange}{\textbf{Media}} \\[4pt]
+  DEF-013 & Técnico   & La estructura del código no cumple la separación feature-first planificada      & CP-028          & \textcolor{BurntOrange}{\textbf{Media}} \\[4pt]
+  DEF-014 & Visual    & La plataforma web no era responsiva en dispositivos móviles; el botón \texttt{+} desaparecía en vistas Android & CP-032 & \textcolor{OliveGreen}{\textbf{Baja}}   \\[4pt]
+  DEF-015 & UX        & El dashboard analítico no muestra un mensaje informativo cuando no existen datos para el período seleccionado & CP-033 & \textcolor{OliveGreen}{\textbf{Baja}}   \\
+\end{longtable}
+
+\subsection{Correcciones aplicadas tras las pruebas}
+
+Posterior a la ejecución de los casos de prueba se atendieron los defectos de menor complejidad dentro de la misma iteración del desarrollo. La Tabla~\ref{tab:correcciones} resume el estado de corrección de cada defecto catalogado.
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{Estado de corrección de los defectos identificados}
+  \label{tab:correcciones}
+  \begin{tabular}{c c l p{7.5cm}}
+    \toprule
+    \textbf{ID} & \textbf{Estado} & \textbf{Tipo} & \textbf{Acción realizada / Pendiente} \\
+    \midrule
+    DEF-001 & \textcolor{OliveGreen}{\textbf{Corregido}} & Funcional &
+      Se ajustó la respuesta del backend para devolver un mensaje legible en lugar de JSON crudo \\[4pt]
+    DEF-002 & \textcolor{BurntOrange}{\textbf{Parcial}}  & Funcional &
+      Se agregó validación de rango en el frontend; la validación server-side queda pendiente \\[4pt]
+    DEF-003 & \textcolor{BrickRed}{\textbf{Pendiente}}   & Funcional &
+      Requiere mejora del motor de categorización con reglas léxicas adicionales y datos de entrenamiento \\[4pt]
+    DEF-004 & \textcolor{BrickRed}{\textbf{Pendiente}}   & Funcional &
+      Requiere refactorización de la lógica de negocio del módulo de deudas en el backend \\[4pt]
+    DEF-005 & \textcolor{BrickRed}{\textbf{Pendiente}}   & Funcional &
+      El mensaje de error al exceder el saldo pendiente sigue siendo incorrecto en la segunda ronda; la corrección aplicada no tuvo el efecto esperado \\[4pt]
+    DEF-006 & \textcolor{BurntOrange}{\textbf{Parcial}}  & Funcional &
+      El botón de filtro por tipo en la plataforma web fue corregido; los filtros avanzados por categoría y búsqueda de texto siguen pendientes en la aplicación móvil \\[4pt]
+    DEF-007 & \textcolor{BrickRed}{\textbf{Pendiente}}   & Funcional &
+      Pantalla planificada para la siguiente iteración del Trabajo Terminal \\[4pt]
+    DEF-008 & \textcolor{BrickRed}{\textbf{Pendiente}}   & Visual    &
+      El ícono sigue sin actualizarse visualmente tras la edición en la segunda ronda; la corrección aplicada no fue efectiva \\[4pt]
+    DEF-009 & \textcolor{BrickRed}{\textbf{Pendiente}}   & Funcional &
+      Requiere restricción \texttt{UNIQUE} en la tabla de categorías de la base de datos \\[4pt]
+    DEF-010 & \textcolor{OliveGreen}{\textbf{Corregido}} & Funcional &
+      Se actualizó el mensaje de error indicando que la categoría tiene gastos asociados \\[4pt]
+    DEF-011 & \textcolor{BrickRed}{\textbf{Pendiente}}   & UX        &
+      Se planifica un flujo de onboarding guiado para la siguiente versión \\[4pt]
+    DEF-012 & \textcolor{BrickRed}{\textbf{Pendiente}}   & Visual    &
+      Requiere auditoría detallada con herramientas de inspección de diseño \\[4pt]
+    DEF-013 & \textcolor{BrickRed}{\textbf{Pendiente}}   & Técnico   &
+      Requiere refactorización mayor hacia arquitectura feature-first con gestión de estado reactiva \\[4pt]
+    DEF-014 & \textcolor{OliveGreen}{\textbf{Corregido}} & Visual    &
+      Se corrigió el layout responsivo de la plataforma web y se restauró el botón \texttt{+} en vistas móviles \\[4pt]
+    DEF-015 & \textcolor{BurntOrange}{\textbf{Parcial}}  & UX        &
+      El dashboard funciona correctamente con filtros por período; falta mostrar un mensaje informativo cuando no hay datos para el período seleccionado \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+De los 15 defectos catalogados, \textbf{3 fueron corregidos} (DEF-001, DEF-010, DEF-014), \textbf{3 fueron atendidos parcialmente} (DEF-002, DEF-006, DEF-015) y los \textbf{9 restantes} requieren trabajo adicional; estos últimos conforman parte de la agenda del siguiente Trabajo Terminal, cuya planificación se detalla en el capítulo de Trabajo Futuro.
+
+% ──────────────────────────────────────────────────────────────
+\section{Evaluación con usuarios}
+% ──────────────────────────────────────────────────────────────
+
+Como complemento a los casos de prueba técnicos, se aplicó una \textbf{encuesta de usabilidad} a \textbf{6 participantes} que interactuaron con el sistema FINARA en condiciones reales de uso. La encuesta fue aplicada el \textbf{20 de mayo de 2026} y constó de 11 preguntas orientadas a medir la experiencia del usuario en las áreas de navegación, diseño visual, funcionalidades principales y percepción general del producto. Se planea aplicar una segunda ronda de la encuesta una vez corregidos los defectos prioritarios identificados en las pruebas del 24 de mayo de 2026. Las gráficas individuales de cada pregunta se encuentran en el Anexo~\ref{sec:anexo-encuesta-pruebas}.
+
+\subsection{Resultados por dimensión}
+
+La Tabla~\ref{tab:encuesta-resumen} presenta el resultado más frecuente por pregunta junto con el porcentaje de participantes que lo seleccionó.
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{Resumen de resultados de la encuesta de usabilidad (6 participantes, 20 de mayo de 2026)}
+  \label{tab:encuesta-resumen}
+  \begin{tabular}{c p{3.8cm} p{5.5cm} c}
+    \toprule
+    \textbf{\#} & \textbf{Dimensión} & \textbf{Resultado más frecuente} & \textbf{Frec.} \\
+    \midrule
+    1 & Facilidad de navegación       & Fácil --- se perdió un par de veces        & 4/6 (66.7\,\%) \\[4pt]
+    2 & Función de escaneo OCR        & No funcionó bien, reconoció muy poco       & 4/6 (66.7\,\%) \\[4pt]
+    3 & Diseño visual                 & Me encantó --- muy atractivo y profesional & 4/6 (66.7\,\%) \\[4pt]
+    4 & Presupuestos por categoría    & Muy útil / Útil (empate)                   & 3/6 (50.0\,\%) \\[4pt]
+    5 & Alertas automáticas           & Sí, muy útil                               & 4/6 (66.7\,\%) \\[4pt]
+    6 & Gráficas y estadísticas       & Mucho --- muy claras y útiles              & 3/6 (50.0\,\%) \\[4pt]
+    7 & Registro manual de gasto      & Rápido --- entre 15 y 30 segundos          & 4/6 (66.7\,\%) \\[4pt]
+    8 & Sección de deudas             & Clara --- solo dudas menores               & 5/6 (83.3\,\%) \\[4pt]
+    9 & Funcionalidad más solicitada  & Exportar reportes en PDF/Excel             & 3/6 (50.0\,\%) \\[4pt]
+    10 & Índice de recomendación (NPS) & Promedio \textbf{8.2\,/\,10}              & --- \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Índice de recomendación (NPS)}
+
+Los puntajes individuales de recomendación fueron: \textbf{10, 9, 8, 8, 8} y \textbf{6}, con un promedio de \textbf{8.2\,/\,10}. Cuatro de los seis participantes asignaron una puntuación de 8 o superior, lo que refleja una percepción positiva del producto en su estado actual.
+
+\subsection{Funcionalidades más solicitadas}
+
+Las funcionalidades que los participantes añadirían a FINARA en versiones futuras fueron: exportación de reportes en PDF/Excel (50\,\%), modo oscuro (33.3\,\%) y metas de ahorro (16.7\,\%). Estas preferencias están alineadas con los módulos pendientes de implementación identificados durante el desarrollo.
+
+\subsection{Hallazgos cualitativos}
+
+Al preguntarles qué es lo \textbf{mejor} de FINARA, los participantes destacaron: el seguimiento claro de gastos mensuales, la interfaz sencilla y atractiva, el diseño UX y la función de escaneo de tickets. La percepción del diseño visual fue consistentemente positiva (100\,\% calificó entre ``me gustó'' y ``me encantó''), contrastando con la percepción del OCR, que es el área de mayor insatisfacción (66.7\,\% reportó que reconoció muy poco). Este contraste confirma que la prioridad técnica del siguiente Trabajo Terminal es la mejora del módulo de categorización automática.

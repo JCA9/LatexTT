@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Resultados de Pruebas — FINARA</title>
+  <style>
+    body { font-family: Calibri, Arial, sans-serif; margin: 40px; font-size: 14px; color: #1a1a1a; }
+    h1 { font-size: 22px; color: #1f3864; border-bottom: 2px solid #1f3864; padding-bottom: 6px; margin-top: 40px; }
+    h2 { font-size: 17px; color: #2e5fa3; margin-top: 28px; }
+    h3 { font-size: 15px; color: #555; margin-top: 20px; }
+    table { border-collapse: collapse; width: 100%; margin: 14px 0 20px 0; }
+    th { background-color: #1f3864; color: white; padding: 8px 12px; text-align: left; font-size: 13px; }
+    td { border: 1px solid #ccc; padding: 7px 12px; font-size: 13px; }
+    tr:nth-child(even) td { background-color: #f2f5fb; }
+    .pass   { color: #2e7d32; font-weight: bold; }
+    .obs    { color: #e65100; font-weight: bold; }
+    .fail   { color: #c62828; font-weight: bold; }
+    .fixed  { color: #2e7d32; font-weight: bold; }
+    .partial{ color: #e65100; font-weight: bold; }
+    .pending{ color: #c62828; font-weight: bold; }
+    .highlight { background-color: #fff9c4; font-weight: bold; }
+    .nps { font-size: 48px; font-weight: bold; color: #1f3864; text-align: center; margin: 10px 0; }
+    .nps-label { text-align: center; color: #555; font-size: 13px; }
+    .box { border: 1px solid #ccc; border-radius: 6px; padding: 14px 20px; margin: 10px 0; background: #f7f9ff; }
+    .green-box { border-left: 5px solid #2e7d32; background: #f1f8f1; }
+    .red-box   { border-left: 5px solid #c62828; background: #fff5f5; }
+    p { margin: 6px 0 10px 0; line-height: 1.5; }
+    ul { margin: 6px 0 10px 24px; line-height: 1.7; }
+    .slide { border: 2px solid #2e5fa3; border-radius: 8px; padding: 20px 28px; margin-bottom: 36px; }
+    .slide-title { font-size: 18px; font-weight: bold; color: #1f3864; margin-bottom: 16px; }
+    .footnote { font-size: 11px; color: #777; margin-top: 4px; }
+  </style>
+</head>
+<body>
+
+<h1>Resultados de Pruebas — FINARA</h1>
+<p>Presentación de resultados · Trabajo Terminal · Mayo 2026</p>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="slide-title">Diapositiva 1 — Validación del sistema: 33 casos de caja negra</div>
+
+  <p>Se diseñaron y ejecutaron <strong>33 casos de prueba de caja negra</strong> agrupados en 6 categorías. La batería se ejecutó en <strong>dos rondas</strong>: la primera el <strong>24 de mayo de 2026</strong> (generó el catálogo de defectos) y la segunda tras aplicar correcciones a los defectos de menor complejidad.</p>
+
+  <p>Las pruebas se realizaron sobre <strong>9 dispositivos físicos Android</strong> de distintas gamas (alta, media-alta, media y baja).</p>
+
+  <h2>Resultados globales por categoría</h2>
+  <table>
+    <tr>
+      <th>Categoría</th>
+      <th>Total</th>
+      <th>Pasó</th>
+      <th>Pasó*</th>
+      <th>Falló</th>
+      <th>% Aprobación</th>
+    </tr>
+    <tr>
+      <td>Funcionalidad</td><td>21</td>
+      <td class="pass">11</td><td class="obs">2</td><td class="fail">8</td>
+      <td>61.9 %</td>
+    </tr>
+    <tr>
+      <td>Seguridad</td><td>3</td>
+      <td class="pass">3</td><td class="obs">0</td><td class="fail">0</td>
+      <td class="pass">100.0 %</td>
+    </tr>
+    <tr>
+      <td>Usabilidad</td><td>4</td>
+      <td class="pass">2</td><td class="obs">1</td><td class="fail">1</td>
+      <td>75.0 %</td>
+    </tr>
+    <tr>
+      <td>Portabilidad</td><td>3</td>
+      <td class="pass">2</td><td class="obs">0</td><td class="fail">1</td>
+      <td>66.7 %</td>
+    </tr>
+    <tr>
+      <td>Compatibilidad</td><td>1</td>
+      <td class="pass">1</td><td class="obs">0</td><td class="fail">0</td>
+      <td class="pass">100.0 %</td>
+    </tr>
+    <tr>
+      <td>Mantenibilidad</td><td>1</td>
+      <td class="pass">0</td><td class="obs">0</td><td class="fail">1</td>
+      <td class="fail">0.0 %</td>
+    </tr>
+    <tr class="highlight">
+      <td><strong>Total</strong></td><td><strong>33</strong></td>
+      <td class="pass"><strong>19</strong></td>
+      <td class="obs"><strong>3</strong></td>
+      <td class="fail"><strong>11</strong></td>
+      <td><strong>66.7 %</strong></td>
+    </tr>
+  </table>
+  <p class="footnote">* Pasó con observaciones menores.</p>
+
+  <h2>Defectos identificados — 15 en total</h2>
+  <table>
+    <tr>
+      <th>ID</th><th>Tipo</th><th>Descripción</th><th>Severidad</th><th>Estado</th>
+    </tr>
+    <tr><td>DEF-001</td><td>Funcional</td><td>Error de email duplicado devuelve JSON sin procesar al usuario</td><td>Baja</td><td class="fixed">Corregido</td></tr>
+    <tr><td>DEF-002</td><td>Funcional</td><td>Backend rechaza valores monetarios extremos en ingresos y egresos</td><td>Media</td><td class="partial">Parcial</td></tr>
+    <tr><td>DEF-003</td><td>Funcional</td><td>Categorizador OCR asigna categorías incorrectas (sesgo hacia "Alimentos" u "Otros")</td><td class="fail">Alta</td><td class="pending">Pendiente</td></tr>
+    <tr><td>DEF-004</td><td>Funcional</td><td>El pago total de una deuda no actualiza el estado a "liquidada"</td><td class="fail">Alta</td><td class="pending">Pendiente</td></tr>
+    <tr><td>DEF-005</td><td>Funcional</td><td>Mensaje de error incorrecto al intentar pagar más del saldo pendiente</td><td>Media</td><td class="pending">Pendiente</td></tr>
+    <tr><td>DEF-006</td><td>Funcional</td><td>Historial de transacciones sin filtros por categoría, tipo ni búsqueda por texto</td><td>Media</td><td class="partial">Parcial</td></tr>
+    <tr><td>DEF-007</td><td>Funcional</td><td>Pantalla de estadísticas por categoría no implementada en esta versión</td><td class="fail">Alta</td><td class="pending">Pendiente</td></tr>
+    <tr><td>DEF-008</td><td>Visual</td><td>El ícono de una categoría no se actualiza visualmente al ser editado</td><td>Baja</td><td class="pending">Pendiente</td></tr>
+    <tr><td>DEF-009</td><td>Funcional</td><td>El sistema permite crear categorías con nombre duplicado</td><td>Media</td><td class="pending">Pendiente</td></tr>
+    <tr><td>DEF-010</td><td>Funcional</td><td>Al eliminar una categoría el mensaje no indica el motivo del error</td><td>Baja</td><td class="fixed">Corregido</td></tr>
+    <tr><td>DEF-011</td><td>UX</td><td>El flujo de navegación no orienta suficientemente al usuario nuevo</td><td>Media</td><td class="pending">Pendiente</td></tr>
+    <tr><td>DEF-012</td><td>Visual</td><td>Verificación de cumplimiento de Material Design no concluida</td><td>Media</td><td class="pending">Pendiente</td></tr>
+    <tr><td>DEF-013</td><td>Técnico</td><td>La estructura del código no cumple la separación feature-first planificada</td><td>Media</td><td class="pending">Pendiente</td></tr>
+    <tr><td>DEF-014</td><td>Visual</td><td>Plataforma web no responsiva en móvil; botón + desaparecía en Android</td><td>Baja</td><td class="fixed">Corregido</td></tr>
+    <tr><td>DEF-015</td><td>UX</td><td>Dashboard no muestra mensaje informativo cuando no hay datos en el período</td><td>Baja</td><td class="partial">Parcial</td></tr>
+  </table>
+
+  <div class="box">
+    <strong>Resumen de correcciones:</strong>
+    <span class="fixed">3 corregidos</span> (DEF-001, DEF-010, DEF-014) &nbsp;|&nbsp;
+    <span class="partial">3 atendidos parcialmente</span> (DEF-002, DEF-006, DEF-015) &nbsp;|&nbsp;
+    <span class="pending">9 pendientes</span> → agenda del siguiente Trabajo Terminal
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="slide-title">Diapositiva 2 — Evaluación del módulo OCR</div>
+
+  <p>Se evaluaron dos aspectos independientes: <strong>extracción de texto</strong> (30 tickets físicos) y <strong>categorización automática</strong> (150 productos).</p>
+
+  <h2>Métricas de extracción de texto — 30 tickets</h2>
+  <p>Tickets de Walmart, Soriana y Farmacias del Ahorro, clasificados en tres niveles de calidad de imagen.</p>
+
+  <table>
+    <tr>
+      <th>Condición</th><th>Tickets</th><th>Tesseract</th><th>Cloud Vision</th>
+      <th>Conf. promedio</th><th>Total detectado</th><th>Productos detectados</th>
+    </tr>
+    <tr>
+      <td>Alta calidad</td><td>12</td><td>7 (58.3 %)</td><td>5 (41.7 %)</td>
+      <td>0.78</td><td class="pass">95.8 %</td><td class="pass">92.4 %</td>
+    </tr>
+    <tr>
+      <td>Calidad media</td><td>10</td><td>2 (20.0 %)</td><td>8 (80.0 %)</td>
+      <td>0.52</td><td>87.0 %</td><td>81.6 %</td>
+    </tr>
+    <tr>
+      <td>Baja calidad</td><td>8</td><td class="fail">0 (0.0 %)</td><td class="pass">8 (100.0 %)</td>
+      <td class="fail">0.29</td><td class="obs">73.0 %</td><td class="obs">63.8 %</td>
+    </tr>
+    <tr class="highlight">
+      <td><strong>Total</strong></td><td><strong>30</strong></td>
+      <td><strong>9 (30.0 %)</strong></td><td><strong>21 (70.0 %)</strong></td>
+      <td><strong>0.57</strong></td><td><strong>86.3 %</strong></td><td><strong>80.6 %</strong></td>
+    </tr>
+  </table>
+
+  <h2>Comparativa de campos clave: Tesseract vs. Google Cloud Vision</h2>
+
+  <table>
+    <tr>
+      <th>Campo clave</th><th>Tesseract (9 tickets)</th><th>Cloud Vision (21 tickets)</th>
+    </tr>
+    <tr><td>Total del ticket</td><td class="obs">65.2 %</td><td class="pass">93.5 %</td></tr>
+    <tr><td>Productos</td><td class="obs">58.8 %</td><td class="pass">88.7 %</td></tr>
+    <tr><td>Nombre de tienda</td><td class="fail">52.4 %</td><td class="pass">87.3 %</td></tr>
+    <tr><td>Fecha</td><td class="fail">44.4 %</td><td class="pass">82.9 %</td></tr>
+  </table>
+
+  <div class="box">
+    Google Cloud Vision supera a Tesseract en todos los campos con una ventaja promedio de <strong>~35 puntos porcentuales</strong>. El diseño híbrido permite procesar tickets de alta calidad sin costo de API, escalando a Cloud Vision solo los casos difíciles.
+  </div>
+
+  <h2>Categorización automática — 150 productos</h2>
+  <p>Exactitud global: <strong>(50 + 8 + 14 + 21) / 150 = 93 / 150 = <span class="obs">62.0 %</span></strong></p>
+
+  <h3>Matriz de confusión</h3>
+  <table>
+    <tr>
+      <th>Real \ Predicho</th><th>Alimentos</th><th>Entretenim.</th><th>Transporte</th><th>Otros</th><th>Total</th>
+    </tr>
+    <tr><td>Alimentos</td><td class="pass"><strong>50</strong></td><td>0</td><td>4</td><td>6</td><td>60</td></tr>
+    <tr><td>Entretenimiento</td><td>4</td><td class="obs"><strong>8</strong></td><td>0</td><td>8</td><td>20</td></tr>
+    <tr><td>Transporte</td><td>8</td><td>0</td><td class="obs"><strong>14</strong></td><td>3</td><td>25</td></tr>
+    <tr><td>Otros</td><td>14</td><td>7</td><td>3</td><td class="obs"><strong>21</strong></td><td>45</td></tr>
+    <tr class="highlight"><td><strong>Total predicho</strong></td><td>76</td><td>15</td><td>21</td><td>38</td><td>150</td></tr>
+  </table>
+
+  <h3>Métricas por categoría</h3>
+  <table>
+    <tr>
+      <th>Categoría</th><th>Precisión</th><th>Exhaustividad</th><th>Puntuación F1</th>
+    </tr>
+    <tr><td>Alimentos</td><td>65.8 %</td><td class="pass">83.3 %</td><td>73.5 %</td></tr>
+    <tr><td>Entretenimiento</td><td class="fail">53.3 %</td><td class="fail">40.0 %</td><td class="fail">45.7 %</td></tr>
+    <tr><td>Transporte</td><td>66.7 %</td><td class="obs">56.0 %</td><td>60.9 %</td></tr>
+    <tr><td>Otros</td><td class="obs">55.3 %</td><td class="fail">46.7 %</td><td>50.6 %</td></tr>
+    <tr class="highlight">
+      <td><strong>Macro promedio</strong></td>
+      <td><strong>60.3 %</strong></td><td><strong>56.5 %</strong></td><td><strong>57.7 %</strong></td>
+    </tr>
+  </table>
+
+  <div class="box">
+    <strong>Conclusión OCR:</strong> "Alimentos" tiene la mayor exhaustividad (83.3 %) pero absorbe productos de otras categorías. "Entretenimiento" es la categoría más afectada (F1 = 45.7 %). La mejora del clasificador es prioridad del siguiente TT.
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="slide-title">Diapositiva 3 — Evaluación con usuarios (Encuesta de usabilidad)</div>
+
+  <p>Encuesta aplicada el <strong>20 de mayo de 2026</strong> a <strong>6 participantes</strong> que interactuaron con FINARA en condiciones reales de uso. Constó de <strong>11 preguntas</strong> en las áreas de navegación, diseño visual, funcionalidades principales y percepción general.</p>
+
+  <div class="nps">8.2 / 10</div>
+  <div class="nps-label">Índice de Recomendación (NPS) — promedio de 6 participantes<br>Puntajes individuales: 10, 9, 8, 8, 8, 6</div>
+
+  <h2>Resultados por pregunta</h2>
+  <table>
+    <tr>
+      <th>#</th><th>Dimensión</th><th>Resultado más frecuente</th><th>Frecuencia</th>
+    </tr>
+    <tr><td>1</td><td>Facilidad de navegación</td><td>Fácil — se perdió un par de veces</td><td>4/6 (66.7 %)</td></tr>
+    <tr><td>2</td><td>Función de escaneo OCR</td><td class="fail">No funcionó bien, reconoció muy poco</td><td class="fail">4/6 (66.7 %)</td></tr>
+    <tr><td>3</td><td>Diseño visual</td><td class="pass">Me encantó — muy atractivo y profesional</td><td class="pass">4/6 (66.7 %)</td></tr>
+    <tr><td>4</td><td>Presupuestos por categoría</td><td>Muy útil / Útil (empate)</td><td>3/6 (50.0 %)</td></tr>
+    <tr><td>5</td><td>Alertas automáticas</td><td class="pass">Sí, muy útil</td><td class="pass">4/6 (66.7 %)</td></tr>
+    <tr><td>6</td><td>Gráficas y estadísticas</td><td class="pass">Mucho — muy claras y útiles</td><td>3/6 (50.0 %)</td></tr>
+    <tr><td>7</td><td>Registro manual de gasto</td><td>Rápido — entre 15 y 30 segundos</td><td>4/6 (66.7 %)</td></tr>
+    <tr><td>8</td><td>Sección de deudas</td><td class="pass">Clara — solo dudas menores</td><td class="pass">5/6 (83.3 %)</td></tr>
+    <tr><td>9</td><td>Funcionalidad más solicitada</td><td>Exportar reportes en PDF / Excel</td><td>3/6 (50.0 %)</td></tr>
+    <tr><td>10</td><td>Índice de recomendación (NPS)</td><td colspan="2"><strong>Promedio 8.2 / 10</strong></td></tr>
+  </table>
+
+  <h2>Hallazgos cualitativos</h2>
+
+  <div class="box green-box">
+    <strong>Lo mejor de FINARA (según los usuarios):</strong>
+    <ul>
+      <li>Seguimiento claro de gastos mensuales</li>
+      <li>Interfaz sencilla y atractiva</li>
+      <li>Diseño UX y experiencia visual (100 % calificó entre "me gustó" y "me encantó")</li>
+      <li>Función de escaneo de tickets (concepto valorado, aunque con fallas en precisión)</li>
+    </ul>
+  </div>
+
+  <div class="box red-box">
+    <strong>Área de mayor insatisfacción:</strong>
+    <ul>
+      <li>OCR: 66.7 % reportó que reconoció muy poco → <strong>prioridad técnica del siguiente TT</strong></li>
+    </ul>
+  </div>
+
+  <h2>Funcionalidades más solicitadas para versiones futuras</h2>
+  <table>
+    <tr><th>Funcionalidad</th><th>% de participantes</th></tr>
+    <tr><td>Exportar reportes en PDF / Excel</td><td class="pass">50.0 %</td></tr>
+    <tr><td>Modo oscuro</td><td>33.3 %</td></tr>
+    <tr><td>Metas de ahorro</td><td>16.7 %</td></tr>
+  </table>
+</div>
+
+</body>
+</html>

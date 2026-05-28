@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Fórmula de Amortización Francesa — FINARA</title>
+  <style>
+    body { font-family: Calibri, Arial, sans-serif; margin: 40px; font-size: 14px; color: #1a1a1a; }
+    h1 { font-size: 22px; color: #1f3864; border-bottom: 2px solid #1f3864; padding-bottom: 6px; margin-top: 40px; }
+    h2 { font-size: 17px; color: #2e5fa3; margin-top: 28px; }
+    h3 { font-size: 15px; color: #555; margin-top: 20px; }
+    table { border-collapse: collapse; width: 100%; margin: 14px 0 20px 0; }
+    th { background-color: #1f3864; color: white; padding: 8px 12px; text-align: left; font-size: 13px; }
+    td { border: 1px solid #ccc; padding: 7px 12px; font-size: 13px; }
+    tr:nth-child(even) td { background-color: #f2f5fb; }
+    .formula-box {
+      background: #f0f4ff;
+      border: 2px solid #2e5fa3;
+      border-radius: 8px;
+      padding: 20px 30px;
+      margin: 18px 0;
+      text-align: center;
+    }
+    .formula {
+      font-size: 28px;
+      font-weight: bold;
+      color: #1f3864;
+      letter-spacing: 1px;
+      font-family: "Cambria Math", Georgia, serif;
+    }
+    .formula-legend {
+      margin-top: 12px;
+      font-size: 13px;
+      color: #333;
+      text-align: left;
+    }
+    .box { border: 1px solid #ccc; border-radius: 6px; padding: 14px 20px; margin: 10px 0; background: #f7f9ff; }
+    .green-box { border-left: 5px solid #2e7d32; background: #f1f8f1; }
+    .blue-box  { border-left: 5px solid #1565c0; background: #e8f0fb; }
+    .orange-box{ border-left: 5px solid #e65100; background: #fff8f0; }
+    .slide { border: 2px solid #2e5fa3; border-radius: 8px; padding: 20px 28px; margin-bottom: 36px; }
+    .slide-title { font-size: 18px; font-weight: bold; color: #1f3864; margin-bottom: 16px; }
+    p { margin: 6px 0 10px 0; line-height: 1.6; }
+    ul, ol { margin: 6px 0 10px 24px; line-height: 1.8; }
+    .tag { display: inline-block; background: #1f3864; color: white; border-radius: 4px;
+           padding: 2px 8px; font-size: 12px; margin-right: 4px; }
+    .tag-new { background: #2e7d32; }
+    .tag-old { background: #c62828; }
+    .highlight { background-color: #fff9c4; font-weight: bold; }
+    code { background: #f0f0f0; border-radius: 3px; padding: 1px 6px; font-family: Consolas, monospace; font-size: 13px; }
+    .step-num { display: inline-block; background: #2e5fa3; color: white; border-radius: 50%;
+                width: 24px; height: 24px; text-align: center; line-height: 24px;
+                font-weight: bold; font-size: 13px; margin-right: 8px; }
+  </style>
+</head>
+<body>
+
+<h1>Módulo de Deudas — Amortización Francesa · FINARA</h1>
+<p>Documento de apoyo para presentación · Trabajo Terminal · Mayo 2026</p>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="slide-title">¿Qué cambió en el módulo de deudas?</div>
+
+  <p>En esta versión del Trabajo Terminal se implementó el cálculo automático de la cuota mensual mediante la <strong>fórmula de amortización francesa</strong> (cuota fija). Anteriormente el sistema solo registraba el monto de la deuda sin calcular el plan de pagos.</p>
+
+  <div class="box blue-box">
+    <strong>Versión anterior:</strong> el usuario tenía que ingresar manualmente la cuota mensual, sin ningún cálculo de intereses ni cronograma de pagos.<br><br>
+    <strong>Versión actual:</strong> el usuario ingresa capital, tasa de interés anual y plazo; el sistema calcula automáticamente la cuota mensual, el interés total y genera el cronograma completo de pagos.
+  </div>
+
+  <h2>¿Qué se implementó?</h2>
+  <ul>
+    <li>Cálculo automático de la <strong>cuota mensual fija</strong> al crear la deuda (backend en Node.js)</li>
+    <li>Vista previa en tiempo real de la cuota antes de guardar (app móvil en Flutter)</li>
+    <li>Cronograma completo de amortización (endpoint <code>GET /:id/amortization</code>)</li>
+    <li>Soporte para <strong>abonos extraordinarios a capital</strong>, que reducen el saldo insoluto y recalculan los pagos restantes</li>
+    <li>Soporte para deudas <strong>sin interés</strong> (<code>tasa = 0%</code>), donde la cuota es simplemente capital ÷ meses</li>
+  </ul>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="slide-title">La Fórmula de Amortización Francesa</div>
+
+  <h2>¿Qué es la amortización francesa?</h2>
+  <p>Es el método de pago de crédito más utilizado en México y Latinoamérica. Su característica principal es que la <strong>cuota mensual es siempre la misma</strong> durante toda la vida del crédito, aunque la proporción entre intereses y capital varía cada mes.</p>
+
+  <ul>
+    <li>Al inicio del crédito, la mayor parte del pago son <strong>intereses</strong>.</li>
+    <li>Conforme pasan los meses, cada pago cubre <strong>más capital y menos intereses</strong>.</li>
+    <li>El monto total a pagar cada mes <strong>nunca cambia</strong>.</li>
+  </ul>
+
+  <h2>La fórmula</h2>
+
+  <div class="formula-box">
+    <div class="formula">M = C · r / [ 1 − (1 + r)⁻ⁿ ]</div>
+    <div class="formula-legend">
+      <strong>M</strong> = Cuota mensual fija (lo que pagas cada mes)<br>
+      <strong>C</strong> = Capital inicial (monto total del crédito)<br>
+      <strong>r</strong> = Tasa mensual = Tasa anual ÷ 1200<br>
+      <strong>n</strong> = Número total de mensualidades (plazo en meses)
+    </div>
+  </div>
+
+  <div class="box green-box">
+    <strong>Caso especial — Deuda sin interés (r = 0):</strong><br>
+    Si la tasa de interés es 0 %, la fórmula se simplifica a:<br><br>
+    <span style="font-size:18px; font-weight:bold; color:#1f3864; font-family: Georgia, serif;">M = C ÷ n</span><br><br>
+    Es decir, el capital se divide en partes iguales entre el número de meses.
+  </div>
+
+  <h2>Ejemplo práctico</h2>
+
+  <table>
+    <tr>
+      <th>Dato</th><th>Valor</th>
+    </tr>
+    <tr><td>Capital inicial (C)</td><td>$10,000 MXN</td></tr>
+    <tr><td>Tasa de interés anual</td><td>24 % anual</td></tr>
+    <tr><td>Tasa mensual (r)</td><td>24 ÷ 1200 = <strong>0.02</strong></td></tr>
+    <tr><td>Plazo (n)</td><td>12 meses</td></tr>
+    <tr class="highlight">
+      <td><strong>Cuota mensual (M)</strong></td>
+      <td><strong>$10,000 × 0.02 ÷ [1 − (1.02)⁻¹²] ≈ $944.56 MXN/mes</strong></td>
+    </tr>
+    <tr><td>Total pagado</td><td>$944.56 × 12 = $11,334.72 MXN</td></tr>
+    <tr><td>Interés total</td><td>$11,334.72 − $10,000 = <strong>$1,334.72 MXN</strong></td></tr>
+  </table>
+
+  <h2>Cronograma de amortización (primeros 3 meses del ejemplo)</h2>
+
+  <table>
+    <tr>
+      <th>Mes</th>
+      <th>Cuota mensual</th>
+      <th>Intereses del período</th>
+      <th>Abono a capital</th>
+      <th>Saldo restante</th>
+    </tr>
+    <tr><td>1</td><td>$944.56</td><td>$200.00</td><td>$744.56</td><td>$9,255.44</td></tr>
+    <tr><td>2</td><td>$944.56</td><td>$185.11</td><td>$759.45</td><td>$8,495.99</td></tr>
+    <tr><td>3</td><td>$944.56</td><td>$169.92</td><td>$774.64</td><td>$7,721.35</td></tr>
+    <tr><td>…</td><td>$944.56</td><td>↓ decrece</td><td>↑ crece</td><td>↓ decrece</td></tr>
+    <tr class="highlight"><td>12</td><td>$944.56</td><td>~$18.43</td><td>~$926.13</td><td>$0.00</td></tr>
+  </table>
+  <p style="font-size:12px; color:#777;">* Valores aproximados con redondeo a 2 decimales.</p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="slide-title">Cómo funciona en FINARA</div>
+
+  <h2>Flujo en la aplicación móvil</h2>
+  <ol>
+    <li><span class="step-num">1</span> El usuario ingresa: <strong>nombre, capital, tasa anual, plazo y fecha del próximo pago</strong></li>
+    <li><span class="step-num">2</span> La app calcula en tiempo real y muestra la <strong>vista previa</strong>: tasa mensual, cuota mensual e interés total</li>
+    <li><span class="step-num">3</span> Al confirmar, el backend calcula y persiste el <strong>pago mensual y la tasa mensual</strong> en la base de datos</li>
+    <li><span class="step-num">4</span> En el panel de deudas el usuario ve una <strong>barra de progreso</strong> y los días al próximo pago</li>
+    <li><span class="step-num">5</span> Al registrar un pago, el sistema actualiza el <strong>saldo insoluto</strong> y el acumulado pagado</li>
+  </ol>
+
+  <h2>Datos que el sistema almacena por deuda</h2>
+  <table>
+    <tr><th>Campo</th><th>Descripción</th></tr>
+    <tr><td>Capital inicial</td><td>Monto original del crédito</td></tr>
+    <tr><td>Tasa anual</td><td>Tasa de interés anual en porcentaje</td></tr>
+    <tr><td>Tasa mensual</td><td>Tasa anual ÷ 12 (calculada automáticamente)</td></tr>
+    <tr><td>Pago mensual</td><td>Cuota fija calculada con la fórmula francesa</td></tr>
+    <tr><td>Saldo insoluto</td><td>Capital pendiente de pago tras cada abono</td></tr>
+    <tr><td>Monto pagado</td><td>Acumulado de todos los pagos realizados</td></tr>
+    <tr><td>Duración en meses</td><td>Plazo total del crédito</td></tr>
+    <tr><td>Fecha del próximo pago</td><td>Actualizada tras cada pago</td></tr>
+    <tr><td>Estado activa/liquidada</td><td>Se activa cuando el saldo llega a $0</td></tr>
+  </table>
+
+  <h2>Abonos extraordinarios a capital</h2>
+  <div class="box orange-box">
+    Además de los pagos ordinarios mensuales, el usuario puede realizar <strong>abonos extraordinarios a capital</strong>. Este tipo de pago:<br><br>
+    <ul>
+      <li>Reduce directamente el <strong>saldo insoluto</strong> sin afectar la cuota de intereses del período</li>
+      <li><strong>Disminuye las mensualidades restantes</strong> al acelerar la amortización</li>
+      <li>No cambia el monto de la cuota mensual, sino el número de pagos que quedan</li>
+    </ul>
+  </div>
+
+  <h2>Cronograma de amortización (endpoint backend)</h2>
+  <p>El endpoint <code>GET /api/debts/:id/amortization</code> genera el cronograma completo de pagos. Para cada período calcula:</p>
+  <ul>
+    <li><strong>Intereses del período</strong> = Saldo insoluto × tasa mensual</li>
+    <li><strong>Abono a capital</strong> = Cuota mensual − Intereses del período</li>
+    <li><strong>Nuevo saldo insoluto</strong> = Saldo anterior − Abono a capital</li>
+  </ul>
+</div>
+
+</body>
+</html>
