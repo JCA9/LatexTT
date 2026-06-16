@@ -1,0 +1,611 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+% ── Paquetes ─────────────────────────────────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{times}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{cite}
+\usepackage{url}
+\usepackage{microtype}
+\usepackage{parskip}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\renewcommand{\baselinestretch}{1.05}
+
+% ── Geometría de página ───────────────────────────────────────────────────────
+\geometry{
+  top=2.0cm, bottom=2.2cm,
+  left=1.8cm, right=1.8cm,
+  columnsep=0.65cm
+}
+
+% ── Encabezado/pie ─────────────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\thepage}
+
+% ── Formato de secciones ──────────────────────────────────────────────────────
+\titleformat{\section}[block]
+  {\normalfont\normalsize\bfseries\centering}
+  {\Roman{section}.}
+  {0.5em}
+  {\MakeUppercase}
+\titlespacing*{\section}{0pt}{9pt}{4pt}
+
+\titleformat{\subsection}[runin]
+  {\normalfont\normalsize\itshape}
+  {\Alph{subsection}.}
+  {0.5em}
+  {}[.]
+\titlespacing*{\subsection}{0pt}{5pt}{4pt}
+
+% ── Captions ──────────────────────────────────────────────────────────────────
+\captionsetup{font=small, labelfont=bf, labelsep=period, justification=centering}
+\captionsetup[table]{position=top, aboveskip=3pt, belowskip=2pt}
+\captionsetup[figure]{position=bottom, aboveskip=2pt, belowskip=0pt}
+
+% ── Espaciado ─────────────────────────────────────────────────────────────────
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4.5pt plus 1pt}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\begin{document}
+
+% ── Encabezado institucional ──────────────────────────────────────────────────
+\twocolumn[{%
+\begin{center}
+  {\small Instituto Politécnico Nacional \quad|\quad Escuela Superior de Cómputo \quad TT\,2026--A062}\\[4pt]
+  {\LARGE\bfseries FINARA: Prototipo de Aplicación para Finanzas\\[2pt]
+   Personales con Escaneo de Tickets usando\\[2pt]
+   Reconocimiento Óptico de Caracteres}\\[6pt]
+  {\normalsize
+   Acevedo Martínez Armando,\quad Cadenas Acevedo Jesús Alejandro\\
+   Directores: Prof.\ Ulises Vélez Saldaña,\quad Dra.\ María de Lourdes Salinas Callejas}\\[2pt]
+  {\small Escuela Superior de Cómputo, Instituto Politécnico Nacional, México D.F.}\\[8pt]
+\end{center}
+
+\noindent\rule{\textwidth}{0.4pt}\\[4pt]
+\noindent\textit{\textbf{Resumen}~---
+\textbf{
+Se presenta FINARA, un sistema integral de gestión de finanzas personales compuesto por una aplicación
+móvil (Flutter), una plataforma web (Next.js/React) y un servidor REST (Node.js/Express) con
+persistencia en MySQL. El sistema automatiza el registro de gastos a partir de tickets físicos y
+digitales mediante un \emph{pipeline} híbrido de OCR que combina Tesseract y Google Cloud Vision, con
+categorización automática por palabras clave. Un módulo de recomendaciones financieras personalizadas
+emplea Claude Haiku como motor de análisis con IA. La evaluación sobre 30 tickets físicos alcanzó una
+tasa de detección del campo total del 86.3\,\%. En una batería de 33 casos de prueba se obtuvo el
+100\,\% de aprobación en seguridad y compatibilidad. La encuesta de usabilidad aplicada a 20
+participantes arrojó un NPS de~60 con promedio de 8.9/10.
+}}\\[4pt]
+\noindent\textit{\textbf{Palabras~clave}~--- Finanzas personales, reconocimiento óptico de caracteres,
+aplicación móvil, arquitectura cliente-servidor, Flutter, Node.js, MySQL, Google Cloud Vision.}\\[4pt]
+\noindent\rule{\textwidth}{0.4pt}\\[6pt]
+}]
+
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Introducción}
+% ══════════════════════════════════════════════════════════════════════════════
+
+Según la Encuesta Nacional sobre Salud Financiera (ENSAFI) 2023 del INEGI, solo el 53.2\,\% de los
+mexicanos lleva algún tipo de registro de sus gastos y únicamente el 32.8\,\% cumple con dicho
+registro de manera continua \cite{inegi2024}. El mismo estudio revela que el 45.9\,\% de la
+población reporta que casi nunca o nunca le sobra dinero al final del mes, evidenciando capacidad
+de ahorro limitada. Adicionalmente, un alto porcentaje de personas en múltiples países se muestra
+preocupado por su situación financiera futura \cite{statista2025}.
+
+A pesar de que las instalaciones de aplicaciones de finanzas personales aumentaron un 50\,\% en
+2023 respecto al año anterior, la retención de usuarios cae drásticamente a partir del séptimo día
+de uso \cite{adjust2023}. Esto indica que las herramientas disponibles no logran sostener el cambio
+de hábitos. Estudios de la OCDE/INFE (2023) señalan que una mayor alfabetización financiera
+apoyada por herramientas digitales está asociada con comportamientos más responsables y mayor
+capacidad de ahorro \cite{OECD_INFE2023}.
+
+Esta brecha entre necesidad y adopción tecnológica motivó el desarrollo de FINARA: una plataforma
+que reduce la carga manual del registro financiero mediante automatización basada en Reconocimiento
+Óptico de Caracteres (OCR), categorización inteligente de gastos y recomendaciones financieras
+generadas por inteligencia artificial. La solución está orientada a jóvenes y adultos sin
+conocimientos contables avanzados, apoyándose en la disponibilidad del 81.4\,\% de la población
+mexicana a dispositivos móviles \cite{EncINEGI}.
+
+El objetivo general fue \textbf{desarrollar una aplicación móvil y plataforma web interactiva para
+la gestión de finanzas personales que registre automáticamente los gastos de tickets físicos y
+digitales, categorizándolos para facilitar el análisis y seguimiento del presupuesto del usuario}.
+Los objetivos específicos incluyeron: módulo de escaneo de tickets físicos y digitales, módulo de
+categorización automática de gastos, módulo de alertas y notificaciones, generación de informes
+exportables y visualización de análisis con gráficas interactivas.
+
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Estado del Arte}
+% ══════════════════════════════════════════════════════════════════════════════
+
+Se analizaron las principales aplicaciones existentes de gestión financiera con funcionalidades
+similares a las propuestas. La Tabla~\ref{tab:estadoarte} sintetiza las características más
+relevantes para la comparativa.
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{Comparativa de aplicaciones de finanzas personales}
+  \label{tab:estadoarte}
+  \renewcommand{\arraystretch}{1.1}
+  \begin{tabular}{p{1.5cm}p{1.4cm}p{1.1cm}p{1.2cm}p{1.2cm}}
+    \toprule
+    \textbf{App} & \textbf{OCR} & \textbf{IA} & \textbf{Web+Móvil} & \textbf{Gratis} \\
+    \midrule
+    Expensify & Sí & Parcial & Sí & No \\
+    Veryfi    & Sí & Sí      & Sí & No \\
+    Mint      & No & Sí      & Sí & Sí \\
+    Shoeboxed & Sí & No      & Sí & No \\
+    Fyle      & Sí & Sí      & Sí & No \\
+    \textbf{FINARA} & \textbf{Sí} & \textbf{Sí} & \textbf{Sí} & \textbf{Sí} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\textbf{Expensify} destaca por su OCR y generación de reportes, pero su interfaz está orientada al
+entorno empresarial y requiere validación manual de categorías. \textbf{Veryfi} combina OCR con
+aprendizaje automático para categorización en tiempo real, aunque su versión gratuita es limitada
+y presenta curva de aprendizaje alta. \textbf{Mint} ofrece integración bancaria y categorización
+inteligente, pero carece de módulo de escaneo de tickets. \textbf{Shoeboxed} permite digitalizar
+recibos, pero su clasificación de gastos no es precisa en español. \textbf{Fyle} logra alta
+precisión con automatización completa, pero su modelo de negocio corporativo restringe su adopción
+por usuarios individuales.
+
+FINARA se diferencia por ser la única solución completamente gratuita y de código abierto que
+integra OCR híbrido con respaldo en la nube, recomendaciones por IA y soporte completo para
+tickets en español, orientada específicamente a la problemática financiera del usuario mexicano.
+
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Metodología}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\subsection{Arquitectura del sistema}
+
+FINARA adopta una arquitectura cliente-servidor de tres capas \cite{ArquitecturaCapas} que separa
+la interfaz de usuario, la lógica de negocio y la gestión de datos. Los tres componentes se
+comunican mediante una API REST autenticada con JSON Web Tokens (JWT), garantizando el aislamiento
+entre cuentas de usuario y la coherencia de datos entre plataformas (Fig.~\ref{fig:arq}).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\columnwidth]{images/ArquitecturaCapasFinara.JPG}
+  \caption{Arquitectura de tres capas del sistema FINARA.}
+  \label{fig:arq}
+\end{figure}
+
+Los tres componentes son:
+
+\begin{itemize}[noitemsep,topsep=2pt]
+  \item \textbf{Aplicación móvil (Flutter):} 9 módulos funcionales orientados al registro
+    ágil de gastos, escaneo de tickets físicos mediante la cámara del dispositivo, gestión
+    de presupuestos, deudas y alertas automáticas. Compatible con Android 10 o superior.
+  \item \textbf{Plataforma web (Next.js/React):} 6 módulos enfocados en análisis financiero
+    detallado, visualización de gráficas comparativas, generación de reportes exportables en
+    PDF y Excel, y recomendaciones personalizadas por período.
+  \item \textbf{Backend REST (Node.js/Express):} 11 módulos con más de 60 endpoints
+    documentados, persistencia en MySQL (12 tablas normalizadas a 3FN), tareas programadas
+    (cron~jobs) para recordatorios diarios y rollover mensual automático de presupuestos e
+    ingresos recurrentes.
+\end{itemize}
+
+La seguridad se implementó mediante cifrado de contraseñas con bcrypt (factor~12) y validación JWT
+en todos los endpoints protegidos. La base de datos MySQL fue diseñada con relaciones de integridad
+referencial y eliminación en cascada.
+
+La metodología de desarrollo adoptada fue una combinación de Extreme Programming (XP) y Kanban
+\cite{Metodologias,ManifestoAgil}, con iteraciones cortas de dos semanas, integración continua y
+revisión constante de requerimientos con los directores del trabajo.
+
+\subsection{Pipeline de OCR híbrido}
+
+El módulo de reconocimiento óptico de caracteres es el componente técnicamente más elaborado del
+sistema. Se diseñó un \emph{pipeline} de seis etapas (Fig.~\ref{fig:ocr}) que combina
+procesamiento local con servicios externos, optimizando el costo de operación:
+
+\begin{enumerate}[noitemsep,topsep=2pt]
+  \item \textbf{Preprocesamiento:} Corrección de iluminación, reescalado, corrección de
+    perspectiva (\textit{deskew}) y binarización adaptativa con OpenCV.
+  \item \textbf{Extracción con Tesseract:} OCR con modelo LSTM en modo de bloque de texto
+    (PSM~6), con soporte para español e inglés \cite{Tesseract}.
+  \item \textbf{Evaluación de confianza:} Métrica ponderada que combina la confianza reportada
+    por Tesseract con la presencia detectada de campos clave: total, productos, tienda y fecha.
+  \item \textbf{Compuertas de activación:} Si la confianza es inferior a 0.72 o el número de
+    palabras reconocidas es menor a 15, el flujo escala automáticamente al servicio externo.
+  \item \textbf{Respaldo externo:} Google Cloud Vision extrae el texto completo del documento;
+    Claude Haiku lo estructura en JSON con los campos requeridos \cite{GoogleCloudVisionAPI}.
+    A diferencia de alternativas como AWS Textract o Azure Document Intelligence, Cloud Vision
+    está diseñada para texto en imágenes tomadas con cámara en condiciones no controladas, que
+    es precisamente el caso de los tickets físicos de FINARA.
+  \item \textbf{Categorización automática:} Los productos detectados reciben una categoría
+    sugerida mediante un clasificador por palabras clave y similitud con el historial de
+    compras previas del usuario.
+\end{enumerate}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\columnwidth]{images/Flujo-OCR2.png}
+  \caption{Diagrama del \textit{pipeline} híbrido de OCR.}
+  \label{fig:ocr}
+\end{figure}
+
+Este diseño permite procesar los tickets de alta calidad localmente, sin costo de API externa, y
+escalar únicamente los casos de mayor dificultad a servicios de visión artificial en la nube. Un
+sistema de caché con vigencia de 15~días evita llamadas redundantes al modelo de IA para el mismo
+período financiero.
+
+\subsection{Módulo de recomendaciones con IA}
+
+Se implementó un módulo de recomendaciones financieras personalizadas que utiliza Claude Haiku como
+motor de análisis. Para cada período consultado, el sistema recopila el contexto financiero del
+usuario (ingresos, distribución de gastos, estado de presupuestos y deudas) y genera un análisis
+estructurado con cuatro secciones: resumen textual, riesgos identificados, recomendaciones
+accionables y acciones priorizadas. Ante una falla del servicio externo, el sistema retorna
+automáticamente recomendaciones generadas por reglas locales, garantizando la disponibilidad del
+módulo en todo momento.
+
+\subsection{Stack tecnológico}
+
+La selección de tecnologías se realizó priorizando herramientas de código abierto, comunidad
+activa y compatibilidad multiplataforma. La Tabla~\ref{tab:stack} resume los componentes
+principales del sistema.
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{Stack tecnológico de FINARA}
+  \label{tab:stack}
+  \renewcommand{\arraystretch}{1.15}
+  \begin{tabular}{p{2.2cm}p{4.4cm}}
+    \toprule
+    \textbf{Componente}   & \textbf{Rol en el sistema} \\
+    \midrule
+    Flutter / Dart        & App móvil multiplataforma (Android) \\
+    Next.js / React       & Plataforma web con SSR y gestión de componentes \\
+    Node.js + Express     & Backend REST: lógica de negocio y orquestación \\
+    MySQL                 & Persistencia relacional (12 tablas, 3FN) \\
+    Python 3 + OpenCV     & Preprocesamiento e invocación de Tesseract \\
+    Tesseract 5 (LSTM)    & OCR local sin costo de API \\
+    Google Cloud Vision   & OCR en la nube para tickets difíciles \\
+    Claude Haiku (Anthropic) & Estructuración JSON y recomendaciones IA \\
+    JWT + bcrypt          & Autenticación y cifrado de contraseñas \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Flutter fue seleccionado frente a React Native por su rendimiento nativo, widget unificado y
+compilación AOT, que garantiza una experiencia fluida en dispositivos de gama baja \cite{WhyFlutter}.
+Next.js fue preferido sobre alternativas como Remix o SvelteKit por su ecosistema maduro, su
+soporte nativo para renderizado del lado del servidor (SSR) y la facilidad de integración con
+bibliotecas de visualización como ECharts \cite{NextJSOfficial}. MySQL se eligió sobre PostgreSQL
+y MongoDB por su madurez, rendimiento en consultas analíticas y la familiaridad del equipo con el
+modelo relacional \cite{WhyMySQL}.
+
+\subsection{Modelo de categorización de gastos}
+
+La asignación de categorías a los productos extraídos del ticket se basa en el
+\textbf{modelo de sobres de Dave Ramsey}, adaptado a cuatro categorías principales: Alimentos,
+Entretenimiento, Transporte y Otros. El clasificador aplica una búsqueda por palabras clave sobre
+el nombre del producto y, si no hay coincidencia directa, consulta el historial de compras previas
+del usuario para inferir la categoría por similitud. Los presupuestos se gestionan en forma de
+límites mensuales por categoría, con indicadores visuales de tres niveles: seguro (consumo menor
+al 75\,\% del límite), advertencia (75\,\%--100\,\%) y peligro/excedido (superación del límite).
+El módulo de deudas implementa el cálculo de cuota mensual por amortización francesa, con soporte
+para pagos ordinarios y abonos extraordinarios a capital.
+
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Resultados}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\subsection{Evaluación del módulo OCR}
+
+Se evaluaron \textbf{30 tickets físicos} de establecimientos como Walmart, Soriana y Farmacias del
+Ahorro, clasificados en tres niveles de calidad según iluminación, enfoque y estado del
+comprobante. La Tabla~\ref{tab:ocr} muestra la distribución de procesamiento y las tasas de
+detección de los campos clave.
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{Métricas de extracción OCR por calidad de imagen (30 tickets)}
+  \label{tab:ocr}
+  \begin{tabular}{lcccc}
+    \toprule
+    \textbf{Condición} & \textbf{Tck.} & \textbf{Tess.} & \textbf{GCV} & \textbf{Total det.} \\
+    \midrule
+    Alta calidad  & 12 &  7 & 5  & 95.8\,\% \\
+    Calidad media & 10 &  2 & 8  & 87.0\,\% \\
+    Baja calidad  &  8 &  0 & 8  & 73.0\,\% \\
+    \midrule
+    \textbf{Total} & \textbf{30} & \textbf{9} & \textbf{21} & \textbf{86.3\,\%} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Google Cloud Vision (GCV) supera a Tesseract en todos los campos clave con una ventaja promedio
+de aproximadamente 35 puntos porcentuales (Tabla~\ref{tab:campos}), justificando el diseño
+híbrido del \emph{pipeline}.
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{Comparativa de detección de campos clave: Tesseract vs.\ GCV}
+  \label{tab:campos}
+  \begin{tabular}{lcc}
+    \toprule
+    \textbf{Campo clave} & \textbf{Tesseract} & \textbf{Cloud Vision} \\
+    \midrule
+    Total del ticket & 65.2\,\% & 93.5\,\% \\
+    Productos        & 58.8\,\% & 88.7\,\% \\
+    Nombre de tienda & 52.4\,\% & 87.3\,\% \\
+    Fecha            & 44.4\,\% & 82.9\,\% \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Precisión del clasificador automático}
+
+Para evaluar el clasificador se probaron \textbf{150 productos} distribuidos en cuatro categorías.
+La exactitud global fue del \textbf{62.0\,\%} y la puntuación F1 macro promedio fue de
+\textbf{57.7\,\%}. La Tabla~\ref{tab:metricas} detalla las métricas por categoría.
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{Métricas del clasificador de categorías (150 productos)}
+  \label{tab:metricas}
+  \begin{tabular}{lccc}
+    \toprule
+    \textbf{Categoría} & \textbf{Precisión} & \textbf{Exhaustiv.} & \textbf{F1} \\
+    \midrule
+    Alimentos       & 65.8\,\% & 83.3\,\% & 73.5\,\% \\
+    Entretenimiento & 53.3\,\% & 40.0\,\% & 45.7\,\% \\
+    Transporte      & 66.7\,\% & 56.0\,\% & 60.9\,\% \\
+    Otros           & 55.3\,\% & 46.7\,\% & 50.6\,\% \\
+    \midrule
+    \textbf{Macro prom.} & \textbf{60.3\,\%} & \textbf{56.5\,\%} & \textbf{57.7\,\%} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+La categoría \textit{Alimentos} concentra la mayoría de las predicciones con alta exhaustividad
+(83.3\,\%) pero baja precisión (65.8\,\%), absorbiendo productos de otras categorías. \textit{Entretenimiento}
+es la más afectada con F1 de apenas 45.7\,\%, principalmente por la asignación incorrecta de
+suscripciones digitales y accesorios de videojuegos. Estos resultados establecen la línea base
+para mejorar el clasificador en iteraciones futuras.
+
+\subsection{Validación mediante casos de prueba}
+
+Se diseñaron y ejecutaron \textbf{33 casos de prueba de caja negra} en \textbf{9 dispositivos
+físicos Android} de distintas gamas (alta, media-alta, media y baja), agrupados en seis
+categorías (Tabla~\ref{tab:pruebas}).
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{Resultados de pruebas por categoría (33 casos)}
+  \label{tab:pruebas}
+  \begin{tabular}{lcccr}
+    \toprule
+    \textbf{Categoría} & \textbf{Total} & \textbf{Pasó} & \textbf{Falló} & \textbf{\% Aprob.} \\
+    \midrule
+    Funcionalidad  & 21 & 13 &  8 & 61.9\,\% \\
+    Seguridad      &  3 &  3 &  0 & 100.0\,\% \\
+    Usabilidad     &  4 &  3 &  1 & 75.0\,\% \\
+    Portabilidad   &  3 &  2 &  1 & 66.7\,\% \\
+    Compatibilidad &  1 &  1 &  0 & 100.0\,\% \\
+    Mantenibilidad &  1 &  0 &  1 &   0.0\,\% \\
+    \midrule
+    \textbf{Total} & \textbf{33} & \textbf{22} & \textbf{11} & \textbf{66.7\,\%} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Los módulos de seguridad y compatibilidad alcanzaron el 100\,\% de aprobación. La autenticación
+sin estado con JWT, el cifrado con bcrypt (factor~12) y la resistencia demostrada a inyecciones
+SQL conforman una base de seguridad adecuada para datos financieros sensibles. La compatibilidad
+fue verificada con Android 10--14 (API 29--34) en pantallas de 5 a 6.7 pulgadas en resoluciones
+de 720p a 1440p. Los 11 casos fallidos generaron un catálogo de 15~defectos; los más
+significativos fueron: ausencia de filtros avanzados en el historial de transacciones, pantalla
+de estadísticas por categoría no implementada, ciclo de vida incompleto de deudas liquidadas e
+inconsistencias en la edición de categorías. De los 15 defectos, 3 fueron corregidos en la misma
+iteración, 3 atendidos parcialmente y 9 quedaron programados para la siguiente fase del proyecto.
+
+\subsection{Evaluación con usuarios}
+
+Se aplicó una encuesta de usabilidad a \textbf{20 participantes} en dos etapas: la primera el
+30 de abril de 2026 (6 participantes) y la segunda entre el 26 de mayo y el 2 de junio de 2026
+(14 participantes adicionales). La Tabla~\ref{tab:encuesta} resume los resultados más relevantes.
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{Resultados de la encuesta de usabilidad (20 participantes)}
+  \label{tab:encuesta}
+  \renewcommand{\arraystretch}{1.15}
+  \begin{tabular}{p{2.6cm}p{3.0cm}c}
+    \toprule
+    \textbf{Dimensión} & \textbf{Resultado más frecuente} & \textbf{Frec.} \\
+    \midrule
+    Diseño visual        & Me encantó, muy atractivo         & 80.0\,\% \\
+    Alertas automáticas  & Sí, muy útil                      & 80.0\,\% \\
+    Presupuestos         & Muy útil, la usaría               & 60.0\,\% \\
+    Registro manual      & Rápido, 15--30 segundos           & 60.0\,\% \\
+    Sección de deudas    & Clara, solo dudas menores         & 60.0\,\% \\
+    Función OCR          & Funcionó bien / perfecto          & 80.0\,\% \\
+    Navegación           & Fácil, se perdió un par de veces  & 65.0\,\% \\
+    \midrule
+    \multicolumn{2}{l}{\textbf{NPS (Índice de recomendación)}} & \textbf{60} \\
+    \multicolumn{2}{l}{\textbf{Promedio de recomendación}} & \textbf{8.9\,/\,10} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Los puntajes individuales de recomendación de los 20 participantes arrojaron 13 promotores
+(puntuación 9--10, 65\,\%), 6 pasivos (puntuación 7--8, 30\,\%) y 1 detractor (5\,\%), dando
+un \textbf{NPS de 60}. Este valor se considera ``bueno'' en la industria de aplicaciones móviles
+\cite{BBVA_Finanzas}. La funcionalidad más solicitada para versiones futuras fue metas de ahorro
+(40\,\%), seguida de exportación en PDF/Excel (30\,\%) y modo oscuro (15\,\%).
+
+Un hallazgo relevante fue la mejora significativa en la percepción del OCR entre etapas: en la
+primera ronda (abril), el 66.7\,\% de los participantes reportó que el módulo reconoció muy poco;
+en la segunda ronda (mayo--junio), el 80\,\% reportó que funcionó bien o perfectamente. Este
+contraste valida las correcciones aplicadas al \emph{pipeline} y posiciona la mejora continua
+del clasificador como prioridad.
+
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Conclusiones}
+% ══════════════════════════════════════════════════════════════════════════════
+
+El sistema FINARA demostró ser técnicamente viable y funcionalmente competitivo en sus módulos
+centrales. Los resultados cuantitativos confirman que la base del sistema es sólida: 66.7\,\%
+de tasa de aprobación global en casos de prueba, 100\,\% de éxito en seguridad y compatibilidad,
+y un NPS de~60 (promedio 8.9/10) en la evaluación con 20 usuarios.
+
+El \emph{pipeline} híbrido de OCR opera correctamente en la extracción de texto con tasas de
+detección del 86.3\,\% en el campo total sobre 30 tickets físicos. Sin embargo, la fase de
+\textbf{categorización automática de productos} no alcanzó el nivel de precisión requerido
+(F1 macro 57.7\,\%), siendo la principal limitación identificada y la prioridad de la siguiente
+iteración del proyecto. Específicamente, el clasificador presenta sesgo hacia la categoría
+\textit{Alimentos}, requiriendo la incorporación de reglas léxicas adicionales y datos de
+entrenamiento más balanceados.
+
+La percepción de los usuarios fue positiva en todas las dimensiones evaluadas. El diseño visual
+fue valorado favorablemente por el 100\,\% de los participantes, y el módulo de escaneo
+automático de tickets fue identificado como la funcionalidad diferenciadora del sistema. Los
+13 defectos restantes en el catálogo constituyen la agenda de trabajo para la siguiente fase,
+con prioridad en la categorización OCR, los filtros del historial y el ciclo de vida de las
+deudas.
+
+Con este proyecto se demuestra que la integración de OCR híbrido, arquitectura cliente-servidor
+de tres capas y recomendaciones generadas por inteligencia artificial constituye una solución
+efectiva y accesible para fomentar hábitos financieros saludables en la población mexicana sin
+conocimientos contables avanzados.
+
+\subsection{Trabajo futuro}
+
+Las líneas de trabajo identificadas para la siguiente iteración son:
+
+\begin{enumerate}[noitemsep,topsep=2pt]
+  \item \textbf{Mejora del clasificador de categorías:} Incorporar reglas léxicas adicionales,
+    ampliar el diccionario de palabras clave por categoría y explorar técnicas de aprendizaje
+    automático supervisado para superar la línea base de F1 macro 57.7\,\%.
+  \item \textbf{Pantalla de estadísticas por categoría:} Implementar la vista de análisis
+    comparativo de gastos por categoría con filtros temporales y desglose por establecimiento.
+  \item \textbf{Ciclo de vida completo de deudas:} Corregir la lógica del módulo de deudas
+    para que al completar el pago total el estado se actualice automáticamente a ``liquidada''.
+  \item \textbf{Filtros avanzados en el historial:} Agregar búsqueda por texto, filtro
+    combinado por categoría y tipo de movimiento en la vista de historial de transacciones.
+  \item \textbf{Metas de ahorro:} Incorporar el módulo de metas financieras, la
+    funcionalidad más solicitada por el 40\,\% de los participantes de la encuesta.
+  \item \textbf{Refactorización a arquitectura feature-first:} Migrar la gestión de estado
+    de la app móvil de \texttt{StatefulWidget}/\texttt{setState} a un patrón reactivo
+    (BLoC o Riverpod) para reducir el acoplamiento entre pantallas.
+\end{enumerate}
+
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section*{Reconocimientos}
+% ══════════════════════════════════════════════════════════════════════════════
+
+Los autores agradecen al Prof. Ulises Vélez Saldaña y a la Dra. María de Lourdes Salinas Callejas
+por su guía y dedicación durante el desarrollo del proyecto, a los sinodales por sus observaciones
+que enriquecieron el trabajo, y a la Escuela Superior de Cómputo del Instituto Politécnico Nacional
+por las facilidades otorgadas. Asimismo, se agradece a los 20 participantes que colaboraron en las
+sesiones de evaluación de usabilidad del sistema FINARA.
+
+
+% ══════════════════════════════════════════════════════════════════════════════
+\begingroup
+\small
+\renewcommand{\refname}{Referencias}
+\begin{thebibliography}{9}
+
+\bibitem{inegi2024}
+INEGI, ``Encuesta Nacional sobre Salud Financiera (ENSAFI) 2023,''
+Instituto Nacional de Estadística y Geografía, México, 2024. [En línea].
+Disponible en: \url{https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2024/ENSAFI/ENSAFI.pdf}
+
+\bibitem{statista2025}
+Statista, ``La situación financiera personal en el futuro, ¿fuente de preocupación?,''
+Statista, 2025. [En línea].
+Disponible en: \url{https://es.statista.com/grafico/27448/porcentaje-de-encuestados-que-estan-preocupados-por-su-futuro-financiero/}
+
+\bibitem{adjust2023}
+Adjust, ``El uso de las aplicaciones de finanzas continúa creciendo en 2023,''
+Adjust Mobile Measurement, 2023. [En línea].
+Disponible en: \url{https://www.adjust.com/es/blog/finance-app-usage/}
+
+\bibitem{OECD_INFE2023}
+OECD, ``OECD/INFE 2023 International Survey of Adult Financial Literacy,''
+OECD Publishing, París, 2023.
+doi: 10.1787/56003a32-en
+
+\bibitem{EncINEGI}
+INEGI, ``Encuesta Nacional sobre Disponibilidad y Uso de Tecnologías de la Información en los
+Hogares (ENDUTIH) 2023,'' Comunicado de Prensa 372/24, jun. 2024. [En línea].
+Disponible en: \url{https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2024/ENDUTIH/ENDUTIH_23.pdf}
+
+\bibitem{Tesseract}
+N. Bispo, ``Tesseract OCR Guide: Exploring Capabilities and Performance,''
+Unstract Blog, 2025. [En línea].
+Disponible en: \url{https://unstract.com/blog/guide-to-optical-character-recognition-with-tesseract-ocr/}
+
+\bibitem{GoogleCloudVisionAPI}
+Google LLC., ``Cloud Vision API: Derive insights from your images in the cloud,''
+Google Cloud Documentation, 2024. [En línea].
+Disponible en: \url{https://cloud.google.com/vision/docs/features-list}
+
+\bibitem{Metodologias}
+R. S. Pressman and B. R. Maxim, \textit{Software Engineering: A Practitioner's Approach},
+9\textsuperscript{a} ed. New York, NY: McGraw-Hill, 2020.
+
+\bibitem{ManifestoAgil}
+K. Beck \textit{et al.}, ``Manifesto for Agile Software Development,'' 2001.
+[En línea]. Disponible en: \url{https://agilemanifesto.org}
+
+\bibitem{ArquitecturaCapas}
+F. Buschmann and K. Henney, ``Pattern-Oriented Software Architecture,''
+\textit{ResearchGate}, 2008. [En línea].
+Disponible en: \url{https://www.researchgate.net/publication/228722744}
+
+\bibitem{WhyFlutter}
+I. Lotarev, ``Flutter vs Kotlin: ¿Cuál elegir para tu proyecto?,''
+Adapty Blog, 2025. [En línea].
+Disponible en: \url{https://adapty.io/blog/flutter-vs-kotlin/}
+
+\bibitem{NextJSOfficial}
+Vercel, ``Next.js Documentation: Introduction,''
+Vercel Inc., 2025. [En línea].
+Disponible en: \url{https://nextjs.org/docs}
+
+\bibitem{WhyMySQL}
+Oracle, ``MySQL: The world's most popular open source database,''
+Oracle Corporation, 2024. [En línea].
+Disponible en: \url{https://www.mysql.com/why-mysql/}
+
+\bibitem{BBVA_Finanzas}
+BBVA México, ``¿Qué son las finanzas personales y su importancia?,''
+BBVA, nov. 2024. [En línea].
+Disponible en: \url{https://www.bbva.mx/educacion-financiera/banca-digital/cuenta-digital-que-son-finanzas-personales.html}
+
+\end{thebibliography}
+\endgroup
+
+\end{document}

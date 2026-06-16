@@ -549,7 +549,7 @@ De los 15 defectos catalogados, \textbf{3 fueron corregidos} (DEF-001, DEF-010, 
 \section{Evaluación con usuarios}
 % ──────────────────────────────────────────────────────────────
 
-Como complemento a los casos de prueba técnicos, se aplicó una \textbf{encuesta de usabilidad} a \textbf{6 participantes} que interactuaron con el sistema FINARA en condiciones reales de uso. La encuesta fue aplicada el \textbf{20 de mayo de 2026} y constó de 11 preguntas orientadas a medir la experiencia del usuario en las áreas de navegación, diseño visual, funcionalidades principales y percepción general del producto. Se planea aplicar una segunda ronda de la encuesta una vez corregidos los defectos prioritarios identificados en las pruebas del 24 de mayo de 2026. Las gráficas individuales de cada pregunta se encuentran en el Anexo~\ref{sec:anexo-encuesta-pruebas}.
+Como complemento a los casos de prueba técnicos, se aplicó una \textbf{encuesta de usabilidad} a \textbf{20 participantes} que interactuaron con el sistema FINARA en condiciones reales de uso. La encuesta se aplicó en dos etapas: la primera el \textbf{30 de abril de 2026} (6 participantes) y la segunda entre el \textbf{26 de mayo y el 2 de junio de 2026} (14 participantes adicionales). Constó de hasta 14 preguntas orientadas a medir la experiencia del usuario en las áreas de navegación, diseño visual, funcionalidades principales, plataforma web y percepción general del producto. Las gráficas individuales de cada pregunta se encuentran en el Anexo~\ref{sec:anexo-encuesta-pruebas}.
 
 \subsection{Resultados por dimensión}
 
@@ -558,34 +558,40 @@ La Tabla~\ref{tab:encuesta-resumen} presenta el resultado más frecuente por pre
 \begin{table}[H]
   \centering
   \small
-  \caption{Resumen de resultados de la encuesta de usabilidad (6 participantes, 20 de mayo de 2026)}
+  \caption{Resumen de resultados de la encuesta de usabilidad (20 participantes, abril--junio 2026)}
   \label{tab:encuesta-resumen}
   \begin{tabular}{c p{3.8cm} p{5.5cm} c}
     \toprule
     \textbf{\#} & \textbf{Dimensión} & \textbf{Resultado más frecuente} & \textbf{Frec.} \\
     \midrule
-    1 & Facilidad de navegación       & Fácil --- se perdió un par de veces        & 4/6 (66.7\,\%) \\[4pt]
-    2 & Función de escaneo OCR        & No funcionó bien, reconoció muy poco       & 4/6 (66.7\,\%) \\[4pt]
-    3 & Diseño visual                 & Me encantó --- muy atractivo y profesional & 4/6 (66.7\,\%) \\[4pt]
-    4 & Presupuestos por categoría    & Muy útil / Útil (empate)                   & 3/6 (50.0\,\%) \\[4pt]
-    5 & Alertas automáticas           & Sí, muy útil                               & 4/6 (66.7\,\%) \\[4pt]
-    6 & Gráficas y estadísticas       & Mucho --- muy claras y útiles              & 3/6 (50.0\,\%) \\[4pt]
-    7 & Registro manual de gasto      & Rápido --- entre 15 y 30 segundos          & 4/6 (66.7\,\%) \\[4pt]
-    8 & Sección de deudas             & Clara --- solo dudas menores               & 5/6 (83.3\,\%) \\[4pt]
-    9 & Funcionalidad más solicitada  & Exportar reportes en PDF/Excel             & 3/6 (50.0\,\%) \\[4pt]
-    10 & Índice de recomendación (NPS) & Promedio \textbf{8.2\,/\,10}              & --- \\
+    1 & Facilidad de navegación       & Fácil --- se perdió un par de veces              & 13/20 (65.0\,\%) \\[4pt]
+    2 & Función de escaneo OCR        & Funcionó bien / Funcionó perfecto (empate)       & 8/20 (40.0\,\%) c/u \\[4pt]
+    3 & Diseño visual                 & Me encantó --- muy atractivo y profesional       & 16/20 (80.0\,\%) \\[4pt]
+    4 & Presupuestos por categoría    & Muy útil --- definitivamente la usaría           & 12/20 (60.0\,\%) \\[4pt]
+    5 & Alertas automáticas           & Sí, muy útil                                     & 16/20 (80.0\,\%) \\[4pt]
+    6 & Gráficas y estadísticas       & Bastante --- me dieron buena información         & 11/20 (55.0\,\%) \\[4pt]
+    7 & Registro manual de gasto      & Rápido --- entre 15 y 30 segundos                & 12/20 (60.0\,\%) \\[4pt]
+    8 & Sección de deudas             & Clara --- solo dudas menores                     & 12/20 (60.0\,\%) \\[4pt]
+    9 & Funcionalidad más solicitada  & Metas de ahorro                                  & 8/20 (40.0\,\%) \\[4pt]
+    \midrule
+    \multicolumn{4}{l}{\textit{Preguntas sobre plataforma web (10 participantes que la evaluaron)}} \\[4pt]
+    10 & Comodidad versión web        & Cómoda                                           & 5/10 (50.0\,\%) \\[4pt]
+    11 & Dashboard web                & Clara y suficiente                               & 6/10 (60.0\,\%) \\[4pt]
+    12 & Detalle de transacciones web & Útil                                             & 6/10 (60.0\,\%) \\[4pt]
+    \midrule
+    13 & Índice de recomendación (NPS) & Promedio \textbf{8.9\,/\,10} --- NPS: \textbf{60} & --- \\
     \bottomrule
   \end{tabular}
 \end{table}
 
 \subsection{Índice de recomendación (NPS)}
 
-Los puntajes individuales de recomendación fueron: \textbf{10, 9, 8, 8, 8} y \textbf{6}, con un promedio de \textbf{8.2\,/\,10}. Cuatro de los seis participantes asignaron una puntuación de 8 o superior, lo que refleja una percepción positiva del producto en su estado actual.
+Los puntajes individuales de recomendación de los 20 participantes fueron: \textbf{6, 8, 8, 10, 9, 8, 10, 10, 9, 9, 9, 8, 10, 10, 8, 9, 8, 10, 10} y \textbf{9}, con un promedio de \textbf{8.9\,/\,10}. Aplicando la metodología NPS estándar, se identificaron \textbf{13 promotores} (puntuación 9--10, 65\,\%), \textbf{6 pasivos} (puntuación 7--8, 30\,\%) y \textbf{1 detractor} (puntuación 0--6, 5\,\%), lo que resulta en un \textbf{NPS de 60}. Este valor se considera ``bueno'' en la industria de aplicaciones móviles y refleja una percepción sólidamente positiva del producto entre los evaluadores.
 
 \subsection{Funcionalidades más solicitadas}
 
-Las funcionalidades que los participantes añadirían a FINARA en versiones futuras fueron: exportación de reportes en PDF/Excel (50\,\%), modo oscuro (33.3\,\%) y metas de ahorro (16.7\,\%). Estas preferencias están alineadas con los módulos pendientes de implementación identificados durante el desarrollo.
+Las funcionalidades que los 20 participantes añadirían a FINARA en versiones futuras fueron: metas de ahorro (40\,\%), exportación de reportes en PDF/Excel (30\,\%), modo oscuro (15\,\%), compartir gastos con familia (10\,\%) y otras sugerencias individuales como comparación mes a mes y consejos personalizados (5\,\% cada una). La preferencia por metas de ahorro refleja el interés de los usuarios en extender la aplicación hacia la planificación financiera proactiva, más allá del registro y control de gastos.
 
 \subsection{Hallazgos cualitativos}
 
-Al preguntarles qué es lo \textbf{mejor} de FINARA, los participantes destacaron: el seguimiento claro de gastos mensuales, la interfaz sencilla y atractiva, el diseño UX y la función de escaneo de tickets. La percepción del diseño visual fue consistentemente positiva (100\,\% calificó entre ``me gustó'' y ``me encantó''), contrastando con la percepción del OCR, que es el área de mayor insatisfacción (66.7\,\% reportó que reconoció muy poco). Este contraste confirma que la prioridad técnica del siguiente Trabajo Terminal es la mejora del módulo de categorización automática.
+Al preguntarles qué es lo \textbf{mejor} de FINARA, los 20 participantes destacaron principalmente: el escaneo automático de tickets (mencionado por la mayoría), la interfaz fácil de entender y usar, el control claro de ingresos y gastos, y la facilidad para visualizar en qué se gasta el dinero. La percepción del diseño visual fue consistentemente positiva (100\,\% calificó entre ``me gustó'' y ``me encantó''). En cuanto al OCR, la segunda ronda de evaluaciones mostró una mejora significativa respecto a la primera: mientras que en abril 4 de 6 participantes (66.7\,\%) reportaron que reconoció muy poco, en la segunda etapa la mayoría reportó que funcionó bien o perfecto, lo que confirma el avance del módulo de categorización automática. Este contraste valida las correcciones aplicadas y posiciona la mejora continua del OCR como una prioridad del siguiente Trabajo Terminal.
